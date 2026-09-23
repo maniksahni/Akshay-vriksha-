@@ -1,0 +1,123 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --pine-deep: #0B2B26;
+    --pine-secondary: #163832;
+    --ivory-sand: #FBF9F5;
+    --ivory-warm: #F4F0EA;
+    --gold-dull: #C5A880;
+    --gold-radiant: #D4AF37;
+    --charcoal-slate: #1A201E;
+    --border-hairline: #E7E2DA;
+  }
+
+  body {
+    background-color: #FBF9F5;
+    color: #1A201E;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Custom subtle scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #F4F0EA;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #C5A880;
+    border-radius: 3px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #0B2B26;
+  }
+}
+
+/* Custom Range Slider for SIP Calculator */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  background: #E7E2DA;
+  height: 6px;
+  border-radius: 3px;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #0B2B26;
+  border: 2px solid #C5A880;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(11, 43, 38, 0.25);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+  transform: scale(1.18);
+  background: #D4AF37;
+  border-color: #0B2B26;
+  box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #0B2B26;
+  border: 2px solid #C5A880;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(11, 43, 38, 0.25);
+}
+
+/* Luxury Editorial Accents */
+.editorial-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.85rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  border: 1px solid rgba(197, 168, 128, 0.35);
+  background: rgba(197, 168, 128, 0.08);
+  color: #C5A880;
+}
+
+.editorial-badge-dark {
+  border-color: rgba(212, 175, 55, 0.4);
+  background: rgba(212, 175, 55, 0.12);
+  color: #D4AF37;
+}
+
+/* Glassmorphism helpers */
+.glass-header {
+  background: rgba(251, 249, 245, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.glass-card-dark {
+  background: rgba(22, 56, 50, 0.7);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(231, 226, 218, 0.12);
+}
+
+.glass-card-light {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(231, 226, 218, 0.8);
+}
