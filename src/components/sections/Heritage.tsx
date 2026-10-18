@@ -106,7 +106,6 @@ function Card({ j, i }: { j: Journey; i: number }) {
       href={whatsappLink(`Namaste! I'd love to know more about a heritage journey to ${j.name}.`)}
       target="_blank"
       rel="noreferrer"
-      data-cursor="Explore"
       className="group block w-[78vw] shrink-0 snap-center sm:w-[46vw] lg:w-auto"
       style={{ rotateX: srx, rotateY: sry, transformPerspective: 900 }}
       onMouseMove={onMove}

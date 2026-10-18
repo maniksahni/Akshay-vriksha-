@@ -25,13 +25,6 @@
     background: #d9ae5b;
     color: #06110d;
   }
-  @media (hover: hover) and (pointer: fine) {
-    body.has-cursor,
-    body.has-cursor a,
-    body.has-cursor button {
-      cursor: none;
-    }
-  }
 }
 
 @layer components {

@@ -78,7 +78,6 @@ export function Hero({ ready }: { ready: boolean }) {
                 href={whatsappLink('Namaste! I would like to start a goal-based SIP.')}
                 target="_blank"
                 rel="noreferrer"
-                data-cursor="Begin"
                 className="inline-flex h-14 items-center gap-3 rounded-full bg-gold pl-7 pr-2 text-[15px] font-semibold text-night transition-colors hover:bg-gold-soft"
               >
                 Start your SIP

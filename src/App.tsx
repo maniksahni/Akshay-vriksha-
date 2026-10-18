@@ -1,6 +1,5 @@
 import { motion, useScroll, useSpring } from 'framer-motion';
 import { useEffect, useState } from 'react';
-import { Cursor } from './components/Cursor';
 import { Nav } from './components/Nav';
 import { Preloader } from './components/Preloader';
 import { SectionIndex } from './components/SectionIndex';
@@ -32,7 +31,6 @@ function WhatsAppFab({ show }: { show: boolean }) {
       target="_blank"
       rel="noreferrer"
       aria-label="Chat on WhatsApp"
-      data-cursor="Chat"
       className="fixed bottom-4 right-4 z-50 grid h-12 w-12 place-items-center sm:bottom-5 sm:right-5 sm:h-14 sm:w-14 rounded-full bg-[#25D366] text-white shadow-[0_10px_30px_-5px_rgba(37,211,102,0.5)]"
       initial={{ scale: 0 }}
       animate={{ scale: show ? 1 : 0 }}
@@ -53,7 +51,6 @@ export default function App() {
   return (
     <>
       <Preloader onDone={() => setReady(true)} />
-      <Cursor />
       <ScrollProgress />
       <Nav ready={ready} />
       <SectionIndex show={ready} />
