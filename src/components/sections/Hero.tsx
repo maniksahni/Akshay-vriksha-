@@ -75,7 +75,7 @@ export function Hero({ ready }: { ready: boolean }) {
 
         <h1 className="mt-6 font-display text-[clamp(3.1rem,8.4vw,9rem)] leading-[0.92] tracking-[-0.02em] text-bone">
           {LINES.map((l, i) => (
-            <span key={i} className="block overflow-hidden pb-[0.06em]">
+            <span key={i} className="-mt-[0.16em] block overflow-hidden pb-[0.06em] pt-[0.16em]">
               <motion.span
                 className={`block ${l.className ?? ''}`}
                 initial={{ y: '110%', rotate: 2 }}
