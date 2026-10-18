@@ -2,15 +2,37 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import { useRef } from 'react';
 import { CONTACT, whatsappLink } from '../../data/site';
 import { scrollToHash } from '../../lib/smooth';
+import { Bokeh } from '../Bokeh';
 import { GoldSilk } from '../GoldSilk';
 import { TreeCanvas } from '../TreeCanvas';
 import { EASE, Magnetic } from '../ui/motion';
 
-const LINES: { text: string; className?: string }[] = [
-  { text: 'Plant a SIP today.' },
+const LINES: { text: string; className?: string; letters?: boolean }[] = [
+  { text: 'Plant a SIP today.', letters: true },
   { text: 'Rest in its shade', className: 'italic text-foil pr-[0.08em]' },
-  { text: 'tomorrow.' },
+  { text: 'tomorrow.', letters: true },
 ];
+
+/** Each letter lifts and turns gold under the pointer, then settles slowly, so a sweep leaves a wave. */
+function Letters({ text }: { text: string }) {
+  return (
+    <>
+      {text.split(' ').map((word, w) => (
+        <span key={w} className="inline-block whitespace-nowrap">
+          {word.split('').map((ch, i) => (
+            <span
+              key={i}
+              className="inline-block transition-[transform,color] duration-[900ms] ease-out hover:-translate-y-[0.12em] hover:text-gold hover:duration-150"
+            >
+              {ch}
+            </span>
+          ))}
+          {w < text.split(' ').length - 1 && '\u00a0'}
+        </span>
+      ))}
+    </>
+  );
+}
 
 export function Hero({ ready }: { ready: boolean }) {
   const ref = useRef<HTMLElement>(null);
@@ -29,6 +51,9 @@ export function Hero({ ready }: { ready: boolean }) {
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_70%_60%_at_68%_70%,rgba(217,174,91,0.13),transparent_65%)]" />
       <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-night to-transparent z-[1]" />
 
+      <div className="absolute inset-0 opacity-80">
+        <Bokeh />
+      </div>
       <motion.div className="absolute inset-0 origin-bottom" style={{ scale: treeScale, y: treeY }}>
         <TreeCanvas grow={ready} rootX={0.5} className="md:hidden opacity-40" />
         <div className="absolute inset-0 hidden md:block">
@@ -57,7 +82,7 @@ export function Hero({ ready }: { ready: boolean }) {
                 animate={ready ? { y: '0%', rotate: 0 } : undefined}
                 transition={{ duration: 1.3, ease: EASE, delay: 0.1 + i * 0.12 }}
               >
-                {l.text}
+                {l.letters ? <Letters text={l.text} /> : l.text}
               </motion.span>
             </span>
           ))}

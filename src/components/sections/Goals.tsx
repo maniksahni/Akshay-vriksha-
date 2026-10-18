@@ -35,6 +35,10 @@ const GOALS: Goal[] = [
   },
 ];
 
+/** Short rupee label for tight slider headers: ₹60 L, ₹1.5 Cr. */
+const shortINR = (n: number) =>
+  n >= 10000000 ? `₹${+(n / 10000000).toFixed(2)} Cr` : `₹${+(n / 100000).toFixed(1)} L`;
+
 function monthlyFor(target: number, years: number) {
   const i = RETURN / 12 / 100;
   const n = years * 12;
@@ -143,7 +147,7 @@ export function Goals() {
               <p className="mt-1 text-[11px] text-bone/50 lg:text-sm">is the SIP that could get you there.</p>
 
               <div className="mt-4 grid grid-cols-2 gap-x-5 rounded-2xl bg-bone px-4 py-3 text-ink lg:mt-8 lg:gap-x-8 lg:px-6 lg:py-5">
-                <Slider label="Cost today" value={cost} min={100000} max={30000000} step={100000} onChange={setCost} display={formatINR(cost, true)} />
+                <Slider label="Cost today" value={cost} min={100000} max={30000000} step={100000} onChange={setCost} display={shortINR(cost)} />
                 <Slider label="In" value={years} min={1} max={30} step={1} onChange={setYears} display={`${years} yrs`} />
               </div>
 

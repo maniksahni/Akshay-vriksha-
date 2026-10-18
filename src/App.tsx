@@ -11,10 +11,12 @@ import { Goals } from './components/sections/Goals';
 import { GrowthStory } from './components/sections/GrowthStory';
 import { Heritage } from './components/sections/Heritage';
 import { Hero } from './components/sections/Hero';
+import { Interlude } from './components/sections/Interlude';
 import { Manifesto } from './components/sections/Manifesto';
 import { NriDesk } from './components/sections/NriDesk';
 import { Offerings } from './components/sections/Offerings';
 import { Process } from './components/sections/Process';
+import { Curtain } from './components/ui/Curtain';
 import { whatsappLink } from './data/site';
 import { startSmoothScroll } from './lib/smooth';
 
@@ -58,15 +60,22 @@ export default function App() {
         <Hero ready={ready} />
         <Manifesto />
         <GrowthStory />
+        <Interlude />
         <Offerings />
         <Process />
-        <Goals />
+        <Curtain>
+          <Goals />
+        </Curtain>
         <Compounding />
-        <NriDesk />
+        <Curtain>
+          <NriDesk />
+        </Curtain>
         <Marquee />
         <Founder />
         <Heritage />
-        <Faq />
+        <Curtain>
+          <Faq />
+        </Curtain>
         <Contact />
       </main>
       <Footer />

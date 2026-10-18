@@ -1,5 +1,5 @@
-import { motion, useMotionValue, useScroll, useSpring, useTransform } from 'framer-motion';
-import { MouseEvent, useRef } from 'react';
+import { motion, MotionValue, useMotionValue, useScroll, useSpring, useTransform } from 'framer-motion';
+import { MouseEvent, useRef, useState } from 'react';
 import { JOURNEYS, Journey, whatsappLink } from '../../data/site';
 import { Scramble } from '../ui/effects';
 import { FadeUp, MaskLines } from '../ui/motion';
@@ -86,7 +86,11 @@ function Scene({ j }: { j: Journey }) {
   );
 }
 
-function Card({ j, i }: { j: Journey; i: number }) {
+const DRIFT = [70, -30, 110, 0];
+
+function Card({ j, i, progress, desktop }: { j: Journey; i: number; progress: MotionValue<number>; desktop: boolean }) {
+  // desktop: arches drift at different speeds as you scroll past, like a stage set
+  const drift = useTransform(progress, [0, 1], [DRIFT[i % 4], -DRIFT[i % 4]]);
   const rx = useMotionValue(0);
   const ry = useMotionValue(0);
   const srx = useSpring(rx, { stiffness: 150, damping: 15 });
@@ -107,7 +111,7 @@ function Card({ j, i }: { j: Journey; i: number }) {
       target="_blank"
       rel="noreferrer"
       className="group block w-[78vw] shrink-0 snap-center sm:w-[46vw] lg:w-auto"
-      style={{ rotateX: srx, rotateY: sry, transformPerspective: 900 }}
+      style={{ rotateX: srx, rotateY: sry, transformPerspective: 900, y: desktop ? drift : 0 }}
       onMouseMove={onMove}
       onMouseLeave={(e) => { rx.set(0); ry.set(0); e.currentTarget.style.setProperty('--px', '0'); e.currentTarget.style.setProperty('--py', '0'); }}
       initial={{ opacity: 0, y: 60 }}
@@ -134,6 +138,7 @@ export function Heritage() {
   const ref = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] });
   const bigX = useTransform(scrollYProgress, [0, 1], ['10%', '-30%']);
+  const [desktop] = useState(() => typeof window !== 'undefined' && window.matchMedia('(min-width: 1024px)').matches);
 
   return (
     <section id="heritage" ref={ref} className="relative overflow-hidden bg-gradient-to-b from-night via-[#1C0D07] to-night py-24 sm:py-32">
@@ -160,7 +165,7 @@ export function Heritage() {
       </div>
       <div className="mt-16 flex snap-x snap-mandatory gap-5 overflow-x-auto px-5 pb-4 [scrollbar-width:none] sm:px-8 lg:container-x lg:grid lg:grid-cols-4 lg:gap-8 lg:overflow-visible">
         {JOURNEYS.map((j, i) => (
-          <Card key={j.name} j={j} i={i} />
+          <Card key={j.name} j={j} i={i} progress={scrollYProgress} desktop={desktop} />
         ))}
       </div>
       <FadeUp className="container-x mt-10">
