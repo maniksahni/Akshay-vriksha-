@@ -3,121 +3,134 @@
 @tailwind utilities;
 
 @layer base {
-  :root {
-    --pine-deep: #0B2B26;
-    --pine-secondary: #163832;
-    --ivory-sand: #FBF9F5;
-    --ivory-warm: #F4F0EA;
-    --gold-dull: #C5A880;
-    --gold-radiant: #D4AF37;
-    --charcoal-slate: #1A201E;
-    --border-hairline: #E7E2DA;
+  html {
+    background: #06110d;
+    -webkit-text-size-adjust: 100%;
   }
-
+  html.lenis,
+  html.lenis body {
+    height: auto;
+  }
+  .lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+  .lenis.lenis-stopped {
+    overflow: hidden;
+  }
   body {
-    background-color: #FBF9F5;
-    color: #1A201E;
-    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+    @apply bg-night text-bone font-sans antialiased;
+    overflow-x: hidden;
   }
-
-  /* Custom subtle scrollbar */
-  ::-webkit-scrollbar {
-    width: 6px;
+  ::selection {
+    background: #d9ae5b;
+    color: #06110d;
   }
-  ::-webkit-scrollbar-track {
-    background: #F4F0EA;
-  }
-  ::-webkit-scrollbar-thumb {
-    background: #C5A880;
-    border-radius: 3px;
-  }
-  ::-webkit-scrollbar-thumb:hover {
-    background: #0B2B26;
+  @media (hover: hover) and (pointer: fine) {
+    body.has-cursor,
+    body.has-cursor a,
+    body.has-cursor button {
+      cursor: none;
+    }
   }
 }
 
-/* Custom Range Slider for SIP Calculator */
-input[type="range"] {
+@layer components {
+  .eyebrow {
+    @apply font-sans text-[11px] uppercase tracking-eyebrow font-semibold;
+  }
+  .container-x {
+    @apply mx-auto w-full max-w-[1440px] px-5 sm:px-8 lg:px-14;
+  }
+  .hairline {
+    @apply border-white/10;
+  }
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+/* Gold-foil text: a slow light sweep across a metallic gradient */
+.text-foil {
+  background: linear-gradient(100deg, #a9802f 0%, #e9cd8f 22%, #fff3d1 30%, #d9ae5b 40%, #a9802f 60%, #e9cd8f 80%, #a9802f 100%);
+  background-size: 250% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: foil 7s ease-in-out infinite;
+}
+@keyframes foil {
+  0%, 100% { background-position: 100% 0; }
+  50% { background-position: 0% 0; }
+}
+
+/* Film grain over everything for a tactile, printed feel */
+.grain {
+  pointer-events: none;
+  position: fixed;
+  inset: -50%;
+  z-index: 60;
+  opacity: 0.06;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation: grain 8s steps(10) infinite;
+}
+@keyframes grain {
+  0%, 100% { transform: translate(0, 0); }
+  10% { transform: translate(-5%, -10%); }
+  30% { transform: translate(3%, -15%); }
+  50% { transform: translate(12%, 9%); }
+  70% { transform: translate(9%, 4%); }
+  90% { transform: translate(-1%, 7%); }
+}
+
+input[type='range'].range {
   -webkit-appearance: none;
   appearance: none;
-  background: #E7E2DA;
-  height: 6px;
-  border-radius: 3px;
-  outline: none;
-  transition: all 0.2s ease;
+  width: 100%;
+  height: 28px;
+  background: transparent;
 }
-
-input[type="range"]::-webkit-slider-thumb {
+input[type='range'].range::-webkit-slider-runnable-track {
+  height: 2px;
+  background: linear-gradient(to right, #d9ae5b var(--fill, 50%), rgba(243, 238, 229, 0.15) var(--fill, 50%));
+}
+input[type='range'].range::-moz-range-track {
+  height: 2px;
+  background: rgba(243, 238, 229, 0.15);
+}
+input[type='range'].range::-moz-range-progress {
+  height: 2px;
+  background: #d9ae5b;
+}
+input[type='range'].range::-webkit-slider-thumb {
   -webkit-appearance: none;
-  appearance: none;
   width: 22px;
   height: 22px;
-  border-radius: 50%;
-  background: #0B2B26;
-  border: 2px solid #C5A880;
-  cursor: pointer;
-  box-shadow: 0 2px 8px rgba(11, 43, 38, 0.25);
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  margin-top: -10px;
+  border-radius: 999px;
+  background: #06110d;
+  border: 2px solid #d9ae5b;
+  box-shadow: 0 0 0 6px rgba(217, 174, 91, 0.12);
+  transition: transform 0.2s;
+}
+input[type='range'].range::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 999px;
+  background: #06110d;
+  border: 2px solid #d9ae5b;
+}
+input[type='range'].range:active::-webkit-slider-thumb {
+  transform: scale(1.2);
+}
+input[type='range'].range:focus-visible {
+  outline: 2px solid #d9ae5b;
+  outline-offset: 4px;
 }
 
-input[type="range"]::-webkit-slider-thumb:hover {
-  transform: scale(1.18);
-  background: #D4AF37;
-  border-color: #0B2B26;
-  box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
-}
-
-input[type="range"]::-moz-range-thumb {
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
-  background: #0B2B26;
-  border: 2px solid #C5A880;
-  cursor: pointer;
-  box-shadow: 0 2px 8px rgba(11, 43, 38, 0.25);
-}
-
-/* Luxury Editorial Accents */
-.editorial-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.35rem 0.85rem;
-  border-radius: 9999px;
-  font-size: 0.75rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  border: 1px solid rgba(197, 168, 128, 0.35);
-  background: rgba(197, 168, 128, 0.08);
-  color: #C5A880;
-}
-
-.editorial-badge-dark {
-  border-color: rgba(212, 175, 55, 0.4);
-  background: rgba(212, 175, 55, 0.12);
-  color: #D4AF37;
-}
-
-/* Glassmorphism helpers */
-.glass-header {
-  background: rgba(251, 249, 245, 0.92);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-}
-
-.glass-card-dark {
-  background: rgba(22, 56, 50, 0.7);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(231, 226, 218, 0.12);
-}
-
-.glass-card-light {
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(231, 226, 218, 0.8);
+@media (prefers-reduced-motion: reduce) {
+  .grain,
+  .text-foil,
+  .animate-marquee {
+    animation: none !important;
+  }
 }
