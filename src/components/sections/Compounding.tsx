@@ -3,6 +3,7 @@ import { whatsappLink } from '../../data/site';
 import { sipSeries } from '../../utils/calculations';
 import { formatINR } from '../../utils/formatters';
 import { FadeUp, MaskLines, useTween } from '../ui/motion';
+import { Scramble } from '../ui/effects';
 
 function Range({
   label,
@@ -113,7 +114,7 @@ export function Compounding() {
         <div className="grid gap-8 lg:grid-cols-[1fr_1fr] lg:items-end">
           <div>
             <FadeUp>
-              <p className="eyebrow mb-2 text-[10px] text-gold lg:mb-4 lg:text-[11px]">The eighth wonder</p>
+              <Scramble text="The eighth wonder" className="eyebrow mb-2 text-[10px] text-gold lg:mb-4 lg:text-[11px]" />
             </FadeUp>
             <MaskLines
               lines={[<>Watch your money <br className="hidden lg:block" /><span className="italic text-gold">grow branches.</span></>]}

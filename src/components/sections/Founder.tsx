@@ -2,6 +2,7 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import { useRef } from 'react';
 import { CONTACT, TESTIMONIAL, VALUES } from '../../data/site';
 import { CountUp, FadeUp, MaskLines } from '../ui/motion';
+import { Scramble } from '../ui/effects';
 
 export function Founder() {
   const ref = useRef<HTMLElement>(null);
@@ -33,7 +34,7 @@ export function Founder() {
 
         <div>
           <FadeUp>
-            <p className="eyebrow mb-3 text-gold sm:mb-4">The gardener</p>
+            <Scramble text="The gardener" className="eyebrow mb-3 text-gold sm:mb-4" />
           </FadeUp>
           <MaskLines
             lines={['An engineer’s discipline,', <span className="italic text-gold">a gardener’s patience.</span>]}

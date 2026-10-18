@@ -2,6 +2,7 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
 import { CITIES, NRI_STEPS, whatsappLink } from '../../data/site';
 import { FadeUp, MaskLines } from '../ui/motion';
+import { Scramble } from '../ui/effects';
 
 function useNow() {
   const [now, setNow] = useState(() => new Date());
@@ -50,7 +51,7 @@ export function NriDesk() {
       <div className="container-x relative grid gap-16 lg:grid-cols-[1fr_1.1fr]">
         <div className="lg:sticky lg:top-28 lg:self-start">
           <FadeUp>
-            <p className="eyebrow mb-4 text-ember">Global NRI Desk</p>
+            <Scramble text="Global NRI Desk" className="eyebrow mb-4 text-ember" />
           </FadeUp>
           <MaskLines
             lines={['Far from home.', <span className="italic text-ember">Close to your roots.</span>]}

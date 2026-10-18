@@ -5,6 +5,7 @@ import { scrollToHash } from '../../lib/smooth';
 import { GoldSilk } from '../GoldSilk';
 import { Logo } from '../Nav';
 import { FadeUp, Magnetic, MaskLines } from '../ui/motion';
+import { Scramble } from '../ui/effects';
 
 const INTERESTS = ['Mutual Funds / SIP', 'Life Insurance', 'Health Insurance', 'Heritage Travel'];
 
@@ -40,7 +41,7 @@ export function Contact() {
       <div className="container-x relative grid gap-16 lg:grid-cols-[1fr_1fr]">
         <div>
           <FadeUp>
-            <p className="eyebrow mb-4 text-gold">Begin</p>
+            <Scramble text="Begin" className="eyebrow mb-4 text-gold" />
           </FadeUp>
           <MaskLines
             lines={['The best time to plant', 'a tree was 20 years ago.', <span className="italic text-gold">The next best is today.</span>]}
@@ -139,7 +140,7 @@ export function Footer() {
             </p>
           </div>
           <nav aria-label="Footer">
-            <p className="eyebrow mb-4 text-bone/40">Explore</p>
+            <Scramble text="Explore" className="eyebrow mb-4 text-bone/40" />
             <ul className="grid grid-cols-2 gap-y-2 text-sm text-bone/75">
               {NAV.map((n) => (
                 <li key={n.href}>
@@ -151,7 +152,7 @@ export function Footer() {
             </ul>
           </nav>
           <div className="space-y-2 text-sm text-bone/75 md:space-y-0">
-            <p className="eyebrow mb-4 text-bone/40">Connect</p>
+            <Scramble text="Connect" className="eyebrow mb-4 text-bone/40" />
             <a className="block hover:text-gold" href={whatsappLink('Namaste!')} target="_blank" rel="noreferrer">WhatsApp</a>
             <a className="block hover:text-gold" href={CONTACT.instagram} target="_blank" rel="noreferrer">Instagram</a>
             <a className="block hover:text-gold" href={`mailto:${CONTACT.email}`}>Email</a>

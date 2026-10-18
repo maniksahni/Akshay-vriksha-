@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { CONTACT, FAQS } from '../../data/site';
 import { FadeUp, MaskLines } from '../ui/motion';
 import { VelocityMarquee } from '../ui/VelocityMarquee';
+import { Scramble } from '../ui/effects';
 
 export function Marquee() {
   const items = [
@@ -44,7 +45,7 @@ export function Faq() {
       <div className="container-x grid gap-14 lg:grid-cols-[0.8fr_1.2fr]">
         <div>
           <FadeUp>
-            <p className="eyebrow mb-4 text-ember">Questions</p>
+            <Scramble text="Questions" className="eyebrow mb-4 text-ember" />
           </FadeUp>
           <MaskLines lines={['Clear answers,', <span className="italic text-ember">no fine print.</span>]} className="font-display text-[clamp(2.4rem,5vw,4.6rem)] leading-[0.98] tracking-[-0.02em]" />
         </div>

@@ -119,6 +119,17 @@ input[type='range'].range::-moz-range-thumb {
   background: #06110d;
   border: 2px solid #d9ae5b;
 }
+input[type='range'].range-ink::-webkit-slider-runnable-track {
+  background: linear-gradient(to right, #c4622d var(--fill, 50%), rgba(19, 32, 27, 0.15) var(--fill, 50%));
+}
+input[type='range'].range-ink::-webkit-slider-thumb {
+  background: #f3eee5;
+  border-color: #c4622d;
+  box-shadow: 0 0 0 6px rgba(196, 98, 45, 0.15);
+}
+input[type='range'].range-ink::-moz-range-progress {
+  background: #c4622d;
+}
 input[type='range'].range:active::-webkit-slider-thumb {
   transform: scale(1.2);
 }

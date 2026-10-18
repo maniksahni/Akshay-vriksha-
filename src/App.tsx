@@ -8,12 +8,14 @@ import { Compounding } from './components/sections/Compounding';
 import { Contact, Footer } from './components/sections/Contact';
 import { Faq, Marquee } from './components/sections/Faq';
 import { Founder } from './components/sections/Founder';
+import { Goals } from './components/sections/Goals';
 import { GrowthStory } from './components/sections/GrowthStory';
 import { Heritage } from './components/sections/Heritage';
 import { Hero } from './components/sections/Hero';
 import { Manifesto } from './components/sections/Manifesto';
 import { NriDesk } from './components/sections/NriDesk';
 import { Offerings } from './components/sections/Offerings';
+import { Process } from './components/sections/Process';
 import { whatsappLink } from './data/site';
 import { startSmoothScroll } from './lib/smooth';
 
@@ -60,6 +62,8 @@ export default function App() {
         <Manifesto />
         <GrowthStory />
         <Offerings />
+        <Process />
+        <Goals />
         <Compounding />
         <NriDesk />
         <Marquee />

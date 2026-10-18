@@ -19,6 +19,8 @@ export const whatsappLink = (text: string) =>
 export const NAV = [
   { label: 'Philosophy', href: '#philosophy' },
   { label: 'Offerings', href: '#offerings' },
+  { label: 'How we work', href: '#process' },
+  { label: 'Goal planner', href: '#goals' },
   { label: 'Compounding', href: '#compounding' },
   { label: 'NRI Desk', href: '#nri' },
   { label: 'Heritage', href: '#heritage' },

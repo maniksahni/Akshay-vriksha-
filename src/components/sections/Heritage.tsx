@@ -1,9 +1,16 @@
 import { motion, useMotionValue, useScroll, useSpring, useTransform } from 'framer-motion';
 import { MouseEvent, useRef } from 'react';
 import { JOURNEYS, Journey, whatsappLink } from '../../data/site';
+import { Scramble } from '../ui/effects';
 import { FadeUp, MaskLines } from '../ui/motion';
 
 const SIL = '#1A0B07';
+
+/** Shift an SVG layer with the pointer; deeper layers move less. */
+const depth = (d: number) => ({
+  transform: `translate(calc(var(--px, 0) * ${d}px), calc(var(--py, 0) * ${d * 0.6}px))`,
+  transition: 'transform 0.6s cubic-bezier(0.22,1,0.36,1)',
+});
 
 function Scene({ j }: { j: Journey }) {
   const id = `sky-${j.name}`;
@@ -16,9 +23,12 @@ function Scene({ j }: { j: Journey }) {
         </linearGradient>
       </defs>
       <rect width="200" height="280" fill={`url(#${id})`} />
+      <g style={depth(-4)}>
       <g className="transition-transform duration-[1.4s] ease-out group-hover:-translate-y-6">
         <circle cx={j.scene === 'peaks' ? 140 : 100} cy={j.scene === 'sun' ? 120 : 150} r={j.scene === 'sun' ? 44 : 26} fill="#FFE7B0" opacity="0.9" />
       </g>
+      </g>
+      <g style={depth(8)}>
       {j.scene === 'ghats' && (
         <g fill={SIL}>
           <path d="M0 200 L0 170 L18 170 L18 150 L26 132 L34 150 L34 170 L60 170 L60 160 L72 160 L72 140 L80 112 L88 140 L88 160 L110 160 L110 175 L140 175 L140 150 L148 128 L156 150 L156 175 L200 175 L200 200 Z" />
@@ -71,6 +81,7 @@ function Scene({ j }: { j: Journey }) {
           ))}
         </g>
       )}
+      </g>
     </svg>
   );
 }
@@ -82,8 +93,13 @@ function Card({ j, i }: { j: Journey; i: number }) {
   const sry = useSpring(ry, { stiffness: 150, damping: 15 });
   const onMove = (e: MouseEvent<HTMLAnchorElement>) => {
     const r = e.currentTarget.getBoundingClientRect();
-    ry.set(((e.clientX - r.left) / r.width - 0.5) * 14);
-    rx.set(-((e.clientY - r.top) / r.height - 0.5) * 14);
+    const x = (e.clientX - r.left) / r.width - 0.5;
+    const y = (e.clientY - r.top) / r.height - 0.5;
+    ry.set(x * 14);
+    rx.set(-y * 14);
+    // drives the depth layers inside <Scene>
+    e.currentTarget.style.setProperty('--px', String(x * 2));
+    e.currentTarget.style.setProperty('--py', String(y * 2));
   };
   return (
     <motion.a
@@ -94,7 +110,7 @@ function Card({ j, i }: { j: Journey; i: number }) {
       className="group block w-[78vw] shrink-0 snap-center sm:w-[46vw] lg:w-auto"
       style={{ rotateX: srx, rotateY: sry, transformPerspective: 900 }}
       onMouseMove={onMove}
-      onMouseLeave={() => { rx.set(0); ry.set(0); }}
+      onMouseLeave={(e) => { rx.set(0); ry.set(0); e.currentTarget.style.setProperty('--px', '0'); e.currentTarget.style.setProperty('--py', '0'); }}
       initial={{ opacity: 0, y: 60 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '0px 0px -10% 0px' }}
@@ -129,7 +145,7 @@ export function Heritage() {
         <div className="grid gap-8 lg:grid-cols-2 lg:items-end">
           <div>
             <FadeUp>
-              <p className="eyebrow mb-4 text-gold">Heritage Travel</p>
+              <Scramble text="Heritage Travel" className="eyebrow mb-4 text-gold" />
             </FadeUp>
             <MaskLines
               lines={['Wealth is the means.', <span className="italic text-gold">Roots are the reward.</span>]}
