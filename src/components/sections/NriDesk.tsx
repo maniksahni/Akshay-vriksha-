@@ -18,18 +18,18 @@ function Clock({ city, tz, now }: { city: string; tz: string; now: Date }) {
   const h = get('hour'), m = get('minute'), s = get('second');
   const awake = h >= 8 && h < 21;
   return (
-    <div className="group flex items-center gap-4 border-b border-ink/10 py-4">
-      <svg viewBox="0 0 40 40" className="h-10 w-10 shrink-0">
+    <div className="group flex items-center gap-3 border-b border-ink/10 py-3 sm:gap-4 sm:py-4">
+      <svg viewBox="0 0 40 40" className="hidden h-10 w-10 shrink-0 sm:block">
         <circle cx="20" cy="20" r="18" fill="none" stroke="currentColor" strokeOpacity="0.2" />
         <line x1="20" y1="20" x2={20 + 9 * Math.sin(((h % 12) + m / 60) * (Math.PI / 6))} y2={20 - 9 * Math.cos(((h % 12) + m / 60) * (Math.PI / 6))} stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
         <line x1="20" y1="20" x2={20 + 13 * Math.sin(m * (Math.PI / 30))} y2={20 - 13 * Math.cos(m * (Math.PI / 30))} stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
         <line x1="20" y1="20" x2={20 + 15 * Math.sin(s * (Math.PI / 30))} y2={20 - 15 * Math.cos(s * (Math.PI / 30))} stroke="#C4622D" strokeWidth="1" strokeLinecap="round" />
       </svg>
       <div className="flex-1">
-        <p className="font-display text-2xl leading-none">{city}</p>
-        <p className="mt-1 text-xs text-ink/50">{awake ? 'Good time for a call' : 'Resting hours'}</p>
+        <p className="font-display text-xl leading-none sm:text-2xl">{city}</p>
+        <p className="mt-1 text-[11px] text-ink/50 sm:text-xs">{awake ? 'Good time for a call' : 'Resting hours'}</p>
       </div>
-      <p className="font-display text-3xl tabular-nums">
+      <p className="font-display text-2xl tabular-nums sm:text-3xl">
         {String(h).padStart(2, '0')}
         <span className="animate-pulse">:</span>
         {String(m).padStart(2, '0')}
@@ -61,7 +61,7 @@ export function NriDesk() {
               Mutual fund investments for NRIs all over the world, and online insurance plans to protect the family back home. Wherever you wake up, we are a message away.
             </p>
           </FadeUp>
-          <FadeUp delay={0.2} className="mt-10 max-w-md">
+          <FadeUp delay={0.2} className="mt-10 grid max-w-md grid-cols-2 gap-x-5 sm:block">
             {CITIES.map((c) => (
               <Clock key={c.city} {...c} now={now} />
             ))}

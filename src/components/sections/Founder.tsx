@@ -12,7 +12,7 @@ export function Founder() {
   return (
     <section id="founder" ref={ref} className="relative overflow-hidden bg-night py-24 sm:py-32">
       <div className="container-x grid items-center gap-16 lg:grid-cols-[0.9fr_1.1fr]">
-        <motion.div style={{ y: archY }} className="relative mx-auto w-full max-w-[440px]">
+        <motion.div style={{ y: archY }} className="relative mx-auto w-full max-w-[300px] sm:max-w-[440px]">
           <div className="relative aspect-[3/4] overflow-hidden rounded-t-full border border-gold/30 bg-gradient-to-b from-moss to-forest">
             <motion.svg style={{ rotate: ringR }} viewBox="0 0 400 400" className="absolute left-1/2 top-[18%] w-[130%] -translate-x-1/2 opacity-40" aria-hidden>
               {Array.from({ length: 14 }).map((_, i) => (
@@ -20,7 +20,7 @@ export function Founder() {
               ))}
             </motion.svg>
             <div className="absolute inset-0 flex flex-col items-center justify-center">
-              <span className="font-display text-[9rem] italic leading-none text-gold">GK</span>
+              <span className="font-display text-[7rem] italic sm:text-[9rem] leading-none text-gold">GK</span>
               <span className="eyebrow mt-2 text-bone/50">Founder</span>
             </div>
             <div className="absolute inset-x-0 bottom-0 border-t border-white/10 bg-night/50 p-5 backdrop-blur">

@@ -149,6 +149,7 @@ export function Heritage() {
         ))}
       </div>
       <FadeUp className="container-x mt-10">
+        <p className="eyebrow mb-3 text-gold/70 lg:hidden">Swipe for more →</p>
         <p className="text-sm text-bone/40">Every itinerary is planned on request. Tell us where your roots are.</p>
       </FadeUp>
     </section>

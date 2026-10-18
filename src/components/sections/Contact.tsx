@@ -150,7 +150,7 @@ export function Footer() {
               ))}
             </ul>
           </nav>
-          <div className="text-sm text-bone/75">
+          <div className="space-y-2 text-sm text-bone/75 md:space-y-0">
             <p className="eyebrow mb-4 text-bone/40">Connect</p>
             <a className="block hover:text-gold" href={whatsappLink('Namaste!')} target="_blank" rel="noreferrer">WhatsApp</a>
             <a className="block hover:text-gold" href={CONTACT.instagram} target="_blank" rel="noreferrer">Instagram</a>
@@ -165,7 +165,7 @@ export function Footer() {
             </p>
             <p className="mt-3">© {new Date().getFullYear()} Akshaya Vriksha · {CONTACT.address}</p>
           </div>
-          <div className="select-none text-center font-deva text-[23vw] leading-[0.82] text-foil" aria-hidden>
+          <div className="select-none text-center whitespace-nowrap font-deva text-[19vw] leading-[0.82] text-foil sm:text-[23vw]" aria-hidden>
             अक्षयवृक्षः
           </div>
         </div>
