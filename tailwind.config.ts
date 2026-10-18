@@ -19,6 +19,7 @@ export default {
         display: ['"Instrument Serif"', 'Georgia', 'serif'],
         sans: ['Manrope', 'system-ui', 'sans-serif'],
         deva: ['"Tiro Devanagari Sanskrit"', '"Instrument Serif"', 'serif'],
+        sign: ['"Mrs Saint Delafield"', 'cursive'],
       },
       letterSpacing: {
         eyebrow: '0.28em',

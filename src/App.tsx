@@ -15,6 +15,8 @@ import { Manifesto } from './components/sections/Manifesto';
 import { NriDesk } from './components/sections/NriDesk';
 import { Offerings } from './components/sections/Offerings';
 import { Process } from './components/sections/Process';
+import { Trust } from './components/sections/Trust';
+import { MobileCTA } from './components/MobileCTA';
 import { Curtain } from './components/ui/Curtain';
 import { whatsappLink } from './data/site';
 import { startSmoothScroll } from './lib/smooth';
@@ -32,7 +34,7 @@ function WhatsAppFab({ show }: { show: boolean }) {
       target="_blank"
       rel="noreferrer"
       aria-label="Chat on WhatsApp"
-      className="fixed bottom-4 right-4 z-50 grid h-12 w-12 place-items-center sm:bottom-5 sm:right-5 sm:h-14 sm:w-14 rounded-full bg-[#25D366] text-white shadow-[0_10px_30px_-5px_rgba(37,211,102,0.5)]"
+      className="fixed bottom-5 right-5 z-50 hidden h-14 w-14 place-items-center lg:grid rounded-full bg-[#25D366] text-white shadow-[0_10px_30px_-5px_rgba(37,211,102,0.5)]"
       initial={{ scale: 0 }}
       animate={{ scale: show ? 1 : 0 }}
       whileHover={{ scale: 1.08 }}
@@ -71,6 +73,7 @@ export default function App() {
         <Marquee />
         <Founder />
         <Heritage />
+        <Trust />
         <Curtain>
           <Faq />
         </Curtain>
@@ -78,6 +81,7 @@ export default function App() {
       </main>
       <Footer />
       <WhatsAppFab show={ready} />
+      <MobileCTA ready={ready} />
       <div className="grain" aria-hidden />
     </>
   );

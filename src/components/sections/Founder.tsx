@@ -54,6 +54,16 @@ export function Founder() {
             <p className="mt-5 max-w-xl text-sm leading-relaxed text-bone/65 sm:mt-8 sm:text-lg">
               {CONTACT.founder} facilitates goal-based SIP distribution tailored to each family’s needs. For over {CONTACT.years} years, Akshaya Vriksha has helped SIP investors build long-term wealth, and backed it with protection through Kotak Life Insurance, for Indian citizens and NRIs alike.
             </p>
+            <motion.p
+              className="mt-4 font-sign text-4xl text-gold lg:mt-6 lg:text-6xl"
+              initial={{ clipPath: 'inset(0 100% 0 0)' }}
+              whileInView={{ clipPath: 'inset(0 0% 0 0)' }}
+              viewport={{ once: true, margin: '0px 0px -15% 0px' }}
+              transition={{ duration: 2.2, ease: [0.65, 0, 0.35, 1], delay: 0.3 }}
+              aria-label={`Signed, ${CONTACT.founder}`}
+            >
+              {CONTACT.founder}
+            </motion.p>
           </FadeUp>
 
           <div className="mt-6 grid grid-cols-3 border-y border-white/10 sm:mt-12">

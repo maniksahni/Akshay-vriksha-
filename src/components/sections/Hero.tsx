@@ -1,6 +1,6 @@
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useRef } from 'react';
-import { CONTACT, whatsappLink } from '../../data/site';
+import { CONTACT } from '../../data/site';
 import { scrollToHash } from '../../lib/smooth';
 import { Bokeh } from '../Bokeh';
 import { GoldSilk } from '../GoldSilk';
@@ -99,23 +99,29 @@ export function Hero({ ready }: { ready: boolean }) {
           </p>
           <div className="flex flex-wrap items-center gap-3">
             <Magnetic>
-              <a
-                href={whatsappLink('Namaste! I would like to start a goal-based SIP.')}
-                target="_blank"
-                rel="noreferrer"
+              <button
+                onClick={() => scrollToHash('#contact')}
                 className="inline-flex h-14 items-center gap-3 rounded-full bg-gold pl-7 pr-2 text-[15px] font-semibold text-night transition-colors hover:bg-gold-soft"
               >
-                Start your SIP
+                Book a consultation
                 <span className="grid h-10 w-10 place-items-center rounded-full bg-night text-gold">→</span>
-              </a>
+              </button>
             </Magnetic>
             <button
-              onClick={() => scrollToHash('#compounding')}
+              onClick={() => scrollToHash('#goals')}
               className="inline-flex h-14 items-center rounded-full border border-white/15 px-7 text-[15px] font-medium text-bone transition-colors hover:border-gold hover:text-gold"
             >
-              See what time can do
+              Plan my goal
             </button>
           </div>
+          <ul className="-mt-2 flex flex-wrap gap-x-5 gap-y-1.5 text-[12px] text-bone/55">
+            {['No-obligation consultation', `AMFI-registered · ${CONTACT.arn}`, 'NRIs welcome'].map((t) => (
+              <li key={t} className="flex items-center gap-1.5">
+                <svg viewBox="0 0 16 16" className="h-3.5 w-3.5 text-gold" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="m3 8.5 3 3 7-7" /></svg>
+                {t}
+              </li>
+            ))}
+          </ul>
         </motion.div>
       </motion.div>
 

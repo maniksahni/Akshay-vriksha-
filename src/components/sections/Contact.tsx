@@ -1,116 +1,68 @@
 import { useInView } from 'framer-motion';
-import { FormEvent, useRef, useState } from 'react';
+import { useRef } from 'react';
 import { CONTACT, NAV, whatsappLink } from '../../data/site';
 import { scrollToHash } from '../../lib/smooth';
+import { Booking } from '../Booking';
 import { GoldSilk } from '../GoldSilk';
 import { Logo } from '../Nav';
-import { FadeUp, Magnetic, MaskLines } from '../ui/motion';
+import { FadeUp, MaskLines } from '../ui/motion';
 import { Scramble } from '../ui/effects';
 
-const INTERESTS = ['Mutual Funds / SIP', 'Life Insurance', 'Health Insurance', 'Heritage Travel'];
+const NEXT = [
+  { t: 'You pick a slot', d: 'Choose a day and time that suits you. NRIs see it in their own timezone.' },
+  { t: 'Gulshan confirms', d: 'He confirms personally on WhatsApp, usually with a couple of questions about your goals.' },
+  { t: 'A calm conversation', d: 'Your goals, your risk comfort and a clear next step. No pressure, no obligation.' },
+];
 
 export function Contact() {
-  const [who, setWho] = useState<'Resident Indian' | 'NRI'>('Resident Indian');
-  const [interests, setInterests] = useState<string[]>(['Mutual Funds / SIP']);
-  const [name, setName] = useState('');
-  const [city, setCity] = useState('');
-  const [note, setNote] = useState('');
-
-  const toggle = (t: string) => setInterests((s) => (s.includes(t) ? s.filter((x) => x !== t) : [...s, t]));
-
-  const submit = (e: FormEvent) => {
-    e.preventDefault();
-    const msg = [
-      `Namaste! My name is ${name || '—'}.`,
-      `I'm a ${who}${city ? ` based in ${city}` : ''}.`,
-      `I'm interested in: ${interests.join(', ') || 'a general consultation'}.`,
-      note && `\n${note}`,
-    ]
-      .filter(Boolean)
-      .join(' ');
-    window.open(whatsappLink(msg), '_blank', 'noopener');
-  };
-
-  const chip = (active: boolean) =>
-    `rounded-full border px-4 py-2.5 text-sm transition-colors ${active ? 'border-gold bg-gold text-night' : 'border-white/15 text-bone/70 hover:border-gold/60 hover:text-bone'}`;
-  const input = 'w-full border-b border-white/15 bg-transparent py-3 text-lg text-bone placeholder:text-bone/30 focus:border-gold focus:outline-none';
-
   return (
-    <section id="contact" className="relative overflow-hidden bg-forest py-24 sm:py-32">
+    <section id="contact" className="relative overflow-hidden bg-forest py-14 lg:py-32">
       <div className="pointer-events-none absolute -right-40 -top-40 h-[600px] w-[600px] rounded-full bg-gold/10 blur-[140px]" />
-      <div className="container-x relative grid gap-16 lg:grid-cols-[1fr_1fr]">
-        <div>
+      <div className="container-x relative grid grid-cols-1 gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:grid-rows-[auto_1fr] lg:gap-x-16 lg:gap-y-0">
+        <div className="lg:col-start-1 lg:row-start-1">
           <FadeUp>
-            <Scramble text="Begin" className="eyebrow mb-4 text-gold" />
+            <Scramble text="Begin" className="eyebrow mb-3 text-gold lg:mb-4" />
           </FadeUp>
           <MaskLines
             lines={['The best time to plant', 'a tree was 20 years ago.', <span className="italic text-gold">The next best is today.</span>]}
-            className="font-display text-[clamp(2.4rem,4.8vw,4.6rem)] leading-[0.98] tracking-[-0.02em]"
+            className="font-display text-[clamp(2rem,4.8vw,4.6rem)] leading-[0.98] tracking-[-0.02em]"
           />
-          <FadeUp delay={0.1} className="mt-12 space-y-6">
-            <a href={`tel:+${CONTACT.phoneIntl}`} className="group block">
-              <span className="eyebrow text-bone/40">Call</span>
-              <span className="mt-1 block font-display text-4xl transition-colors group-hover:text-gold sm:text-5xl">+91 {CONTACT.phone.replace(/(\d{5})(\d{5})/, '$1 $2')}</span>
-            </a>
-            <a href={`mailto:${CONTACT.email}`} className="group block">
-              <span className="eyebrow text-bone/40">Write</span>
-              <span className="mt-1 block break-all font-display text-3xl transition-colors group-hover:text-gold sm:text-4xl">{CONTACT.email}</span>
-            </a>
-            <div>
-              <span className="eyebrow text-bone/40">Visit</span>
-              <span className="mt-1 block font-display text-3xl sm:text-4xl">{CONTACT.address}</span>
-            </div>
-          </FadeUp>
+
+          <ol className="mt-8 hidden space-y-5 lg:block">
+            {NEXT.map((n, i) => (
+              <FadeUp key={n.t} delay={0.1 + i * 0.08}>
+                <li className="flex gap-4">
+                  <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full border border-gold/40 font-display text-lg text-gold">{i + 1}</span>
+                  <div>
+                    <p className="font-display text-2xl">{n.t}</p>
+                    <p className="mt-1 max-w-sm text-sm text-bone/55">{n.d}</p>
+                  </div>
+                </li>
+              </FadeUp>
+            ))}
+          </ol>
         </div>
 
-        <FadeUp delay={0.15}>
-          <form onSubmit={submit} className="rounded-[28px] border border-white/10 bg-night/50 p-7 backdrop-blur sm:p-10">
-            <p className="font-display text-3xl">Book a free consultation</p>
-            <p className="mt-2 text-sm text-bone/50">Fill this in and we’ll continue the conversation on WhatsApp.</p>
-
-            <fieldset className="mt-8">
-              <legend className="eyebrow mb-3 text-bone/40">I am a</legend>
-              <div className="flex flex-wrap gap-2">
-                {(['Resident Indian', 'NRI'] as const).map((w) => (
-                  <button type="button" key={w} className={chip(who === w)} onClick={() => setWho(w)} aria-pressed={who === w}>
-                    {w}
-                  </button>
-                ))}
-              </div>
-            </fieldset>
-            <fieldset className="mt-6">
-              <legend className="eyebrow mb-3 text-bone/40">Interested in</legend>
-              <div className="flex flex-wrap gap-2">
-                {INTERESTS.map((t) => (
-                  <button type="button" key={t} className={chip(interests.includes(t))} onClick={() => toggle(t)} aria-pressed={interests.includes(t)}>
-                    {t}
-                  </button>
-                ))}
-              </div>
-            </fieldset>
-            <div className="mt-6 grid gap-5 sm:grid-cols-2">
-              <label>
-                <span className="sr-only">Your name</span>
-                <input className={input} placeholder="Your name" value={name} onChange={(e) => setName(e.target.value)} required autoComplete="name" />
-              </label>
-              <label>
-                <span className="sr-only">City / country</span>
-                <input className={input} placeholder="City / country" value={city} onChange={(e) => setCity(e.target.value)} autoComplete="address-level2" />
-              </label>
-            </div>
-            <label className="mt-5 block">
-              <span className="sr-only">Anything else</span>
-              <textarea className={`${input} min-h-[90px] resize-none`} placeholder="Your goal: a house, retirement, a child’s education…" value={note} onChange={(e) => setNote(e.target.value)} />
-            </label>
-            <div className="mt-8">
-              <Magnetic>
-                <button type="submit" className="inline-flex h-14 items-center gap-3 rounded-full bg-gold pl-7 pr-2 text-[15px] font-semibold text-night transition-colors hover:bg-gold-soft">
-                  Continue on WhatsApp
-                  <span className="grid h-10 w-10 place-items-center rounded-full bg-night text-gold">→</span>
-                </button>
-              </Magnetic>
-            </div>
-          </form>
+        <FadeUp delay={0.15} className="min-w-0 lg:col-start-2 lg:row-span-2 lg:row-start-1">
+          <Booking />
+        </FadeUp>
+        <FadeUp delay={0.1} className="grid grid-cols-2 gap-x-6 gap-y-4 border-t border-white/10 pt-6 lg:col-start-1 lg:row-start-2 lg:mt-12 lg:self-start">
+          <a href={`tel:+${CONTACT.phoneIntl}`} className="group block">
+            <span className="eyebrow text-[10px] text-bone/40">Call</span>
+            <span className="mt-1 block font-display text-xl transition-colors group-hover:text-gold lg:text-3xl">+91 {CONTACT.phone.replace(/(\d{5})(\d{5})/, '$1 $2')}</span>
+          </a>
+          <a href={whatsappLink('Namaste!')} target="_blank" rel="noreferrer" className="group block">
+            <span className="eyebrow text-[10px] text-bone/40">WhatsApp</span>
+            <span className="mt-1 block font-display text-xl transition-colors group-hover:text-gold lg:text-3xl">Message us</span>
+          </a>
+          <a href={`mailto:${CONTACT.email}`} className="group col-span-2 block sm:col-span-1">
+            <span className="eyebrow text-[10px] text-bone/40">Write</span>
+            <span className="mt-1 block break-all font-display text-xl transition-colors group-hover:text-gold lg:text-2xl">{CONTACT.email}</span>
+          </a>
+          <div className="col-span-2 sm:col-span-1">
+            <span className="eyebrow text-[10px] text-bone/40">Visit</span>
+            <span className="mt-1 block font-display text-xl lg:text-2xl">{CONTACT.address}</span>
+          </div>
         </FadeUp>
       </div>
     </section>

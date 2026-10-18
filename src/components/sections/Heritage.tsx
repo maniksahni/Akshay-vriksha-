@@ -123,7 +123,8 @@ function Card({ j, i, progress, desktop }: { j: Journey; i: number; progress: Mo
         <div className="absolute inset-0 transition-transform duration-[1.4s] ease-out group-hover:scale-110">
           <Scene j={j} />
         </div>
-        <div className="absolute inset-x-0 top-[22%] text-center font-deva text-5xl text-bone/90 drop-shadow-[0_2px_20px_rgba(0,0,0,0.5)] sm:text-6xl">{j.hindi}</div>
+        <div className="absolute inset-x-0 top-0 h-[42%] bg-gradient-to-b from-black/45 to-transparent" />
+        <div className="absolute inset-x-0 top-[13%] text-center font-deva text-[2.6rem] text-bone [text-shadow:0_2px_18px_rgba(0,0,0,0.65),0_1px_2px_rgba(0,0,0,0.5)] sm:text-5xl">{j.hindi}</div>
       </div>
       <div className="mt-5 flex items-baseline justify-between gap-3">
         <h3 className="font-display text-3xl">{j.name}</h3>

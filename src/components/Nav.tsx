@@ -1,6 +1,6 @@
 import { AnimatePresence, motion, useMotionValueEvent, useScroll } from 'framer-motion';
 import { useEffect, useState } from 'react';
-import { CONTACT, NAV, whatsappLink } from '../data/site';
+import { CONTACT, NAV } from '../data/site';
 import { lockScroll, scrollToHash } from '../lib/smooth';
 import { EASE, Magnetic } from './ui/motion';
 
@@ -59,14 +59,12 @@ export function Nav({ ready }: { ready: boolean }) {
             <div className="flex items-center gap-3">
               <span className="hidden eyebrow text-bone/40 xl:inline">AMFI-registered MFD · {CONTACT.arn}</span>
               <Magnetic className="hidden sm:inline-block">
-                <a
-                  href={whatsappLink('Namaste! I would like to book a consultation with Akshaya Vriksha.')}
-                  target="_blank"
-                  rel="noreferrer"
+                <button
+                  onClick={() => go('#contact')}
                   className="inline-flex h-11 items-center rounded-full bg-gold px-5 text-sm font-semibold text-night transition-colors hover:bg-gold-soft"
                 >
                   Book a call
-                </a>
+                </button>
               </Magnetic>
               <button
                 onClick={() => setOpen((o) => !o)}

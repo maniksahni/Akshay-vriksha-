@@ -24,6 +24,7 @@ export const NAV = [
   { label: 'Compounding', href: '#compounding' },
   { label: 'NRI Desk', href: '#nri' },
   { label: 'Heritage', href: '#heritage' },
+  { label: 'Verify us', href: '#trust' },
   { label: 'Founder', href: '#founder' },
   { label: 'Contact', href: '#contact' },
 ];
@@ -139,6 +140,18 @@ export const FAQS = [
   {
     q: 'I live abroad. Can I invest in Indian mutual funds?',
     a: 'Yes. NRIs can invest through NRE or NRO accounts, and onboarding is done online. Residents of the US and Canada can invest too, but only with the AMCs that accept them, and we’ll show you which ones.',
+  },
+  {
+    q: 'What documents do I need to start?',
+    a: 'Usually your PAN, Aadhaar (or passport for NRIs), a bank account and a photo. KYC is done once and works across all fund houses. We walk you through it online.',
+  },
+  {
+    q: 'Can I pause or stop my SIP?',
+    a: 'Yes. Most SIPs can be paused, changed or stopped at any time, and you can usually redeem your units whenever you need to. Some schemes, like ELSS tax-saving funds, have a three-year lock-in, and we’ll flag that before you invest.',
+  },
+  {
+    q: 'Will you help with insurance claims?',
+    a: 'Yes. Claims are settled by the insurer, but we help your family with the paperwork and follow-up so they aren’t doing it alone at a difficult time.',
   },
   {
     q: 'How is Akshaya Vriksha paid?',
