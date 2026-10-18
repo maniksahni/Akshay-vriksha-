@@ -11,7 +11,6 @@ import { Goals } from './components/sections/Goals';
 import { GrowthStory } from './components/sections/GrowthStory';
 import { Heritage } from './components/sections/Heritage';
 import { Hero } from './components/sections/Hero';
-import { Interlude } from './components/sections/Interlude';
 import { Manifesto } from './components/sections/Manifesto';
 import { NriDesk } from './components/sections/NriDesk';
 import { Offerings } from './components/sections/Offerings';
@@ -60,7 +59,6 @@ export default function App() {
         <Hero ready={ready} />
         <Manifesto />
         <GrowthStory />
-        <Interlude />
         <Offerings />
         <Process />
         <Curtain>
