@@ -95,18 +95,26 @@ function Motif({ kind, stroke }: { kind: Offering['motif']; stroke: string }) {
 function Panel({ o, i }: { o: Offering; i: number }) {
   const t = THEMES[i % THEMES.length];
   return (
-    <article className={`relative flex min-h-[86svh] w-full shrink-0 flex-col overflow-hidden rounded-[28px] ${t.bg} ${t.text} p-7 sm:p-10 lg:h-[78vh] lg:min-h-0 lg:w-[78vw] lg:max-w-[1180px] lg:p-14`}>
-      <div className={`pointer-events-none absolute -bottom-[6vw] -right-[2vw] select-none font-deva text-[clamp(8rem,22vw,20rem)] leading-none opacity-[0.06]`}>{o.hindi}</div>
+    <article
+      className={`relative flex w-[84vw] max-w-[440px] shrink-0 snap-center flex-col overflow-hidden rounded-[24px] ${t.bg} ${t.text} p-6 sm:w-[62vw] sm:p-8 lg:h-[78vh] lg:w-[78vw] lg:max-w-[1180px] lg:rounded-[28px] lg:p-14`}
+    >
+      <div className="pointer-events-none absolute -bottom-6 -right-2 select-none font-deva text-[7rem] leading-none opacity-[0.06] lg:-bottom-[6vw] lg:-right-[2vw] lg:text-[clamp(8rem,22vw,20rem)]">{o.hindi}</div>
       <div className="flex items-start justify-between">
-        <span className={`font-display text-7xl leading-none sm:text-8xl ${t.accent}`}>{o.no}</span>
-        <span className={`eyebrow ${t.sub}`}>Offering {o.no} / 03</span>
+        <span className={`font-display text-5xl leading-none lg:text-8xl ${t.accent}`}>{o.no}</span>
+        <span className={`eyebrow text-[10px] ${t.sub}`}>{o.no} / 03</span>
       </div>
-      <div className="relative mt-auto grid gap-10 lg:grid-cols-[1.25fr_1fr] lg:items-end">
+      <div className="relative mt-6 grid gap-10 lg:mt-auto lg:grid-cols-[1.25fr_1fr] lg:items-end">
         <div>
-          <h3 className="font-display text-[clamp(2.6rem,6vw,5.6rem)] leading-[0.95] tracking-[-0.02em]">{o.title}</h3>
-          <p className={`mt-4 font-display text-2xl italic sm:text-3xl ${t.accent}`}>{o.line}</p>
-          <p className={`mt-6 max-w-xl leading-relaxed ${t.sub}`}>{o.body}</p>
-          <ul className={`mt-8 grid max-w-xl grid-cols-1 border-t sm:grid-cols-2 ${t.line}`}>
+          <h3 className="font-display text-[2.3rem] leading-[0.95] tracking-[-0.02em] lg:text-[clamp(2.6rem,6vw,5.6rem)]">{o.title}</h3>
+          <p className={`mt-2 font-display text-xl italic leading-snug lg:mt-4 lg:text-3xl ${t.accent}`}>{o.line}</p>
+          <p className={`mt-4 max-w-xl text-sm leading-relaxed lg:mt-6 lg:text-base ${t.sub}`}>{o.body}</p>
+          {/* phones: compact chips; desktop: ruled list */}
+          <ul className="mt-5 flex flex-wrap gap-2 lg:hidden">
+            {o.points.map((p) => (
+              <li key={p} className={`rounded-full border px-3 py-1.5 text-xs ${t.line}`}>{p}</li>
+            ))}
+          </ul>
+          <ul className={`mt-8 hidden max-w-xl grid-cols-2 border-t lg:grid ${t.line}`}>
             {o.points.map((p) => (
               <li key={p} className={`flex items-center gap-3 border-b py-3 text-sm ${t.line}`}>
                 <span className={`h-1.5 w-1.5 rounded-full bg-current ${t.accent}`} />
@@ -118,12 +126,12 @@ function Panel({ o, i }: { o: Offering; i: number }) {
             href={whatsappLink(`Namaste! I'm interested in ${o.title}.`)}
             target="_blank"
             rel="noreferrer"
-            className={`mt-8 inline-flex h-12 items-center gap-2 rounded-full px-6 text-sm font-semibold transition-colors ${t.btn}`}
+            className={`mt-6 inline-flex h-11 items-center gap-2 rounded-full px-5 text-sm font-semibold transition-colors lg:mt-8 lg:h-12 lg:px-6 ${t.btn}`}
           >
             {o.cta} →
           </a>
         </div>
-        <div className="mx-auto hidden aspect-square w-full max-w-[360px] sm:block">
+        <div className="mx-auto hidden aspect-square w-full max-w-[360px] lg:block">
           <Motif kind={o.motif} stroke={t.stroke} />
         </div>
       </div>
@@ -138,6 +146,17 @@ export function Offerings() {
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end end'] });
   const x = useTransform(scrollYProgress, [0.05, 0.95], [0, -distance]);
   const progress = useTransform(scrollYProgress, [0.05, 0.95], ['0%', '100%']);
+  const [active, setActive] = useState(0);
+  const pinned = distance > 0;
+
+  // phones/tablets: swipeable cards, track which one is centred for the dots
+  const onSwipe = () => {
+    const el = trackRef.current;
+    if (!el || pinned) return;
+    const card = el.firstElementChild as HTMLElement | null;
+    if (!card) return;
+    setActive(Math.round(el.scrollLeft / (card.offsetWidth + 16)));
+  };
 
   useLayoutEffect(() => {
     const measure = () => {
@@ -151,17 +170,15 @@ export function Offerings() {
     return () => window.removeEventListener('resize', measure);
   }, []);
 
-  const pinned = distance > 0;
-
   return (
     <section id="offerings" ref={ref} className="relative bg-night" style={{ height: pinned ? `calc(100vh + ${distance}px)` : undefined }}>
-      <div className={pinned ? 'sticky top-0 flex h-screen flex-col justify-center overflow-hidden' : 'py-24'}>
-        <div className="container-x mb-8 flex items-end justify-between gap-6 lg:mb-10">
+      <div className={pinned ? 'sticky top-0 flex h-screen flex-col justify-center overflow-hidden' : 'py-16 sm:py-24'}>
+        <div className="container-x mb-6 flex items-end justify-between gap-6 lg:mb-10">
           <div>
             <FadeUp>
               <p className="eyebrow mb-4 text-gold">What we offer</p>
             </FadeUp>
-            <MaskLines lines={['Three branches,', <span className="italic text-gold">one tree.</span>]} className="font-display text-[clamp(2.4rem,5vw,4.6rem)] leading-[0.98] tracking-[-0.02em] text-bone" />
+            <MaskLines lines={['Three branches,', <span className="italic text-gold">one tree.</span>]} className="font-display text-[clamp(2.2rem,5vw,4.6rem)] leading-[0.98] tracking-[-0.02em] text-bone" />
           </div>
           {pinned && (
             <div className="hidden w-56 lg:block">
@@ -172,11 +189,26 @@ export function Offerings() {
             </div>
           )}
         </div>
-        <motion.div ref={trackRef} style={{ x: pinned ? x : 0 }} className="flex flex-col gap-5 px-5 sm:px-8 lg:w-max lg:flex-row lg:gap-8 lg:px-14">
+        <motion.div
+          ref={trackRef}
+          onScroll={onSwipe}
+          style={{ x: pinned ? x : 0 }}
+          className="flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-1 [scrollbar-width:none] sm:px-8 lg:w-max lg:snap-none lg:gap-8 lg:overflow-visible lg:px-14 [&::-webkit-scrollbar]:hidden"
+        >
           {OFFERINGS.map((o, i) => (
             <Panel key={o.no} o={o} i={i} />
           ))}
         </motion.div>
+        {!pinned && (
+          <div className="container-x mt-5 flex items-center justify-between lg:hidden">
+            <div className="flex gap-2" aria-hidden>
+              {OFFERINGS.map((o, i) => (
+                <span key={o.no} className={`h-1 rounded-full transition-all duration-500 ${i === active ? 'w-8 bg-gold' : 'w-3 bg-white/20'}`} />
+              ))}
+            </div>
+            <span className="eyebrow text-[10px] text-bone/40">Swipe →</span>
+          </div>
+        )}
       </div>
     </section>
   );
