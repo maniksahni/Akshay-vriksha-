@@ -22,9 +22,11 @@ export const NAV = [
   { label: 'How we work', href: '#process' },
   { label: 'Goal planner', href: '#goals' },
   { label: 'Compounding', href: '#compounding' },
+  { label: 'Toolkit', href: '#toolkit' },
   { label: 'NRI Desk', href: '#nri' },
   { label: 'Heritage', href: '#heritage' },
   { label: 'Verify us', href: '#trust' },
+  { label: 'Learn', href: '#learn' },
   { label: 'Founder', href: '#founder' },
   { label: 'Contact', href: '#contact' },
 ];

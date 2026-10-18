@@ -21,6 +21,10 @@
     @apply bg-night text-bone font-sans antialiased;
     overflow-x: hidden;
   }
+  :focus-visible {
+    outline: 2px solid #d9ae5b;
+    outline-offset: 3px;
+  }
   ::selection {
     background: #d9ae5b;
     color: #06110d;

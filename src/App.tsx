@@ -16,6 +16,8 @@ import { NriDesk } from './components/sections/NriDesk';
 import { Offerings } from './components/sections/Offerings';
 import { Process } from './components/sections/Process';
 import { Trust } from './components/sections/Trust';
+import { Toolkit } from './components/sections/Toolkit';
+import { Learn } from './components/sections/Learn';
 import { MobileCTA } from './components/MobileCTA';
 import { Curtain } from './components/ui/Curtain';
 import { whatsappLink } from './data/site';
@@ -57,7 +59,10 @@ export default function App() {
       <ScrollProgress />
       <Nav ready={ready} />
       <SectionIndex show={ready} />
-      <main className="relative z-10 bg-night">
+      <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[200] focus:rounded-full focus:bg-gold focus:px-5 focus:py-3 focus:text-night">
+        Skip to content
+      </a>
+      <main id="main" className="relative z-10 bg-night">
         <Hero ready={ready} />
         <Manifesto />
         <GrowthStory />
@@ -67,6 +72,7 @@ export default function App() {
           <Goals />
         </Curtain>
         <Compounding />
+        <Toolkit />
         <Curtain>
           <NriDesk />
         </Curtain>
@@ -74,6 +80,9 @@ export default function App() {
         <Founder />
         <Heritage />
         <Trust />
+        <Curtain>
+          <Learn />
+        </Curtain>
         <Curtain>
           <Faq />
         </Curtain>
