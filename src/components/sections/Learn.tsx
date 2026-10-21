@@ -87,10 +87,10 @@ export function Learn() {
   const lesson = open != null ? LESSONS[open] : null;
 
   useEffect(() => {
-    lockScroll(open != null);
+    const unlock = lockScroll(open != null);
     const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setOpen(null);
     window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
+    return () => { window.removeEventListener('keydown', onKey); unlock(); };
   }, [open]);
 
   return (

@@ -20,18 +20,15 @@ export function Nav({ ready }: { ready: boolean }) {
   const menuButton = useRef<HTMLButtonElement>(null);
   const menuRef = useRef<HTMLElement>(null);
   const [open, setOpen] = useState(false);
-  const [hidden, setHidden] = useState(false);
   const [solid, setSolid] = useState(false);
   const { scrollY } = useScroll();
 
   useMotionValueEvent(scrollY, 'change', (y) => {
-    const prev = scrollY.getPrevious() ?? 0;
-    setHidden(y > prev && y > 400 && !open);
     setSolid(y > 40);
   });
 
   useEffect(() => {
-    lockScroll(open);
+    const unlock = lockScroll(open);
     if (open) requestAnimationFrame(() => menuRef.current?.querySelector<HTMLAnchorElement>('a')?.focus());
     const onKey = (e: KeyboardEvent) => {
       if (!open) return;
@@ -45,12 +42,12 @@ export function Nav({ ready }: { ready: boolean }) {
       }
     };
     window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
+    return () => { window.removeEventListener('keydown', onKey); unlock(); };
   }, [open]);
 
   const go = (href: string) => {
     setOpen(false);
-    setTimeout(() => scrollToHash(href), open ? 450 : 0);
+    setTimeout(() => scrollToHash(href), open ? 180 : 0);
   };
 
   return (
@@ -58,7 +55,7 @@ export function Nav({ ready }: { ready: boolean }) {
       <motion.header
         className="fixed inset-x-0 top-0 z-50"
         initial={{ y: -100 }}
-        animate={{ y: ready && !hidden ? 0 : -100 }}
+        animate={{ y: ready ? 0 : -100 }}
         transition={{ duration: 0.7, ease: EASE }}
       >
         <div
@@ -105,11 +102,11 @@ export function Nav({ ready }: { ready: boolean }) {
             ref={menuRef}
             id="site-menu"
             aria-label="Site"
-            className="fixed inset-0 z-40 overflow-y-auto bg-forest"
-            initial={{ clipPath: 'circle(0% at calc(100% - 70px) 36px)' }}
-            animate={{ clipPath: 'circle(150% at calc(100% - 70px) 36px)' }}
-            exit={{ clipPath: 'circle(0% at calc(100% - 70px) 36px)' }}
-            transition={{ duration: 0.9, ease: EASE }}
+            className="fixed inset-0 z-40 overflow-y-auto overscroll-contain bg-forest"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0, pointerEvents: 'none' }}
+            transition={{ duration: 0.15 }}
           >
             <div className="pointer-events-none absolute -bottom-10 right-0 select-none font-deva text-[38vw] leading-none text-white/[0.03]">वृक्ष</div>
             <div className="container-x grid min-h-full gap-12 pb-12 pt-28 lg:grid-cols-[1.4fr_1fr] lg:pt-36">

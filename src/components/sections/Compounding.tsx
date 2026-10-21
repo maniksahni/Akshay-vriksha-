@@ -156,7 +156,7 @@ export function Compounding() {
 
           <div className="order-3 flex min-w-0 flex-col px-4 pb-4 pt-3 lg:order-none lg:col-start-2 lg:row-start-2 lg:p-9">
             <div ref={boxRef} className="relative w-full min-w-0 overflow-hidden lg:mt-4">
-              <svg width={width} height={H} className="block touch-none" onPointerMove={onMove} onPointerLeave={() => setHover(null)} role="img" aria-label={`Growth chart: ${formatINR(final.value, true)} after ${years} years.`}>
+              <svg width={width} height={H} className="block touch-pan-y" onPointerMove={onMove} onPointerLeave={() => setHover(null)} role="img" aria-label={`Growth chart: ${formatINR(final.value, true)} after ${years} years.`}>
                 <defs>
                   <linearGradient id="gNow" x1="0" x2="0" y1="0" y2="1">
                     <stop offset="0" stopColor="#D9AE5B" stopOpacity="0.45" />
