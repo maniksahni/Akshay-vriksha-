@@ -19,16 +19,16 @@ export const whatsappLink = (text: string) =>
   `https://wa.me/${CONTACT.phoneIntl}?text=${encodeURIComponent(text)}`;
 
 export const NAV = [
-  { label: 'Philosophy', href: '#philosophy' },
+  { label: 'Philosophy', href: '#philosophy', deskOnly: true },
   { label: 'Offerings', href: '#offerings' },
-  { label: 'How we work', href: '#process' },
+  { label: 'How we work', href: '#process', deskOnly: true },
   { label: 'Goal planner', href: '#goals' },
   { label: 'Compounding', href: '#compounding' },
-  { label: 'Toolkit', href: '#toolkit' },
+  { label: 'Toolkit', href: '#toolkit', deskOnly: true },
   { label: 'NRI Desk', href: '#nri' },
   { label: 'Verify us', href: '#trust' },
-  { label: 'Start here', href: '#essentials' },
-  { label: 'Learn', href: '#learn' },
+  { label: 'Start here', href: '#essentials', deskOnly: true },
+  { label: 'Learn', href: '#learn', deskOnly: true },
   { label: 'Founder', href: '#founder' },
   { label: 'FAQs', href: '#faq' },
   { label: 'Contact', href: '#contact' },

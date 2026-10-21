@@ -341,6 +341,13 @@ button.bg-gold:hover::after {
   main section[class*="py-"] { padding-block: 3rem; }
 
 
+  /* essentials only: titles carry the NRI steps, values and FAQ filters are desktop extras */
+  #nri ol li p.leading-relaxed { display: none; }
+  #nri ol li { padding-bottom: 1.5rem; }
+  #nri ol h3 { margin-top: 0.25rem; font-size: 1.6rem; }
+  .founder-values { display: none; }
+  #faq [aria-label="Question topics"] { display: none; }
+
   /* the fixed booking bar is ~76px tall: keep the footer's last lines clear of it */
   footer.fixed { padding-bottom: 5.5rem; }
 }

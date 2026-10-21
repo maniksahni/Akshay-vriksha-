@@ -122,10 +122,10 @@ export function Nav({ ready }: { ready: boolean }) {
             <div className="container-x grid min-h-full gap-12 pb-12 pt-28 lg:grid-cols-[1.4fr_1fr] lg:pt-36">
               <div>
               <p className="eyebrow mb-5 text-gold">Explore AkshayVriksha</p>
-              <a href="#start" onClick={event => { event.preventDefault(); go('#start'); }} className="mb-6 flex items-center justify-between rounded-2xl border border-gold/30 bg-gold/10 p-5 text-gold"><span><span className="block font-display text-2xl">Not sure where to start?</span><span className="mt-1 block text-xs text-bone/60">Find your next step in one tap.</span></span><span aria-hidden>↗</span></a>
+              <a href="#start" onClick={event => { event.preventDefault(); go('#start'); }} className="mb-6 flex items-center justify-between rounded-2xl border border-gold/30 bg-gold/10 p-5 text-gold max-lg:hidden"><span><span className="block font-display text-2xl">Not sure where to start?</span><span className="mt-1 block text-xs text-bone/60">Find your next step in one tap.</span></span><span aria-hidden>↗</span></a>
               <ul className="grid grid-cols-2 gap-x-5 gap-y-1">
                 {NAV.map((item, i) => (
-                  <li key={item.href} className="overflow-hidden">
+                  <li key={item.href} className={`overflow-hidden ${"deskOnly" in item && item.deskOnly ? "max-lg:hidden" : ""}`}>
                     <motion.a
                       href={item.href}
                       onClick={(e) => { e.preventDefault(); go(item.href); }}

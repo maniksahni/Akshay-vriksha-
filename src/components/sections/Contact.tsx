@@ -95,7 +95,7 @@ export function Footer() {
             <Scramble text="Explore" className="eyebrow mb-4 text-bone/40" />
             <ul className="grid grid-cols-2 gap-y-2 text-sm text-bone/75">
               {NAV.map((n) => (
-                <li key={n.href}>
+                <li key={n.href} className={"deskOnly" in n && n.deskOnly ? "max-lg:hidden" : ""}>
                   <a href={n.href} onClick={(e) => { e.preventDefault(); scrollToHash(n.href); }} className="hover:text-gold">
                     {n.label}
                   </a>

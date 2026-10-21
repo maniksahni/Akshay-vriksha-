@@ -81,7 +81,7 @@ export function Founder() {
             </div>
           </div>
 
-          <div className="mt-6 grid gap-3 sm:mt-12 sm:grid-cols-3 sm:gap-8">
+          <div className="founder-values mt-6 grid gap-3 sm:mt-12 sm:grid-cols-3 sm:gap-8">
             {VALUES.map((v, i) => (
               <FadeUp key={v.title} delay={i * 0.1} className="flex items-baseline gap-3 sm:block">
                 <p className="w-28 shrink-0 font-display text-lg text-bone sm:w-auto sm:text-2xl">{v.title}</p>

@@ -2,6 +2,7 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import { useRef } from 'react';
 import { CONTACT } from '../../data/site';
 import { scrollToHash } from '../../lib/smooth';
+import { firstSectionAfterHero } from '../../lib/useDesktop';
 import { Bokeh } from '../Bokeh';
 import { GoldSilk } from '../GoldSilk';
 import { TreeCanvas } from '../TreeCanvas';
@@ -112,7 +113,7 @@ export function Hero({ ready }: { ready: boolean }) {
               Plan my goal
             </button>
           </div>
-          <button onClick={() => scrollToHash('#essentials')} className="self-start text-sm text-gold underline decoration-gold/30 underline-offset-4 hover:decoration-gold">New to investing? Start with the essentials ↗</button>
+          <button onClick={() => scrollToHash('#essentials')} className="self-start text-sm max-lg:hidden text-gold underline decoration-gold/30 underline-offset-4 hover:decoration-gold">New to investing? Start with the essentials ↗</button>
           <ul className="-mt-2 flex flex-wrap gap-x-5 gap-y-1.5 text-[12px] text-bone/55">
             {['No-obligation consultation', `AMFI Registered Mutual Fund Distributor · ${CONTACT.arn}`, 'NRIs welcome'].map((t) => (
               <li key={t} className="flex items-center gap-1.5">
@@ -136,7 +137,7 @@ export function Hero({ ready }: { ready: boolean }) {
             <span className="hidden sm:inline"><span className="text-gold">Kotak Life</span> {CONTACT.kotak}</span>
             <span className="hidden md:inline"><span className="text-gold">{CONTACT.years}+</span> years of trust</span>
           </div>
-          <button onClick={() => scrollToHash('#philosophy')} className="flex items-center gap-3 hover:text-gold">
+          <button onClick={() => scrollToHash(firstSectionAfterHero())} className="flex items-center gap-3 hover:text-gold">
             Scroll
             <span className="relative block h-8 w-px overflow-hidden bg-white/15">
               <span className="absolute left-0 top-0 h-3 w-px animate-[float_1.6s_ease-in-out_infinite] bg-gold" />

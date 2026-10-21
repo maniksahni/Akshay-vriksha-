@@ -20,6 +20,7 @@ import { Learn } from './components/sections/Learn';
 import { MobileCTA } from './components/MobileCTA';
 import { Curtain } from './components/ui/Curtain';
 import { whatsappLink } from './data/site';
+import { useIsDesktop } from './lib/useDesktop';
 
 function ScrollProgress() {
   const { scrollYProgress } = useScroll();
@@ -49,6 +50,8 @@ function WhatsAppFab({ show }: { show: boolean }) {
 
 export default function App() {
   const ready = true;
+  // phones and tablets get the essentials only: offer, plan, proof, booking
+  const desktop = useIsDesktop();
 
   return (
     <>
@@ -60,26 +63,28 @@ export default function App() {
       </a>
       <main id="main" className="relative z-10 bg-night">
         <Hero ready={ready} />
-        <QuickStart />
-        <Manifesto />
-        <GrowthStory />
+        {desktop && <QuickStart />}
+        {desktop && <Manifesto />}
+        {desktop && <GrowthStory />}
         <Offerings />
-        <Process />
+        {desktop && <Process />}
         <Curtain>
           <Goals />
         </Curtain>
         <Compounding />
-        <Toolkit />
+        {desktop && <Toolkit />}
         <Curtain>
           <NriDesk />
         </Curtain>
-        <Marquee />
+        {desktop && <Marquee />}
         <Founder />
         <Trust />
-        <InvestorEssentials />
-        <Curtain>
-          <Learn />
-        </Curtain>
+        {desktop && <InvestorEssentials />}
+        {desktop && (
+          <Curtain>
+            <Learn />
+          </Curtain>
+        )}
         <Curtain>
           <Faq />
         </Curtain>
