@@ -10,6 +10,7 @@ import { Founder } from './components/sections/Founder';
 import { Goals } from './components/sections/Goals';
 import { GrowthStory } from './components/sections/GrowthStory';
 import { InvestorEssentials } from './components/sections/InvestorEssentials';
+import { QuickStart } from './components/sections/QuickStart';
 import { Hero } from './components/sections/Hero';
 import { Manifesto } from './components/sections/Manifesto';
 import { NriDesk } from './components/sections/NriDesk';
@@ -64,6 +65,7 @@ export default function App() {
       </a>
       <main id="main" className="relative z-10 bg-night">
         <Hero ready={ready} />
+        <QuickStart />
         <Manifesto />
         <GrowthStory />
         <Offerings />

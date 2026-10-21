@@ -69,14 +69,13 @@ export function Contact() {
   );
 }
 
-/** Curtain footer: it sits fixed beneath the page and is uncovered as the last section scrolls away. */
+/** Flowing footer keeps every link reachable on short and narrow screens. */
 export function Footer() {
-  // the footer is position:fixed, so watch its in-flow wrapper to know when it is actually uncovered
   const ref = useRef<HTMLDivElement>(null);
   const uncovered = useInView(ref, { margin: '100px' });
   return (
-    <div ref={ref} className="relative h-[100svh] min-h-[680px]" style={{ clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%)' }}>
-      <footer className="fixed bottom-0 flex h-[100svh] min-h-[680px] w-full flex-col justify-between overflow-hidden bg-night pt-24">
+    <div ref={ref} className="relative">
+      <footer className="relative flex w-full flex-col gap-14 overflow-hidden bg-night pt-16 lg:pt-24">
         <div className="pointer-events-none absolute inset-0 opacity-60">
           {uncovered && <GoldSilk intensity={0.35} />}
         </div>
@@ -117,7 +116,7 @@ export function Footer() {
             </div>
           </div>
         </div>
-        <div className="relative">
+        <div className="relative pb-24 lg:pb-0">
           <div className="container-x pb-6 text-[11px] leading-relaxed text-bone/40">
             <p className="max-w-4xl">
               AkshayVriksha is an AMFI-registered mutual fund distributor ({CONTACT.arn}) and a Kotak Life Insurance advisor ({CONTACT.kotak}). Mutual fund investments are subject to market risks; read all scheme-related documents carefully. Insurance is the subject matter of solicitation. Past performance is not indicative of future returns.

@@ -61,6 +61,8 @@ export function Booking() {
   const toggle = (t: string) => setInterests((s) => (s.includes(t) ? s.filter((x) => x !== t) : [...s, t]));
   const when = slot ? `${days[day].weekday} ${days[day].label}, ${slot} IST` : '';
 
+  const [requestUrl, setRequestUrl] = useState('');
+
   const submit = (e: FormEvent) => {
     e.preventDefault();
     const msg = [
@@ -73,7 +75,9 @@ export function Booking() {
     ]
       .filter(Boolean)
       .join('\n');
-    window.open(whatsappLink(msg), '_blank', 'noopener');
+    const url = whatsappLink(msg);
+    setRequestUrl(url);
+    window.open(url, '_blank', 'noopener');
     setSent(true);
   };
 
@@ -122,6 +126,8 @@ export function Booking() {
               <p className="mt-2 max-w-sm text-sm text-bone/60">
                 Send the WhatsApp message that just opened{slot ? ` for ${when}` : ''}, and Gulshan will confirm your slot personally.
               </p>
+              <a href={requestUrl} target="_blank" rel="noreferrer" className="mt-5 inline-flex min-h-12 items-center rounded-full bg-gold px-5 text-sm font-semibold text-night">Open WhatsApp again ↗</a>
+              <p className="mt-2 text-xs text-bone/50">If the new window didn’t open, use the button above.</p>
               <button type="button" onClick={() => setSent(false)} className="mt-6 text-sm text-gold underline-offset-4 hover:underline">
                 Change something
               </button>

@@ -25,7 +25,8 @@ export function startSmoothScroll() {
 export function scrollToHash(hash: string) {
   const el = document.querySelector(hash);
   if (!el) return;
-  if (lenis) lenis.scrollTo(el as HTMLElement, { offset: 0 });
+  if (window.location.hash !== hash) window.history.replaceState(null, '', hash);
+  if (lenis) lenis.scrollTo(el as HTMLElement, { offset: -80 });
   else el.scrollIntoView({ behavior: prefersReducedMotion() ? 'auto' : 'smooth' });
 }
 

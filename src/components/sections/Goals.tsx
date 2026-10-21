@@ -30,8 +30,8 @@ const GOALS: Goal[] = [
     icon: <svg viewBox="0 0 32 32" {...stroke}><path d="M16 4v24" /><path d="M16 9c-5 0-9 3-9 7h18c0-4-4-7-9-7z" /><path d="M6 28h20" /></svg>,
   },
   {
-    id: 'yatra', name: 'A journey home', hindi: 'यात्रा', cost: 500000, years: 3,
-    icon: <svg viewBox="0 0 32 32" {...stroke}><path d="M6 28h20" /><path d="M9 28V18l3-3 4-11 4 11 3 3v10" /><path d="M14 28v-5a2 2 0 0 1 4 0v5" /></svg>,
+    id: 'milestone', name: 'Personal milestone', hindi: 'संकल्प', cost: 500000, years: 3,
+    icon: <svg viewBox="0 0 32 32" {...stroke}><circle cx="16" cy="16" r="11" /><circle cx="16" cy="16" r="5" /><path d="m16 16 10-10M22 6h4v4" /></svg>,
   },
 ];
 

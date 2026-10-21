@@ -30,6 +30,7 @@ export const NAV = [
   { label: 'Start here', href: '#essentials' },
   { label: 'Learn', href: '#learn' },
   { label: 'Founder', href: '#founder' },
+  { label: 'FAQs', href: '#faq' },
   { label: 'Contact', href: '#contact' },
 ];
 

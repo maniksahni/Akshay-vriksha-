@@ -39,9 +39,10 @@ export function MobileCTA({ ready }: { ready: boolean }) {
               onClick={() => scrollToHash('#contact')}
               className="flex h-12 flex-1 items-center justify-center gap-2 rounded-full bg-gold text-sm font-semibold text-night active:scale-[0.98]"
             >
-              Book a consultation
+              Book a call
               <span aria-hidden>→</span>
             </button>
+            <button type="button" onClick={() => scrollToHash('#compounding')} className="h-12 rounded-full border border-white/15 px-4 text-xs font-medium text-bone hover:border-gold">SIP calculator</button>
             <a
               href={whatsappLink('Namaste! I have a question for AkshayVriksha.')}
               target="_blank"

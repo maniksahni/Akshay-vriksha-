@@ -1,5 +1,5 @@
 import { AnimatePresence, motion, useMotionValueEvent, useScroll } from 'framer-motion';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { CONTACT, NAV } from '../data/site';
 import { lockScroll, scrollToHash } from '../lib/smooth';
 import { EASE, Magnetic } from './ui/motion';
@@ -17,6 +17,8 @@ export function Logo({ className = '' }: { className?: string }) {
 }
 
 export function Nav({ ready }: { ready: boolean }) {
+  const menuButton = useRef<HTMLButtonElement>(null);
+  const menuRef = useRef<HTMLElement>(null);
   const [open, setOpen] = useState(false);
   const [hidden, setHidden] = useState(false);
   const [solid, setSolid] = useState(false);
@@ -30,7 +32,18 @@ export function Nav({ ready }: { ready: boolean }) {
 
   useEffect(() => {
     lockScroll(open);
-    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setOpen(false);
+    if (open) requestAnimationFrame(() => menuRef.current?.querySelector<HTMLAnchorElement>('a')?.focus());
+    const onKey = (e: KeyboardEvent) => {
+      if (!open) return;
+      if (e.key === 'Escape') { setOpen(false); menuButton.current?.focus(); }
+      if (e.key === 'Tab') {
+        const links = Array.from(menuRef.current?.querySelectorAll<HTMLElement>('a, button') ?? []);
+        const first = links[0];
+        const last = links[links.length - 1];
+        if (e.shiftKey && (document.activeElement === first || document.activeElement === menuButton.current)) { e.preventDefault(); last?.focus(); }
+        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); menuButton.current?.focus(); }
+      }
+    };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
   }, [open]);
@@ -57,7 +70,9 @@ export function Nav({ ready }: { ready: boolean }) {
               <span className="flex flex-col gap-1"><span className="font-deva text-lg leading-none">अक्षयवृक्षः</span><span className="font-display text-lg leading-none tracking-tight">AkshayVriksha</span></span>
             </a>
             <div className="flex items-center gap-3">
-              <span className="hidden eyebrow text-bone/40 xl:inline">AMFI Registered Mutual Fund Distributor · {CONTACT.arn}</span>
+              <nav aria-label="Quick navigation" className="hidden items-center gap-6 text-sm text-bone/70 xl:flex">
+                {[{label: 'Start here', href: '#start'}, {label: 'Calculators', href: '#compounding'}, {label: 'FAQs', href: '#faq'}].map(item => <a key={item.href} href={item.href} onClick={event => { event.preventDefault(); go(item.href); }} className="py-3 hover:text-gold">{item.label}</a>)}
+              </nav>
               <Magnetic className="hidden sm:inline-block">
                 <button
                   onClick={() => go('#contact')}
@@ -67,6 +82,7 @@ export function Nav({ ready }: { ready: boolean }) {
                 </button>
               </Magnetic>
               <button
+                ref={menuButton}
                 onClick={() => setOpen((o) => !o)}
                 aria-expanded={open}
                 aria-controls="site-menu"
@@ -86,6 +102,7 @@ export function Nav({ ready }: { ready: boolean }) {
       <AnimatePresence>
         {open && (
           <motion.nav
+            ref={menuRef}
             id="site-menu"
             aria-label="Site"
             className="fixed inset-0 z-40 overflow-y-auto bg-forest"
@@ -96,23 +113,27 @@ export function Nav({ ready }: { ready: boolean }) {
           >
             <div className="pointer-events-none absolute -bottom-10 right-0 select-none font-deva text-[38vw] leading-none text-white/[0.03]">वृक्ष</div>
             <div className="container-x grid min-h-full gap-12 pb-12 pt-28 lg:grid-cols-[1.4fr_1fr] lg:pt-36">
-              <ul className="space-y-1">
+              <div>
+              <p className="eyebrow mb-5 text-gold">Explore AkshayVriksha</p>
+              <a href="#start" onClick={event => { event.preventDefault(); go('#start'); }} className="mb-6 flex items-center justify-between rounded-2xl border border-gold/30 bg-gold/10 p-5 text-gold"><span><span className="block font-display text-2xl">Not sure where to start?</span><span className="mt-1 block text-xs text-bone/60">Find your next step in one tap.</span></span><span aria-hidden>↗</span></a>
+              <ul className="grid grid-cols-2 gap-x-5 gap-y-1">
                 {NAV.map((item, i) => (
                   <li key={item.href} className="overflow-hidden">
                     <motion.a
                       href={item.href}
                       onClick={(e) => { e.preventDefault(); go(item.href); }}
-                      className="group flex items-baseline gap-5 py-1 font-display text-[clamp(2.6rem,7vw,5.5rem)] leading-[1.02] text-bone transition-colors hover:text-gold"
+                      className="group flex min-h-14 items-center gap-3 border-b border-white/10 py-3 font-display text-xl leading-tight text-bone transition-colors hover:text-gold sm:text-3xl"
                       initial={{ y: '100%' }}
                       animate={{ y: 0 }}
-                      transition={{ duration: 0.8, ease: EASE, delay: 0.25 + i * 0.05 }}
+                      transition={{ duration: 0.8, ease: EASE, delay: 0.1 + i * 0.025 }}
                     >
-                      <span className="font-sans text-xs tabular-nums text-bone/30 group-hover:text-gold">0{i + 1}</span>
+                      <span className="font-sans text-xs tabular-nums text-bone/30 group-hover:text-gold">{String(i + 1).padStart(2, '0')}</span>
                       <span className="transition-transform duration-500 group-hover:translate-x-3 group-hover:italic">{item.label}</span>
                     </motion.a>
                   </li>
                 ))}
               </ul>
+              </div>
               <motion.div
                 className="flex flex-col justify-end gap-8 text-bone/70"
                 initial={{ opacity: 0, y: 20 }}
