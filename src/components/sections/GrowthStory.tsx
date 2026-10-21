@@ -37,7 +37,7 @@ export function GrowthStory() {
   const bar = useTransform(scrollYProgress, [0, 1], ['0%', '100%']);
 
   return (
-    <section ref={ref} className="relative h-[420vh] bg-night" aria-label="How a SIP grows, from seed to shade">
+    <section ref={ref} id="growth" className="relative h-[420vh] bg-night" aria-label="How a SIP grows, from seed to shade">
       <div className="sticky top-0 h-[100svh] overflow-hidden">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_60%_55%_at_70%_80%,rgba(217,174,91,0.12),transparent_70%)]" />
         <div className="absolute inset-0 md:left-[30%]">

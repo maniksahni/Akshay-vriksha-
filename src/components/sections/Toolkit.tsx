@@ -257,7 +257,7 @@ export function Toolkit() {
           ))}
         </div>
 
-        <Spotlight className="mt-3 rounded-[22px] border border-white/10 bg-forest/60 p-5 lg:mt-5 lg:rounded-[28px] lg:p-10" tilt={2}>
+        <Spotlight className="glow-edge mt-3 rounded-[22px] border border-white/10 bg-forest/60 p-5 lg:mt-5 lg:rounded-[28px] lg:p-10" tilt={2}>
           <AnimatePresence mode="wait" initial={false}>
             <motion.div key={tab} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -12 }} transition={{ duration: 0.3, ease: EASE }}>
               {tab === 'risk' ? <RiskQuiz /> : <CoverCalc />}

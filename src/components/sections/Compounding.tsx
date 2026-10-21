@@ -88,7 +88,8 @@ export function Compounding() {
   const tCost = useTween(cost);
 
   // chart geometry
-  const H = desktop ? 320 : 120;
+  // shorter chart on laptop-height screens so the whole calculator fits one view
+  const H = desktop ? (typeof window !== "undefined" && window.innerHeight < 940 ? 210 : 320) : 120;
   const pad = { l: 8, r: 8, t: desktop ? 20 : 8, b: desktop ? 28 : 20 };
   const iw = Math.max(10, width - pad.l - pad.r);
   const ih = H - pad.t - pad.b;

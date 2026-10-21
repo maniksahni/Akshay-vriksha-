@@ -60,7 +60,7 @@ export function Hero({ ready }: { ready: boolean }) {
       </motion.div>
 
       <div className="pointer-events-none absolute inset-0 z-[1] bg-[linear-gradient(90deg,rgba(6,17,13,0.85)_0%,rgba(6,17,13,0.55)_38%,transparent_62%)] max-md:bg-[linear-gradient(0deg,rgba(6,17,13,0.95)_0%,rgba(6,17,13,0.6)_55%,transparent_80%)]" />
-      <motion.div style={{ y: textY, opacity: textO }} className="container-x relative z-[2] flex min-h-[100svh] flex-col justify-center pb-28 pt-28 sm:pb-32 lg:pb-28 lg:pt-32">
+      <motion.div style={{ y: textY, opacity: textO }} className="hero-copy container-x relative z-[2] flex min-h-[100svh] flex-col justify-center pb-28 pt-28 sm:pb-32 lg:pb-28 lg:pt-32">
         <motion.p
           className="font-deva text-lg text-gold/90 sm:text-xl"
           initial={{ opacity: 0, y: 12 }}

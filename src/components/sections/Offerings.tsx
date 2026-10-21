@@ -98,7 +98,7 @@ function Panel({ o, i }: { o: Offering; i: number }) {
   return (
     <Spotlight className="w-[84vw] max-w-[440px] shrink-0 snap-center rounded-[24px] sm:w-[62vw] lg:w-[78vw] lg:max-w-[1180px] lg:rounded-[28px]" tilt={3} color={i === 1 ? 'rgba(196,98,45,0.14)' : 'rgba(233,205,143,0.14)'}>
     <article
-      className={`relative flex h-full w-full flex-col overflow-hidden rounded-[24px] ${t.bg} ${t.text} p-6 sm:p-8 lg:h-[78vh] lg:rounded-[28px] lg:p-14`}
+      className={`offering-panel relative flex h-full w-full flex-col overflow-hidden rounded-[24px] ${t.bg} ${t.text} p-6 sm:p-8 lg:h-[78vh] lg:rounded-[28px] lg:p-14`}
     >
       <div className="pointer-events-none absolute -bottom-6 -right-2 select-none font-deva text-[7rem] leading-none opacity-[0.06] lg:-bottom-[6vw] lg:-right-[2vw] lg:text-[clamp(8rem,22vw,20rem)]">{o.hindi}</div>
       <div className="flex items-start justify-between">
@@ -175,7 +175,7 @@ export function Offerings() {
 
   return (
     <section id="offerings" ref={ref} className="relative bg-night" style={{ height: pinned ? `calc(100vh + ${distance}px)` : undefined }}>
-      <div className={pinned ? 'sticky top-0 flex h-screen flex-col justify-center overflow-hidden' : 'py-16 sm:py-24'}>
+      <div className={pinned ? 'offering-stage sticky top-0 flex h-screen flex-col justify-center overflow-hidden' : 'py-16 sm:py-24'}>
         <div className="container-x mb-6 flex items-end justify-between gap-6 lg:mb-10">
           <div>
             <FadeUp>

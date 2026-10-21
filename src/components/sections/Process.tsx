@@ -72,11 +72,11 @@ function Card({ i, progress }: { i: number; progress: MotionValue<number> }) {
   const scale = useTransform(progress, [i / n, 1], [1, 1 - (n - 1 - i) * 0.05]);
   const dim = useTransform(progress, [i / n, 1], [0, (n - 1 - i) * 0.12]);
   return (
-    <div className="sticky min-h-[560px] h-[68svh] last:h-[88svh] lg:h-screen lg:last:h-screen" style={{ top: 0 }}>
+    <div className="process-stage sticky min-h-[560px] h-[68svh] last:h-[88svh] lg:h-screen lg:last:h-screen" style={{ top: 0 }}>
       <div className="flex h-full items-start justify-center pt-[calc(76px+var(--i)*14px)] lg:items-center lg:pt-[calc(var(--i)*22px)]" style={{ ['--i' as string]: i }}>
         <motion.article
           style={{ scale }}
-          className={`relative w-full max-w-[1180px] origin-top overflow-hidden rounded-[22px] ${s.theme} p-6 shadow-[0_-20px_60px_-20px_rgba(0,0,0,0.6)] lg:rounded-[28px] lg:p-14`}
+          className={`process-panel relative w-full max-w-[1180px] origin-top overflow-hidden rounded-[22px] ${s.theme} p-6 shadow-[0_-20px_60px_-20px_rgba(0,0,0,0.6)] lg:rounded-[28px] lg:p-14`}
         >
           <motion.div aria-hidden style={{ opacity: dim }} className="pointer-events-none absolute inset-0 bg-black" />
           <div className="relative grid gap-5 lg:grid-cols-[1fr_auto] lg:items-center lg:gap-16">

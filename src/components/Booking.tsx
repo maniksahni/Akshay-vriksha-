@@ -82,7 +82,7 @@ export function Booking() {
   };
 
   return (
-    <div className="relative min-w-0 overflow-hidden rounded-[24px] border border-white/10 bg-night/60 backdrop-blur lg:rounded-[28px]">
+    <div className="glow-edge relative min-w-0 overflow-hidden rounded-[24px] border border-white/10 bg-night/60 backdrop-blur lg:rounded-[28px]">
       <div className="pointer-events-none absolute -right-20 -top-20 h-60 w-60 rounded-full bg-gold/10 blur-[80px]" />
 
       {/* stepper */}
