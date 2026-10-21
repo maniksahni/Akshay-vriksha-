@@ -21,8 +21,6 @@ export function GrowthStory() {
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end end'] });
   // tree reaches full size a little before the section ends, so the last chapter can breathe
   const growth = useTransform(scrollYProgress, [0.02, 0.88], [0.02, 1]);
-  const treeScale = useTransform(growth, [0, 1], [0.15, 1]);
-  const treeOpacity = useTransform(growth, [0, 1], [0.15, 0.7]);
   const [year, setYear] = useState(0);
   const [chapter, setChapter] = useState(0);
 
@@ -39,17 +37,17 @@ export function GrowthStory() {
   const bar = useTransform(scrollYProgress, [0, 1], ['0%', '100%']);
 
   return (
-    <section ref={ref} className="growth-story relative h-[240svh] bg-night" aria-label="How a SIP grows, from seed to shade">
-      <div className="growth-stage sticky top-0 h-[100svh] min-h-[720px] overflow-hidden">
+    <section ref={ref} className="relative h-[420vh] bg-night" aria-label="How a SIP grows, from seed to shade">
+      <div className="sticky top-0 h-[100svh] overflow-hidden">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_60%_55%_at_70%_80%,rgba(217,174,91,0.12),transparent_70%)]" />
         <div className="absolute inset-0 md:left-[30%]">
-          <motion.div className="h-full origin-bottom" style={{ scale: treeScale, opacity: treeOpacity }}><TreeCanvas progress={growth} rootX={0.55} seed={2025} /></motion.div>
+          <TreeCanvas progress={growth} rootX={0.55} seed={2025} className="opacity-50 md:opacity-100" />
         </div>
         <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,rgba(6,17,13,0.95)_0%,rgba(6,17,13,0.6)_35%,transparent_60%)] max-md:bg-[linear-gradient(0deg,rgba(6,17,13,0.95)_10%,transparent_70%)]" />
 
         <div className="container-x relative flex h-full flex-col justify-between pb-28 pt-28 lg:pb-10">
           <div className="flex items-center gap-4">
-            <span className="eyebrow text-gold">From seed to shade · Scroll to grow</span>
+            <span className="eyebrow text-gold">From seed to shade</span>
             <span className="relative h-px w-40 bg-white/10">
               <motion.span style={{ width: bar }} className="absolute inset-y-0 left-0 bg-gold" />
             </span>
@@ -63,10 +61,10 @@ export function GrowthStory() {
             <AnimatePresence mode="wait">
               <motion.div
                 key={chapter}
-                initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -8 }}
-                transition={{ duration: 0.2, ease: EASE }}
+                initial={{ opacity: 0, y: 30, filter: 'blur(8px)' }}
+                animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+                exit={{ opacity: 0, y: -20, filter: 'blur(8px)' }}
+                transition={{ duration: 0.6, ease: EASE }}
                 className="mt-6"
               >
                 <p className="font-deva text-2xl text-gold/80">{ch.hindi}</p>

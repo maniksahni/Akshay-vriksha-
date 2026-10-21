@@ -2,6 +2,7 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import { useRef } from 'react';
 import { CONTACT } from '../../data/site';
 import { scrollToHash } from '../../lib/smooth';
+import { Bokeh } from '../Bokeh';
 import { GoldSilk } from '../GoldSilk';
 import { TreeCanvas } from '../TreeCanvas';
 import { EASE, Magnetic } from '../ui/motion';
@@ -50,6 +51,7 @@ export function Hero({ ready }: { ready: boolean }) {
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_70%_60%_at_68%_70%,rgba(217,174,91,0.13),transparent_65%)]" />
       <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-night to-transparent z-[1]" />
 
+      <div className="absolute inset-0 opacity-80"><Bokeh /></div>
       <motion.div className="absolute inset-0 origin-bottom" style={{ scale: treeScale, y: treeY }}>
         <TreeCanvas grow={ready} rootX={0.5} className="md:hidden opacity-40" />
         <div className="absolute inset-0 hidden md:block">

@@ -24,7 +24,7 @@ type Node = {
 };
 
 type Leaf = { node: number; ox: number; oy: number; r: number; phase: number; hue: number };
-
+type Fall = { x: number; y: number; vx: number; vy: number; r: number; life: number; phase: number };
 
 function mulberry32(seed: number) {
   return () => {
@@ -114,7 +114,7 @@ export function TreeCanvas({
     const ctx = canvas.getContext('2d')!;
     const reduced = prefersReducedMotion();
     const small = window.innerWidth < 768;
-    const { nodes, leaves } = buildTree(small ? 6 : 8, seed);
+    const { nodes, leaves } = buildTree(small ? 8 : 10, seed);
     const maxDepth = nodes.reduce((m, n) => Math.max(m, n.depth), 0);
     const glowGold = makeGlow('rgba(233,205,143,1)');
     const glowEmber = makeGlow('rgba(214,120,62,1)');
@@ -125,19 +125,28 @@ export function TreeCanvas({
     let visible = true;
     let raf = 0;
     const pointer = { x: -9999, y: -9999, tx: 0, wind: 0 };
+    const falls: Fall[] = [];
+    let lastSpawn = 0;
 
     const resize = () => {
       const r = canvas.getBoundingClientRect();
-      dpr = Math.min(window.devicePixelRatio || 1, 1.25);
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
       w = r.width;
       h = r.height;
       canvas.width = Math.round(w * dpr);
       canvas.height = Math.round(h * dpr);
-      if (visible && !raf) raf = requestAnimationFrame(frame);
     };
     resize();
     const ro = new ResizeObserver(resize);
     ro.observe(canvas);
+
+    const onMove = (e: PointerEvent) => {
+      const r = canvas.getBoundingClientRect();
+      pointer.x = e.clientX - r.left;
+      pointer.y = e.clientY - r.top;
+      pointer.tx = (pointer.x / Math.max(w, 1) - 0.5) * 2;
+    };
+    window.addEventListener('pointermove', onMove, { passive: true });
 
     const io = new IntersectionObserver(([e]) => {
       visible = e.isIntersecting;
@@ -219,13 +228,35 @@ export function TreeCanvas({
         ctx.drawImage(lf.hue > 0.86 ? glowEmber : glowGold, x - size, y - size, size * 2, size * 2);
       }
 
+      // Falling leaves once the tree is grown.
+      if (!reduced && growth > 0.95 && !progressRef.current) {
+        if (time - lastSpawn > (small ? 520 : 300) && falls.length < 40) {
+          lastSpawn = time;
+          const lf = leaves[(Math.random() * leaves.length) | 0];
+          const n = nodes[lf.node];
+          falls.push({ x: n.ex, y: n.ey, vx: (Math.random() - 0.5) * 0.3, vy: 0.25 + Math.random() * 0.5, r: 1.5 + Math.random() * 2.5, life: 1, phase: Math.random() * 6 });
+        }
+        for (let i = falls.length - 1; i >= 0; i--) {
+          const f = falls[i];
+          f.phase += 0.02;
+          f.x += f.vx + Math.sin(f.phase) * 0.6 + pointer.wind * 0.4;
+          f.y += f.vy;
+          f.life -= 0.0022;
+          if (f.y > h || f.life <= 0) {
+            falls.splice(i, 1);
+            continue;
+          }
+          const s = f.r * 3;
+          ctx.globalAlpha = f.life * 0.8;
+          ctx.drawImage(glowGold, f.x - s, f.y - s, s * 2, s * 2);
+        }
+      }
       ctx.globalAlpha = 1;
       ctx.globalCompositeOperation = 'source-over';
     }
 
     function frame(time: number) {
       raf = 0;
-      if (!visible || document.hidden || w === 0 || h === 0) return;
       if (progressRef.current) {
         growth = Math.min(1, Math.max(0, progressRef.current.get()));
       } else if (growRef.current && growth < 1) {
@@ -234,12 +265,9 @@ export function TreeCanvas({
       }
       layout(time);
       draw(time);
-      if (!reduced && !progressRef.current && growRef.current && growth < 1) raf = requestAnimationFrame(frame);
+      if (visible && !document.hidden && !(reduced && growth >= 1 && !progressRef.current)) raf = requestAnimationFrame(frame);
     }
-    if (!raf) raf = requestAnimationFrame(frame);
-    const unsubscribe = progress?.on('change', () => {
-      if (visible && !document.hidden && !raf) raf = requestAnimationFrame(frame);
-    });
+    raf = requestAnimationFrame(frame);
 
     const onVis = () => {
       if (!document.hidden && visible && !raf) raf = requestAnimationFrame(frame);
@@ -250,10 +278,10 @@ export function TreeCanvas({
       cancelAnimationFrame(raf);
       ro.disconnect();
       io.disconnect();
-      unsubscribe?.();
+      window.removeEventListener('pointermove', onMove);
       document.removeEventListener('visibilitychange', onVis);
     };
-  }, [rootX, seed, progress]);
+  }, [rootX, seed]);
 
   return <canvas ref={ref} aria-hidden className={`block h-full w-full ${className}`} />;
 }
