@@ -9,7 +9,6 @@ import { Faq, Marquee } from './components/sections/Faq';
 import { Founder } from './components/sections/Founder';
 import { Goals } from './components/sections/Goals';
 import { GrowthStory } from './components/sections/GrowthStory';
-import { Heritage } from './components/sections/Heritage';
 import { Hero } from './components/sections/Hero';
 import { Manifesto } from './components/sections/Manifesto';
 import { NriDesk } from './components/sections/NriDesk';
@@ -32,7 +31,7 @@ function ScrollProgress() {
 function WhatsAppFab({ show }: { show: boolean }) {
   return (
     <motion.a
-      href={whatsappLink('Namaste! I have a question for Akshaya Vriksha.')}
+      href={whatsappLink('Namaste! I have a question for AkshayVriksha.')}
       target="_blank"
       rel="noreferrer"
       aria-label="Chat on WhatsApp"
@@ -78,7 +77,6 @@ export default function App() {
         </Curtain>
         <Marquee />
         <Founder />
-        <Heritage />
         <Trust />
         <Curtain>
           <Learn />

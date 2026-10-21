@@ -43,7 +43,7 @@ export function MobileCTA({ ready }: { ready: boolean }) {
               <span aria-hidden>→</span>
             </button>
             <a
-              href={whatsappLink('Namaste! I have a question for Akshaya Vriksha.')}
+              href={whatsappLink('Namaste! I have a question for AkshayVriksha.')}
               target="_blank"
               rel="noreferrer"
               aria-label="Chat on WhatsApp"

@@ -3,7 +3,7 @@ import { useEffect, useRef } from 'react';
 import { prefersReducedMotion } from '../lib/smooth';
 
 /**
- * The Akshaya Vriksha (the inexhaustible tree), drawn procedurally.
+ * The AkshayVriksha (the inexhaustible tree), drawn procedurally.
  * Branches grow in once `grow` turns true, sway in a soft wind that follows the
  * pointer, and shed glowing leaves, a quiet picture of compounding.
  */

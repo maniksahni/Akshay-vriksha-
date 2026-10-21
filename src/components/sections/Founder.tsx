@@ -27,7 +27,7 @@ export function Founder() {
             </div>
             <div className="absolute inset-x-0 bottom-0 border-t border-white/10 bg-night/50 p-5 backdrop-blur">
               <p className="font-display text-3xl">{CONTACT.founder}</p>
-              <p className="text-sm text-bone/50">Electronics Engineer · Founder, Akshaya Vriksha</p>
+              <p className="text-sm text-bone/50">Electronics Engineer · Founder, AkshayVriksha</p>
             </div>
           </div>
         </motion.div>
@@ -52,7 +52,7 @@ export function Founder() {
           </FadeUp>
           <FadeUp delay={0.1}>
             <p className="mt-5 max-w-xl text-sm leading-relaxed text-bone/65 sm:mt-8 sm:text-lg">
-              {CONTACT.founder} facilitates goal-based SIP distribution tailored to each family’s needs. For over {CONTACT.years} years, Akshaya Vriksha has helped SIP investors build long-term wealth, and backed it with protection through Kotak Life Insurance, for Indian citizens and NRIs alike.
+              {CONTACT.founder} facilitates goal-based SIP distribution tailored to each family’s needs. For over {CONTACT.years} years, AkshayVriksha has helped SIP investors build long-term wealth, and backed it with protection through Kotak Life Insurance, for Indian citizens and NRIs alike.
             </p>
             <motion.p
               className="mt-4 font-sign text-4xl text-gold lg:mt-6 lg:text-6xl"

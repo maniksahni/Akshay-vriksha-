@@ -40,7 +40,7 @@ export function Manifesto() {
             })}
           </p>
           <p className="mt-10 max-w-md text-sm leading-relaxed text-bone/50 sm:text-base">
-            Founded by {CONTACT.founder}, an electronics engineer by training, Akshaya Vriksha has spent {CONTACT.years}+ years helping SIP investors build long-term wealth and protect it.
+            Founded by {CONTACT.founder}, an electronics engineer by training, AkshayVriksha has spent {CONTACT.years}+ years helping SIP investors build long-term wealth and protect it.
           </p>
         </div>
       </div>

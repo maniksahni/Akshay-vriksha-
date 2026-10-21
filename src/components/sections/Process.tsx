@@ -3,7 +3,7 @@ import { useRef } from 'react';
 import { Scramble } from '../ui/effects';
 import { MaskLines } from '../ui/motion';
 
-// The four steps come straight from Akshaya Vriksha's own "Nurturing your financial journey" poster.
+// The four steps come straight from AkshayVriksha's own "Nurturing your financial journey" poster.
 const STEPS = [
   {
     title: 'Facilitating investment solutions',

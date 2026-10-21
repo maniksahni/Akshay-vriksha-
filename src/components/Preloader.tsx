@@ -58,7 +58,7 @@ export function Preloader({ onDone }: { onDone: () => void }) {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.5 }}
           >
-            The inexhaustible tree
+            AkshayVriksha · The inexhaustible tree
           </motion.p>
           <div className="absolute bottom-8 left-5 right-5 flex items-end justify-between sm:left-10 sm:right-10">
             <span className="eyebrow text-bone/40">Planting a seed</span>

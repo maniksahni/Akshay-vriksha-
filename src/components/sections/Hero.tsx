@@ -95,7 +95,7 @@ export function Hero({ ready }: { ready: boolean }) {
           transition={{ duration: 1, ease: EASE, delay: 0.7 }}
         >
           <p className="text-base leading-relaxed text-bone/70 sm:text-lg">
-            Goal-based SIPs, life &amp; health insurance and heritage journeys, for families in India and NRIs across the world. Facilitated personally by {CONTACT.founder}.
+            Goal-based SIPs and life &amp; health insurance, for families in India and NRIs across the world. Facilitated personally by {CONTACT.founder}.
           </p>
           <div className="flex flex-wrap items-center gap-3">
             <Magnetic>
@@ -115,7 +115,7 @@ export function Hero({ ready }: { ready: boolean }) {
             </button>
           </div>
           <ul className="-mt-2 flex flex-wrap gap-x-5 gap-y-1.5 text-[12px] text-bone/55">
-            {['No-obligation consultation', `AMFI-registered · ${CONTACT.arn}`, 'NRIs welcome'].map((t) => (
+            {['No-obligation consultation', `AMFI Registered Mutual Fund Distributor · ${CONTACT.arn}`, 'NRIs welcome'].map((t) => (
               <li key={t} className="flex items-center gap-1.5">
                 <svg viewBox="0 0 16 16" className="h-3.5 w-3.5 text-gold" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="m3 8.5 3 3 7-7" /></svg>
                 {t}

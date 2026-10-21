@@ -24,10 +24,10 @@ function CopyCode({ code }: { code: string }) {
   );
 }
 
-/** You → fund house / insurer, with Akshaya Vriksha alongside as guide, never in the money path. */
+/** You → fund house / insurer, with AkshayVriksha alongside as guide, never in the money path. */
 function MoneyFlow() {
   return (
-    <svg viewBox="0 0 560 220" className="h-auto w-full" fill="none" role="img" aria-label="Your money goes from your bank account straight to the fund house or insurer. Akshaya Vriksha guides you but never holds your money.">
+    <svg viewBox="0 0 560 220" className="h-auto w-full" fill="none" role="img" aria-label="Your money goes from your bank account straight to the fund house or insurer. AkshayVriksha guides you but never holds your money.">
       <defs>
         <linearGradient id="flow" x1="0" x2="1">
           <stop offset="0" stopColor="#D9AE5B" stopOpacity="0.2" />
@@ -53,7 +53,7 @@ function MoneyFlow() {
 
       {/* the guide, off to the side */}
       <rect x="205" y="160" width="150" height="50" rx="25" stroke="#F3EEE5" strokeOpacity="0.25" strokeDasharray="4 5" />
-      <text x="280" y="190" textAnchor="middle" fill="#F3EEE5" fillOpacity="0.8" fontSize="14" fontFamily="Instrument Serif">Akshaya Vriksha</text>
+      <text x="280" y="190" textAnchor="middle" fill="#F3EEE5" fillOpacity="0.8" fontSize="14" fontFamily="Instrument Serif">AkshayVriksha</text>
       <path d="M230 160 C 200 140, 160 130, 120 150" stroke="#F3EEE5" strokeOpacity="0.25" strokeDasharray="3 5" />
       <path d="M330 160 C 360 140, 400 130, 440 150" stroke="#F3EEE5" strokeOpacity="0.25" strokeDasharray="3 5" />
       <text x="280" y="40" textAnchor="middle" fill="#F3EEE5" fillOpacity="0.45" fontSize="11" fontFamily="Manrope">We guide, plan and service. We never hold your money.</text>
@@ -84,7 +84,7 @@ function MoneyFlowStacked() {
         <p className="mt-1 text-[10px] text-bone/50">in your name</p>
       </div>
       <p className="col-span-3 mt-2 rounded-full border border-dashed border-white/20 px-3 py-2 text-center text-[11px] text-bone/60">
-        Akshaya Vriksha guides and services, and never holds your money.
+        AkshayVriksha guides and services, and never holds your money.
       </p>
     </div>
   );
@@ -113,7 +113,7 @@ export function Trust() {
         <div className="mt-6 grid gap-3 lg:mt-14 lg:grid-cols-3 lg:gap-6">
           <Spotlight className="rounded-[22px] border border-white/10 bg-forest/70 p-5 lg:p-8" tilt={4}>
             <p className="eyebrow text-[10px] text-bone/40">Mutual funds</p>
-            <p className="mt-2 font-display text-2xl lg:text-3xl">AMFI-registered distributor</p>
+            <p className="mt-2 font-display text-2xl lg:text-3xl">AMFI Registered Mutual Fund Distributor</p>
             <p className="mt-3 font-display text-4xl tracking-wide text-gold lg:text-5xl">{CONTACT.arn}</p>
             <div className="mt-4 flex flex-wrap items-center gap-2">
               <a href={AMFI_LOCATOR} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 rounded-full bg-gold px-3.5 py-1.5 text-xs font-semibold text-night hover:bg-gold-soft">

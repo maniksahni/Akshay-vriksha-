@@ -10,6 +10,7 @@ export const CONTACT = {
   arn: 'ARN-105840',
   kotak: 'KLI61205587',
   instagram: 'https://www.instagram.com/akshayavriksha/',
+  facebook: 'https://www.facebook.com/gulshankohli13',
   years: 12,
 };
 
@@ -24,7 +25,6 @@ export const NAV = [
   { label: 'Compounding', href: '#compounding' },
   { label: 'Toolkit', href: '#toolkit' },
   { label: 'NRI Desk', href: '#nri' },
-  { label: 'Heritage', href: '#heritage' },
   { label: 'Verify us', href: '#trust' },
   { label: 'Learn', href: '#learn' },
   { label: 'Founder', href: '#founder' },
@@ -63,16 +63,7 @@ export const OFFERINGS: Offering[] = [
     cta: 'Protect my family',
     motif: 'shield',
   },
-  {
-    no: '03',
-    title: 'Heritage Travel',
-    hindi: 'यात्रा',
-    line: 'Return to the roots of सनातन भारत.',
-    body: 'Curated spiritual journeys and heritage tours through the ancient civilisations of भारतवर्ष, with guided trips for NRI families and groups.',
-    points: ['Spiritual journeys', 'Heritage & culture tours', 'For individuals & groups', 'Designed for NRI families'],
-    cta: 'Plan a journey',
-    motif: 'temple',
-  },
+
 ];
 
 export const NRI_STEPS = [
@@ -133,7 +124,7 @@ export const TESTIMONIAL = {
 export const FAQS = [
   {
     q: 'Where does my money actually go?',
-    a: 'Straight from your bank account to the mutual fund house (AMC) or the insurer. Units and policies are held in your own name. Your money never passes through Akshaya Vriksha.',
+    a: 'Straight from your bank account to the mutual fund house (AMC) or the insurer. Units and policies are held in your own name. Your money never passes through AkshayVriksha.',
   },
   {
     q: 'How much do I need to start a SIP?',
@@ -156,11 +147,7 @@ export const FAQS = [
     a: 'Yes. Claims are settled by the insurer, but we help your family with the paperwork and follow-up so they aren’t doing it alone at a difficult time.',
   },
   {
-    q: 'How is Akshaya Vriksha paid?',
+    q: 'How is AkshayVriksha paid?',
     a: 'We are an AMFI-registered mutual fund distributor (ARN-105840) and a Kotak Life Insurance advisor. We are paid commission by the fund houses and the insurer, as regulated by SEBI, AMFI and IRDAI, and we disclose it.',
-  },
-  {
-    q: 'Why does a financial firm plan heritage journeys?',
-    a: 'Because wealth is the means, not the end. For many of our NRI families, reconnecting with the roots of Bharat is one of the goals we help them plan for.',
   },
 ];

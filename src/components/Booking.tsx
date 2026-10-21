@@ -3,7 +3,7 @@ import { FormEvent, useMemo, useState } from 'react';
 import { whatsappLink } from '../data/site';
 import { EASE } from './ui/motion';
 
-const INTERESTS = ['Mutual Funds / SIP', 'Life Insurance', 'Health Insurance', 'Heritage Travel'];
+const INTERESTS = ['Mutual Funds / SIP', 'Life Insurance', 'Health Insurance'];
 // Consultation slots, in India time.
 const SLOTS = ['10:00', '11:30', '13:00', '15:00', '16:30', '18:00', '19:30'];
 const STEPS = ['About you', 'Pick a time', 'Your details'];

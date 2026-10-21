@@ -85,8 +85,9 @@ export function Footer() {
           <div>
             <div className="flex items-center gap-3">
               <Logo className="h-10 w-10 text-bone" />
-              <span className="font-display text-3xl">Akshaya Vriksha</span>
+              <span><span className="block font-deva text-2xl">अक्षयवृक्षः</span><span className="font-display text-3xl">AkshayVriksha</span></span>
             </div>
+            <p className="mt-4 text-sm text-gold">AMFI Registered Mutual Fund Distributor · {CONTACT.arn}</p>
             <p className="mt-5 max-w-sm text-sm leading-relaxed text-bone/55">
               Investments for your long-term goals. Plant a SIP today to aim for a brighter tomorrow in the shade of your own अक्षयवृक्षः.
             </p>
@@ -107,6 +108,7 @@ export function Footer() {
             <Scramble text="Connect" className="eyebrow mb-4 text-bone/40" />
             <a className="block hover:text-gold" href={whatsappLink('Namaste!')} target="_blank" rel="noreferrer">WhatsApp</a>
             <a className="block hover:text-gold" href={CONTACT.instagram} target="_blank" rel="noreferrer">Instagram</a>
+            <a className="block hover:text-gold" href={CONTACT.facebook} target="_blank" rel="noreferrer">Facebook</a>
             <a className="block hover:text-gold" href={`mailto:${CONTACT.email}`}>Email</a>
             <a className="block hover:text-gold" href={`tel:+${CONTACT.phoneIntl}`}>+91 {CONTACT.phone}</a>
           </div>
@@ -114,9 +116,9 @@ export function Footer() {
         <div className="relative">
           <div className="container-x pb-6 text-[11px] leading-relaxed text-bone/40">
             <p className="max-w-4xl">
-              Akshaya Vriksha is an AMFI-registered mutual fund distributor ({CONTACT.arn}) and a Kotak Life Insurance advisor ({CONTACT.kotak}). Mutual fund investments are subject to market risks; read all scheme-related documents carefully. Insurance is the subject matter of solicitation. Past performance is not indicative of future returns.
+              AkshayVriksha is an AMFI-registered mutual fund distributor ({CONTACT.arn}) and a Kotak Life Insurance advisor ({CONTACT.kotak}). Mutual fund investments are subject to market risks; read all scheme-related documents carefully. Insurance is the subject matter of solicitation. Past performance is not indicative of future returns.
             </p>
-            <p className="mt-3">© {new Date().getFullYear()} Akshaya Vriksha · {CONTACT.address}</p>
+            <p className="mt-3">© {new Date().getFullYear()} AkshayVriksha · {CONTACT.address}</p>
           </div>
           <div className="select-none text-center whitespace-nowrap font-deva text-[19vw] leading-[0.82] text-foil sm:text-[23vw]" aria-hidden>
             अक्षयवृक्षः

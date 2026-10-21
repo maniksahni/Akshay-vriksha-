@@ -103,7 +103,7 @@ function Panel({ o, i }: { o: Offering; i: number }) {
       <div className="pointer-events-none absolute -bottom-6 -right-2 select-none font-deva text-[7rem] leading-none opacity-[0.06] lg:-bottom-[6vw] lg:-right-[2vw] lg:text-[clamp(8rem,22vw,20rem)]">{o.hindi}</div>
       <div className="flex items-start justify-between">
         <span className={`font-display text-5xl leading-none lg:text-8xl ${t.accent}`}>{o.no}</span>
-        <span className={`eyebrow text-[10px] ${t.sub}`}>{o.no} / 03</span>
+        <span className={`eyebrow text-[10px] ${t.sub}`}>{o.no} / {String(OFFERINGS.length).padStart(2, '0')}</span>
       </div>
       <div className="relative mt-6 grid gap-10 lg:mt-auto lg:grid-cols-[1.25fr_1fr] lg:items-end">
         <div>
@@ -181,7 +181,7 @@ export function Offerings() {
             <FadeUp>
               <Scramble text="What we offer" className="eyebrow mb-4 text-gold" />
             </FadeUp>
-            <MaskLines lines={['Three branches,', <span className="italic text-gold">one tree.</span>]} className="font-display text-[clamp(2.2rem,5vw,4.6rem)] leading-[0.98] tracking-[-0.02em] text-bone" />
+            <MaskLines lines={['Two branches,', <span className="italic text-gold">one tree.</span>]} className="font-display text-[clamp(2.2rem,5vw,4.6rem)] leading-[0.98] tracking-[-0.02em] text-bone" />
           </div>
           {pinned && (
             <div className="hidden w-56 lg:block">

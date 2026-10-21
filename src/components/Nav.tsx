@@ -52,12 +52,12 @@ export function Nav({ ready }: { ready: boolean }) {
           className={`transition-colors duration-500 ${solid && !open ? 'bg-night/70 backdrop-blur-xl border-b border-white/5' : 'bg-transparent'}`}
         >
           <div className="container-x flex h-[72px] items-center justify-between">
-            <a href="#top" onClick={(e) => { e.preventDefault(); go('#top'); }} className="flex items-center gap-2.5 text-bone" aria-label="Akshaya Vriksha home">
+            <a href="#top" onClick={(e) => { e.preventDefault(); go('#top'); }} className="flex items-center gap-2.5 text-bone" aria-label="AkshayVriksha home">
               <Logo className="h-8 w-8" />
-              <span className="font-display text-[22px] leading-none tracking-tight">Akshaya Vriksha</span>
+              <span className="flex flex-col gap-1"><span className="font-deva text-lg leading-none">अक्षयवृक्षः</span><span className="font-display text-lg leading-none tracking-tight">AkshayVriksha</span></span>
             </a>
             <div className="flex items-center gap-3">
-              <span className="hidden eyebrow text-bone/40 xl:inline">AMFI-registered MFD · {CONTACT.arn}</span>
+              <span className="hidden eyebrow text-bone/40 xl:inline">AMFI Registered Mutual Fund Distributor · {CONTACT.arn}</span>
               <Magnetic className="hidden sm:inline-block">
                 <button
                   onClick={() => go('#contact')}
