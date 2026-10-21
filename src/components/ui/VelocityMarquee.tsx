@@ -24,12 +24,14 @@ export function VelocityMarquee({ children, baseVelocity = -2, className = '' }:
   const skew = useTransform(smooth, [-3000, 0, 3000], [8, 0, -8]);
   const dir = useRef(1);
   const reduced = prefersReducedMotion();
+  // touch screens: steady speed, no skew; scroll-velocity effects stutter under finger scrolling
+  const touch = typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches;
   const pos = useTransform(x, (n) => `${wrap(-50, 0, n)}%`);
 
   useAnimationFrame((_, delta) => {
     if (reduced || !visible || document.hidden) return;
     let move = dir.current * baseVelocity * (delta / 1000);
-    const f = factor.get();
+    const f = touch ? 0 : factor.get();
     if (f < 0) dir.current = -1;
     else if (f > 0) dir.current = 1;
     move += dir.current * move * Math.abs(f);
@@ -38,7 +40,7 @@ export function VelocityMarquee({ children, baseVelocity = -2, className = '' }:
 
   return (
     <div ref={ref} className={`overflow-hidden whitespace-nowrap ${className}`}>
-      <motion.div className="flex w-max" style={{ x: pos, skewX: skew }}>
+      <motion.div className="flex w-max" style={{ x: pos, skewX: touch ? 0 : skew }}>
         <div className="flex shrink-0">{children}</div>
         <div className="flex shrink-0" aria-hidden>
           {children}

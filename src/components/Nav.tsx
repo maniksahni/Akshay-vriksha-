@@ -4,14 +4,24 @@ import { CONTACT, NAV } from '../data/site';
 import { lockScroll, scrollToHash } from '../lib/smooth';
 import { EASE, Magnetic } from './ui/motion';
 
+/** The Akshaya Vriksha mark: a temple arch sheltering the inexhaustible tree, its leaves doubling as coins.
+ *  Same geometry as brand-kit/svg/akshaya-vriksha-mark.svg; the trunk follows currentColor. */
 export function Logo({ className = '' }: { className?: string }) {
   return (
-    <svg viewBox="0 0 32 32" className={className} aria-hidden>
-      <path d="M16 29V13M16 19l-6-6M16 16l6-6M16 23l5-4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" fill="none" />
-      <circle cx="10" cy="12" r="2.2" fill="#D9AE5B" />
-      <circle cx="22.4" cy="9.4" r="2.2" fill="#D9AE5B" />
-      <circle cx="16" cy="10.2" r="2.4" fill="#E9CD8F" />
-      <circle cx="21.4" cy="18.6" r="1.6" fill="#D9AE5B" />
+    <svg viewBox="0 0 64 64" className={className} aria-hidden>
+      <path d="M11 57V31a21 21 0 0 1 42 0v26" fill="none" stroke="#D9AE5B" strokeWidth="2.4" strokeLinecap="round" />
+      <path d="M7 57h50" stroke="#D9AE5B" strokeWidth="2.4" strokeLinecap="round" />
+      <g fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round">
+        <path d="M32 57V27" />
+        <path d="M32 45c-3.5-3.2-7-5-10.5-9.6" />
+        <path d="M32 39c3.6-3.2 6.8-5.6 9.8-10.2" />
+        <path d="M32 50.5c3-2.2 5.6-3.4 8.6-4.6" />
+        <path d="M32 57c-2.6-2.4-6-3.4-9.4-3.4M32 57c2.6-2.4 6-3.4 9.4-3.4" strokeWidth="2" />
+      </g>
+      <circle cx="21" cy="33.4" r="4.1" fill="#D9AE5B" />
+      <circle cx="42.4" cy="27.6" r="4.1" fill="#D9AE5B" />
+      <circle cx="32" cy="23.2" r="4.6" fill="#E9CD8F" />
+      <circle cx="41.6" cy="45.4" r="2.9" fill="#D9AE5B" />
     </svg>
   );
 }

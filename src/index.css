@@ -341,3 +341,18 @@ button.bg-gold:hover::after {
   .glow-edge::before { animation: none; }
   a.bg-gold::after, button.bg-gold::after { display: none; }
 }
+
+/* Phones and tablets: no dead space, nothing hidden behind the bottom bar. */
+@media (max-width: 1023px) {
+  main section[class*="py-"] { padding-block: 3rem; }
+
+  /* scroll-driven scenes: same choreography, less thumb travel */
+  #philosophy { height: 170vh; }
+  #philosophy > div { align-items: flex-start; padding-top: 6.5rem; }
+  #growth { height: 300vh; }
+  #process .process-stage { height: 56svh; min-height: 420px; }
+  #process .process-stage:last-child { height: 78svh; }
+
+  /* the fixed booking bar is ~76px tall: keep the footer's last lines clear of it */
+  footer.fixed { padding-bottom: 5.5rem; }
+}

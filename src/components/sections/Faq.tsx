@@ -16,20 +16,21 @@ export function Marquee() {
     'India & NRIs worldwide',
     `${CONTACT.years}+ years`,
   ];
-  const dot = <svg viewBox="0 0 10 10" className="mx-10 h-2.5 w-2.5 shrink-0"><circle cx="5" cy="5" r="5" fill="currentColor" /></svg>;
+  const dot = <svg viewBox="0 0 10 10" className="mx-4 h-1.5 w-1.5 shrink-0 lg:mx-10 lg:h-2.5 lg:w-2.5"><circle cx="5" cy="5" r="5" fill="currentColor" /></svg>;
   return (
-    <div className="relative z-10 -my-px overflow-hidden bg-night py-10" aria-label="Credentials">
-      <div className="-rotate-2 scale-105 bg-gold py-5 text-night">
+    // Phones: one flat, compact ribbon. Desktop keeps the tilted double ribbon.
+    <div className="relative z-10 -my-px overflow-hidden bg-night py-3 lg:py-10" aria-label="Credentials">
+      <div className="bg-gold py-2.5 text-night lg:-rotate-2 lg:scale-105 lg:py-5">
         <VelocityMarquee baseVelocity={-1.5}>
           {items.map((t, i) => (
-            <span key={i} className="flex items-center font-display text-3xl sm:text-4xl">{t}{dot}</span>
+            <span key={i} className="flex items-center font-display text-lg lg:text-4xl">{t}{dot}</span>
           ))}
         </VelocityMarquee>
       </div>
-      <div className="mt-6 rotate-1 scale-105 border-y border-gold/30 py-4">
+      <div className="mt-6 hidden rotate-1 scale-105 border-y border-gold/30 py-4 lg:block">
         <VelocityMarquee baseVelocity={1.2}>
           {['अक्षयवृक्षः', 'Plant', 'Nurture', 'Protect', 'Grow', 'Rest in the shade'].map((t, i) => (
-            <span key={i} className={`flex items-center text-4xl sm:text-6xl ${i === 0 ? 'font-deva text-gold' : 'font-display italic text-transparent [-webkit-text-stroke:1px_rgba(217,174,91,0.7)]'}`}>
+            <span key={i} className={`flex items-center text-6xl ${i === 0 ? 'font-deva text-gold' : 'font-display italic text-transparent [-webkit-text-stroke:1px_rgba(217,174,91,0.7)]'}`}>
               {t}
               <span className="mx-10 text-gold">✦</span>
             </span>
