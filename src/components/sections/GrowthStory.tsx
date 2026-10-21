@@ -1,7 +1,9 @@
-import { useState } from 'react';
+import { AnimatePresence, motion, useMotionValueEvent, useScroll, useTransform } from 'framer-motion';
+import { useRef, useState } from 'react';
 import { sipValue } from '../../utils/calculations';
 import { formatINR } from '../../utils/formatters';
 import { TreeIllustration } from '../TreeIllustration';
+import { EASE } from '../ui/motion';
 
 const MONTHLY = 10000;
 const RATE = 12;
@@ -15,25 +17,87 @@ const CHAPTERS = [
 ];
 
 export function GrowthStory() {
+  const ref = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end end'] });
+  // tree reaches full size a little before the section ends, so the last chapter can breathe
+  const growth = useTransform(scrollYProgress, [0.02, 0.88], [0.02, 1]);
+  const treeScale = useTransform(growth, [0, 1], [0.15, 1]);
+  const treeOpacity = useTransform(growth, [0, 1], [0.15, 0.7]);
+  const [year, setYear] = useState(0);
   const [chapter, setChapter] = useState(0);
+
+  useMotionValueEvent(scrollYProgress, 'change', (p) => {
+    const y = Math.round(Math.min(1, Math.max(0, (p - 0.02) / 0.86)) * YEARS);
+    setYear(y);
+    const c = CHAPTERS.reduce((acc, ch, i) => (y >= ch.year ? i : acc), 0);
+    setChapter(c);
+  });
+
+  const value = sipValue(MONTHLY, RATE, year * 12);
+  const invested = MONTHLY * year * 12;
   const ch = CHAPTERS[chapter];
-  const value = sipValue(MONTHLY, RATE, ch.year * 12);
-  const invested = MONTHLY * ch.year * 12;
+  const bar = useTransform(scrollYProgress, [0, 1], ['0%', '100%']);
+
   return (
-    <section className="relative overflow-hidden bg-forest py-14 lg:py-20" aria-label="How a SIP grows, from seed to shade">
-      <div className="container-x relative grid gap-8 lg:grid-cols-[1fr_0.8fr]">
-        <div>
-          <p className="eyebrow mb-4 text-gold">From seed to shade</p>
-          <h2 className="font-display text-4xl lg:text-5xl">Explore the years of growth.</h2>
-          <p className="mt-3 text-sm text-bone/60">Choose a milestone to explore this investment illustration.</p>
-          <div className="my-6 grid grid-cols-4 gap-2" role="group" aria-label="Investment milestone">
-            {CHAPTERS.map((c,i) => <button key={c.year} type="button" aria-pressed={chapter === i} onClick={() => setChapter(i)} className={`min-h-12 rounded-full border px-2 text-sm ${chapter === i ? 'border-gold bg-gold text-night' : 'border-white/20 text-bone hover:border-gold'}`}>Year {c.year}</button>)}
-          </div>
-          <div aria-live="polite"><p className="font-deva text-xl text-gold">{ch.hindi}</p><h3 className="mt-1 font-display text-3xl">{ch.title}</h3><p className="mt-3 max-w-lg text-sm leading-relaxed text-bone/65">{ch.body}</p>
-          <dl className="mt-6 grid grid-cols-2 gap-4 border-t border-white/15 pt-5"><div><dt className="text-xs text-bone/55">Amount invested</dt><dd className="mt-2 font-display text-3xl">{formatINR(invested,true)}</dd></div><div><dt className="text-xs text-bone/55">Illustrated value</dt><dd className="mt-2 font-display text-3xl text-gold">{formatINR(value,true)}</dd></div></dl></div>
-          <p className="mt-5 text-xs leading-relaxed text-bone/50">Illustration: ₹10,000/month at an assumed {RATE}% p.a. for up to {YEARS} years. Actual returns vary and are not guaranteed. Mutual fund investments are subject to market risks.</p>
+    <section ref={ref} className="growth-story relative h-[240svh] bg-night" aria-label="How a SIP grows, from seed to shade">
+      <div className="growth-stage sticky top-0 h-[100svh] min-h-[720px] overflow-hidden">
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_60%_55%_at_70%_80%,rgba(217,174,91,0.12),transparent_70%)]" />
+        <div className="absolute inset-0 md:left-[30%]">
+          <motion.div className="h-full origin-bottom" style={{ scale: treeScale, opacity: treeOpacity }}><TreeIllustration className="h-full w-full" /></motion.div>
         </div>
-        <TreeIllustration className="hidden h-[460px] w-full self-end opacity-60 lg:block" />
+        <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,rgba(6,17,13,0.95)_0%,rgba(6,17,13,0.6)_35%,transparent_60%)] max-md:bg-[linear-gradient(0deg,rgba(6,17,13,0.95)_10%,transparent_70%)]" />
+
+        <div className="container-x relative flex h-full flex-col justify-between pb-28 pt-28 lg:pb-10">
+          <div className="flex items-center gap-4">
+            <span className="eyebrow text-gold">From seed to shade · Scroll to grow</span>
+            <span className="relative h-px w-40 bg-white/10">
+              <motion.span style={{ width: bar }} className="absolute inset-y-0 left-0 bg-gold" />
+            </span>
+          </div>
+
+          <div className="max-w-xl">
+            <div className="flex items-baseline gap-4">
+              <span className="eyebrow text-bone/40">Year</span>
+              <span className="font-display text-[clamp(5rem,13vw,12rem)] leading-[0.8] tabular-nums text-foil">{String(year).padStart(2, '0')}</span>
+            </div>
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={chapter}
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -8 }}
+                transition={{ duration: 0.2, ease: EASE }}
+                className="mt-6"
+              >
+                <p className="font-deva text-2xl text-gold/80">{ch.hindi}</p>
+                <h2 className="mt-1 font-display text-[clamp(2.6rem,5vw,4.8rem)] leading-none tracking-[-0.02em]">{ch.title}</h2>
+                <p className="mt-5 max-w-md text-base leading-relaxed text-bone/65 sm:text-lg">{ch.body}</p>
+              </motion.div>
+            </AnimatePresence>
+          </div>
+
+          <div className="grid max-w-xl grid-cols-2 gap-6 border-t border-white/10 pt-6 sm:grid-cols-3">
+            <div>
+              <p className="eyebrow text-bone/40">Invested</p>
+              <p className="mt-2 font-display text-3xl tabular-nums">{formatINR(invested, true)}</p>
+            </div>
+            <div>
+              <p className="eyebrow text-bone/40">Illustrated value</p>
+              <p className="mt-2 font-display text-3xl tabular-nums text-gold">{formatINR(value, true)}</p>
+            </div>
+            <div className="hidden sm:block">
+              <p className="eyebrow text-bone/40">Chapter</p>
+              <div className="mt-4 flex gap-1.5">
+                {CHAPTERS.map((c, i) => (
+                  <span key={c.title} className={`h-1 flex-1 rounded-full transition-colors duration-500 ${i <= chapter ? 'bg-gold' : 'bg-white/10'}`} />
+                ))}
+              </div>
+            </div>
+            <p className="col-span-full text-[10px] text-bone/30">
+              Illustration: ₹10,000/month at an assumed {RATE}% p.a. Mutual fund investments are subject to market risks; returns are not guaranteed.
+            </p>
+          </div>
+        </div>
       </div>
     </section>
   );
