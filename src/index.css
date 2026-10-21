@@ -142,3 +142,9 @@ input[type='range'].range:focus-visible {
     animation: none !important;
   }
 }
+
+/* Clear keyboard navigation across links, forms and interactive tools. */
+:where(a, button, input, select, textarea):focus-visible {
+  outline: 2px solid #d9ae5b;
+  outline-offset: 4px;
+}

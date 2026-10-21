@@ -9,6 +9,7 @@ import { Faq, Marquee } from './components/sections/Faq';
 import { Founder } from './components/sections/Founder';
 import { Goals } from './components/sections/Goals';
 import { GrowthStory } from './components/sections/GrowthStory';
+import { InvestorEssentials } from './components/sections/InvestorEssentials';
 import { Hero } from './components/sections/Hero';
 import { Manifesto } from './components/sections/Manifesto';
 import { NriDesk } from './components/sections/NriDesk';
@@ -78,6 +79,7 @@ export default function App() {
         <Marquee />
         <Founder />
         <Trust />
+        <InvestorEssentials />
         <Curtain>
           <Learn />
         </Curtain>

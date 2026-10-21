@@ -72,7 +72,7 @@ export function Founder() {
               <p className="mt-1 text-[11px] leading-tight text-bone/50 sm:mt-2 sm:text-sm">Years of stewardship</p>
             </div>
             <div className="border-l border-white/10 px-3 py-4 sm:px-4 sm:py-6">
-              <p className="font-display text-4xl text-gold sm:text-6xl">3</p>
+              <p className="font-display text-4xl text-gold sm:text-6xl">2</p>
               <p className="mt-1 text-[11px] leading-tight text-bone/50 sm:mt-2 sm:text-sm">Branches of service</p>
             </div>
             <div className="border-l border-white/10 py-4 pl-3 sm:py-6 sm:pl-4">

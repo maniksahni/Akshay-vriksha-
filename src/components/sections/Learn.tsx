@@ -12,7 +12,7 @@ const LESSONS = [
     tag: 'Basics',
     title: 'SIP or lumpsum?',
     hindi: 'नियमित',
-    teaser: 'Why investing a fixed amount every month usually beats waiting for the “right” moment.',
+    teaser: 'How regular investing differs from investing a larger amount at once.',
     points: [
       'A SIP invests a fixed amount on a fixed date, every month, automatically.',
       'When markets fall, the same amount buys more units; when they rise, fewer. Over time this averages your cost, known as rupee-cost averaging.',
@@ -77,7 +77,7 @@ const LESSONS = [
       '₹10,000 a month for 25 years at an assumed 12% grows to roughly ₹1.9 crore. Start 5 years later and it’s about ₹1 crore.',
       'The money you invest in those first five years is small. Their growth is not.',
       'Increasing your SIP a little every year (a step-up) adds even more.',
-      'Illustrations assume a constant return. Real markets go up and down, but time smooths the ride.',
+      'Illustrations assume a constant return. Actual returns vary and losses are possible, even over longer periods.',
     ],
   },
 ];

@@ -114,6 +114,7 @@ export function Hero({ ready }: { ready: boolean }) {
               Plan my goal
             </button>
           </div>
+          <button onClick={() => scrollToHash('#essentials')} className="self-start text-sm text-gold underline decoration-gold/30 underline-offset-4 hover:decoration-gold">New to investing? Start with the essentials ↗</button>
           <ul className="-mt-2 flex flex-wrap gap-x-5 gap-y-1.5 text-[12px] text-bone/55">
             {['No-obligation consultation', `AMFI Registered Mutual Fund Distributor · ${CONTACT.arn}`, 'NRIs welcome'].map((t) => (
               <li key={t} className="flex items-center gap-1.5">

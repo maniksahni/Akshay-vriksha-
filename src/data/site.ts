@@ -27,6 +27,7 @@ export const NAV = [
   { label: 'Toolkit', href: '#toolkit' },
   { label: 'NRI Desk', href: '#nri' },
   { label: 'Verify us', href: '#trust' },
+  { label: 'Start here', href: '#essentials' },
   { label: 'Learn', href: '#learn' },
   { label: 'Founder', href: '#founder' },
   { label: 'Contact', href: '#contact' },
@@ -123,6 +124,14 @@ export const TESTIMONIAL = {
 };
 
 export const FAQS = [
+  {
+    q: 'Does a SIP guarantee returns?',
+    a: 'No. A SIP is a method of investing regularly. Its value depends on the underlying scheme and market performance. Review the scheme documents and Riskometer before investing; illustrations on this website are assumptions, not promises.',
+  },
+  {
+    q: 'What should I ask about investment costs?',
+    a: 'Ask about the expense ratio, whether the plan is regular or direct, distributor commissions, and any exit load. Check the current scheme documents and discuss how these costs affect your investment.',
+  },
   {
     q: 'Where does my money actually go?',
     a: 'Straight from your bank account to the mutual fund house (AMC) or the insurer. Units and policies are held in your own name. Your money never passes through AkshayVriksha.',
