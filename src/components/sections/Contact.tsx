@@ -111,6 +111,10 @@ export function Footer() {
             <a className="block hover:text-gold" href={CONTACT.facebook} target="_blank" rel="noreferrer">Facebook</a>
             <a className="block hover:text-gold" href={`mailto:${CONTACT.email}`}>Email</a>
             <a className="block hover:text-gold" href={`tel:+${CONTACT.phoneIntl}`}>+91 {CONTACT.phone}</a>
+            <div className="pt-4">
+              <p className="eyebrow mb-2 text-bone/40">Travel socials</p>
+              <a className="block hover:text-gold" href={CONTACT.travelTwitter} target="_blank" rel="noreferrer">GulshanOnWheels · X (Twitter) ↗</a>
+            </div>
           </div>
         </div>
         <div className="relative">

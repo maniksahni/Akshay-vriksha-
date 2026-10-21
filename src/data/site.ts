@@ -11,6 +11,7 @@ export const CONTACT = {
   kotak: 'KLI61205587',
   instagram: 'https://www.instagram.com/akshayavriksha/',
   facebook: 'https://www.facebook.com/gulshankohli13',
+  travelTwitter: 'https://x.com/GulshanOnWheels',
   years: 12,
 };
 
