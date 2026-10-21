@@ -1,4 +1,5 @@
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import { useLayoutEffect, useRef, useState } from 'react';
 import { OFFERINGS, Offering, whatsappLink } from '../../data/site';
 import { FadeUp, MaskLines } from '../ui/motion';
 import { Scramble, Spotlight } from '../ui/effects';
@@ -95,9 +96,9 @@ function Motif({ kind, stroke }: { kind: Offering['motif']; stroke: string }) {
 function Panel({ o, i }: { o: Offering; i: number }) {
   const t = THEMES[i % THEMES.length];
   return (
-    <Spotlight className="w-full rounded-[24px] lg:rounded-[28px]" tilt={3} color={i === 1 ? 'rgba(196,98,45,0.14)' : 'rgba(233,205,143,0.14)'}>
+    <Spotlight className="w-[84vw] max-w-[440px] shrink-0 snap-center rounded-[24px] sm:w-[62vw] lg:w-[78vw] lg:max-w-[1180px] lg:rounded-[28px]" tilt={3} color={i === 1 ? 'rgba(196,98,45,0.14)' : 'rgba(233,205,143,0.14)'}>
     <article
-      className={`relative flex h-full w-full flex-col overflow-hidden rounded-[24px] ${t.bg} ${t.text} p-6 sm:p-8 lg:min-h-[560px] lg:rounded-[28px] lg:p-14`}
+      className={`relative flex h-full w-full flex-col overflow-hidden rounded-[24px] ${t.bg} ${t.text} p-6 sm:p-8 lg:h-[78vh] lg:rounded-[28px] lg:p-14`}
     >
       <div className="pointer-events-none absolute -bottom-6 -right-2 select-none font-deva text-[7rem] leading-none opacity-[0.06] lg:-bottom-[6vw] lg:-right-[2vw] lg:text-[clamp(8rem,22vw,20rem)]">{o.hindi}</div>
       <div className="flex items-start justify-between">
@@ -142,8 +143,76 @@ function Panel({ o, i }: { o: Offering; i: number }) {
 }
 
 export function Offerings() {
-  return <section id="offerings" className="bg-night py-16 lg:py-24"><div className="container-x">
-    <FadeUp><Scramble text="What we offer" className="eyebrow mb-4 text-gold" /><MaskLines lines={['Two branches,', <span className="italic text-gold">one tree.</span>]} className="font-display text-[clamp(2.2rem,5vw,4.6rem)] leading-tight" /></FadeUp>
-    <div className="mt-8 space-y-5 lg:mt-12 lg:space-y-8">{OFFERINGS.map((o,i) => <Panel key={o.no} o={o} i={i} />)}</div>
-  </div></section>;
+  const ref = useRef<HTMLElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
+  const [distance, setDistance] = useState(0);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end end'] });
+  const x = useTransform(scrollYProgress, [0.05, 0.95], [0, -distance]);
+  const progress = useTransform(scrollYProgress, [0.05, 0.95], ['0%', '100%']);
+  const [active, setActive] = useState(0);
+  const pinned = distance > 0;
+
+  // phones/tablets: swipeable cards, track which one is centred for the dots
+  const onSwipe = () => {
+    const el = trackRef.current;
+    if (!el || pinned) return;
+    const card = el.firstElementChild as HTMLElement | null;
+    if (!card) return;
+    setActive(Math.round(el.scrollLeft / (card.offsetWidth + 16)));
+  };
+
+  useLayoutEffect(() => {
+    const measure = () => {
+      const track = trackRef.current;
+      if (!track) return;
+      const wide = window.matchMedia('(min-width: 1024px)').matches;
+      setDistance(wide ? Math.max(0, track.scrollWidth - window.innerWidth) : 0);
+    };
+    measure();
+    window.addEventListener('resize', measure);
+    return () => window.removeEventListener('resize', measure);
+  }, []);
+
+  return (
+    <section id="offerings" ref={ref} className="relative bg-night" style={{ height: pinned ? `calc(100vh + ${distance}px)` : undefined }}>
+      <div className={pinned ? 'sticky top-0 flex h-screen flex-col justify-center overflow-hidden' : 'py-16 sm:py-24'}>
+        <div className="container-x mb-6 flex items-end justify-between gap-6 lg:mb-10">
+          <div>
+            <FadeUp>
+              <Scramble text="What we offer" className="eyebrow mb-4 text-gold" />
+            </FadeUp>
+            <MaskLines lines={['Two branches,', <span className="italic text-gold">one tree.</span>]} className="font-display text-[clamp(2.2rem,5vw,4.6rem)] leading-[0.98] tracking-[-0.02em] text-bone" />
+          </div>
+          {pinned && (
+            <div className="hidden w-56 lg:block">
+              <div className="h-px w-full bg-white/10">
+                <motion.div style={{ width: progress }} className="h-px bg-gold" />
+              </div>
+              <Scramble text="Keep scrolling" className="eyebrow mt-3 text-bone/40" />
+            </div>
+          )}
+        </div>
+        <motion.div
+          ref={trackRef}
+          onScroll={onSwipe}
+          style={{ x: pinned ? x : 0 }}
+          className="flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-1 [scrollbar-width:none] sm:px-8 lg:w-max lg:snap-none lg:gap-8 lg:overflow-visible lg:px-14 [&::-webkit-scrollbar]:hidden"
+        >
+          {OFFERINGS.map((o, i) => (
+            <Panel key={o.no} o={o} i={i} />
+          ))}
+        </motion.div>
+        {!pinned && (
+          <div className="container-x mt-5 flex items-center justify-between lg:hidden">
+            <div className="flex gap-2" aria-hidden>
+              {OFFERINGS.map((o, i) => (
+                <span key={o.no} className={`h-1 rounded-full transition-all duration-500 ${i === active ? 'w-8 bg-gold' : 'w-3 bg-white/20'}`} />
+              ))}
+            </div>
+            <span className="eyebrow text-[10px] text-bone/40">Swipe →</span>
+          </div>
+        )}
+      </div>
+    </section>
+  );
 }

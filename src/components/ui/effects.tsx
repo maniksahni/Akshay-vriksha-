@@ -1,5 +1,5 @@
-import { motion, useMotionValue, useSpring } from 'framer-motion';
-import { CSSProperties, MouseEvent, ReactNode, useRef } from 'react';
+import { motion, useInView, useMotionValue, useSpring } from 'framer-motion';
+import { CSSProperties, MouseEvent, ReactNode, useEffect, useRef, useState } from 'react';
 import { prefersReducedMotion } from '../../lib/smooth';
 
 /**
@@ -65,7 +65,38 @@ export function Spotlight({
   );
 }
 
-/** Stable section labels avoid timer-driven text changes during scrolling. */
+const GLYPHS = 'अकखगघचछजझटठडढतथदधनपफबभमयरलवशसह✦◆●';
+
+/** Text that resolves out of shuffling Devanagari glyphs the first time it enters view. */
 export function Scramble({ text, className = '' }: { text: string; className?: string }) {
-  return <p className={className}>{text}</p>;
+  const ref = useRef<HTMLParagraphElement>(null);
+  const inView = useInView(ref, { once: true, margin: '0px 0px -10% 0px' });
+  const [out, setOut] = useState(text);
+
+  useEffect(() => {
+    if (!inView || prefersReducedMotion()) return;
+    let frame = 0;
+    const total = 22;
+    const id = setInterval(() => {
+      frame++;
+      const reveal = Math.floor((frame / total) * text.length);
+      setOut(
+        text
+          .split('')
+          .map((ch, i) => (ch === ' ' || i < reveal ? ch : GLYPHS[(Math.random() * GLYPHS.length) | 0]))
+          .join(''),
+      );
+      if (frame >= total) {
+        clearInterval(id);
+        setOut(text);
+      }
+    }, 38);
+    return () => clearInterval(id);
+  }, [inView, text]);
+
+  return (
+    <p ref={ref} className={className} aria-label={text}>
+      <span aria-hidden>{out}</span>
+    </p>
+  );
 }

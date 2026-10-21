@@ -2,7 +2,7 @@ import { AnimatePresence, motion, useMotionValueEvent, useScroll, useTransform }
 import { useRef, useState } from 'react';
 import { sipValue } from '../../utils/calculations';
 import { formatINR } from '../../utils/formatters';
-import { TreeIllustration } from '../TreeIllustration';
+import { TreeCanvas } from '../TreeCanvas';
 import { EASE } from '../ui/motion';
 
 const MONTHLY = 10000;
@@ -43,7 +43,7 @@ export function GrowthStory() {
       <div className="growth-stage sticky top-0 h-[100svh] min-h-[720px] overflow-hidden">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_60%_55%_at_70%_80%,rgba(217,174,91,0.12),transparent_70%)]" />
         <div className="absolute inset-0 md:left-[30%]">
-          <motion.div className="h-full origin-bottom" style={{ scale: treeScale, opacity: treeOpacity }}><TreeIllustration className="h-full w-full" /></motion.div>
+          <motion.div className="h-full origin-bottom" style={{ scale: treeScale, opacity: treeOpacity }}><TreeCanvas progress={growth} rootX={0.55} seed={2025} /></motion.div>
         </div>
         <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,rgba(6,17,13,0.95)_0%,rgba(6,17,13,0.6)_35%,transparent_60%)] max-md:bg-[linear-gradient(0deg,rgba(6,17,13,0.95)_10%,transparent_70%)]" />
 

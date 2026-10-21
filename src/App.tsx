@@ -60,30 +60,30 @@ export default function App() {
       </a>
       <main id="main" className="relative z-10 bg-night">
         <Hero ready={ready} />
-        <Curtain><QuickStart /></Curtain>
+        <QuickStart />
         <Manifesto />
         <GrowthStory />
-        <Curtain><Offerings /></Curtain>
+        <Offerings />
         <Process />
         <Curtain>
           <Goals />
         </Curtain>
-        <Curtain><Compounding /></Curtain>
-        <Curtain><Toolkit /></Curtain>
+        <Compounding />
+        <Toolkit />
         <Curtain>
           <NriDesk />
         </Curtain>
         <Marquee />
         <Founder />
-        <Curtain><Trust /></Curtain>
-        <Curtain><InvestorEssentials /></Curtain>
+        <Trust />
+        <InvestorEssentials />
         <Curtain>
           <Learn />
         </Curtain>
         <Curtain>
           <Faq />
         </Curtain>
-        <Curtain><Contact /></Curtain>
+        <Contact />
       </main>
       <Footer />
       <WhatsAppFab show={ready} />
