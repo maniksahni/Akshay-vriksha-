@@ -154,3 +154,16 @@ section[id] { scroll-margin-top: 80px; }
 @media (max-width: 639px) {
   .eyebrow { letter-spacing: 0.14em; }
 }
+
+/* Keep touch scrolling on the browser's fast path. */
+.text-foil { animation: none; }
+@media (max-width: 1023px) {
+  .process-card-surface { transform: none !important; }
+  [class*="backdrop-blur"] { backdrop-filter: none !important; }
+  div[class*="blur-["] { display: none; }
+}
+body:has(#site-menu) .mobile-actions,
+body:has(#site-menu) .floating-contact { display: none; }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}

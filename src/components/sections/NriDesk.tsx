@@ -7,7 +7,7 @@ import { Scramble } from '../ui/effects';
 function useNow() {
   const [now, setNow] = useState(() => new Date());
   useEffect(() => {
-    const id = setInterval(() => setNow(new Date()), 1000);
+    const id = setInterval(() => setNow(new Date()), 60000);
     return () => clearInterval(id);
   }, []);
   return now;
@@ -32,7 +32,7 @@ function Clock({ city, tz, now }: { city: string; tz: string; now: Date }) {
       </div>
       <p className="font-display text-2xl tabular-nums sm:text-3xl">
         {String(h).padStart(2, '0')}
-        <span className="animate-pulse">:</span>
+        <span >:</span>
         {String(m).padStart(2, '0')}
       </p>
     </div>

@@ -1,7 +1,5 @@
 import { motion, useScroll, useSpring } from 'framer-motion';
-import { useEffect, useState } from 'react';
 import { Nav } from './components/Nav';
-import { Preloader } from './components/Preloader';
 import { SectionIndex } from './components/SectionIndex';
 import { Compounding } from './components/sections/Compounding';
 import { Contact, Footer } from './components/sections/Contact';
@@ -22,7 +20,6 @@ import { Learn } from './components/sections/Learn';
 import { MobileCTA } from './components/MobileCTA';
 import { Curtain } from './components/ui/Curtain';
 import { whatsappLink } from './data/site';
-import { startSmoothScroll } from './lib/smooth';
 
 function ScrollProgress() {
   const { scrollYProgress } = useScroll();
@@ -37,7 +34,7 @@ function WhatsAppFab({ show }: { show: boolean }) {
       target="_blank"
       rel="noreferrer"
       aria-label="Chat on WhatsApp"
-      className="fixed bottom-5 right-5 z-50 hidden h-14 w-14 place-items-center lg:grid rounded-full bg-[#25D366] text-white shadow-[0_10px_30px_-5px_rgba(37,211,102,0.5)]"
+      className="floating-contact fixed bottom-5 right-5 z-50 hidden h-14 w-14 place-items-center lg:grid rounded-full bg-[#25D366] text-white shadow-[0_10px_30px_-5px_rgba(37,211,102,0.5)]"
       initial={{ scale: 0 }}
       animate={{ scale: show ? 1 : 0 }}
       whileHover={{ scale: 1.08 }}
@@ -51,12 +48,10 @@ function WhatsAppFab({ show }: { show: boolean }) {
 }
 
 export default function App() {
-  const [ready, setReady] = useState(false);
-  useEffect(() => startSmoothScroll(), []);
+  const ready = true;
 
   return (
     <>
-      <Preloader onDone={() => setReady(true)} />
       <ScrollProgress />
       <Nav ready={ready} />
       <SectionIndex show={ready} />
@@ -93,7 +88,6 @@ export default function App() {
       <Footer />
       <WhatsAppFab show={ready} />
       <MobileCTA ready={ready} />
-      <div className="grain" aria-hidden />
     </>
   );
 }

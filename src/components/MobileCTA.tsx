@@ -28,13 +28,13 @@ export function MobileCTA({ ready }: { ready: boolean }) {
     <AnimatePresence>
       {show && (
         <motion.div
-          className="fixed inset-x-0 bottom-0 z-50 px-3 pb-[max(12px,env(safe-area-inset-bottom))] lg:hidden"
+          className="mobile-actions fixed inset-x-0 bottom-0 z-50 px-3 pb-[max(12px,env(safe-area-inset-bottom))] lg:hidden"
           initial={{ y: 100 }}
           animate={{ y: 0 }}
           exit={{ y: 100 }}
           transition={{ type: 'spring', stiffness: 260, damping: 28 }}
         >
-          <div className="flex items-center gap-2 rounded-full border border-white/10 bg-night/85 p-1.5 shadow-[0_10px_40px_-10px_rgba(0,0,0,0.8)] backdrop-blur-xl">
+          <div className="flex items-center gap-2 rounded-full border border-white/10 bg-night p-1.5 shadow-[0_10px_40px_-10px_rgba(0,0,0,0.8)] backdrop-blur-xl">
             <button
               onClick={() => scrollToHash('#contact')}
               className="flex h-12 flex-1 items-center justify-center gap-2 rounded-full bg-gold text-sm font-semibold text-night active:scale-[0.98]"

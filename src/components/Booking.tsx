@@ -190,7 +190,7 @@ export function Booking() {
                   </button>
                 ))}
               </div>
-              <div className="mt-6 flex items-center gap-3">
+              <div className="mt-6 flex flex-wrap items-center gap-3">
                 <button type="button" onClick={() => setStep(0)} className="h-12 rounded-full border border-white/15 px-5 text-sm text-bone/70 hover:border-gold/60">
                   Back
                 </button>
@@ -230,11 +230,11 @@ export function Booking() {
                 <span className="sr-only">Your goal</span>
                 <input className={input} placeholder="Your goal: a house, retirement, a child’s education…" value={note} onChange={(e) => setNote(e.target.value)} />
               </label>
-              <div className="mt-6 flex items-center gap-3">
+              <div className="mt-6 flex flex-wrap items-center gap-3">
                 <button type="button" onClick={() => setStep(1)} className="h-12 rounded-full border border-white/15 px-5 text-sm text-bone/70 hover:border-gold/60">
                   Back
                 </button>
-                <button type="submit" className="inline-flex h-12 items-center gap-3 rounded-full bg-[#25D366] pl-6 pr-2 text-sm font-semibold text-night transition-colors hover:bg-[#3be07a]">
+                <button type="submit" className="inline-flex h-12 shrink-0 items-center gap-3 rounded-full bg-[#25D366] pl-6 pr-2 text-sm font-semibold text-night transition-colors hover:bg-[#3be07a]">
                   Confirm on WhatsApp <span className="grid h-8 w-8 place-items-center rounded-full bg-night text-[#25D366]">→</span>
                 </button>
               </div>
