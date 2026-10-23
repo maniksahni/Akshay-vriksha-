@@ -5,16 +5,16 @@ import { Coin } from './Coin';
 import { EASE, Magnetic, Marquee } from './ui';
 
 const STICKERS = [
-  { text: '₹500 se start', cls: 'bg-lime text-void', pos: 'left-[2%] top-[14%]', rot: -10 },
+  { text: 'Start at ₹500', cls: 'bg-lime text-void', pos: 'left-[2%] top-[14%]', rot: -10 },
   { text: 'NRI? sorted ✈', cls: 'bg-volt text-chalk', pos: 'right-[0%] top-[6%]', rot: 8 },
   { text: 'no jargon fr', cls: 'bg-chalk text-void', pos: 'left-[0%] bottom-[16%]', rot: 6 },
   { text: 'AMFI ✓ ARN-105840', cls: 'bg-coral text-void', pos: 'right-[2%] bottom-[8%]', rot: -7 },
 ];
 
 const LINES = [
-  { t: 'Tu chill kar.', c: 'text-chalk' },
-  { t: 'Paisa', c: 'text-chalk' },
-  { t: 'grind karega.', c: 'text-lime' },
+  { t: 'You chill.', c: 'text-chalk' },
+  { t: 'Your money', c: 'text-chalk' },
+  { t: 'does the grind.', c: 'text-lime' },
 ];
 
 export function Hero() {
@@ -35,7 +35,7 @@ export function Hero() {
       <div className="pointer-events-none absolute -left-40 top-10 h-[480px] w-[480px] rounded-full bg-volt/25 blur-[120px]" />
       <div className="pointer-events-none absolute -right-20 bottom-0 h-[420px] w-[420px] rounded-full bg-lime/15 blur-[120px]" />
 
-      <div className="wrap relative grid items-center gap-2 pb-8 pt-2 lg:grid-cols-[1.15fr_0.85fr] lg:gap-10 lg:pb-16 lg:pt-14">
+      <div className="wrap relative grid items-center gap-2 pb-8 pt-2 lg:grid-cols-[1.3fr_0.7fr] lg:gap-10 lg:pb-16 lg:pt-14">
         <div className="relative z-10 order-2 lg:order-none">
           <motion.p
             className="kicker text-lime"
@@ -46,7 +46,7 @@ export function Hero() {
             <span className="h-2 w-2 animate-pulse rounded-full bg-lime" /> SIPs · insurance · NRI investing
           </motion.p>
 
-          <h1 className="h-display mt-4 text-[clamp(2.35rem,5.3vw,5.1rem)]">
+          <h1 className="h-display mt-4 text-[clamp(2.05rem,4.7vw,4.6rem)]">
             {LINES.map((l, i) => (
               <span key={l.t} className="block overflow-hidden pb-[0.06em]">
                 <motion.span
@@ -55,8 +55,18 @@ export function Hero() {
                   animate={{ y: 0, rotate: 0 }}
                   transition={{ duration: 1, ease: EASE, delay: 0.1 + i * 0.1 }}
                 >
-                  {l.t}
-                  {i === 2 && <span className="ml-2 inline-block animate-floaty align-middle text-[0.55em]">💸</span>}
+                  {i === 2 ? (
+                    <>
+                      {l.t.split(' ').slice(0, -1).join(' ')}{' '}
+                      {/* keep the emoji glued to the last word so it never wraps alone */}
+                      <span className="whitespace-nowrap">
+                        {l.t.split(' ').slice(-1)[0]}
+                        <span className="ml-2 inline-block animate-floaty align-middle text-[0.5em]">💸</span>
+                      </span>
+                    </>
+                  ) : (
+                    l.t
+                  )}
                 </motion.span>
               </span>
             ))}
