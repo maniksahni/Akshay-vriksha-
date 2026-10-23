@@ -50,17 +50,6 @@ function updatePlanner() {
   $('#growth-chart').setAttribute('aria-label', 'Illustration of contributions growing towards ' + money(future) + ' over ' + years + ' years, assuming ' + rate + '% annual return.');
   updateRange($('#target')); updateRange($('#years'));
 }
-function previewGoal(key) {
-  const goal = goals[key];
-  $('#preview-title').textContent = goal.title;
-  $('#preview-ring').setAttribute('stroke-dasharray', (goal.progress / 100 * 591).toFixed(1) + ' 591');
-  $('#preview-percent').firstChild.textContent = goal.progress;
-  $('.goal-ring').setAttribute('aria-label','Illustrative goal progress: ' + goal.progress + ' percent');
-  $('#preview-amount').textContent = money(goal.amount);
-  $('#preview-years').textContent = goal.years + ' years';
-  document.querySelectorAll('[data-preview]').forEach(button => {const active=button.dataset.preview===key;button.classList.toggle('active',active);button.setAttribute('aria-pressed',String(active));});
-}
-document.querySelectorAll('[data-preview]').forEach(button => button.addEventListener('click', () => previewGoal(button.dataset.preview)));
 document.querySelectorAll('[data-goal]').forEach(button => button.addEventListener('click', () => {
   selectedGoal = button.dataset.goal;
   const goal = goals[selectedGoal];
