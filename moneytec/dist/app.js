@@ -98,7 +98,7 @@ document.querySelectorAll('[data-open]').forEach(button=>button.addEventListener
   } else if(type==='checklist'){
     openDialog(checklistContent());dialog.querySelectorAll('[data-check]').forEach(input=>input.addEventListener('change',()=>{const i=Number(input.dataset.check);input.checked?checklist.add(i):checklist.delete(i);$('#check-progress').textContent=checklist.size+' of 5 reviewed.';}));
   } else if(type==='privacy'){
-    openDialog('<div class="eyebrow">PRIVACY, SIMPLY</div><h2 id="dialog-title">Your numbers stay yours.</h2><p>The planner, snapshot and checklist run in your browser. This concept does not send your entries to a server or store them in an account.</p><p>Downloading a plan creates a file on your device. Your planner entries reset when the page reloads. The website host may process standard technical request information; Google Fonts receives requests when fonts load.</p><p>There are no account creation, investment transaction or newsletter submission flows on this concept website.</p>');
+    openDialog('<div class="eyebrow">PRIVACY, SIMPLY</div><h2 id="dialog-title">Your numbers stay yours.</h2><p>The planner, snapshot and checklist run in your browser. The tools do not send your entries to a server or store them in an account.</p><p>Downloading a plan creates a file on your device. Your planner entries reset when the page reloads. The website host may process standard technical request information; Google Fonts receives requests when fonts load.</p><p>The consultation form prepares a WhatsApp message only when you choose to continue. Its entries are not submitted to this website. Opening WhatsApp shares the prepared message with WhatsApp; sending it is your choice. Phone, email and social links open their respective services. This website does not execute investments or take payments.</p>');
   }
 }));
 const menuToggle=$('#menu-toggle');const mobileMenu=$('#mobile-menu');
@@ -106,7 +106,7 @@ function closeMenu(){mobileMenu.hidden=true;menuToggle.setAttribute('aria-expand
 menuToggle.addEventListener('click',()=>{const opening=mobileMenu.hidden;mobileMenu.hidden=!opening;menuToggle.setAttribute('aria-expanded',String(opening));menuToggle.setAttribute('aria-label',opening?'Close navigation':'Open navigation');});
 mobileMenu.querySelectorAll('a').forEach(link=>link.addEventListener('click',closeMenu));
 document.addEventListener('keydown',event=>{if(event.key==='Escape'&&!mobileMenu.hidden){closeMenu();menuToggle.focus();}});
-window.matchMedia('(min-width: 651px)').addEventListener('change',event=>{if(event.matches)closeMenu();});
+window.matchMedia('(min-width: 901px)').addEventListener('change',event=>{if(event.matches)closeMenu();});
 $('#year').textContent = new Date().getFullYear();
 updatePlanner();
 
