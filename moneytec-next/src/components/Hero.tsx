@@ -7,7 +7,7 @@ import { EASE, Magnetic, Marquee } from './ui';
 const STICKERS = [
   { text: 'Start at ₹500', cls: 'bg-lime text-void', pos: 'left-[2%] top-[14%]', rot: -10 },
   { text: 'NRI? sorted ✈', cls: 'bg-volt text-chalk', pos: 'right-[0%] top-[6%]', rot: 8 },
-  { text: 'no jargon fr', cls: 'bg-chalk text-void', pos: 'left-[0%] bottom-[16%]', rot: 6 },
+  { text: 'Talk to a real human 👋', cls: 'bg-chalk text-void', pos: 'left-[0%] bottom-[0%] sm:bottom-[16%]', rot: 5 },
   { text: 'AMFI ✓ ARN-105840', cls: 'bg-coral text-void', pos: 'right-[2%] bottom-[8%]', rot: -7 },
 ];
 
