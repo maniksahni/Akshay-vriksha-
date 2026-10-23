@@ -117,9 +117,9 @@ if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-mot
   document.documentElement.classList.add('reveal-ready');
   const observer = new IntersectionObserver(entries => entries.forEach(entry => {if(entry.isIntersecting){entry.target.classList.add('is-visible');observer.unobserve(entry.target);}}), {threshold:0.05});
   targets.forEach(element => observer.observe(element));
-  if (window.matchMedia('(hover:hover) and (pointer:fine)').matches) {
-    const visual = $('.hero-visual');
-    visual.addEventListener('pointermove', event => {const rect=visual.getBoundingClientRect();$('.dashboard').style.setProperty('--tilt-x', ((.5-(event.clientY-rect.top)/rect.height)*3).toFixed(2)+'deg');$('.dashboard').style.setProperty('--tilt-y', (((event.clientX-rect.left)/rect.width-.5)*3).toFixed(2)+'deg');});
-    visual.addEventListener('pointerleave',()=>{$('.dashboard').style.setProperty('--tilt-x','0deg');$('.dashboard').style.setProperty('--tilt-y','0deg');});
-  }
+  const sculpture = document.querySelector('.sculpture');
+  const motionObserver = new IntersectionObserver(entries => {
+    sculpture.style.animationPlayState = entries[0].isIntersecting ? 'running' : 'paused';
+  });
+  motionObserver.observe(sculpture);
 }
