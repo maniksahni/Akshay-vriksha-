@@ -3,121 +3,351 @@
 @tailwind utilities;
 
 @layer base {
-  :root {
-    --pine-deep: #0B2B26;
-    --pine-secondary: #163832;
-    --ivory-sand: #FBF9F5;
-    --ivory-warm: #F4F0EA;
-    --gold-dull: #C5A880;
-    --gold-radiant: #D4AF37;
-    --charcoal-slate: #1A201E;
-    --border-hairline: #E7E2DA;
+  html {
+    background: #06110d;
+    -webkit-text-size-adjust: 100%;
   }
-
+  html.lenis,
+  html.lenis body {
+    height: auto;
+  }
+  .lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+  .lenis.lenis-stopped {
+    overflow: hidden;
+  }
   body {
-    background-color: #FBF9F5;
-    color: #1A201E;
-    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+    @apply bg-night text-bone font-sans antialiased;
+    overflow-x: hidden;
   }
-
-  /* Custom subtle scrollbar */
-  ::-webkit-scrollbar {
-    width: 6px;
+  :focus-visible {
+    outline: 2px solid #d9ae5b;
+    outline-offset: 3px;
   }
-  ::-webkit-scrollbar-track {
-    background: #F4F0EA;
-  }
-  ::-webkit-scrollbar-thumb {
-    background: #C5A880;
-    border-radius: 3px;
-  }
-  ::-webkit-scrollbar-thumb:hover {
-    background: #0B2B26;
+  ::selection {
+    background: #d9ae5b;
+    color: #06110d;
   }
 }
 
-/* Custom Range Slider for SIP Calculator */
-input[type="range"] {
+@layer components {
+  .eyebrow {
+    @apply font-sans text-[11px] uppercase tracking-eyebrow font-semibold;
+  }
+  .container-x {
+    @apply mx-auto w-full max-w-[1440px] px-5 sm:px-8 lg:px-14;
+  }
+  .hairline {
+    @apply border-white/10;
+  }
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+/* Gold-foil text: a slow light sweep across a metallic gradient */
+.text-foil {
+  background: linear-gradient(100deg, #a9802f 0%, #e9cd8f 22%, #fff3d1 30%, #d9ae5b 40%, #a9802f 60%, #e9cd8f 80%, #a9802f 100%);
+  background-size: 250% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: foil 7s ease-in-out infinite;
+}
+@keyframes foil {
+  0%, 100% { background-position: 100% 0; }
+  50% { background-position: 0% 0; }
+}
+
+/* Film grain over everything for a tactile, printed feel */
+.grain {
+  pointer-events: none;
+  position: fixed;
+  inset: -50%;
+  z-index: 60;
+  opacity: 0.06;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation: grain 8s steps(10) infinite;
+}
+@keyframes grain {
+  0%, 100% { transform: translate(0, 0); }
+  10% { transform: translate(-5%, -10%); }
+  30% { transform: translate(3%, -15%); }
+  50% { transform: translate(12%, 9%); }
+  70% { transform: translate(9%, 4%); }
+  90% { transform: translate(-1%, 7%); }
+}
+
+input[type='range'].range {
   -webkit-appearance: none;
   appearance: none;
-  background: #E7E2DA;
-  height: 6px;
-  border-radius: 3px;
-  outline: none;
-  transition: all 0.2s ease;
+  width: 100%;
+  height: 28px;
+  background: transparent;
 }
-
-input[type="range"]::-webkit-slider-thumb {
+input[type='range'].range::-webkit-slider-runnable-track {
+  height: 2px;
+  background: linear-gradient(to right, #d9ae5b var(--fill, 50%), rgba(243, 238, 229, 0.15) var(--fill, 50%));
+}
+input[type='range'].range::-moz-range-track {
+  height: 2px;
+  background: rgba(243, 238, 229, 0.15);
+}
+input[type='range'].range::-moz-range-progress {
+  height: 2px;
+  background: #d9ae5b;
+}
+input[type='range'].range::-webkit-slider-thumb {
   -webkit-appearance: none;
-  appearance: none;
   width: 22px;
   height: 22px;
-  border-radius: 50%;
-  background: #0B2B26;
-  border: 2px solid #C5A880;
-  cursor: pointer;
-  box-shadow: 0 2px 8px rgba(11, 43, 38, 0.25);
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  margin-top: -10px;
+  border-radius: 999px;
+  background: #06110d;
+  border: 2px solid #d9ae5b;
+  box-shadow: 0 0 0 6px rgba(217, 174, 91, 0.12);
+  transition: transform 0.2s;
+}
+input[type='range'].range::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 999px;
+  background: #06110d;
+  border: 2px solid #d9ae5b;
+}
+input[type='range'].range-ink::-webkit-slider-runnable-track {
+  background: linear-gradient(to right, #c4622d var(--fill, 50%), rgba(19, 32, 27, 0.15) var(--fill, 50%));
+}
+input[type='range'].range-ink::-webkit-slider-thumb {
+  background: #f3eee5;
+  border-color: #c4622d;
+  box-shadow: 0 0 0 6px rgba(196, 98, 45, 0.15);
+}
+input[type='range'].range-ink::-moz-range-progress {
+  background: #c4622d;
+}
+input[type='range'].range:active::-webkit-slider-thumb {
+  transform: scale(1.2);
+}
+input[type='range'].range:focus-visible {
+  outline: 2px solid #d9ae5b;
+  outline-offset: 4px;
 }
 
-input[type="range"]::-webkit-slider-thumb:hover {
-  transform: scale(1.18);
-  background: #D4AF37;
-  border-color: #0B2B26;
-  box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+@media (prefers-reduced-motion: reduce) {
+  .grain,
+  .text-foil,
+  .animate-marquee {
+    animation: none !important;
+  }
 }
 
-input[type="range"]::-moz-range-thumb {
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
-  background: #0B2B26;
-  border: 2px solid #C5A880;
-  cursor: pointer;
-  box-shadow: 0 2px 8px rgba(11, 43, 38, 0.25);
+/* Clear keyboard navigation across links, forms and interactive tools. */
+:where(a, button, input, select, textarea):focus-visible {
+  outline: 2px solid #d9ae5b;
+  outline-offset: 4px;
 }
 
-/* Luxury Editorial Accents */
-.editorial-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.35rem 0.85rem;
-  border-radius: 9999px;
-  font-size: 0.75rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  border: 1px solid rgba(197, 168, 128, 0.35);
-  background: rgba(197, 168, 128, 0.08);
-  color: #C5A880;
+/* Leave room for the header when following section links. */
+section[id] { scroll-margin-top: 80px; }
+@media (max-width: 639px) {
+  .eyebrow { letter-spacing: 0.14em; }
 }
 
-.editorial-badge-dark {
-  border-color: rgba(212, 175, 55, 0.4);
-  background: rgba(212, 175, 55, 0.12);
-  color: #D4AF37;
+/* Keep touch scrolling on the browser's fast path. */
+.text-foil { animation: none; }
+@media (max-width: 1023px) {
+  [class*="backdrop-blur"] { backdrop-filter: none !important; }
+  div[class*="blur-["] { display: none; }
+}
+body:has(#site-menu) .mobile-actions,
+body:has(#site-menu) .floating-contact { display: none; }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
 }
 
-/* Glassmorphism helpers */
-.glass-header {
-  background: rgba(251, 249, 245, 0.92);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+@media (max-height: 719px), (prefers-reduced-motion: reduce) {
+  .growth-story { height: auto; }
+  .growth-stage { position: relative; height: auto; min-height: 720px; }
 }
 
-.glass-card-dark {
-  background: rgba(22, 56, 50, 0.7);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(231, 226, 218, 0.12);
+/* Compact desktop composition; touch layouts and tree animation stay unchanged. */
+@media (min-width: 1024px) {
+  .container-x { max-width: 1280px; padding-inline: 2.5rem; }
+  main section[class*="py-"] { padding-block: 4rem; }
+  main h2[class] { font-size: clamp(2rem, 3.4vw, 3.4rem); line-height: 1.06; }
+  #top h1 { font-size: clamp(3.5rem, 5.8vw, 5.4rem); }
+  .hero-copy { padding-top: 6.5rem; padding-bottom: 6rem; }
+  .hero-copy > div { margin-top: 1.5rem; gap: 1.1rem; }
+  .hero-copy p { font-size: 0.95rem; }
+  #philosophy p.font-display { font-size: clamp(2rem, 3.6vw, 3.5rem); max-width: 28ch; }
+  #philosophy .mb-10 { margin-bottom: 1.5rem; }
+  #philosophy .mt-10 { margin-top: 1.5rem; }
+  #growth .container-x { padding-top: 6.5rem; padding-bottom: 2rem; }
+  #growth .text-foil { font-size: clamp(5rem, 9vw, 8rem); }
+  #growth h2 { font-size: 3rem; }
+  #growth p { font-size: 0.9rem; }
+  #growth p.text-\[10px\] { font-size: 0.7rem; }
+  .offering-stage { top: 72px; height: calc(100svh - 72px); }
+  .offering-stage > .container-x { margin-bottom: 1.25rem; }
+  .offering-panel { height: auto; min-height: 500px; padding: 1.75rem; }
+  .offering-panel > div:first-of-type + div span.font-display { font-size: 3.5rem; }
+  .offering-panel h3 { font-size: clamp(2.5rem, 3.8vw, 3.8rem); }
+  .offering-panel p.font-display { font-size: 1.5rem; }
+  .offering-panel p { margin-top: 0.75rem; font-size: 0.875rem; }
+  .offering-panel ul { margin-top: 1rem; }
+  .offering-panel a { margin-top: 1.25rem; }
+  .offering-panel .mt-auto { margin-top: 1.25rem; }
+  .process-panel { padding: 2rem; }
+  .process-panel h3 { margin-top: 1rem; font-size: clamp(2.2rem, 3.5vw, 3.4rem); }
+  .process-panel p { margin-top: 1rem; font-size: 1rem; }
+  .process-panel ul { margin-top: 1.25rem; }
+  #goals .text-foil { font-size: 4.5rem; }
+  #compounding p.text-gold.font-display { font-size: 4rem; }
+  #contact .font-display.text-3xl { font-size: 1.5rem; }
 }
 
-.glass-card-light {
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(231, 226, 218, 0.8);
+/* Laptop screens (wide but short, e.g. 1280×720, 1366×768, 1440×900): keep each scene within one screen.
+   Big monitors are untouched; phones never match (min-width). */
+@media (min-width: 1024px) and (max-height: 940px) {
+  main section[class*="py-"] { padding-block: 3.25rem; }
+  main h2[class] { font-size: clamp(1.9rem, 3vw, 3rem); }
+
+  /* hero */
+  #top h1 { font-size: clamp(3rem, 5.2vw, 4.6rem); }
+  .hero-copy { padding-top: 5.25rem; padding-bottom: 4.75rem; }
+  .hero-copy > div { margin-top: 1.1rem; }
+
+  /* offerings: shorter heading and panels so the pinned stage never clips */
+  .offering-stage > .container-x { margin-bottom: 0.6rem; }
+  .offering-stage h2[class] { font-size: clamp(1.8rem, 2.6vw, 2.5rem); }
+  #offerings .offering-panel { height: auto; }
+  .offering-panel { min-height: 0; padding: 1.5rem 1.75rem; }
+  .offering-panel h3 { font-size: clamp(2.2rem, 3.2vw, 3.2rem); }
+  .offering-panel p.font-display { font-size: 1.25rem; }
+  .offering-panel .aspect-square { max-width: 220px; }
+
+  .process-panel { padding: 1.6rem 2rem; }
+  .process-panel h3 { font-size: clamp(1.9rem, 2.9vw, 2.7rem); }
+  .process-panel p { font-size: 0.95rem; }
+  .process-panel .h-56 { height: 8.5rem; width: 8.5rem; }
+  .process-panel .lg\:text-8xl { font-size: 4rem; }
+
+  /* NRI desk: clocks in two columns so the pinned column fits */
+  #nri .lg\:sticky { top: 5.5rem; }
+  #nri .lg\:sticky .grid.max-w-md { display: grid; grid-template-columns: 1fr 1fr; column-gap: 1.5rem; margin-top: 1.25rem; }
+  #nri .lg\:sticky .grid.max-w-md svg { display: none; }
+  #nri .lg\:sticky .grid.max-w-md > div { padding-block: 0.55rem; }
+  #nri ol li { padding-bottom: 2.25rem; }
+  #nri ol h3 { font-size: 2.1rem; }
+
+  /* founder */
+  #founder .max-w-\[440px\] { max-width: 320px; }
+  #founder .lg\:text-6xl { font-size: 2.75rem; }
+  #founder > .container-x + .container-x { margin-top: 3rem; }
+  #founder blockquote { font-size: clamp(1.5rem, 2.4vw, 2.2rem); }
+
+  /* investor essentials */
+  #essentials label { padding-block: 0.7rem; }
+  #essentials .mt-10 { margin-top: 1.5rem; }
+  #essentials article { padding: 1.25rem 1.5rem; }
+  #essentials .text-4xl { font-size: 2rem; }
+
+  /* trust */
+  #trust .lg\:text-5xl { font-size: 2.4rem; }
+  #trust .lg\:p-8 { padding: 1.4rem 1.6rem; }
+  #trust .lg\:p-10 { padding: 1.5rem 2rem; }
+  #trust .lg\:mt-14 { margin-top: 2rem; }
+
+  /* toolkit + learn */
+  #toolkit .lg\:mt-12, #learn .lg\:mt-14 { margin-top: 1.75rem; }
+  #toolkit .lg\:p-10 { padding: 1.75rem 2rem; }
+  #toolkit .lg\:min-h-\[380px\] { min-height: 320px; }
+  #toolkit .lg\:text-4xl { font-size: 1.9rem; }
+  #learn .lg\:min-h-\[260px\] { min-height: 210px; }
+
+  /* faq */
+  #faq button[aria-expanded] { padding-block: 1rem; }
+  #faq button[aria-expanded] .font-display { font-size: 1.45rem; }
+  #faq [role="region"] p { padding-bottom: 1.1rem; }
+
+  /* compounding + contact */
+  #compounding .lg\:mt-14 { margin-top: 1.75rem; }
+  #compounding .lg\:p-9 { padding: 1.5rem 1.75rem; }
+  #compounding .lg\:space-y-7 > * + * { margin-top: 1.1rem; }
+  #contact ol.lg\:block { margin-top: 1.25rem; }
+  #contact ol li .text-2xl { font-size: 1.25rem; }
+}
+
+/* Premium details --------------------------------------------------------- */
+
+/* A soft sheen sweeps across gold buttons on hover. */
+a.bg-gold,
+button.bg-gold {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+a.bg-gold::after,
+button.bg-gold::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(105deg, transparent 30%, rgba(255, 246, 220, 0.75) 50%, transparent 70%);
+  transform: translateX(-120%);
+  transition: transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+}
+a.bg-gold:hover::after,
+button.bg-gold:hover::after {
+  transform: translateX(120%);
+}
+
+/* A slow ray of gold travelling around a card's edge. */
+@property --edge-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+.glow-edge {
+  position: relative;
+}
+.glow-edge::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  padding: 2px;
+  border-radius: inherit;
+  background: conic-gradient(from var(--edge-angle), rgba(217, 174, 91, 0.12) 0deg 150deg, rgba(217, 174, 91, 0.6) 230deg, #fff0c8 290deg, rgba(217, 174, 91, 0.6) 320deg, rgba(217, 174, 91, 0.12) 350deg);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  z-index: 2;
+  animation: edge-spin 7s linear infinite;
+}
+@keyframes edge-spin {
+  to { --edge-angle: 360deg; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .glow-edge::before { animation: none; }
+  a.bg-gold::after, button.bg-gold::after { display: none; }
+}
+
+/* Phones and tablets: no dead space, nothing hidden behind the bottom bar. */
+@media (max-width: 1023px) {
+  main section[class*="py-"] { padding-block: 3rem; }
+
+
+  /* essentials only: titles carry the NRI steps, values and FAQ filters are desktop extras */
+  #nri ol li p.leading-relaxed { display: none; }
+  #nri ol li { padding-bottom: 1.5rem; }
+  #nri ol h3 { margin-top: 0.25rem; font-size: 1.6rem; }
+  .founder-values { display: none; }
+  #faq [aria-label="Question topics"] { display: none; }
+
+  /* the fixed booking bar is ~76px tall: keep the footer's last lines clear of it */
+  footer.fixed { padding-bottom: 5.5rem; }
 }

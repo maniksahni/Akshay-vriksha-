@@ -1,123 +1,18 @@
-import { CalculationResult } from '../types';
-
 /**
- * Pure Mathematical SIP Compounding Formula:
- * M = P * [ ((1 + i)^n - 1) / i ] * (1 + i)
- * 
- * Where:
- * P = Monthly Investment Amount
- * i = Monthly interest rate (Annual rate r / 12 / 100)
- * n = Total compounding months (Years * 12)
- * M = Projected Total Maturity Value
+ * SIP future value, paid at the start of each month:
+ * FV = P × [((1 + i)^n − 1) / i] × (1 + i), with i = annual rate / 12, n = months.
  */
-export function calculateSip(
-  monthlyAmount: number,
-  annualReturnRate: number,
-  years: number
-): CalculationResult {
-  const i = annualReturnRate / 12 / 100;
-  const n = years * 12;
-  
-  if (i === 0) {
-    const totalInvested = monthlyAmount * n;
-    return {
-      totalInvested,
-      estimatedReturns: 0,
-      totalMaturityValue: totalInvested,
-      yearlyBreakdown: Array.from({ length: years }, (_, idx) => ({
-        year: idx + 1,
-        invested: monthlyAmount * (idx + 1) * 12,
-        value: monthlyAmount * (idx + 1) * 12,
-      })),
-    };
-  }
-
-  // Pure SIP maturity calculation
-  const totalMaturityValue = monthlyAmount * ((Math.pow(1 + i, n) - 1) / i) * (1 + i);
-  const totalInvested = monthlyAmount * n;
-  const estimatedReturns = Math.max(0, totalMaturityValue - totalInvested);
-
-  // Yearly progression breakdown for visualization
-  const yearlyBreakdown = Array.from({ length: years }, (_, idx) => {
-    const currentYear = idx + 1;
-    const currentMonths = currentYear * 12;
-    const yearInvested = monthlyAmount * currentMonths;
-    const yearMaturity = monthlyAmount * ((Math.pow(1 + i, currentMonths) - 1) / i) * (1 + i);
-    return {
-      year: currentYear,
-      invested: Math.round(yearInvested),
-      value: Math.round(yearMaturity),
-    };
-  });
-
-  return {
-    totalInvested: Math.round(totalInvested),
-    estimatedReturns: Math.round(estimatedReturns),
-    totalMaturityValue: Math.round(totalMaturityValue),
-    yearlyBreakdown,
-  };
+export function sipValue(monthly: number, annualRatePct: number, months: number): number {
+  if (months <= 0) return 0;
+  const i = annualRatePct / 12 / 100;
+  if (i === 0) return monthly * months;
+  return monthly * ((Math.pow(1 + i, months) - 1) / i) * (1 + i);
 }
 
-/**
- * Lumpsum Compound Growth Formula:
- * A = P * (1 + r/100)^t
- */
-export function calculateLumpsum(
-  principal: number,
-  annualReturnRate: number,
-  years: number
-): CalculationResult {
-  const r = annualReturnRate / 100;
-  const totalMaturityValue = principal * Math.pow(1 + r, years);
-  const estimatedReturns = Math.max(0, totalMaturityValue - principal);
-
-  const yearlyBreakdown = Array.from({ length: years }, (_, idx) => {
-    const currentYear = idx + 1;
-    const yearMaturity = principal * Math.pow(1 + r, currentYear);
-    return {
-      year: currentYear,
-      invested: Math.round(principal),
-      value: Math.round(yearMaturity),
-    };
+/** Year-by-year values for an SIP that starts after `delayYears` and runs to `years`. */
+export function sipSeries(monthly: number, annualRatePct: number, years: number, delayYears = 0) {
+  return Array.from({ length: years + 1 }, (_, y) => {
+    const months = Math.max(0, y - delayYears) * 12;
+    return { year: y, invested: monthly * months, value: sipValue(monthly, annualRatePct, months) };
   });
-
-  return {
-    totalInvested: Math.round(principal),
-    estimatedReturns: Math.round(estimatedReturns),
-    totalMaturityValue: Math.round(totalMaturityValue),
-    yearlyBreakdown,
-  };
-}
-
-/**
- * Goal Required Monthly SIP Calculation:
- * P = Target / [ ((1 + i)^n - 1) / i * (1 + i) ]
- */
-export function calculateRequiredSipForGoal(
-  targetCorpus: number,
-  annualReturnRate: number,
-  years: number
-): { requiredMonthlySip: number; totalInvested: number; estimatedReturns: number } {
-  const i = annualReturnRate / 12 / 100;
-  const n = years * 12;
-
-  if (i === 0) {
-    const required = targetCorpus / n;
-    return {
-      requiredMonthlySip: Math.round(required),
-      totalInvested: Math.round(targetCorpus),
-      estimatedReturns: 0,
-    };
-  }
-
-  const factor = ((Math.pow(1 + i, n) - 1) / i) * (1 + i);
-  const requiredMonthlySip = targetCorpus / factor;
-  const totalInvested = requiredMonthlySip * n;
-  const estimatedReturns = Math.max(0, targetCorpus - totalInvested);
-
-  return {
-    requiredMonthlySip: Math.round(requiredMonthlySip),
-    totalInvested: Math.round(totalInvested),
-    estimatedReturns: Math.round(estimatedReturns),
-  };
 }
