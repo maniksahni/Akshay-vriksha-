@@ -1,33 +1,31 @@
-import { AdmitOne, BackPage, Column, MobileBar, Tickets } from './components/Back';
-import { Clippings } from './components/Clippings';
-import { FrontPage, Masthead } from './components/Front';
-import { MenuBoard } from './components/MenuBoard';
-import { PressPass } from './components/PressPass';
-import { Quiz } from './components/Quiz';
-import { ReceiptCalc } from './components/Receipt';
+import { Faq, Finale, Footer, Gulshan, Safety } from './components/Closing';
+import { Configure } from './components/Configure';
+import { Grow } from './components/Grow';
+import { Hero } from './components/Hero';
+import { Highlights } from './components/Highlights';
+import { Nav } from './components/Nav';
+import { Plans } from './components/Plans';
 
-/** "The Moneytec Times": a riso-printed zine about your money, one section per page. */
+/** moneytec, told like a product launch: one idea per scene, lots of air, motion only where it means something. */
 export default function App() {
   return (
     <>
-      <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:bg-sun focus:px-5 focus:py-3 focus:font-bold">
+      <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-link focus:px-5 focus:py-3 focus:text-white">
         Skip to content
       </a>
-      <Masthead />
+      <Nav />
       <main id="main">
-        <FrontPage />
-        <ReceiptCalc />
-        <MenuBoard />
-        <Quiz />
-        <Clippings />
-        <PressPass />
-        <Tickets />
-        <Column />
-        <AdmitOne />
+        <Hero />
+        <Grow />
+        <Highlights />
+        <Configure />
+        <Plans />
+        <Safety />
+        <Gulshan />
+        <Faq />
+        <Finale />
       </main>
-      <BackPage />
-      <MobileBar />
-      <div className="paper-grain" aria-hidden />
+      <Footer />
     </>
   );
 }

@@ -1,30 +1,26 @@
-/** "The Moneytec Times": newsprint + three riso inks + black. */
+/** Apple-style tokens: paper white, near-black, quiet greys, one signature gradient. */
 module.exports = {
   content: [__dirname + '/index.html', __dirname + '/src/**/*.{ts,tsx}'],
   theme: {
     extend: {
       colors: {
-        paper: '#F1ECE1',
-        newsprint: '#E7E0D1',
-        ink: '#141413',
-        pink: '#FF3EA5',
-        blue: '#2B50FF',
-        sun: '#FFD83D',
-        mint: '#16B57F',
+        snow: '#FBFBFD',
+        cloud: '#F5F5F7',
+        mist: '#E8E8ED',
+        graphite: '#86868B',
+        slate: '#6E6E73',
+        coal: '#1D1D1F',
+        night: '#000000',
+        link: '#0071E3',
+        linkdark: '#2997FF',
+        mint: '#30D158',
       },
       fontFamily: {
-        display: ['"Bricolage Grotesque"', 'system-ui', 'sans-serif'],
-        mono: ['"JetBrains Mono"', 'ui-monospace', 'monospace'],
-        hand: ['Caveat', 'cursive'],
-        serif: ['"Instrument Serif"', 'Georgia', 'serif'],
+        sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
       },
-      keyframes: {
-        marquee: { to: { transform: 'translateX(-50%)' } },
-        wiggle: { '0%,100%': { transform: 'rotate(-2deg)' }, '50%': { transform: 'rotate(2deg)' } },
-      },
-      animation: {
-        marquee: 'marquee 32s linear infinite',
-        wiggle: 'wiggle 3s ease-in-out infinite',
+      letterSpacing: {
+        tightest: '-0.045em',
+        tighter2: '-0.03em',
       },
     },
   },
