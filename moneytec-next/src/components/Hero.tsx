@@ -61,7 +61,7 @@ export function Hero() {
   const [size, setSize] = useState(360);
   const [mobile, setMobile] = useState(false);
   useEffect(() => {
-    const set = () => { setMobile(window.innerWidth < 640); setSize(window.innerWidth < 640 ? 174 : window.innerWidth < 1024 ? 320 : 380); };
+    const set = () => { setMobile(window.innerWidth < 640); setSize(window.innerWidth < 640 ? 148 : window.innerWidth < 1024 ? 360 : 500); };
     set();
     window.addEventListener('resize', set);
     return () => window.removeEventListener('resize', set);
@@ -94,47 +94,54 @@ export function Hero() {
   }, [tx, ty]);
 
   return (
-    <section id="top" data-dark ref={ref} className="moneytec-hero relative -mt-[52px] h-[200svh] bg-night text-white">
+    <section id="top" data-dark ref={ref} className="moneytec-hero relative -mt-[52px] h-[300svh] bg-night text-white">
       <div className="sticky top-0 flex h-[100svh] flex-col items-center overflow-hidden pt-[52px]">
-        {/* soft studio light */}
-        <motion.div className="pointer-events-none absolute left-1/2 top-[38%] h-[70vmin] w-[70vmin] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(255,55,95,0.35),rgba(191,90,242,0.18)_40%,transparent_70%)] blur-2xl" style={{ opacity: glow }} />
+        {/* A restrained studio glow gives the metal mark depth without competing with the message. */}
+        <motion.div className="hero-ambient pointer-events-none absolute rounded-full bg-[radial-gradient(circle,rgba(255,55,95,0.28),rgba(191,90,242,0.18)_40%,transparent_70%)] blur-2xl" style={{ opacity: glow }} />
 
-        <motion.div className="relative z-10 mt-[6vh] px-5 text-center sm:mt-[7vh]" style={{ opacity: mobile ? 1 : titleOpacity, y: mobile ? 0 : titleY }}>
-          <motion.p className="eyebrow text-white/80" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9, ease: EASE }}>
-            moneytec
-          </motion.p>
-          <motion.h1
-            className="display mt-2 text-[clamp(2.6rem,7.2vw,5.6rem)]"
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1.1, ease: EASE, delay: 0.1 }}
-          >
-            Your ambitions.
-            <br />
-            <span className="grad">A smarter money journey.</span>
-          </motion.h1>
-          <p className="hero-mobile-intro">Goal-based SIPs, insurance and NRI investing with Gulshan Kohli.</p>
-          <motion.div className="mt-5 flex flex-wrap items-center justify-center gap-x-6 gap-y-3" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1, delay: 0.5 }}>
-            <a href="#start" className="pill-blue">Get started</a>
-            <a href="#calculator" className="textlink-dark">Try the calculator ›</a>
+        <motion.div className="hero-stage relative z-10 mx-auto flex w-full max-w-[1320px] flex-1 items-center px-5 sm:px-8" style={{ opacity: mobile ? 1 : titleOpacity, y: mobile ? 0 : titleY }}>
+          <div className="hero-copy relative z-10 w-full">
+            <motion.p className="hero-kicker" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9, ease: EASE }}>
+              <span className="hero-kicker-mark" /> MONEYTEC <span className="hero-kicker-rule" /> MONEY, WITH MEANING
+            </motion.p>
+            <motion.h1
+              className="display hero-title mt-6"
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1.1, ease: EASE, delay: 0.1 }}
+            >
+              Make your money<br />
+              <span className="hero-serif">mean <span className="grad">more.</span></span>
+            </motion.h1>
+            <p className="hero-description">A clearer path to your goals, built around your life.</p>
+            <p className="hero-mobile-intro">Goal-based mutual fund investing, insurance and NRI guidance with Gulshan Kohli.</p>
+            <motion.div className="mt-7 flex flex-wrap items-center gap-x-6 gap-y-3" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1, delay: 0.5 }}>
+              <a href="#start" className="hero-primary">Start a conversation <span aria-hidden="true">↗</span></a>
+              <a href="#calculator" className="hero-secondary">Explore your plan <span aria-hidden="true">↓</span></a>
+            </motion.div>
+            <div className="hero-credentials" aria-label="Professional credentials">
+              <span><i aria-hidden="true">✳</i> AMFI registered <b>ARN-105840</b></span>
+              <span><i aria-hidden="true">✳</i> Personal guidance <b>Gulshan Kohli</b></span>
+            </div>
+          </div>
+
+          <motion.div className="hero-coin relative z-0" style={{ scale: mobile ? 1 : scale, y: mobile ? 0 : coinY }} initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 1.4, ease: EASE, delay: 0.2 }}>
+          <div className="coin-halo" aria-hidden="true" /><TitaniumCoin size={size} spin={spin} tiltX={tiltX} tiltY={tiltY} staticFacing={mobile} />
+          <div className="absolute -bottom-10 left-1/2 h-10 w-[70%] -translate-x-1/2 rounded-[50%] bg-white/10 blur-xl" />
+            <div className="hero-orbit-label"><span className="hero-orbit-dot" /> BUILT AROUND YOU <span>01 / 04</span></div>
           </motion.div>
         </motion.div>
 
-        <motion.div className="hero-coin relative z-0 mt-auto mb-[9vh] sm:mb-[7vh]" style={{ scale: mobile ? 1 : scale, y: mobile ? 0 : coinY }} initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 1.4, ease: EASE, delay: 0.2 }}>
-          <div className="coin-halo" aria-hidden="true" /><TitaniumCoin size={size} spin={spin} tiltX={tiltX} tiltY={tiltY} staticFacing={mobile} />
-          {/* floor reflection */}
-          <div className="absolute -bottom-10 left-1/2 h-10 w-[70%] -translate-x-1/2 rounded-[50%] bg-white/10 blur-xl" />
-        </motion.div>
-
-        <motion.div className="hero-second-copy absolute inset-x-0 top-[16vh] z-10 px-5 text-center" style={{ opacity: mobile ? 1 : line2Opacity, y: mobile ? 0 : line2Y }}>
-          <p className="display text-[clamp(2rem,5.2vw,4rem)]">
-            Tools that bring clarity.
-            <br />
-            <span className="grad-mint">A person who understands.</span>
+        <motion.div className="hero-second-copy absolute inset-x-0 top-[19vh] z-10 px-5 text-center" style={{ opacity: mobile ? 1 : line2Opacity, y: mobile ? 0 : line2Y }}>
+          <p className="hero-kicker justify-center"><span className="hero-kicker-mark" /> A MORE PERSONAL APPROACH TO MONEY</p>
+          <p className="display mt-6 text-[clamp(2.4rem,6vw,5.2rem)]">
+            Clarity for the plan.<br />
+            <span className="hero-serif grad-mint">Confidence in the person.</span>
           </p>
-          <p className="body-lg mx-auto mt-3 max-w-xl text-white/65">
-            Goal-based SIPs, insurance and NRI investing, set up with {FACTS.name}, a real person who picks up the phone.
+          <p className="body-lg mx-auto mt-5 max-w-xl text-white/65">
+            Goal-based investing, family protection and NRI guidance, with {FACTS.name} alongside you.
           </p>
+          <a href="#grow" className="hero-secondary mt-7">See how it works <span aria-hidden="true">↓</span></a>
         </motion.div>
       </div>
     </section>
