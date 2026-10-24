@@ -17,10 +17,11 @@ export const wa = (text: string) => `https://wa.me/${FACTS.phoneIntl}?text=${enc
 
 export const NAV = [
   { label: 'Calculator', href: '#glow-up' },
-  { label: 'What we do', href: '#menu' },
-  { label: 'Vibe check', href: '#vibe' },
-  { label: 'Who’s Gulshan', href: '#gulshan' },
-  { label: 'FAQ', href: '#faq' },
+  { label: 'Menu', href: '#menu' },
+  { label: 'Quiz', href: '#vibe' },
+  { label: 'Fact-check', href: '#myths' },
+  { label: 'Gulshan', href: '#gulshan' },
+  { label: 'Advice', href: '#faq' },
 ];
 
 export const DISCLAIMER =

@@ -1,33 +1,30 @@
-/** Moneytec design tokens: near-black base, acid lime + electric violet, chunky display type. */
+/** "The Moneytec Times": newsprint + three riso inks + black. */
 module.exports = {
   content: [__dirname + '/index.html', __dirname + '/src/**/*.{ts,tsx}'],
   theme: {
     extend: {
       colors: {
-        void: '#09090B',
-        coal: '#121215',
-        ash: '#1C1C21',
-        line: 'rgba(255,255,255,0.09)',
-        chalk: '#F4F2EC',
-        lime: { DEFAULT: '#D4FF3A', deep: '#A8D400' },
-        volt: { DEFAULT: '#8B6CFF', soft: '#B9A8FF' },
-        coral: '#FF6B4A',
-        sky: '#5CE1E6',
+        paper: '#F1ECE1',
+        newsprint: '#E7E0D1',
+        ink: '#141413',
+        pink: '#FF3EA5',
+        blue: '#2B50FF',
+        sun: '#FFD83D',
+        mint: '#16B57F',
       },
       fontFamily: {
-        display: ['Unbounded', 'system-ui', 'sans-serif'],
-        sans: ['"Space Grotesk"', 'system-ui', 'sans-serif'],
+        display: ['"Bricolage Grotesque"', 'system-ui', 'sans-serif'],
+        mono: ['"JetBrains Mono"', 'ui-monospace', 'monospace'],
+        hand: ['Caveat', 'cursive'],
         serif: ['"Instrument Serif"', 'Georgia', 'serif'],
       },
       keyframes: {
         marquee: { to: { transform: 'translateX(-50%)' } },
-        floaty: { '0%,100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-8px)' } },
-        spin: { to: { transform: 'rotate(360deg)' } },
+        wiggle: { '0%,100%': { transform: 'rotate(-2deg)' }, '50%': { transform: 'rotate(2deg)' } },
       },
       animation: {
-        marquee: 'marquee 28s linear infinite',
-        floaty: 'floaty 4s ease-in-out infinite',
-        'spin-slow': 'spin 18s linear infinite',
+        marquee: 'marquee 32s linear infinite',
+        wiggle: 'wiggle 3s ease-in-out infinite',
       },
     },
   },
