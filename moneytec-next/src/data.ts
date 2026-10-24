@@ -18,6 +18,7 @@ export const wa = (text: string) => `https://wa.me/${FACTS.phoneIntl}?text=${enc
 export const NAV = [
   { label: 'Growth', href: '#grow' },
   { label: 'Highlights', href: '#highlights' },
+  { label: 'Instagram', href: '#instagram' },
   { label: 'Calculator', href: '#calculator' },
   { label: 'Plans', href: '#plans' },
   { label: 'Next steps', href: '#next-steps' },

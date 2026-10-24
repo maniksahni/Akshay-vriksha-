@@ -3,6 +3,7 @@ import { Configure } from './components/Configure';
 import { Grow } from './components/Grow';
 import { Hero } from './components/Hero';
 import { Highlights } from './components/Highlights';
+import { InstagramReels } from './components/InstagramReels';
 import { Nav } from './components/Nav';
 import { NextSteps } from './components/NextSteps';
 import { Plans } from './components/Plans';
@@ -26,6 +27,7 @@ export default function App() {
         </div>
         <Grow />
         <Highlights />
+        <InstagramReels />
         <Configure />
         <Plans />
         <Safety />
