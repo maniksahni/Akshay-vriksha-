@@ -53,15 +53,15 @@ export function Safety() {
 export function Gulshan() {
   return (
     <section id="gulshan" className="bg-white py-16 sm:py-28">
-      <div className="wrap-wide grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
+      <div className="wrap-wide grid items-center gap-6 sm:gap-10 lg:grid-cols-2 lg:gap-16">
         <Reveal>
-          <div className="relative mx-auto aspect-square w-full max-w-[440px] overflow-hidden rounded-[36px] bg-gradient-to-br from-[#f5f5f7] to-[#e8e8ed]">
+          <div className="relative mx-auto aspect-square w-full max-w-[220px] overflow-hidden rounded-[28px] sm:max-w-[440px] sm:rounded-[36px] bg-gradient-to-br from-[#f5f5f7] to-[#e8e8ed]">
             <div className="absolute inset-[12%] rounded-full bg-gradient-to-br from-[#FF9F0A] via-[#FF375F] to-[#BF5AF2] p-[6px]">
               <div className="grid h-full w-full place-items-center rounded-full bg-white">
-                <span className="text-[clamp(4rem,12vw,7rem)] font-semibold tracking-[-0.06em]">GK</span>
+                <span className="text-[3.2rem] font-semibold sm:text-[clamp(4rem,12vw,7rem)] tracking-[-0.06em]">GK</span>
               </div>
             </div>
-            <span className="absolute bottom-5 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-white/90 px-4 py-2 text-[13px] font-semibold shadow-sm">{FACTS.years}+ years · {FACTS.city}</span>
+            <span className="absolute bottom-3 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-white/90 px-3 py-1.5 text-[11px] sm:bottom-5 sm:px-4 sm:py-2 sm:text-[13px] font-semibold shadow-sm">{FACTS.years}+ years · {FACTS.city}</span>
           </div>
         </Reveal>
         <Reveal delay={0.1}>

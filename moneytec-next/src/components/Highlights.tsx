@@ -109,11 +109,11 @@ export function Highlights() {
       </div>
       <div ref={track} className="no-scrollbar mt-8 flex snap-x snap-mandatory gap-5 overflow-x-auto px-5 sm:px-[max(2rem,calc((100vw-1260px)/2+2rem))]">
         {CARDS.map((c, i) => (
-          <article key={c.title} className={`relative flex h-[440px] w-[82vw] max-w-[380px] shrink-0 snap-center flex-col overflow-hidden rounded-[28px] bg-gradient-to-b ${c.bg} p-7 text-white sm:h-[520px] sm:w-[60vw] sm:max-w-[680px] sm:p-10`}>
-            <p className="text-[24px] font-semibold leading-tight tracking-[-0.03em] sm:text-[32px]">{c.title}</p>
-            <p className="mt-2 max-w-sm text-[15px] leading-snug text-white/65 sm:text-[17px]">{c.body}</p>
-            <div className="mt-auto h-[46%] w-full">{c.art}</div>
-            <a href={wa(`Hi Gulshan! Tell me more: ${c.title}`)} target="_blank" rel="noreferrer" className="textlink-dark mt-4 text-[15px]">Ask about this ›</a>
+          <article key={c.title} className={`relative flex h-[320px] w-[78vw] max-w-[340px] shrink-0 snap-center flex-col overflow-hidden rounded-[24px] bg-gradient-to-b ${c.bg} p-5 text-white sm:rounded-[28px] sm:h-[520px] sm:w-[60vw] sm:max-w-[680px] sm:p-10`}>
+            <p className="text-[21px] font-semibold leading-tight tracking-[-0.03em] sm:text-[32px]">{c.title}</p>
+            <p className="mt-1.5 max-w-sm text-[14px] leading-snug text-white/65 sm:text-[17px]">{c.body}</p>
+            <div className="mt-auto h-[38%] w-full sm:h-[46%]">{c.art}</div>
+            <a href={wa(`Hi Gulshan! Tell me more: ${c.title}`)} target="_blank" rel="noreferrer" className="textlink-dark mt-3 text-[14px] sm:mt-4 sm:text-[15px]">Ask about this ›</a>
             <span className="sr-only">{i + 1} of {CARDS.length}</span>
           </article>
         ))}

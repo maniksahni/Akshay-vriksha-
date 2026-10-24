@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from 'framer-motion';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { wa } from '../data';
 import { EASE } from './ui';
 
@@ -20,9 +20,17 @@ export function Plans() {
   const [ans, setAns] = useState<number[]>([]);
   const done = ans.length === QS.length;
   const pick = done ? Math.round(ans.reduce((a, b) => a + b, 0) / QS.length) : -1;
+  const track = useRef<HTMLDivElement>(null);
+  // on phone the cards are a swipe row: bring the matched one into view
+  useEffect(() => {
+    const t = track.current;
+    const card = t?.children[pick] as HTMLElement | undefined;
+    if (!t || !card || t.scrollWidth <= t.clientWidth) return;
+    t.scrollTo({ left: card.offsetLeft - (t.clientWidth - card.clientWidth) / 2, behavior: 'smooth' });
+  }, [pick]);
 
   return (
-    <section id="plans" className="bg-snow py-16 sm:py-24">
+    <section id="plans" className="overflow-hidden bg-snow py-14 sm:py-24">
       <div className="wrap-wide text-center">
         <h2 className="display text-[clamp(2rem,4.6vw,3.5rem)]">Which approach is right for you?</h2>
         <button onClick={() => { setQuiz(true); setAns([]); }} className="textlink mt-3">Not sure? Answer 3 quick questions ›</button>
@@ -47,37 +55,45 @@ export function Plans() {
           </p>
         )}
 
-        <div className="mt-10 grid gap-5 text-left md:grid-cols-3">
+        <motion.div
+          ref={track}
+          className="no-scrollbar -mx-5 mt-6 flex snap-x snap-mandatory gap-3 overflow-x-auto px-5 pb-2 pt-4 text-left md:mx-0 md:mt-8 md:grid md:grid-cols-3 md:gap-5 md:overflow-visible md:px-0"
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '0px 0px -10% 0px' }}
+          transition={{ duration: 0.7, ease: EASE }}
+        >
           {PLANS.map((p, i) => {
             const best = i === pick;
             return (
-              <motion.div
+              <div
                 key={p.name}
-                className={`relative flex flex-col rounded-[28px] bg-white p-6 transition-shadow sm:p-8 ${best ? 'shadow-[0_0_0_2px_#0071E3,0_20px_50px_-20px_rgba(0,113,227,0.45)]' : ''}`}
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '0px 0px -10% 0px' }}
-                transition={{ duration: 0.7, ease: EASE, delay: i * 0.08 }}
+                className={`relative flex w-[80vw] max-w-[330px] shrink-0 snap-center flex-col rounded-[24px] bg-white p-5 transition-shadow md:w-auto md:max-w-none md:rounded-[28px] md:p-8 ${best ? 'shadow-[0_0_0_2px_#0071E3,0_20px_50px_-20px_rgba(0,113,227,0.45)]' : ''}`}
               >
-                {best && <span className="absolute -top-3 left-6 rounded-full bg-link px-3 py-1 text-[12px] font-semibold text-white">Your match</span>}
-                <div className={`h-12 w-12 rounded-full bg-gradient-to-br ${p.ring} p-[3px]`}><div className="h-full w-full rounded-full bg-white" /></div>
-                <p className="mt-5 text-[28px] font-semibold tracking-[-0.03em]">{p.name}</p>
-                <p className="text-[17px] text-slate">{p.tag}</p>
-                <dl className="mt-6 space-y-4 border-t border-mist pt-5 text-[15px]">
+                {best && <span className="absolute -top-3 left-5 rounded-full bg-link px-3 py-1 text-[12px] font-semibold text-white md:left-6">Your match</span>}
+                <div className="flex items-center gap-3 md:block">
+                  <div className={`h-9 w-9 shrink-0 rounded-full bg-gradient-to-br ${p.ring} p-[3px] md:h-12 md:w-12`}><div className="h-full w-full rounded-full bg-white" /></div>
+                  <div className="md:mt-5">
+                    <p className="text-[21px] font-semibold leading-tight tracking-[-0.03em] md:text-[28px]">{p.name}</p>
+                    <p className="text-[14px] text-slate md:text-[17px]">{p.tag}</p>
+                  </div>
+                </div>
+                <dl className="mt-4 grid grid-cols-2 gap-x-4 gap-y-3 border-t border-mist pt-4 text-[13px] md:mt-6 md:block md:space-y-4 md:pt-5 md:text-[15px]">
                   <div><dt className="text-graphite">Time horizon</dt><dd className="font-semibold">{p.horizon}</dd></div>
                   <div><dt className="text-graphite">Market drops</dt><dd className="font-semibold">{p.drops}</dd></div>
-                  <div><dt className="text-graphite">Typical goals</dt><dd className="font-semibold">{p.goals}</dd></div>
-                  <div>
+                  <div className="col-span-2"><dt className="text-graphite">Typical goals</dt><dd className="font-semibold">{p.goals}</dd></div>
+                  <div className="col-span-2">
                     <dt className="text-graphite">A sample mix</dt>
                     <dd className="mt-2 flex h-2.5 overflow-hidden rounded-full">{p.mix.map((v, k) => <span key={k} className={MIX[k][1]} style={{ width: `${v}%` }} />)}</dd>
-                    <dd className="mt-1.5 text-[13px] text-slate">{MIX.map(([m], k) => `${m} ${p.mix[k]}%`).join(' · ')}</dd>
+                    <dd className="mt-1.5 text-[12px] text-slate md:text-[13px]">{MIX.map(([m], k) => `${m} ${p.mix[k]}%`).join(' · ')}</dd>
                   </div>
                 </dl>
-                <a href={wa(`Hi Gulshan! I think I'm a "${p.name}". Can we plan around that?`)} target="_blank" rel="noreferrer" className="textlink mt-6 text-[17px]">Plan as a {p.name} ›</a>
-              </motion.div>
+                <a href={wa(`Hi Gulshan! I think I'm a "${p.name}". Can we plan around that?`)} target="_blank" rel="noreferrer" className="textlink mt-4 text-[15px] md:mt-6 md:text-[17px]">Plan as a {p.name} ›</a>
+              </div>
             );
           })}
-        </div>
+        </motion.div>
+        <p className="mt-1 text-[12px] text-graphite md:hidden">Swipe to compare ›</p>
         <p className="mx-auto mt-6 max-w-2xl text-[12px] text-graphite">Sample mixes are for illustration, not advice. Your actual plan comes from a proper risk profiling with Gulshan.</p>
       </div>
     </section>
