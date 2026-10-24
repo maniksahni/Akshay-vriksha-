@@ -41,10 +41,9 @@ export function Nav() {
 
   return (
     <>
-      <div className="relative z-50 h-11 bg-[#161617]/95 text-[12px] text-white/80">
+      <div className="site-utility relative z-50 h-11 bg-[#161617]/95 text-[12px] text-white/80">
         <div className="wrap-wide flex h-full items-center justify-between">
-          <a href="#top" aria-label="moneytec home"><Wordmark /></a>
-          <span className="hidden tracking-[0] sm:inline">Goal-based SIPs, insurance and NRI investing · with Gulshan Kohli</span>
+          <span>Goal-based SIPs, insurance and NRI investing · with Gulshan Kohli</span>
           <a href={wa('Hi Gulshan! I have a question.')} target="_blank" rel="noreferrer" className="hover:text-white">Chat ↗</a>
         </div>
       </div>

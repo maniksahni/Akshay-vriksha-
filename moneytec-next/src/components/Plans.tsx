@@ -4,9 +4,9 @@ import { wa } from '../data';
 import { EASE } from './ui';
 
 const PLANS = [
-  { name: 'Near-term needs', tag: 'Stability first', horizon: 'Under 3 years', drops: 'Prefers to avoid them', goals: 'Emergency fund, short-term goals', mix: [25, 65, 10], ring: 'from-[#64D2FF] to-[#0A84FF]' },
-  { name: 'Life milestones', tag: 'Balanced growth', horizon: '3 to 7 years', drops: 'Can sit through some', goals: 'Car, wedding, a home down-payment', mix: [55, 35, 10], ring: 'from-[#30D158] to-[#64D2FF]' },
-  { name: 'Long-term goals', tag: 'Let it compound', horizon: '7+ years', drops: 'Can affect your plan', goals: 'Retirement, kids’ education, wealth', mix: [75, 15, 10], ring: 'from-[#FF9F0A] via-[#FF375F] to-[#BF5AF2]' },
+  { name: 'Near-term needs', tag: 'Keep liquidity in view', horizon: 'Under 3 years', drops: 'Prefers to avoid them', goals: 'Emergency fund, short-term goals', ring: 'from-[#64D2FF] to-[#0A84FF]' },
+  { name: 'Life milestones', tag: 'Plan around a date', horizon: '3 to 7 years', drops: 'Can sit through some', goals: 'Car, wedding, a home down-payment', ring: 'from-[#30D158] to-[#64D2FF]' },
+  { name: 'Long-term goals', tag: 'Plan for changing markets', horizon: '7+ years', drops: 'Can affect your plan', goals: 'Retirement, kids’ education, wealth', ring: 'from-[#FF9F0A] via-[#FF375F] to-[#BF5AF2]' },
 ];
 const QS = [
   { q: 'When will you need the money?', a: ['Under 3 years', '3–7 years', '7+ years'] },

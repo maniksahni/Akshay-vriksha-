@@ -6,9 +6,9 @@ Financial-services frontend for Moneytec with Gulshan Kohli (AMFI Registered Mut
 - Serve the production output: `python3 -m http.server 5191 --directory moneytec-next/dist`
 - Publish only the contents of `moneytec-next/dist/` into `moneytec-next/` on `gh-pages`. Preserve other site folders. No custom domain is configured.
 
-Features: SIP illustrations including a zero-return scenario, contribution/growth breakdown, delayed-start comparison, goal conversation prompts, financial-service highlights, credentials, FAQs and WhatsApp drafts. Drafts include calculator assumptions or selected planning answers; visitors must send them themselves. No investment transaction is made here.
+Features: SIP illustrations including a zero-return scenario, contribution/growth breakdown, delayed-start comparison, goal conversation prompts, financial-service highlights, visible distributor credentials, FAQs and WhatsApp drafts. Drafts include calculator assumptions or selected planning answers; visitors must send them themselves. No investment transaction is made here. Content focuses on SIPs, family protection and NRI planning. It does not include travel, invented testimonials, product picks or sample asset allocations.
 
-Polish includes restrained static glow, responsive layouts, useful next-step routes and keyboard/mobile navigation. Travel content and invented initials are excluded.
+Polish includes restrained static glow, responsive layouts, useful next-step routes and keyboard/mobile navigation. The mobile header uses one wordmark, the coin faces forward, and the financial copy describes product terms and payment paths carefully.
 
 ## Mobile layout
 

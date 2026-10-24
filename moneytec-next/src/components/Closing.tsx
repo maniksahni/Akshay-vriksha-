@@ -27,12 +27,12 @@ export function Safety() {
             <br />
             <span className="grad-mint">touches us.</span>
           </h2>
-          <p className="body-lg mx-auto mt-4 max-w-xl text-white/65">It goes straight from your bank to the fund house or insurer, in your name. That’s how it should be.</p>
+          <p className="body-lg mx-auto mt-4 max-w-xl text-white/65">This website never collects your investment or premium payment. If you choose a product, payment follows the fund house or insurer’s process.</p>
         </Reveal>
         <div className="mt-12 grid gap-8 text-left sm:grid-cols-3">
           {[
-            ['Straight to the source.', 'Payments go directly to the AMC or Kotak Life. Never to a middleman’s account.'],
-            ['Always in your name.', 'Your units and policies are held by you. You can see them any time.'],
+            ['You stay in control.', 'Product decisions and payments are made by you through the relevant fund house or insurer.'],
+            ['Your holdings are yours.', 'Mutual fund units and insurance policies are in your name, subject to the product terms.'],
             ['Check us yourself.', `AMFI-registered distributor ${FACTS.arn}. Kotak Life advisor ${FACTS.kotak}.`],
           ].map(([t, d], i) => (
             <Reveal key={t} delay={i * 0.08}>

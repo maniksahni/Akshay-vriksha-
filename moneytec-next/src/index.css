@@ -172,6 +172,7 @@ input[type='range'].slider::-moz-range-thumb {
   .moneytec-hero h1 { font-size: clamp(2.6rem,6vw,4.3rem); }
 }
 @media (max-width: 639px) {
+  .site-utility { display: none; }
   .moneytec-hero h1 { font-size: clamp(2.2rem,8.5vw,3.3rem); }
   .moneytec-hero .hero-coin { margin-bottom: 7vh; }
   .calculator-summary { padding: 24px; }

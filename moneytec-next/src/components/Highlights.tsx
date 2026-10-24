@@ -3,8 +3,8 @@ import { wa } from '../data';
 
 const CARDS = [
   {
-    title: 'SIPs from ₹500 a month.',
-    body: 'Goal-based, matched to your timeline and your comfort with risk.',
+    title: 'Start with a monthly goal.',
+    body: 'Explore an amount and timeline. Scheme minimums vary; returns are never guaranteed.',
     bg: 'from-[#1d1d1f] to-[#000]',
     art: (
       <svg viewBox="0 0 200 140" className="h-full w-full" aria-hidden>
@@ -15,7 +15,7 @@ const CARDS = [
   },
   {
     title: 'Life cover that has your back.',
-    body: 'Term plans via Kotak Life, so your family is sorted no matter what.',
+    body: 'Explore life cover through Kotak Life, subject to eligibility, underwriting and policy terms.',
     bg: 'from-[#0b2a4a] to-[#000]',
     art: (
       <svg viewBox="0 0 200 140" className="h-full w-full" aria-hidden>
@@ -27,7 +27,7 @@ const CARDS = [
   },
   {
     title: 'Invest from anywhere.',
-    body: 'Earning in $, £ or AED? NRE/NRO investing, mostly online, on your time zone.',
+    body: 'Discuss NRE/NRO requirements and available options for your country of residence.',
     bg: 'from-[#0f3a2e] to-[#000]',
     art: (
       <svg viewBox="0 0 200 140" className="h-full w-full" aria-hidden>
@@ -39,8 +39,8 @@ const CARDS = [
     ),
   },
   {
-    title: 'Save tax, the smart way.',
-    body: 'ELSS funds under Section 80C (old regime), with the shortest lock-in: 3 years.',
+    title: 'Understand before you invest.',
+    body: 'Review the goal, time horizon, costs, risks and scheme documents with a person.',
     bg: 'from-[#3a1d0b] to-[#000]',
     art: (
       <svg viewBox="0 0 200 140" className="h-full w-full" aria-hidden>
@@ -50,8 +50,8 @@ const CARDS = [
     ),
   },
   {
-    title: 'A check-up, every year.',
-    body: 'Already investing? We look for overlap, idle money and forgotten SIPs.',
+    title: 'Review your investments.',
+    body: 'Organise existing SIPs and funds around your goals, timeline and comfort with risk.',
     bg: 'from-[#2a0f3a] to-[#000]',
     art: (
       <svg viewBox="0 0 200 140" className="h-full w-full" aria-hidden>
@@ -107,7 +107,7 @@ export function Highlights() {
       <div className="wrap-wide">
         <h2 className="display text-[clamp(2rem,4.6vw,3.5rem)]">How we can help.</h2>
       </div>
-      <div ref={track} className="highlights-track no-scrollbar mt-8 flex snap-x snap-mandatory gap-5 overflow-x-auto px-5 sm:px-[max(2rem,calc((100vw-1260px)/2+2rem))]">
+      <div ref={track} className="highlights-track no-scrollbar mt-8 flex snap-x snap-mandatory gap-5 overflow-x-auto px-5 sm:px-[max(2rem,calc((100vw-1260px)/2+2rem))]" aria-label="Financial services">
         {CARDS.map((c, i) => (
           <article key={c.title} className={`relative flex h-[320px] w-[78vw] max-w-[340px] shrink-0 snap-center flex-col overflow-hidden rounded-[24px] bg-gradient-to-b ${c.bg} p-5 text-white sm:rounded-[28px] sm:h-[520px] sm:w-[60vw] sm:max-w-[680px] sm:p-10`}>
             <p className="text-[21px] font-semibold leading-tight tracking-[-0.03em] sm:text-[32px]">{c.title}</p>

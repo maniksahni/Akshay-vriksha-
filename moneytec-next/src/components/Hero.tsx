@@ -4,13 +4,13 @@ import { FACTS } from '../data';
 import { EASE, reduced } from './ui';
 
 /** A brushed-titanium ₹ coin, built from stacked CSS discs; its spin is driven from outside. */
-function TitaniumCoin({ size, spin, tiltX, tiltY }: { size: number; spin: MotionValue<number>; tiltX: MotionValue<number>; tiltY: MotionValue<number> }) {
+function TitaniumCoin({ size, spin, tiltX, tiltY, staticFacing = false }: { size: number; spin: MotionValue<number>; tiltX: MotionValue<number>; tiltY: MotionValue<number>; staticFacing?: boolean }) {
   const thickness = Math.round(size * 0.085);
   const layers = 16;
   const rotateY = useTransform([spin, tiltY], ([s, t]: number[]) => s + t);
   return (
     <div style={{ width: size, height: size, perspective: 1600 }} className="relative">
-      <motion.div className="absolute inset-0" style={{ rotateX: tiltX, rotateY, transformStyle: 'preserve-3d' }}>
+      <motion.div className="absolute inset-0" style={{ rotateX: staticFacing ? 10 : tiltX, rotateY: staticFacing ? 0 : rotateY, transformStyle: 'preserve-3d' }}>
         {Array.from({ length: layers }).map((_, i) => (
           <div
             key={i}
@@ -121,7 +121,7 @@ export function Hero() {
         </motion.div>
 
         <motion.div className="hero-coin relative z-0 mt-auto mb-[9vh] sm:mb-[7vh]" style={{ scale: mobile ? 1 : scale, y: mobile ? 0 : coinY }} initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 1.4, ease: EASE, delay: 0.2 }}>
-          <div className="coin-halo" aria-hidden="true" /><TitaniumCoin size={size} spin={spin} tiltX={tiltX} tiltY={tiltY} />
+          <div className="coin-halo" aria-hidden="true" /><TitaniumCoin size={size} spin={spin} tiltX={tiltX} tiltY={tiltY} staticFacing={mobile} />
           {/* floor reflection */}
           <div className="absolute -bottom-10 left-1/2 h-10 w-[70%] -translate-x-1/2 rounded-[50%] bg-white/10 blur-xl" />
         </motion.div>
