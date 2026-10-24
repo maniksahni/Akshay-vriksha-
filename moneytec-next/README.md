@@ -1,11 +1,11 @@
-# moneytec (next)
+# Moneytec preview
 
-Gen-Z fintech front end for Moneytec, with Gulshan Kohli (AMFI-registered MFD, ARN-105840).
+Financial-services frontend for Moneytec with Gulshan Kohli (AMFI Registered Mutual Fund Distributor, ARN-105840). The approved black/white contrast, orange–pink–purple and mint gradients, scrolling coin and growth story are retained.
 
-- Dev: `npx vite --config moneytec-next/vite.config.ts` (from the repo root) → http://localhost:5190
-- Build: `npx vite build --config moneytec-next/vite.config.ts` → `moneytec-next/dist/`
-- Deploy: copy `moneytec-next/dist/` to any static host (relative paths, works in a sub-folder or on its own domain).
+- Build from repository root: `npx tsc --noEmit -p moneytec-next/tsconfig.json && npx vite build --config moneytec-next/vite.config.ts`
+- Serve the production output: `python3 -m http.server 5191 --directory moneytec-next/dist`
+- Publish only the contents of `moneytec-next/dist/` into `moneytec-next/` on `gh-pages`. Preserve other site folders. No custom domain is configured.
 
-Sections: hero with a draggable 3D coin and throwable stickers, glow-up SIP calculator (start now vs in 5 years),
-services bento, money vibe-check quiz, myth-vs-fact swipe deck, founder, 3 steps, FAQ and a WhatsApp starter form.
-Every number is an illustration with disclaimers; forms only prefill a WhatsApp message, nothing is submitted or invested.
+Features: SIP illustrations including a zero-return scenario, contribution/growth breakdown, delayed-start comparison, goal conversation prompts, financial-service highlights, credentials, FAQs and WhatsApp drafts. Drafts include calculator assumptions or selected planning answers; visitors must send them themselves. No investment transaction is made here.
+
+Polish includes restrained static glow, responsive layouts, useful next-step routes and keyboard/mobile navigation. Travel content and invented initials are excluded.

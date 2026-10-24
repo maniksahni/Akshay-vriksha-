@@ -4,11 +4,10 @@ import { wa } from '../data';
 import { EASE } from './ui';
 
 const PLANS = [
-  { name: 'Chill Saver', tag: 'Stability first', horizon: 'Under 3 years', drops: 'Prefers to avoid them', goals: 'Emergency fund, short-term goals', mix: [25, 65, 10], ring: 'from-[#64D2FF] to-[#0A84FF]' },
-  { name: 'Steady Grinder', tag: 'Balanced growth', horizon: '3 to 7 years', drops: 'Can sit through some', goals: 'Car, wedding, a home down-payment', mix: [55, 35, 10], ring: 'from-[#30D158] to-[#64D2FF]' },
-  { name: 'Long-Game Legend', tag: 'Let it compound', horizon: '7+ years', drops: 'Sees them as sales', goals: 'Retirement, kids’ education, wealth', mix: [75, 15, 10], ring: 'from-[#FF9F0A] via-[#FF375F] to-[#BF5AF2]' },
+  { name: 'Near-term needs', tag: 'Stability first', horizon: 'Under 3 years', drops: 'Prefers to avoid them', goals: 'Emergency fund, short-term goals', mix: [25, 65, 10], ring: 'from-[#64D2FF] to-[#0A84FF]' },
+  { name: 'Life milestones', tag: 'Balanced growth', horizon: '3 to 7 years', drops: 'Can sit through some', goals: 'Car, wedding, a home down-payment', mix: [55, 35, 10], ring: 'from-[#30D158] to-[#64D2FF]' },
+  { name: 'Long-term goals', tag: 'Let it compound', horizon: '7+ years', drops: 'Can affect your plan', goals: 'Retirement, kids’ education, wealth', mix: [75, 15, 10], ring: 'from-[#FF9F0A] via-[#FF375F] to-[#BF5AF2]' },
 ];
-const MIX = [['Equity', 'bg-coal'], ['Debt', 'bg-graphite'], ['Gold', 'bg-[#FFD60A]']];
 const QS = [
   { q: 'When will you need the money?', a: ['Under 3 years', '3–7 years', '7+ years'] },
   { q: 'Markets fall 20%. You…', a: ['Want out', 'Wait it out', 'Invest more'] },
@@ -19,7 +18,7 @@ export function Plans() {
   const [quiz, setQuiz] = useState(false);
   const [ans, setAns] = useState<number[]>([]);
   const done = ans.length === QS.length;
-  const pick = done ? Math.round(ans.reduce((a, b) => a + b, 0) / QS.length) : -1;
+  const pick = done ? ans[0] : -1;
   const track = useRef<HTMLDivElement>(null);
   // on phone the cards are a swipe row: bring the matched one into view
   useEffect(() => {
@@ -32,8 +31,8 @@ export function Plans() {
   return (
     <section id="plans" className="overflow-hidden bg-snow py-14 sm:py-24">
       <div className="wrap-wide text-center">
-        <h2 className="display text-[clamp(2rem,4.6vw,3.5rem)]">Which approach is right for you?</h2>
-        <button onClick={() => { setQuiz(true); setAns([]); }} className="textlink mt-3">Not sure? Answer 3 quick questions ›</button>
+        <h2 className="display text-[clamp(2rem,4.6vw,3.5rem)]">What are you planning for?</h2>
+        <button onClick={() => { setQuiz(true); setAns([]); }} className="textlink mt-3">Prepare for your conversation ›</button>
 
         <AnimatePresence>
           {quiz && !done && (
@@ -50,7 +49,7 @@ export function Plans() {
         </AnimatePresence>
         {done && (
           <p className="mt-4 text-[17px]">
-            Looks like you’re a <span className="font-semibold">{PLANS[pick].name}</span>.{' '}
+            Your timeline points to <span className="font-semibold">{PLANS[pick].name.toLowerCase()}</span>. Discuss your other answers with Gulshan.{' '}
             <button onClick={() => { setAns([]); setQuiz(true); }} className="text-link hover:underline">Retake</button>
           </p>
         )}
@@ -70,7 +69,7 @@ export function Plans() {
                 key={p.name}
                 className={`relative flex w-[80vw] max-w-[330px] shrink-0 snap-center flex-col rounded-[24px] bg-white p-5 transition-shadow md:w-auto md:max-w-none md:rounded-[28px] md:p-8 ${best ? 'shadow-[0_0_0_2px_#0071E3,0_20px_50px_-20px_rgba(0,113,227,0.45)]' : ''}`}
               >
-                {best && <span className="absolute -top-3 left-5 rounded-full bg-link px-3 py-1 text-[12px] font-semibold text-white md:left-6">Your match</span>}
+                {best && <span className="absolute -top-3 left-5 rounded-full bg-link px-3 py-1 text-[12px] font-semibold text-white md:left-6">Your timeline</span>}
                 <div className="flex items-center gap-3 md:block">
                   <div className={`h-9 w-9 shrink-0 rounded-full bg-gradient-to-br ${p.ring} p-[3px] md:h-12 md:w-12`}><div className="h-full w-full rounded-full bg-white" /></div>
                   <div className="md:mt-5">
@@ -82,19 +81,15 @@ export function Plans() {
                   <div><dt className="text-graphite">Time horizon</dt><dd className="font-semibold">{p.horizon}</dd></div>
                   <div><dt className="text-graphite">Market drops</dt><dd className="font-semibold">{p.drops}</dd></div>
                   <div className="col-span-2"><dt className="text-graphite">Typical goals</dt><dd className="font-semibold">{p.goals}</dd></div>
-                  <div className="col-span-2">
-                    <dt className="text-graphite">A sample mix</dt>
-                    <dd className="mt-2 flex h-2.5 overflow-hidden rounded-full">{p.mix.map((v, k) => <span key={k} className={MIX[k][1]} style={{ width: `${v}%` }} />)}</dd>
-                    <dd className="mt-1.5 text-[12px] text-slate md:text-[13px]">{MIX.map(([m], k) => `${m} ${p.mix[k]}%`).join(' · ')}</dd>
-                  </div>
+                  <div className="col-span-2"><dt className="text-graphite">Before you choose</dt><dd className="mt-1 leading-relaxed">{i === 0 ? 'Check access to your money, exit conditions and capital risk.' : i === 1 ? 'Estimate your target, timeline and a comfortable monthly amount.' : 'Review affordability, inflation and your ability to stay invested.'}</dd></div>
                 </dl>
-                <a href={wa(`Hi Gulshan! I think I'm a "${p.name}". Can we plan around that?`)} target="_blank" rel="noreferrer" className="textlink mt-4 text-[15px] md:mt-6 md:text-[17px]">Plan as a {p.name} ›</a>
+                <a href={wa(`Hi Gulshan! I would like to discuss ${p.name.toLowerCase()} with a ${p.horizon} timeline. Can we review my goals and risk comfort?${done ? ` My answers: ${QS.map((q, n) => `${q.q} ${q.a[ans[n]]}`).join("; ")}` : ""}`)} target="_blank" rel="noreferrer" className="textlink mt-4 text-[15px] md:mt-6 md:text-[17px]">Discuss this goal ›</a>
               </div>
             );
           })}
         </motion.div>
         <p className="mt-1 text-[12px] text-graphite md:hidden">Swipe to compare ›</p>
-        <p className="mx-auto mt-6 max-w-2xl text-[12px] text-graphite">Sample mixes are for illustration, not advice. Your actual plan comes from a proper risk profiling with Gulshan.</p>
+        <p className="mx-auto mt-6 max-w-2xl text-[12px] text-graphite">These are starting points for a conversation, not product recommendations. Suitability depends on your full financial circumstances and risk assessment.</p>
       </div>
     </section>
   );

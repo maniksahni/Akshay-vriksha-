@@ -83,7 +83,7 @@ export function Hero() {
   const tiltX = useSpring(tx, { stiffness: 60, damping: 14 });
   const tiltY = useSpring(ty, { stiffness: 60, damping: 14 });
   useEffect(() => {
-    if (reduced()) return;
+    if (reduced() || !window.matchMedia('(pointer: fine)').matches) return;
     const move = (e: PointerEvent) => {
       tx.set(10 - (e.clientY / window.innerHeight - 0.5) * 16);
       ty.set((e.clientX / window.innerWidth - 0.5) * 24);
@@ -93,7 +93,7 @@ export function Hero() {
   }, [tx, ty]);
 
   return (
-    <section id="top" data-dark ref={ref} className="relative -mt-[52px] h-[200svh] bg-night text-white">
+    <section id="top" data-dark ref={ref} className="moneytec-hero relative -mt-[52px] h-[200svh] bg-night text-white">
       <div className="sticky top-0 flex h-[100svh] flex-col items-center overflow-hidden pt-[52px]">
         {/* soft studio light */}
         <motion.div className="pointer-events-none absolute left-1/2 top-[38%] h-[70vmin] w-[70vmin] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(255,55,95,0.35),rgba(191,90,242,0.18)_40%,transparent_70%)] blur-2xl" style={{ opacity: glow }} />
@@ -108,9 +108,9 @@ export function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.1, ease: EASE, delay: 0.1 }}
           >
-            You chill.
+            Your ambitions.
             <br />
-            <span className="grad">Your money does the grind.</span>
+            <span className="grad">A smarter money journey.</span>
           </motion.h1>
           <motion.div className="mt-5 flex flex-wrap items-center justify-center gap-x-6 gap-y-3" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1, delay: 0.5 }}>
             <a href="#start" className="pill-blue">Get started</a>
@@ -118,17 +118,17 @@ export function Hero() {
           </motion.div>
         </motion.div>
 
-        <motion.div className="relative z-0 mt-auto mb-[9vh] sm:mb-[7vh]" style={{ scale, y: coinY }} initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 1.4, ease: EASE, delay: 0.2 }}>
-          <TitaniumCoin size={size} spin={spin} tiltX={tiltX} tiltY={tiltY} />
+        <motion.div className="hero-coin relative z-0 mt-auto mb-[9vh] sm:mb-[7vh]" style={{ scale, y: coinY }} initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 1.4, ease: EASE, delay: 0.2 }}>
+          <div className="coin-halo" aria-hidden="true" /><TitaniumCoin size={size} spin={spin} tiltX={tiltX} tiltY={tiltY} />
           {/* floor reflection */}
           <div className="absolute -bottom-10 left-1/2 h-10 w-[70%] -translate-x-1/2 rounded-[50%] bg-white/10 blur-xl" />
         </motion.div>
 
         <motion.div className="absolute inset-x-0 top-[16vh] z-10 px-5 text-center" style={{ opacity: line2Opacity, y: line2Y }}>
           <p className="display text-[clamp(2rem,5.2vw,4rem)]">
-            Built for people who’d rather
+            Tools that bring clarity.
             <br />
-            <span className="grad-mint">live than watch markets.</span>
+            <span className="grad-mint">A person who understands.</span>
           </p>
           <p className="body-lg mx-auto mt-3 max-w-xl text-white/65">
             Goal-based SIPs, insurance and NRI investing, set up with {FACTS.name}, a real person who picks up the phone.

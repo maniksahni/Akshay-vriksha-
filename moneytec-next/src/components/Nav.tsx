@@ -32,6 +32,11 @@ export function Nav() {
   });
   useEffect(() => {
     document.documentElement.style.overflow = open ? 'hidden' : '';
+    const close = (e: KeyboardEvent) => { if (e.key === 'Escape') setOpen(false); };
+    const resize = () => { if (window.innerWidth >= 768) setOpen(false); };
+    window.addEventListener('keydown', close);
+    window.addEventListener('resize', resize);
+    return () => { document.documentElement.style.overflow = ''; window.removeEventListener('keydown', close); window.removeEventListener('resize', resize); };
   }, [open]);
 
   return (
@@ -56,10 +61,10 @@ export function Nav() {
                 <a key={n.href} href={n.href} className="opacity-80 transition-opacity hover:opacity-100">{n.label}</a>
               ))}
             </nav>
-            <button onClick={() => setOpen((o) => !o)} aria-expanded={open} aria-controls="local-menu" className="text-[12px] opacity-80 md:hidden">
+            <button onClick={() => setOpen((o) => !o)} aria-expanded={open} aria-controls="local-menu" className="min-h-11 px-2 text-[12px] opacity-80 md:hidden">
               {open ? 'Close' : 'Sections'}
             </button>
-            <a href="#start" className="inline-flex h-7 items-center rounded-full bg-link px-3 text-[12px] font-normal text-white hover:bg-[#0077ED]">Get started</a>
+            <a href="#start" onClick={() => setOpen(false)} className="inline-flex h-7 items-center rounded-full bg-link px-3 text-[12px] font-normal text-white hover:bg-[#0077ED]">Get started</a>
           </div>
         </div>
         <AnimatePresence>

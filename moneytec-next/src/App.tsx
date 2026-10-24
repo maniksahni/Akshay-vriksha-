@@ -4,6 +4,7 @@ import { Grow } from './components/Grow';
 import { Hero } from './components/Hero';
 import { Highlights } from './components/Highlights';
 import { Nav } from './components/Nav';
+import { NextSteps } from './components/NextSteps';
 import { Plans } from './components/Plans';
 
 /** moneytec, told like a product launch: one idea per scene, lots of air, motion only where it means something. */
@@ -22,6 +23,7 @@ export default function App() {
         <Plans />
         <Safety />
         <Gulshan />
+        <NextSteps />
         <Faq />
         <Finale />
       </main>

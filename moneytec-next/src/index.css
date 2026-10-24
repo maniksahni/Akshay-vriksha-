@@ -145,3 +145,37 @@ input[type='range'].slider::-moz-range-thumb {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* Same Moneytec palette, with light concentrated around interactive focal points. */
+.coin-halo {
+  position: absolute; inset: -18%; pointer-events: none; border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(255,55,95,.15), rgba(191,90,242,.12) 42%, transparent 70%);
+}
+.hero-coin::after {
+  content: ''; position: absolute; inset: -8%; border: 1px solid rgba(191,90,242,.14);
+  border-radius: 50%; pointer-events: none; transform: rotateX(64deg); z-index: -1;
+}
+.pill-blue { box-shadow: 0 4px 18px rgba(0,113,227,.16); }
+.pill-blue:hover { box-shadow: 0 6px 25px rgba(0,113,227,.28); }
+.tile { border: 1px solid rgba(134,134,139,.12); }
+.calculator-summary { border: 1px solid rgba(134,134,139,.14); box-shadow: 0 18px 54px -35px rgba(191,90,242,.4); }
+.route-panel { border: 1px solid rgba(134,134,139,.16); box-shadow: 0 16px 44px -30px rgba(0,113,227,.25); }
+.step-number { background: rgba(0,113,227,.07); }
+.route-choice { transition: background-color .2s, border-color .2s, box-shadow .2s; }
+.route-choice:hover { box-shadow: 0 3px 15px rgba(0,113,227,.12); }
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .tile { transition: box-shadow .25s; }
+  .tile:hover { box-shadow: 0 15px 38px -22px rgba(191,90,242,.4); }
+}
+@media (max-height: 740px) and (min-width: 640px) {
+  .moneytec-hero .hero-coin { zoom: .72; margin-bottom: 3vh; }
+  .moneytec-hero h1 { font-size: clamp(2.6rem,6vw,4.3rem); }
+}
+@media (max-width: 639px) {
+  .moneytec-hero h1 { font-size: clamp(2.2rem,8.5vw,3.3rem); }
+  .moneytec-hero .hero-coin { margin-bottom: 7vh; }
+  .calculator-summary { padding: 24px; }
+}
+@media (max-width: 639px) and (max-height: 720px) {
+  .moneytec-hero .hero-coin { zoom: .78; margin-bottom: 4vh; }
+}

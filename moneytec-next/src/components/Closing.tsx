@@ -157,8 +157,8 @@ export function Finale() {
             <AnimatePresence mode="wait" initial={false}>
               {sent ? (
                 <motion.div key="sent" initial={{ opacity: 0, scale: 0.97 }} animate={{ opacity: 1, scale: 1 }} className="py-10 text-center">
-                  <p className="text-[28px] font-semibold tracking-[-0.03em]">You’re all set.</p>
-                  <p className="mt-2 text-white/65">Hit send in WhatsApp, and Gulshan will take it from there.</p>
+                  <p className="text-[28px] font-semibold tracking-[-0.03em]">Your draft is ready.</p>
+                  <p className="mt-2 text-white/65">Send your message in WhatsApp to start the conversation. Nothing has been submitted here.</p>
                   <button type="button" onClick={() => setSent(false)} className="textlink-dark mt-4">Change something ›</button>
                 </motion.div>
               ) : (
@@ -195,6 +195,8 @@ export function Footer() {
           <nav aria-label="Footer" className="flex flex-wrap gap-x-5 gap-y-1">
             {NAV.map((n) => <a key={n.href} href={n.href} className="hover:underline">{n.label}</a>)}
             <a href={wa('Hi!')} target="_blank" rel="noreferrer" className="hover:underline">WhatsApp</a>
+            <a href="https://www.instagram.com/akshayavriksha/" target="_blank" rel="noreferrer" className="hover:underline">Instagram</a>
+            <a href="https://www.facebook.com/gulshankohli13" target="_blank" rel="noreferrer" className="hover:underline">Facebook</a>
             <a href={`mailto:${FACTS.email}`} className="hover:underline">Email</a>
           </nav>
           <p>© {new Date().getFullYear()} moneytec · {FACTS.city}</p>

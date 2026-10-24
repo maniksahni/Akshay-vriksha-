@@ -5,7 +5,7 @@ import { EASE, inr, sipValue, useTween } from './ui';
 
 const AMOUNTS = [1000, 3000, 5000, 10000, 25000];
 const DURATIONS = [5, 10, 15, 20, 25, 30];
-const RATES = [10, 12, 14];
+const RATES = [0, 6, 8, 10, 12, 14];
 
 function Segmented<T extends number>({ options, value, onChange, label, fmt }: { options: T[]; value: T; onChange: (v: T) => void; label: string; fmt: (v: T) => string }) {
   return (
@@ -70,14 +70,15 @@ export function Configure() {
 
           {/* summary, sticky on desktop like a buy-page sidebar */}
           <aside className="lg:sticky lg:top-24 lg:self-start">
-            <div className="rounded-[28px] bg-cloud p-6 sm:p-8">
-              <p className="text-[14px] font-medium text-slate">In {years} years, you could have</p>
+            <div className="calculator-summary rounded-[28px] bg-cloud p-6 sm:p-8">
+              <p className="text-[14px] font-medium text-slate">Illustrated value after {years} years</p>
               <p className="display grad mt-1 text-[clamp(2.6rem,6vw,3.6rem)] tabular-nums">{inr(tTotal)}</p>
               <div className="mt-5 space-y-2 border-t border-mist pt-4 text-[15px]">
                 <div className="flex justify-between"><span className="text-slate">You put in</span><span className="font-semibold tabular-nums">{inr(invested)}</span></div>
                 <div className="flex justify-between"><span className="text-slate">Growth</span><span className="font-semibold tabular-nums text-[#248A3D]">+{inr(Math.max(0, total - invested))}</span></div>
               </div>
 
+              <div className="mt-5 flex h-2 overflow-hidden rounded-full bg-mist" role="img" aria-label={`Contributions ${inr(invested)}, illustrated growth ${inr(Math.max(0, total - invested))}`}><span className="bg-link transition-[width] duration-300" style={{ width: `${total ? invested / total * 100 : 100}%` }} /><span className="flex-1 bg-gradient-to-r from-[#FF375F] to-[#BF5AF2]" /></div>
               <div className="mt-6">
                 <p className="text-[14px] font-medium text-slate">Start now vs. start in 5 years</p>
                 <div className="mt-3 space-y-2.5">
@@ -90,10 +91,10 @@ export function Configure() {
                     <p className="mt-1 flex justify-between text-[13px] text-slate"><span>Start in 5 years</span><span className="font-semibold tabular-nums">{inr(tLate)}</span></p>
                   </div>
                 </div>
-                <p className="mt-3 text-[14px] font-semibold text-[#D70015]">Waiting could cost {inr(total - late)}.</p>
+                <p className="mt-3 text-[14px] font-semibold text-[#D70015]">Illustrated difference: {inr(total - late)}.</p>
               </div>
 
-              <a href={wa(`Hi Gulshan! I'd like to start a SIP of ${inr(monthly, false)} a month for ${years} years.`)} target="_blank" rel="noreferrer" className="pill-blue mt-6 w-full">Start this SIP</a>
+              <a href={wa(`Hi Gulshan! I'd like to discuss a SIP illustration: ${inr(monthly, false)} monthly for ${years} years, assuming ${rate}% annually. Illustrated value ${inr(total)}; contributions ${inr(invested)}. I understand returns are not guaranteed.`)} target="_blank" rel="noreferrer" className="pill-blue mt-6 w-full">Discuss this illustration</a>
               <p className="mt-3 text-[11px] leading-snug text-graphite">Contributions at the start of each month, constant {rate}% a year. Illustration only; mutual fund investments are subject to market risks.</p>
             </div>
           </aside>
