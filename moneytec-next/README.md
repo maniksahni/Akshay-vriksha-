@@ -9,3 +9,9 @@ Financial-services frontend for Moneytec with Gulshan Kohli (AMFI Registered Mut
 Features: SIP illustrations including a zero-return scenario, contribution/growth breakdown, delayed-start comparison, goal conversation prompts, financial-service highlights, credentials, FAQs and WhatsApp drafts. Drafts include calculator assumptions or selected planning answers; visitors must send them themselves. No investment transaction is made here.
 
 Polish includes restrained static glow, responsive layouts, useful next-step routes and keyboard/mobile navigation. Travel content and invented initials are excluded.
+
+## Mobile layout
+
+Below 640px, the hero and growth story use normal document flow, with a manual timeline slider. Service and goal cards stack within the screen rather than requiring horizontal swipes. Headings, illustrations, calculator controls and vertical spacing use compact phone sizes. Highlight autoplay defaults off.
+
+Validated in headless Chromium at 320×640, 375×667, 390×844, 430×932, 768×1024 and 1366×768: section overflow, mobile timeline, FAQ expansion, next-step links and menu Escape behavior. Phone screenshots were inspected. TypeScript and production build pass. Safari was not used.

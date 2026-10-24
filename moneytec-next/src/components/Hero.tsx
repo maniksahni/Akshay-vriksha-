@@ -59,8 +59,9 @@ export function Hero() {
   const ref = useRef<HTMLElement>(null);
   const { scrollYProgress: p } = useScroll({ target: ref, offset: ['start start', 'end end'] });
   const [size, setSize] = useState(360);
+  const [mobile, setMobile] = useState(false);
   useEffect(() => {
-    const set = () => setSize(window.innerWidth < 640 ? 230 : window.innerWidth < 1024 ? 320 : 380);
+    const set = () => { setMobile(window.innerWidth < 640); setSize(window.innerWidth < 640 ? 174 : window.innerWidth < 1024 ? 320 : 380); };
     set();
     window.addEventListener('resize', set);
     return () => window.removeEventListener('resize', set);
@@ -98,7 +99,7 @@ export function Hero() {
         {/* soft studio light */}
         <motion.div className="pointer-events-none absolute left-1/2 top-[38%] h-[70vmin] w-[70vmin] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(255,55,95,0.35),rgba(191,90,242,0.18)_40%,transparent_70%)] blur-2xl" style={{ opacity: glow }} />
 
-        <motion.div className="relative z-10 mt-[6vh] px-5 text-center sm:mt-[7vh]" style={{ opacity: titleOpacity, y: titleY }}>
+        <motion.div className="relative z-10 mt-[6vh] px-5 text-center sm:mt-[7vh]" style={{ opacity: mobile ? 1 : titleOpacity, y: mobile ? 0 : titleY }}>
           <motion.p className="eyebrow text-white/80" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9, ease: EASE }}>
             moneytec
           </motion.p>
@@ -112,19 +113,20 @@ export function Hero() {
             <br />
             <span className="grad">A smarter money journey.</span>
           </motion.h1>
+          <p className="hero-mobile-intro">Goal-based SIPs, insurance and NRI investing with Gulshan Kohli.</p>
           <motion.div className="mt-5 flex flex-wrap items-center justify-center gap-x-6 gap-y-3" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1, delay: 0.5 }}>
             <a href="#start" className="pill-blue">Get started</a>
             <a href="#calculator" className="textlink-dark">Try the calculator ›</a>
           </motion.div>
         </motion.div>
 
-        <motion.div className="hero-coin relative z-0 mt-auto mb-[9vh] sm:mb-[7vh]" style={{ scale, y: coinY }} initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 1.4, ease: EASE, delay: 0.2 }}>
+        <motion.div className="hero-coin relative z-0 mt-auto mb-[9vh] sm:mb-[7vh]" style={{ scale: mobile ? 1 : scale, y: mobile ? 0 : coinY }} initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 1.4, ease: EASE, delay: 0.2 }}>
           <div className="coin-halo" aria-hidden="true" /><TitaniumCoin size={size} spin={spin} tiltX={tiltX} tiltY={tiltY} />
           {/* floor reflection */}
           <div className="absolute -bottom-10 left-1/2 h-10 w-[70%] -translate-x-1/2 rounded-[50%] bg-white/10 blur-xl" />
         </motion.div>
 
-        <motion.div className="absolute inset-x-0 top-[16vh] z-10 px-5 text-center" style={{ opacity: line2Opacity, y: line2Y }}>
+        <motion.div className="hero-second-copy absolute inset-x-0 top-[16vh] z-10 px-5 text-center" style={{ opacity: mobile ? 1 : line2Opacity, y: mobile ? 0 : line2Y }}>
           <p className="display text-[clamp(2rem,5.2vw,4rem)]">
             Tools that bring clarity.
             <br />

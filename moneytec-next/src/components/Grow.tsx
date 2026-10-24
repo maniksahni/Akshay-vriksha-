@@ -1,15 +1,15 @@
 import { motion, useMotionValueEvent, useScroll, useTransform } from 'framer-motion';
-import { useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { inr, sipValue } from './ui';
 
 const MONTHLY = 5000;
 const RATE = 12;
 const YEARS = 30;
 const MILESTONES = [
-  { at: 0, line: 'It starts small.', sub: 'Five thousand a month. Less than a weekend away.' },
+  { at: 0, line: 'It starts small.', sub: 'A regular contribution, built around your budget.' },
   { at: 10, line: 'Then it starts to show.', sub: 'A decade in, growth is doing a real share of the work.' },
-  { at: 20, line: 'Then it outpaces you.', sub: 'Each year now adds more than you put in.' },
-  { at: 30, line: 'Then it changes your life.', sub: 'A home. A retirement. A choice you get to make.' },
+  { at: 20, line: 'See the longer view.', sub: 'Explore how the assumed return changes the illustration.' },
+  { at: 30, line: 'Keep the goal in view.', sub: 'Review progress and suitability as your circumstances change.' },
 ];
 
 /** Pinned scene: scroll through thirty years of one SIP; the number and the curve grow with you. */
@@ -17,11 +17,15 @@ export function Grow() {
   const ref = useRef<HTMLElement>(null);
   const { scrollYProgress: p } = useScroll({ target: ref, offset: ['start start', 'end end'] });
   const [year, setYear] = useState(0);
+  const [mobile, setMobile] = useState(false);
+  const [mobileYear, setMobileYear] = useState(10);
+  useEffect(() => { const media = matchMedia("(max-width: 639px)"); const sync = () => setMobile(media.matches); sync(); media.addEventListener("change", sync); return () => media.removeEventListener("change", sync); }, []);
+  const displayYear = mobile ? mobileYear : year;
   useMotionValueEvent(p, 'change', (v) => setYear(Math.round(Math.min(1, Math.max(0, (v - 0.05) / 0.85)) * YEARS)));
 
-  const value = sipValue(MONTHLY, RATE, year * 12);
-  const invested = MONTHLY * 12 * year;
-  const ms = MILESTONES.reduce((a, m) => (year >= m.at ? m : a), MILESTONES[0]);
+  const value = sipValue(MONTHLY, RATE, displayYear * 12);
+  const invested = MONTHLY * 12 * displayYear;
+  const ms = MILESTONES.reduce((a, m) => (displayYear >= m.at ? m : a), MILESTONES[0]);
 
   // the curve, precomputed; drawn up to the current scroll position
   const W = 600, H = 220;
@@ -44,7 +48,7 @@ export function Grow() {
           <div className="mx-auto mt-8 grid max-w-3xl grid-cols-3 items-end gap-3 sm:mt-10">
             <div>
               <p className="text-[12px] font-medium text-graphite sm:text-sm">Year</p>
-              <p className="display text-[clamp(2rem,6vw,4rem)] tabular-nums">{year}</p>
+              <p className="display text-[clamp(2rem,6vw,4rem)] tabular-nums">{displayYear}</p>
             </div>
             <div>
               <p className="text-[12px] font-medium text-graphite sm:text-sm">You put in</p>
@@ -65,8 +69,9 @@ export function Grow() {
               </linearGradient>
             </defs>
             <path d={path} fill="none" stroke="#E8E8ED" strokeWidth="3" vectorEffect="non-scaling-stroke" />
-            <motion.path d={path} fill="none" stroke="url(#grow-line)" strokeWidth="4" strokeLinecap="round" vectorEffect="non-scaling-stroke" style={{ pathLength: draw }} />
+            <motion.path d={path} fill="none" stroke="url(#grow-line)" strokeWidth="4" strokeLinecap="round" vectorEffect="non-scaling-stroke" style={{ pathLength: mobile ? mobileYear / YEARS : draw }} />
           </svg>
+          {mobile && <label className="mt-4 block text-left text-sm text-slate">Explore the timeline · {mobileYear} years<input className="slider mt-2" type="range" min="1" max="30" value={mobileYear} onChange={e => setMobileYear(Number(e.target.value))} aria-label="Illustration timeline in years" /></label>}
           <p className="mt-4 text-[11px] text-graphite">₹5,000 a month at an assumed 12% a year, for illustration. Returns aren’t guaranteed; mutual funds are subject to market risks.</p>
         </div>
       </div>

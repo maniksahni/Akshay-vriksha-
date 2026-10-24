@@ -56,7 +56,7 @@ export function Plans() {
 
         <motion.div
           ref={track}
-          className="no-scrollbar -mx-5 mt-6 flex snap-x snap-mandatory gap-3 overflow-x-auto px-5 pb-2 pt-4 text-left md:mx-0 md:mt-8 md:grid md:grid-cols-3 md:gap-5 md:overflow-visible md:px-0"
+          className="plans-track no-scrollbar -mx-5 mt-6 flex snap-x snap-mandatory gap-3 overflow-x-auto px-5 pb-2 pt-4 text-left md:mx-0 md:mt-8 md:grid md:grid-cols-3 md:gap-5 md:overflow-visible md:px-0"
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '0px 0px -10% 0px' }}
@@ -88,7 +88,7 @@ export function Plans() {
             );
           })}
         </motion.div>
-        <p className="mt-1 text-[12px] text-graphite md:hidden">Swipe to compare ›</p>
+        <p className="plans-swipe mt-1 text-[12px] text-graphite md:hidden">Swipe to compare ›</p>
         <p className="mx-auto mt-6 max-w-2xl text-[12px] text-graphite">These are starting points for a conversation, not product recommendations. Suitability depends on your full financial circumstances and risk assessment.</p>
       </div>
     </section>

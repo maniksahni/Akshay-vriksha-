@@ -17,6 +17,13 @@ export default function App() {
       <Nav />
       <main id="main">
         <Hero />
+        <div className="border-b border-mist bg-white py-5">
+          <div className="wrap-wide flex flex-wrap items-center justify-center gap-x-7 gap-y-3 text-center text-xs text-slate">
+            <a href="https://www.amfiindia.com/locate-distributor" target="_blank" rel="noreferrer" className="hover:underline"><strong className="text-coal">AMFI Registered Mutual Fund Distributor</strong> · ARN-105840 ↗</a>
+            <span><strong className="text-coal">Gulshan Kohli</strong> · 12+ years of experience</span>
+            <a href="#safety" className="text-link">Understand how your money is handled ↓</a>
+          </div>
+        </div>
         <Grow />
         <Highlights />
         <Configure />

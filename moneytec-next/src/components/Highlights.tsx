@@ -66,7 +66,7 @@ const CARDS = [
 export function Highlights() {
   const track = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(0);
-  const [playing, setPlaying] = useState(true);
+  const [playing, setPlaying] = useState(false);
 
   const goTo = (i: number) => {
     const el = track.current;
@@ -105,9 +105,9 @@ export function Highlights() {
   return (
     <section id="highlights" className="bg-snow py-16 sm:py-24">
       <div className="wrap-wide">
-        <h2 className="display text-[clamp(2rem,4.6vw,3.5rem)]">Get the highlights.</h2>
+        <h2 className="display text-[clamp(2rem,4.6vw,3.5rem)]">How we can help.</h2>
       </div>
-      <div ref={track} className="no-scrollbar mt-8 flex snap-x snap-mandatory gap-5 overflow-x-auto px-5 sm:px-[max(2rem,calc((100vw-1260px)/2+2rem))]">
+      <div ref={track} className="highlights-track no-scrollbar mt-8 flex snap-x snap-mandatory gap-5 overflow-x-auto px-5 sm:px-[max(2rem,calc((100vw-1260px)/2+2rem))]">
         {CARDS.map((c, i) => (
           <article key={c.title} className={`relative flex h-[320px] w-[78vw] max-w-[340px] shrink-0 snap-center flex-col overflow-hidden rounded-[24px] bg-gradient-to-b ${c.bg} p-5 text-white sm:rounded-[28px] sm:h-[520px] sm:w-[60vw] sm:max-w-[680px] sm:p-10`}>
             <p className="text-[21px] font-semibold leading-tight tracking-[-0.03em] sm:text-[32px]">{c.title}</p>
@@ -118,7 +118,7 @@ export function Highlights() {
           </article>
         ))}
       </div>
-      <div className="mt-6 flex items-center justify-center gap-3">
+      <div className="highlights-controls mt-6 flex items-center justify-center gap-3">
         <div className="flex items-center gap-2 rounded-full bg-mist/80 px-4 py-3" role="tablist" aria-label="Highlights">
           {CARDS.map((c, i) => (
             <button key={c.title} role="tab" aria-selected={i === active} aria-label={`Show highlight ${i + 1}`} onClick={() => { setPlaying(false); goTo(i); }} className={`h-2 rounded-full transition-all duration-500 ${i === active ? 'w-8 bg-coal' : 'w-2 bg-graphite/60'}`} />
