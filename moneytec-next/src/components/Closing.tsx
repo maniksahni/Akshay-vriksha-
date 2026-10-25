@@ -99,7 +99,7 @@ export function Faq() {
   return (
     <section id="faq" className="bg-snow py-16 sm:py-24">
       <div className="wrap">
-        <h2 className="display text-[clamp(2rem,4.6vw,3.5rem)]">Questions? Answers.</h2>
+        <h2 className="display text-[clamp(2rem,4.6vw,3.5rem)]">A little clarity goes a long way.</h2>
         <div className="mt-8 border-t border-mist">
           {FAQ.map(([q, a], i) => {
             const on = open === i;
@@ -148,7 +148,7 @@ export function Finale() {
       <div className="wrap relative text-center">
         <Reveal>
           <h2 className="display text-[clamp(2.6rem,7vw,5.6rem)]">
-            Start your SIP <span className="grad">today.</span>
+            Your next chapter<br /><span className="hero-serif grad">starts here.</span>
           </h2>
           <p className="body-lg mx-auto mt-4 max-w-lg text-white/65">Tell us a little. It opens WhatsApp with everything filled in, and Gulshan replies personally.</p>
         </Reveal>
@@ -188,6 +188,7 @@ export function Footer() {
   return (
     <footer className="bg-cloud pb-10 pt-8 text-[12px] leading-relaxed text-slate">
       <div className="wrap-wide">
+        <div className="footer-signature" aria-hidden="true">moneytec<span>↗</span></div>
         <p className="border-b border-mist pb-4">
           {FACTS.name} is an AMFI-registered mutual fund distributor ({FACTS.arn}) and a Kotak Life Insurance advisor ({FACTS.kotak}). {DISCLAIMER}
         </p>

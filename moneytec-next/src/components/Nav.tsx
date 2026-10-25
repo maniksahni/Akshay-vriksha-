@@ -53,7 +53,7 @@ export function Nav() {
         }`}
       >
         <div className={`wrap-wide flex h-[52px] items-center justify-between transition-colors duration-500 ${!frosted || dark ? 'text-white' : 'text-coal'}`}>
-          <a href="#top" className="text-[21px] font-semibold tracking-[-0.03em]">moneytec</a>
+          <a href="#top" className="text-[21px] font-semibold tracking-[-0.03em]"><Wordmark dark={!frosted || dark} /></a>
           <div className="flex items-center gap-5">
             <nav aria-label="Sections" className="hidden items-center gap-6 text-[12px] md:flex">
               {NAV.map((n) => (

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { FadeIn } from './ui';
 import { wa } from '../data';
 
 const CARDS = [
@@ -45,7 +45,7 @@ const CARDS = [
     art: (
       <svg viewBox="0 0 200 140" className="h-full w-full" aria-hidden>
         <defs><linearGradient id="h4" x1="0" x2="1"><stop offset="0" stopColor="#FFD60A" /><stop offset="1" stopColor="#FF9F0A" /></linearGradient></defs>
-        <text x="100" y="92" textAnchor="middle" fontSize="70" fontWeight="800" fill="url(#h4)" fontFamily="Inter, sans-serif" letterSpacing="-4">80C</text>
+        <path d="M45 30h45l10 8 10-8h45v80h-45l-10 8-10-8H45Z M100 38v80 M58 50h27 M58 65h27 M115 50h27 M115 65h27" fill="none" stroke="url(#h4)" strokeWidth="3" strokeLinejoin="round" />
       </svg>
     ),
   },
@@ -62,75 +62,26 @@ const CARDS = [
   },
 ];
 
-/** "Get the highlights": a snap carousel that auto-advances, with play/pause and dots. */
+/** All services stay visible in an editorial grid; motion is limited to entry and hover. */
 export function Highlights() {
-  const track = useRef<HTMLDivElement>(null);
-  const [active, setActive] = useState(0);
-  const [playing, setPlaying] = useState(false);
-
-  const goTo = (i: number) => {
-    const el = track.current;
-    const card = el?.children[i] as HTMLElement | undefined;
-    if (el && card) el.scrollTo({ left: card.offsetLeft - el.offsetLeft - (el.clientWidth - card.clientWidth) / 2, behavior: 'smooth' });
-  };
-
-  useEffect(() => {
-    const el = track.current;
-    if (!el) return;
-    const onScroll = () => {
-      const mid = el.scrollLeft + el.clientWidth / 2;
-      let best = 0, dist = Infinity;
-      [...el.children].forEach((c, i) => {
-        const e = c as HTMLElement;
-        const d = Math.abs(e.offsetLeft - el.offsetLeft + e.clientWidth / 2 - mid);
-        if (d < dist) { dist = d; best = i; }
-      });
-      setActive(best);
-    };
-    el.addEventListener('scroll', onScroll, { passive: true });
-    return () => el.removeEventListener('scroll', onScroll);
-  }, []);
-
-  // auto-advance only while the carousel is on screen
-  useEffect(() => {
-    if (!playing) return;
-    const el = track.current;
-    let visible = false;
-    const io = new IntersectionObserver(([e]) => (visible = e.isIntersecting), { threshold: 0.4 });
-    if (el) io.observe(el);
-    const id = setInterval(() => { if (visible) goTo((active + 1) % CARDS.length); }, 4500);
-    return () => { clearInterval(id); io.disconnect(); };
-  }, [playing, active]);
-
   return (
-    <section id="highlights" className="bg-snow py-16 sm:py-24">
+    <section id="highlights" data-dark className="services-editorial">
       <div className="wrap-wide">
-        <h2 className="display text-[clamp(2rem,4.6vw,3.5rem)]">How we can help.</h2>
-      </div>
-      <div ref={track} className="highlights-track no-scrollbar mt-8 flex snap-x snap-mandatory gap-5 overflow-x-auto px-5 sm:px-[max(2rem,calc((100vw-1260px)/2+2rem))]" aria-label="Financial services">
-        {CARDS.map((c, i) => (
-          <article key={c.title} className={`relative flex h-[320px] w-[78vw] max-w-[340px] shrink-0 snap-center flex-col overflow-hidden rounded-[24px] bg-gradient-to-b ${c.bg} p-5 text-white sm:rounded-[28px] sm:h-[520px] sm:w-[60vw] sm:max-w-[680px] sm:p-10`}>
-            <p className="text-[21px] font-semibold leading-tight tracking-[-0.03em] sm:text-[32px]">{c.title}</p>
-            <p className="mt-1.5 max-w-sm text-[14px] leading-snug text-white/65 sm:text-[17px]">{c.body}</p>
-            <div className="mt-auto h-[38%] w-full sm:h-[46%]">{c.art}</div>
-            <a href={wa(`Hi Gulshan! Tell me more: ${c.title}`)} target="_blank" rel="noreferrer" className="textlink-dark mt-3 text-[14px] sm:mt-4 sm:text-[15px]">Ask about this ›</a>
-            <span className="sr-only">{i + 1} of {CARDS.length}</span>
-          </article>
-        ))}
-      </div>
-      <div className="highlights-controls mt-6 flex items-center justify-center gap-3">
-        <div className="flex items-center gap-2 rounded-full bg-mist/80 px-4 py-3" role="tablist" aria-label="Highlights">
+        <div className="section-heading">
+          <div><p className="section-index">01 / YOUR FINANCIAL WORLD</p><h2>One life.<br /><em>Many possibilities.</em></h2></div>
+          <p>Your first SIP. Your family’s protection. Your next chapter. Start with what matters to you.</p>
+        </div>
+        <div className="services-grid">
           {CARDS.map((c, i) => (
-            <button key={c.title} role="tab" aria-selected={i === active} aria-label={`Show highlight ${i + 1}`} onClick={() => { setPlaying(false); goTo(i); }} className={`h-2 rounded-full transition-all duration-500 ${i === active ? 'w-8 bg-coal' : 'w-2 bg-graphite/60'}`} />
+            <FadeIn key={c.title} className={`service-panel service-panel-${i}`} delay={i * .05}>
+              <article>
+                <div className="service-topline"><span>0{i + 1}</span><span>{['BUILD','PROTECT','CONNECT','UNDERSTAND','REVIEW'][i]}</span></div>
+                <div className="service-art">{c.art}</div>
+                <div className="service-caption"><h3>{c.title}</h3><p>{c.body}</p><a href={wa(`Hi Gulshan! Tell me more: ${c.title}`)} target="_blank" rel="noreferrer">Let’s talk <span aria-hidden="true">↗</span></a></div>
+              </article>
+            </FadeIn>
           ))}
         </div>
-        <button onClick={() => setPlaying((v) => !v)} aria-label={playing ? 'Pause highlights' : 'Play highlights'} className="grid h-11 w-11 place-items-center rounded-full bg-mist/80 text-coal">
-          {playing ? (
-            <svg viewBox="0 0 24 24" className="h-4 w-4" fill="currentColor"><rect x="6" y="5" width="4" height="14" rx="1" /><rect x="14" y="5" width="4" height="14" rx="1" /></svg>
-          ) : (
-            <svg viewBox="0 0 24 24" className="h-4 w-4" fill="currentColor"><path d="M8 5v14l11-7z" /></svg>
-          )}
-        </button>
       </div>
     </section>
   );

@@ -1,4 +1,4 @@
-import { motion, MotionValue, useMotionValue, useScroll, useSpring, useTransform } from 'framer-motion';
+import { motion, MotionValue, useMotionValue, useMotionValueEvent, useScroll, useSpring, useTransform } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
 import { FACTS } from '../data';
 import { EASE, reduced } from './ui';
@@ -60,6 +60,8 @@ export function Hero() {
   const { scrollYProgress: p } = useScroll({ target: ref, offset: ['start start', 'end end'] });
   const [size, setSize] = useState(360);
   const [mobile, setMobile] = useState(false);
+  const [secondScene, setSecondScene] = useState(false);
+  useMotionValueEvent(p, 'change', value => setSecondScene(value > 0.55));
   useEffect(() => {
     const set = () => { setMobile(window.innerWidth < 640); setSize(window.innerWidth < 640 ? 148 : window.innerWidth < 1024 ? 360 : 500); };
     set();
@@ -72,10 +74,10 @@ export function Hero() {
   const spin = useSpring(spinRaw, { stiffness: 80, damping: 22 });
   const scale = useTransform(p, [0, 0.55, 1], [1, 1.12, 0.92]);
   const coinY = useTransform(p, [0, 1], ['0%', '-6%']);
-  const titleOpacity = useTransform(p, [0, 0.32], [1, 0]);
-  const titleY = useTransform(p, [0, 0.32], [0, -40]);
-  const line2Opacity = useTransform(p, [0.45, 0.65, 0.95, 1], [0, 1, 1, 0.9]);
-  const line2Y = useTransform(p, [0.45, 0.65], [40, 0]);
+  const titleOpacity = useTransform(p, [0.15, 0.55], [1, 0]);
+  const titleY = useTransform(p, [0.15, 0.55], [0, -40]);
+  const line2Opacity = useTransform(p, [0.5, 0.72, 0.95, 1], [0, 1, 1, 0.9]);
+  const line2Y = useTransform(p, [0.5, 0.72], [40, 0]);
   const glow = useTransform(p, [0, 0.6], [0.35, 0.75]);
 
   // gentle pointer tilt
@@ -94,12 +96,12 @@ export function Hero() {
   }, [tx, ty]);
 
   return (
-    <section id="top" data-dark ref={ref} className="moneytec-hero relative -mt-[52px] h-[300svh] bg-night text-white">
+    <section id="top" data-dark ref={ref} className="moneytec-hero relative -mt-[52px] h-[175svh] bg-night text-white">
       <div className="sticky top-0 flex h-[100svh] flex-col items-center overflow-hidden pt-[52px]">
         {/* A restrained studio glow gives the metal mark depth without competing with the message. */}
         <motion.div className="hero-ambient pointer-events-none absolute rounded-full bg-[radial-gradient(circle,rgba(255,55,95,0.28),rgba(191,90,242,0.18)_40%,transparent_70%)] blur-2xl" style={{ opacity: glow }} />
 
-        <motion.div className="hero-stage relative z-10 mx-auto flex w-full max-w-[1320px] flex-1 items-center px-5 sm:px-8" style={{ opacity: mobile ? 1 : titleOpacity, y: mobile ? 0 : titleY }}>
+        <motion.div aria-hidden={!mobile && secondScene} className="hero-stage relative z-10 mx-auto flex w-full max-w-[1320px] flex-1 items-center px-5 sm:px-8" style={{ opacity: mobile ? 1 : titleOpacity, y: mobile ? 0 : titleY, pointerEvents: !mobile && secondScene ? 'none' : 'auto' }}>
           <div className="hero-copy relative z-10 w-full">
             <motion.p className="hero-kicker" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9, ease: EASE }}>
               <span className="hero-kicker-mark" /> MONEYTEC <span className="hero-kicker-rule" /> MONEY, WITH MEANING
@@ -116,8 +118,8 @@ export function Hero() {
             <p className="hero-description">A clearer path to your goals, built around your life.</p>
             <p className="hero-mobile-intro">Goal-based mutual fund investing, insurance and NRI guidance with Gulshan Kohli.</p>
             <motion.div className="mt-7 flex flex-wrap items-center gap-x-6 gap-y-3" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1, delay: 0.5 }}>
-              <a href="#start" className="hero-primary">Start a conversation <span aria-hidden="true">↗</span></a>
-              <a href="#calculator" className="hero-secondary">Explore your plan <span aria-hidden="true">↓</span></a>
+              <a href="#start" tabIndex={!mobile && secondScene ? -1 : undefined} className="hero-primary">Start a conversation <span aria-hidden="true">↗</span></a>
+              <a href="#calculator" tabIndex={!mobile && secondScene ? -1 : undefined} className="hero-secondary">Explore your plan <span aria-hidden="true">↓</span></a>
             </motion.div>
             <div className="hero-credentials" aria-label="Professional credentials">
               <span><i aria-hidden="true">✳</i> AMFI registered <b>ARN-105840</b></span>
@@ -128,20 +130,20 @@ export function Hero() {
           <motion.div className="hero-coin relative z-0" style={{ scale: mobile ? 1 : scale, y: mobile ? 0 : coinY }} initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 1.4, ease: EASE, delay: 0.2 }}>
           <div className="coin-halo" aria-hidden="true" /><TitaniumCoin size={size} spin={spin} tiltX={tiltX} tiltY={tiltY} staticFacing={mobile} />
           <div className="absolute -bottom-10 left-1/2 h-10 w-[70%] -translate-x-1/2 rounded-[50%] bg-white/10 blur-xl" />
-            <div className="hero-orbit-label"><span className="hero-orbit-dot" /> BUILT AROUND YOU <span>01 / 04</span></div>
+            <div className="hero-orbit-label"><span className="hero-orbit-dot" /> BUILT AROUND YOU <span>MONEYTEC</span></div>
           </motion.div>
         </motion.div>
 
-        <motion.div className="hero-second-copy absolute inset-x-0 top-[19vh] z-10 px-5 text-center" style={{ opacity: mobile ? 1 : line2Opacity, y: mobile ? 0 : line2Y }}>
+        <motion.div aria-hidden={mobile || !secondScene} className="hero-second-copy absolute inset-x-0 top-[19vh] z-10 px-5 text-center" style={{ opacity: mobile ? 1 : line2Opacity, y: mobile ? 0 : line2Y, pointerEvents: secondScene ? 'auto' : 'none' }}>
           <p className="hero-kicker justify-center"><span className="hero-kicker-mark" /> A MORE PERSONAL APPROACH TO MONEY</p>
           <p className="display mt-6 text-[clamp(2.4rem,6vw,5.2rem)]">
             Clarity for the plan.<br />
-            <span className="hero-serif grad-mint">Confidence in the person.</span>
+            <span className="hero-serif grad">Confidence in the person.</span>
           </p>
           <p className="body-lg mx-auto mt-5 max-w-xl text-white/65">
             Goal-based investing, family protection and NRI guidance, with {FACTS.name} alongside you.
           </p>
-          <a href="#grow" className="hero-secondary mt-7">See how it works <span aria-hidden="true">↓</span></a>
+          <a href="#highlights" tabIndex={secondScene && !mobile ? undefined : -1} className="hero-secondary mt-7">See how it works <span aria-hidden="true">↓</span></a>
         </motion.div>
       </div>
     </section>

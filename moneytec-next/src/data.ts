@@ -16,13 +16,11 @@ export const FACTS = {
 export const wa = (text: string) => `https://wa.me/${FACTS.phoneIntl}?text=${encodeURIComponent(text)}`;
 
 export const NAV = [
+  { label: 'Expertise', href: '#highlights' },
   { label: 'Growth', href: '#grow' },
-  { label: 'Highlights', href: '#highlights' },
-  { label: 'Instagram', href: '#instagram' },
   { label: 'Calculator', href: '#calculator' },
   { label: 'Plans', href: '#plans' },
-  { label: 'Next steps', href: '#next-steps' },
-  { label: 'Safety', href: '#safety' },
+  { label: 'Our approach', href: '#safety' },
   { label: 'Gulshan', href: '#gulshan' },
   { label: 'FAQ', href: '#faq' },
 ];

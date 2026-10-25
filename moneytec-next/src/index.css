@@ -300,3 +300,84 @@ input[type='range'].slider::-moz-range-thumb {
   .hero-coin { zoom: .82; margin-top: 11px !important; }
   .hero-credentials { margin-top: 12px; }
 }
+
+/* A continuous editorial system, from the first frame to the last. */
+.services-editorial { position: relative; padding: 100px 0 110px; color: #f4f2f7; background: #09090b; border-top: 1px solid #242329; }
+.section-heading { display: flex; align-items: end; justify-content: space-between; gap: 35px; margin-bottom: 42px; }
+.section-index { color: #b1a4b9; font-size: 10px; letter-spacing: .22em; font-weight: 600; }
+.section-heading h2 { margin-top: 22px; font-size: clamp(40px, 5.4vw, 68px); line-height: 1.04; letter-spacing: -.055em; font-weight: 500; }
+.section-heading h2 em { font-family: Georgia, serif; font-weight: 400; color: #d4bccf; }
+.section-heading > p { max-width: 300px; color: #a5a1aa; font-size: 15px; line-height: 1.7; }
+.services-grid { display: grid; grid-template-columns: repeat(6, minmax(0,1fr)); gap: 16px; }
+.service-panel { grid-column: span 2; min-width: 0; border: 1px solid #2a272f; border-radius: 22px; overflow: hidden; background: linear-gradient(140deg,#1c1821,#101013); transition: border-color .3s; }
+.service-panel:nth-child(-n+2) { grid-column: span 3; }
+.service-panel article { position: relative; height: 100%; min-height: 350px; padding: 27px; overflow: hidden; display: flex; flex-direction: column; }
+.service-panel:nth-child(-n+2) article { min-height: 390px; }
+.service-topline { display: flex; justify-content: space-between; color: #9f96a7; font-size: 10px; letter-spacing: .16em; }
+.service-topline > span:first-child { color: #ddd5e3; }
+.service-art { width: 150px; height: 105px; margin: 20px auto; transition: transform .5s; filter: drop-shadow(0 10px 35px #bf5af22b); }
+.service-panel:nth-child(-n+2) .service-art { width: 230px; height: 140px; }
+.service-caption { position: relative; margin-top: auto; }
+.service-caption h3 { max-width: 320px; font-size: 24px; line-height: 1.12; letter-spacing: -.035em; font-weight: 500; }
+.service-caption p { margin-top: 12px; max-width: 340px; font-size: 13px; line-height: 1.65; color: #a9a4af; }
+.service-caption a { margin-top: 24px; padding-top: 15px; border-top: 1px solid #ffffff16; display: flex; justify-content: space-between; font-size: 12px; color: #e3dce8; }
+.service-caption a span { font-size: 17px; color: #f4b0ce; }
+.service-panel-0 { background: radial-gradient(ellipse at 70% 15%,#442337 0,transparent 65%),#151217; }
+.service-panel-1 { background: radial-gradient(ellipse at 75% 20%,#1d2e43 0,transparent 65%),#11151a; }
+@media (hover:hover) { .service-panel:hover { border-color: #8b607c; } .service-panel:hover .service-art { transform: translateY(-5px) scale(1.04); } }
+#grow { background: radial-gradient(ellipse at 80% 55%,#ece5f1,transparent 65%),#f9f8fa; }
+#grow > .sticky > .wrap { position: relative; padding-top: 35px; padding-bottom: 35px; }
+#grow svg { background-image: linear-gradient(#1a14200a 1px,transparent 1px),linear-gradient(90deg,#1a14200a 1px,transparent 1px); background-size: 100% 25%,10% 100%; }
+#instagram { background: #f0edf2; }
+.instagram-reel { box-shadow: 0 18px 40px -24px #20102877; border: 1px solid #ffffff; }
+#calculator { background: #faf9fb; }
+#calculator h2, #plans h2, #instagram h2, #gulshan h2, #faq h2 { letter-spacing: -.055em; }
+.calculator-summary { background: linear-gradient(145deg,#fff,#eee8f4); box-shadow: 0 28px 70px -45px #673e7b77; }
+#plans { background: #eeeaf0; }
+.plans-track > div { border: 1px solid #dbd5df; box-shadow: 0 18px 36px -30px #2e153b55; }
+#safety { position: relative; background: radial-gradient(ellipse at 15% 15%,#242035 0,transparent 58%),radial-gradient(ellipse at 85% 95%,#30202c 0,transparent 55%),#09090b; }
+#safety .grad-mint { background-image: linear-gradient(90deg,#ff9f0a,#ff375f 45%,#bf5af2); }
+#safety .mt-12 > div { border-top: 1px solid #ffffff25; padding-top: 24px; }
+#gulshan { background: #f8f6f9; }
+#gulshan .aspect-square { border: 1px solid #ded7e3; background: radial-gradient(ellipse at 20% 20%,#fff,#ddd4e5); box-shadow: 0 30px 65px -45px #653777; }
+#faq { background: #f1eef3; }
+#faq button { padding-top: 24px; padding-bottom: 24px; }
+#faq button > span:first-child { font-weight: 500; }
+#start { background: radial-gradient(ellipse at 12% 20%,#302031,transparent 55%),radial-gradient(ellipse at 95% 75%,#181e31,transparent 55%),#09090b; }
+#start form { border: 1px solid #ffffff10; box-shadow: 0 35px 90px -50px #000; background: linear-gradient(120deg,#ffffff09,#ffffff03); }
+#start h2 { font-weight: 500; letter-spacing: -.065em; }
+footer { background: #e9e5ed !important; }
+.footer-signature { display: flex; align-items: start; justify-content: space-between; padding: 22px 0 45px; color: #211b28; font-size: clamp(70px,15.7vw,195px); line-height: 1; font-weight: 600; letter-spacing: -.085em; }
+.footer-signature span { margin-top: 12px; font-size: .4em; font-weight: 300; color: #9d6c9b; }
+@media (min-width: 640px) {
+ .moneytec-hero .hero-stage { min-height: 0; }
+ .moneytec-hero > .sticky { padding-bottom: 28px; }
+ .hero-coin { right: 0; }
+ .hero-second-copy { top: 31vh; }
+}
+@media (max-width: 900px) and (min-width:640px) {
+ .service-panel { grid-column: span 3; }
+ .service-panel:last-child { grid-column: span 6; }
+ .service-panel:last-child article { min-height: 240px; }
+ .service-panel:last-child .service-art { position:absolute; right: 10%; top: 40px; }
+ .hero-coin { right: -16%; }
+}
+@media (max-width: 639px) {
+ .services-editorial { padding: 45px 0 !important; }
+ .section-heading { display:block; margin-bottom:24px; }
+ .section-index { font-size: 8px; }
+ .section-heading h2 { font-size: 39px; margin-top: 16px; }
+ .section-heading > p { margin-top: 18px; font-size: 13px; max-width: 340px; }
+ .services-grid { grid-template-columns: 1fr; gap: 12px; }
+ .service-panel, .service-panel:nth-child(-n+2) { grid-column: auto; }
+ .service-panel article, .service-panel:nth-child(-n+2) article { min-height: 0; padding: 20px; }
+ .service-topline { font-size: 8px; }
+ .service-art, .service-panel:nth-child(-n+2) .service-art { position: absolute; right: 13px; top: 38px; width: 80px; height: 75px; margin: 0; }
+ .service-caption { margin-top: 24px; }
+ .service-caption h3 { font-size: 21px; padding-right: 80px; }
+ .service-caption p { font-size: 12px; max-width: 100%; padding-right: 75px; }
+ .service-caption a { margin-top: 17px; }
+ .footer-signature { padding: 14px 0 30px; }
+ #start .hero-serif { display:inline-block; }
+ #grow > .sticky > .wrap { padding-top:0; padding-bottom:0; }
+}

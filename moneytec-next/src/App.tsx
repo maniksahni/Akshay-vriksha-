@@ -25,8 +25,8 @@ export default function App() {
             <a href="#safety" className="text-link">Understand how your money is handled ↓</a>
           </div>
         </div>
-        <Grow />
         <Highlights />
+        <Grow />
         <InstagramReels />
         <Configure />
         <Plans />
