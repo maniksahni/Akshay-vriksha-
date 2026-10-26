@@ -72,7 +72,7 @@ export function Grow() {
             <motion.path d={path} fill="none" stroke="url(#grow-line)" strokeWidth="4" strokeLinecap="round" vectorEffect="non-scaling-stroke" style={{ pathLength: mobile ? mobileYear / YEARS : draw }} />
           </svg>
           {mobile && <label className="mt-4 block text-left text-sm text-slate">Explore the timeline · {mobileYear} years<input className="slider mt-2" type="range" min="1" max="30" value={mobileYear} onChange={e => setMobileYear(Number(e.target.value))} aria-label="Illustration timeline in years" /></label>}
-          <p className="mt-4 text-[11px] text-graphite">₹5,000 a month at an assumed 12% a year, for illustration. Returns aren’t guaranteed; mutual funds are subject to market risks.</p>
+          <p className="mt-4 text-[11px] text-graphite">₹5,000 per month, assuming CAGR of 12% per year. Illustration only.<br />Returns are not guaranteed.<br />Mutual fund investments are subject to market risks.</p>
         </div>
       </div>
     </section>

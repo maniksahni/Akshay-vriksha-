@@ -3,54 +3,20 @@ import { useEffect, useRef, useState } from 'react';
 import { FACTS } from '../data';
 import { EASE, reduced } from './ui';
 
-/** A brushed-titanium ₹ coin, built from stacked CSS discs; its spin is driven from outside. */
-function TitaniumCoin({ size, spin, tiltX, tiltY, staticFacing = false }: { size: number; spin: MotionValue<number>; tiltX: MotionValue<number>; tiltY: MotionValue<number>; staticFacing?: boolean }) {
-  const thickness = Math.round(size * 0.085);
-  const layers = 16;
-  const rotateY = useTransform([spin, tiltY], ([s, t]: number[]) => s + t);
+/** A luminous rupee suspended in a lightweight circuit field. */
+function TechRupee({ size, tiltX, tiltY, staticFacing = false }: { size: number; tiltX: MotionValue<number>; tiltY: MotionValue<number>; staticFacing?: boolean }) {
   return (
-    <div style={{ width: size, height: size, perspective: 1600 }} className="relative">
-      <motion.div className="absolute inset-0" style={{ rotateX: staticFacing ? 10 : tiltX, rotateY: staticFacing ? 0 : rotateY, transformStyle: 'preserve-3d' }}>
-        {Array.from({ length: layers }).map((_, i) => (
-          <div
-            key={i}
-            className="absolute inset-0 rounded-full"
-            style={{
-              transform: `translateZ(${-thickness / 2 + (i * thickness) / (layers - 1)}px)`,
-              background: `repeating-linear-gradient(90deg, #8e8e93 0 2px, #b8b8bd 2px 4px)`,
-              filter: `brightness(${0.75 + (i % 3) * 0.08})`,
-            }}
-          />
-        ))}
-        {/* face: brushed metal with an engraved rupee */}
-        <div
-          className="absolute inset-0 grid place-items-center rounded-full"
-          style={{
-            transform: `translateZ(${thickness / 2 + 0.5}px)`,
-            background:
-              'radial-gradient(circle at 30% 25%, rgba(255,255,255,0.95), rgba(255,255,255,0) 42%), conic-gradient(from 210deg, #d9d9de, #9a9aa0, #f2f2f5, #8a8a90, #e4e4e8, #a7a7ad, #d9d9de)',
-            boxShadow: 'inset 0 0 0 6px rgba(255,255,255,0.55), inset 0 0 0 12px rgba(0,0,0,0.12), inset 0 -24px 60px rgba(0,0,0,0.25)',
-            backfaceVisibility: 'hidden',
-          }}
-        >
-          <div className="absolute inset-[10%] rounded-full border border-black/10" />
-          <span className="grad select-none font-extrabold leading-none" style={{ fontSize: size * 0.5, filter: 'drop-shadow(0 2px 1px rgba(255,255,255,0.7)) drop-shadow(0 -1px 0 rgba(0,0,0,0.25))' }}>
-            ₹
-          </span>
-        </div>
-        {/* back: engraved wordmark */}
-        <div
-          className="absolute inset-0 grid place-items-center rounded-full"
-          style={{
-            transform: `rotateY(180deg) translateZ(${thickness / 2 + 0.5}px)`,
-            background: 'conic-gradient(from 40deg, #2c2c2e, #636366, #1c1c1e, #48484a, #2c2c2e)',
-            boxShadow: 'inset 0 0 0 6px rgba(255,255,255,0.12), inset 0 0 0 12px rgba(0,0,0,0.4)',
-            backfaceVisibility: 'hidden',
-          }}
-        >
-          <span className="font-semibold tracking-[-0.03em] text-white/85" style={{ fontSize: size * 0.11 }}>moneytec</span>
-        </div>
-      </motion.div>
+    <div className="tech-rupee" style={{ width: size, height: size, perspective: 1200 }} aria-hidden="true">
+      <svg className="rupee-circuits" viewBox="0 0 400 400" fill="none">
+        <defs><linearGradient id="circuit-gradient"><stop stopColor="#ff9f0a" /><stop offset=".5" stopColor="#ff375f" /><stop offset="1" stopColor="#bf5af2" /></linearGradient></defs>
+        <g stroke="url(#circuit-gradient)" strokeWidth="1.2">
+          <path d="M20 95h65l30 30h55 M380 80h-65l-35 35h-40 M15 270h75l35-35h45 M385 290h-65l-40-40h-40 M100 20v55l30 30 M300 380v-55l-30-30 M45 190h65 M290 190h65" />
+          <path d="M60 60h45 M60 60v45 M340 60h-45 M340 60v45 M60 340h45 M60 340v-45 M340 340h-45 M340 340v-45" opacity=".5" />
+        </g>
+        {[ [20,95],[380,80],[15,270],[385,290],[100,20],[300,380],[45,190],[355,190] ].map(([cx,cy],i)=><circle key={i} cx={cx} cy={cy} r="3" fill={i%2 ? '#bf5af2' : '#ff9f0a'} />)}
+      </svg>
+      <motion.div className="rupee-symbol" style={{ rotateX: staticFacing ? 0 : tiltX, rotateY: staticFacing ? 0 : tiltY }}><span className="grad">₹</span></motion.div>
+      <div className="rupee-scan" />
     </div>
   );
 }
@@ -70,8 +36,6 @@ export function Hero() {
   }, []);
 
   // scroll choreography: the coin turns a full revolution and lifts; copy hands over to the second line
-  const spinRaw = useTransform(p, [0, 1], [-18, 342]);
-  const spin = useSpring(spinRaw, { stiffness: 80, damping: 22 });
   const scale = useTransform(p, [0, 0.55, 1], [1, 1.12, 0.92]);
   const coinY = useTransform(p, [0, 1], ['0%', '-6%']);
   const titleOpacity = useTransform(p, [0.15, 0.55], [1, 0]);
@@ -128,7 +92,7 @@ export function Hero() {
           </div>
 
           <motion.div className="hero-coin relative z-0" style={{ scale: mobile ? 1 : scale, y: mobile ? 0 : coinY }} initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 1.4, ease: EASE, delay: 0.2 }}>
-          <div className="coin-halo" aria-hidden="true" /><TitaniumCoin size={size} spin={spin} tiltX={tiltX} tiltY={tiltY} staticFacing={mobile} />
+          <div className="coin-halo" aria-hidden="true" /><TechRupee size={size} tiltX={tiltX} tiltY={tiltY} staticFacing={mobile} />
           <div className="absolute -bottom-10 left-1/2 h-10 w-[70%] -translate-x-1/2 rounded-[50%] bg-white/10 blur-xl" />
             <div className="hero-orbit-label"><span className="hero-orbit-dot" /> BUILT AROUND YOU <span>MONEYTEC</span></div>
           </motion.div>

@@ -3,9 +3,9 @@ import { useMemo, useState } from 'react';
 import { wa } from '../data';
 import { EASE, inr, sipValue, useTween } from './ui';
 
-const AMOUNTS = [1000, 3000, 5000, 10000, 25000];
+const AMOUNTS = [1000, 3000, 5000, 10000, 25000, 50000];
 const DURATIONS = [5, 10, 15, 20, 25, 30];
-const RATES = [0, 6, 8, 10, 12, 14];
+const RATES = [6, 10, 12, 14, 15, 16];
 
 function Segmented<T extends number>({ options, value, onChange, label, fmt }: { options: T[]; value: T; onChange: (v: T) => void; label: string; fmt: (v: T) => string }) {
   return (
@@ -95,7 +95,7 @@ export function Configure() {
               </div>
 
               <a href={wa(`Hi Gulshan! I'd like to discuss a SIP illustration: ${inr(monthly, false)} monthly for ${years} years, assuming ${rate}% annually. Illustrated value ${inr(total)}; contributions ${inr(invested)}. I understand returns are not guaranteed.`)} target="_blank" rel="noreferrer" className="pill-blue mt-6 w-full">Discuss this illustration</a>
-              <p className="mt-3 text-[11px] leading-snug text-graphite">Contributions at the start of each month, constant {rate}% a year. Illustration only; mutual fund investments are subject to market risks.</p>
+              <p className="mt-3 text-[11px] leading-snug text-graphite">Contributions at the start of each month, assuming {rate}% CAGR per year. Illustration only; returns are not guaranteed. Mutual fund investments are subject to market risks.</p>
             </div>
           </aside>
         </div>

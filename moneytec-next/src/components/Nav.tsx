@@ -1,7 +1,7 @@
-import { AnimatePresence, motion, useMotionValueEvent, useScroll } from 'framer-motion';
+import { useMotionValueEvent, useScroll } from 'framer-motion';
 import { useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { NAV, wa } from '../data';
-import { EASE } from './ui';
 
 export function Wordmark({ dark = true }: { dark?: boolean }) {
   return (
@@ -31,12 +31,12 @@ export function Nav() {
     setDark(under);
   });
   useEffect(() => {
-    document.documentElement.style.overflow = open ? 'hidden' : '';
+    // Keep page scrolling available so menu anchors work on mobile browsers.
     const close = (e: KeyboardEvent) => { if (e.key === 'Escape') setOpen(false); };
     const resize = () => { if (window.innerWidth >= 768) setOpen(false); };
     window.addEventListener('keydown', close);
     window.addEventListener('resize', resize);
-    return () => { document.documentElement.style.overflow = ''; window.removeEventListener('keydown', close); window.removeEventListener('resize', resize); };
+    return () => { window.removeEventListener('keydown', close); window.removeEventListener('resize', resize); };
   }, [open]);
 
   return (
@@ -60,31 +60,26 @@ export function Nav() {
                 <a key={n.href} href={n.href} className="opacity-80 transition-opacity hover:opacity-100">{n.label}</a>
               ))}
             </nav>
-            <button onClick={() => setOpen((o) => !o)} aria-expanded={open} aria-controls="local-menu" className="min-h-11 px-2 text-[12px] opacity-80 md:hidden">
+            <button type="button" onClick={() => setOpen((o) => !o)} aria-label={open ? 'Close sections menu' : 'Open sections menu'} aria-expanded={open} aria-controls="local-menu" className="min-h-11 px-2 text-[12px] opacity-80 md:hidden">
               {open ? 'Close' : 'Sections'}
             </button>
             <a href="#start" onClick={() => setOpen(false)} className="inline-flex h-7 items-center rounded-full bg-link px-3 text-[12px] font-normal text-white hover:bg-[#0077ED]">Get started</a>
           </div>
         </div>
-        <AnimatePresence>
-          {open && (
-            <motion.nav
+          {open && createPortal(<>
+            <button type="button" className="menu-backdrop" aria-label="Close sections menu" onClick={() => setOpen(false)} />
+            <nav
               id="local-menu"
               aria-label="Sections"
-              className="absolute inset-x-0 top-full border-b border-black/10 bg-white/95 backdrop-blur-xl md:hidden"
-              initial={{ height: 0, opacity: 0 }}
-              animate={{ height: 'auto', opacity: 1 }}
-              exit={{ height: 0, opacity: 0 }}
-              transition={{ duration: 0.35, ease: EASE }}
+              className="mobile-section-menu border-b border-black/10 bg-white text-coal md:hidden"
             >
               <div className="wrap-wide flex flex-col py-2">
                 {NAV.map((n) => (
                   <a key={n.href} href={n.href} onClick={() => setOpen(false)} className="border-b border-black/5 py-3 text-[17px] text-coal last:border-0">{n.label}</a>
                 ))}
               </div>
-            </motion.nav>
-          )}
-        </AnimatePresence>
+            </nav>
+            </>, document.body)}
       </div>
     </>
   );

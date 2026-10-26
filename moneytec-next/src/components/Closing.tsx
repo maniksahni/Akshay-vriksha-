@@ -1,6 +1,6 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { FormEvent, useState } from 'react';
-import { DISCLAIMER, FACTS, NAV, wa } from '../data';
+import { DISCLAIMER, FACTS, NAV, SOCIALS, wa } from '../data';
 import { EASE } from './ui';
 
 function Reveal({ children, className = '', delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) {
@@ -55,12 +55,8 @@ export function Gulshan() {
     <section id="gulshan" className="bg-white py-16 sm:py-28">
       <div className="wrap-wide grid items-center gap-6 sm:gap-10 lg:grid-cols-2 lg:gap-16">
         <Reveal>
-          <div className="relative mx-auto aspect-square w-full max-w-[220px] overflow-hidden rounded-[28px] sm:max-w-[440px] sm:rounded-[36px] bg-gradient-to-br from-[#f5f5f7] to-[#e8e8ed]">
-            <div className="absolute inset-[12%] rounded-full bg-gradient-to-br from-[#FF9F0A] via-[#FF375F] to-[#BF5AF2] p-[6px]">
-              <div className="grid h-full w-full place-items-center rounded-full bg-white">
-                <span className="text-[3.2rem] font-semibold sm:text-[clamp(4rem,12vw,7rem)] tracking-[-0.06em]">GK</span>
-              </div>
-            </div>
+          <div className="relative mx-auto gulshan-portrait aspect-[4/5] w-full max-w-[260px] overflow-hidden rounded-[28px] sm:max-w-[440px] sm:rounded-[36px] bg-gradient-to-br from-[#f5f5f7] to-[#e8e8ed]">
+            <img src="./images/gulshan-kohli.webp" alt="Gulshan Kohli, mutual fund distributor" width="800" height="922" loading="lazy" decoding="async" className="gulshan-photo h-full w-full object-cover" />
             <span className="absolute bottom-3 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-white/90 px-3 py-1.5 text-[11px] sm:bottom-5 sm:px-4 sm:py-2 sm:text-[13px] font-semibold shadow-sm">{FACTS.years}+ years · {FACTS.city}</span>
           </div>
         </Reveal>
@@ -196,8 +192,7 @@ export function Footer() {
           <nav aria-label="Footer" className="flex flex-wrap gap-x-5 gap-y-1">
             {NAV.map((n) => <a key={n.href} href={n.href} className="hover:underline">{n.label}</a>)}
             <a href={wa('Hi!')} target="_blank" rel="noreferrer" className="hover:underline">WhatsApp</a>
-            <a href="https://www.instagram.com/akshayavriksha/" target="_blank" rel="noreferrer" className="hover:underline">Instagram</a>
-            <a href="https://www.facebook.com/gulshankohli13" target="_blank" rel="noreferrer" className="hover:underline">Facebook</a>
+            {SOCIALS.map(s => <a key={s.name} href={s.href} target="_blank" rel="noreferrer" className="hover:underline">{s.name}</a>)}
             <a href={`mailto:${FACTS.email}`} className="hover:underline">Email</a>
           </nav>
           <p>© {new Date().getFullYear()} moneytec · {FACTS.city}</p>

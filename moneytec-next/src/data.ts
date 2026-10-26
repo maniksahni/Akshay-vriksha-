@@ -27,3 +27,9 @@ export const NAV = [
 
 export const DISCLAIMER =
   'Mutual fund investments are subject to market risks; read all scheme-related documents carefully. Illustrations assume a constant return and are not a promise of future returns. Insurance is the subject matter of solicitation.';
+
+export const SOCIALS = [
+  { name: 'Instagram', href: 'https://www.instagram.com/akshayavriksha?utm_source=qr&vrfl=Ym9ub2psenpldDY0', handle: '@akshayavriksha', icon: 'instagram' },
+  { name: 'Facebook', href: 'https://www.facebook.com/share/1DsGWmmBrY/', handle: 'Connect with Gulshan', icon: 'facebook' },
+  { name: 'X (Twitter)', href: 'https://x.com/GulshanOnWheels', handle: '@GulshanOnWheels', icon: 'x' },
+];

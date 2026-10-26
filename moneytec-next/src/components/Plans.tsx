@@ -4,12 +4,12 @@ import { wa } from '../data';
 import { EASE } from './ui';
 
 const PLANS = [
-  { name: 'Near-term needs', tag: 'Keep liquidity in view', horizon: 'Under 3 years', drops: 'Prefers to avoid them', goals: 'Emergency fund, short-term goals', ring: 'from-[#64D2FF] to-[#0A84FF]' },
-  { name: 'Life milestones', tag: 'Plan around a date', horizon: '3 to 7 years', drops: 'Can sit through some', goals: 'Car, wedding, a home down-payment', ring: 'from-[#30D158] to-[#64D2FF]' },
-  { name: 'Long-term goals', tag: 'Plan for changing markets', horizon: '7+ years', drops: 'Can affect your plan', goals: 'Retirement, kids’ education, wealth', ring: 'from-[#FF9F0A] via-[#FF375F] to-[#BF5AF2]' },
+  { name: 'Near-term needs', tag: 'Keep liquidity in view', horizon: '3–5 years', drops: 'Prefers to avoid them', goals: 'Emergency fund, short-term goals', ring: 'from-[#64D2FF] to-[#0A84FF]' },
+  { name: 'Life milestones', tag: 'Plan around a date', horizon: '5–10 years', drops: 'Can sit through some', goals: 'Car, wedding, a home down-payment', ring: 'from-[#30D158] to-[#64D2FF]' },
+  { name: 'Wealth for Generations', tag: 'Plan for changing markets', horizon: '10–30+ years', drops: 'Can affect your plan', goals: 'Retirement, kids’ education, wealth', ring: 'from-[#FF9F0A] via-[#FF375F] to-[#BF5AF2]' },
 ];
 const QS = [
-  { q: 'When will you need the money?', a: ['Under 3 years', '3–7 years', '7+ years'] },
+  { q: 'When will you need the money?', a: ['3–5 years', '5–10 years', '10–30+ years'] },
   { q: 'Markets fall 20%. You…', a: ['Want out', 'Wait it out', 'Invest more'] },
   { q: 'Your investing so far?', a: ['New to it', 'Some funds', 'Years in equity'] },
 ];

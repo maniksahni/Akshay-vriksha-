@@ -110,6 +110,6 @@ export function inr(n: number, short = true) {
 /** SIP future value with contributions at the start of each month. */
 export function sipValue(monthly: number, annualPct: number, months: number) {
   if (months <= 0) return 0;
-  const i = annualPct / 1200;
+  const i = Math.pow(1 + annualPct / 100, 1 / 12) - 1;
   return i === 0 ? monthly * months : monthly * ((Math.pow(1 + i, months) - 1) / i) * (1 + i);
 }
