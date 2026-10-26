@@ -31,5 +31,6 @@ export const DISCLAIMER =
 export const SOCIALS = [
   { name: 'Instagram', href: 'https://www.instagram.com/akshayavriksha?utm_source=qr&vrfl=Ym9ub2psenpldDY0', handle: '@akshayavriksha', icon: 'instagram' },
   { name: 'Facebook', href: 'https://www.facebook.com/share/1DsGWmmBrY/', handle: 'Connect with Gulshan', icon: 'facebook' },
+  { name: 'YouTube', href: 'https://youtube.com/@gulshanonwheels?si=p6E3A7oKxky9Zodh', handle: '@gulshanonwheels', icon: 'youtube' },
   { name: 'X (Twitter)', href: 'https://x.com/GulshanOnWheels', handle: '@GulshanOnWheels', icon: 'x' },
 ];
