@@ -409,3 +409,22 @@ footer { background: #e9e5ed !important; }
  #gulshan .gulshan-portrait { max-width:240px; margin-bottom:10px; }
  @keyframes rupee-scan { 0%,100% { transform:translateY(0);opacity:0; } 30%,70% { opacity:.55; } 90% { transform:translateY(70px);opacity:0; } }
 }
+
+/* Sculpted hologram: extruded vector edges, a blueprint echo, and travelling light. */
+.hologram-rupee { transform-style:preserve-3d; }
+.hologram-art { width:100%; height:100%; overflow:visible; }
+.holo-face { filter:drop-shadow(0 0 14px #ff3e7c50); }
+.holo-flow { animation:holo-flow 7s linear infinite; }
+.holo-sheen { animation:holo-sheen 7s ease-in-out infinite; }
+.holo-node { animation:holo-node 4s ease-in-out infinite; }
+.hologram-caption { position:absolute; bottom:0; left:0; right:0; display:flex; align-items:center; justify-content:center; gap:10px; font-size:7px; letter-spacing:.23em; color:#c8a8d5; }
+.hologram-caption i { height:2px; width:2px; background:#ff83b4; border-radius:50%; }
+.hologram-rupee + div { display:none; }
+.hero-coin:has(.hologram-rupee) .hero-orbit-label { display:none; }
+@keyframes holo-flow { to { stroke-dashoffset:-280; } }
+@keyframes holo-sheen { 0%,20% { translate:0 -30px; opacity:0; } 25% { opacity:.6; } 65% { translate:0 560px; opacity:0; } 100% { translate:0 560px; opacity:0; } }
+@keyframes holo-node { 0%,100% { opacity:.25; } 50% { opacity:1; } }
+@media (max-width:639px) {
+ .hologram-caption { font-size:4px; letter-spacing:.15em; gap:5px; bottom:-7px; }
+ .holo-wire { stroke-width:1.2; }
+}

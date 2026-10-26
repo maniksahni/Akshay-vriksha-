@@ -3,21 +3,35 @@ import { useEffect, useRef, useState } from 'react';
 import { FACTS } from '../data';
 import { EASE, reduced } from './ui';
 
-/** A luminous rupee suspended in a lightweight circuit field. */
+/** Vector-built holographic rupee: crisp at every size, without canvas or WebGL. */
 function TechRupee({ size, tiltX, tiltY, staticFacing = false }: { size: number; tiltX: MotionValue<number>; tiltY: MotionValue<number>; staticFacing?: boolean }) {
+  const glyph = 'M128 78H294V101H235C250 113 259 127 262 145H294V168H262C255 205 228 225 185 230L286 333H246L128 211V202H166C206 202 225 190 231 168H128V145H231C226 116 205 101 166 101H128Z';
   return (
-    <div className="tech-rupee" style={{ width: size, height: size, perspective: 1200 }} aria-hidden="true">
-      <svg className="rupee-circuits" viewBox="0 0 400 400" fill="none">
-        <defs><linearGradient id="circuit-gradient"><stop stopColor="#ff9f0a" /><stop offset=".5" stopColor="#ff375f" /><stop offset="1" stopColor="#bf5af2" /></linearGradient></defs>
-        <g stroke="url(#circuit-gradient)" strokeWidth="1.2">
-          <path d="M20 95h65l30 30h55 M380 80h-65l-35 35h-40 M15 270h75l35-35h45 M385 290h-65l-40-40h-40 M100 20v55l30 30 M300 380v-55l-30-30 M45 190h65 M290 190h65" />
-          <path d="M60 60h45 M60 60v45 M340 60h-45 M340 60v45 M60 340h45 M60 340v-45 M340 340h-45 M340 340v-45" opacity=".5" />
+    <motion.div className="tech-rupee hologram-rupee" style={{ width: size, height: size, perspective: 1200, rotateX: staticFacing ? 0 : tiltX, rotateY: staticFacing ? 0 : tiltY }} aria-hidden="true">
+      <svg viewBox="0 0 420 420" className="hologram-art" fill="none">
+        <defs>
+          <linearGradient id="rupee-face" x1="120" y1="80" x2="290" y2="335" gradientUnits="userSpaceOnUse"><stop stopColor="#ffd688" /><stop offset=".22" stopColor="#ff9f2f" /><stop offset=".53" stopColor="#ff387d" /><stop offset=".8" stopColor="#d15dff" /><stop offset="1" stopColor="#f4cbff" /></linearGradient>
+          <linearGradient id="rupee-edge" x1="120" y1="80" x2="300" y2="340" gradientUnits="userSpaceOnUse"><stop stopColor="#cd6618" /><stop offset=".5" stopColor="#7f1b63" /><stop offset="1" stopColor="#491d7a" /></linearGradient>
+          <linearGradient id="rupee-network"><stop stopColor="#ff9f0a" /><stop offset=".5" stopColor="#ff375f" /><stop offset="1" stopColor="#bf5af2" /></linearGradient>
+          <linearGradient id="rupee-sheen" x1="0" y1="0" x2="1" y2="1"><stop stopColor="white" stopOpacity="0" /><stop offset=".5" stopColor="white" stopOpacity=".6" /><stop offset="1" stopColor="white" stopOpacity="0" /></linearGradient>
+          <pattern id="rupee-grid" width="21" height="21" patternUnits="userSpaceOnUse"><path d="M21 0H0V21" stroke="#d7b4ee" strokeOpacity=".09" strokeWidth=".5" /></pattern>
+          <clipPath id="rupee-cut"><path d={glyph} /></clipPath>
+        </defs>
+        <path d="M210 15 379 112V307L210 405 41 307V112Z" fill="url(#rupee-grid)" stroke="url(#rupee-network)" strokeOpacity=".16" />
+        <g className="holo-wire" stroke="url(#rupee-network)" strokeWidth=".8">
+          <path d="M210 35 360 122V296L210 383 60 296V122Z" strokeDasharray="3 9" />
+          <path d="M15 130H79L110 160H130 M402 105H333L304 134H280 M15 280H77L115 242H144 M405 301H343L302 260H270 M80 48V89L121 129 M338 375V335L294 291 M6 210H105 M312 210H414" />
         </g>
-        {[ [20,95],[380,80],[15,270],[385,290],[100,20],[300,380],[45,190],[355,190] ].map(([cx,cy],i)=><circle key={i} cx={cx} cy={cy} r="3" fill={i%2 ? '#bf5af2' : '#ff9f0a'} />)}
+        <g className="holo-flow" stroke="url(#rupee-network)" strokeWidth="1.7" strokeDasharray="5 135" strokeLinecap="round"><path d="M15 130H79L110 160H130 M402 105H333L304 134H280 M15 280H77L115 242H144 M405 301H343L302 260H270" /></g>
+        <path className="rupee-blueprint" d={glyph} transform="translate(-17 -14)" stroke="#e3a3fd" strokeWidth=".65" strokeDasharray="2 3" opacity=".3" />
+        {[14,11,8,5,2].map(n => <path key={n} d={glyph} transform={`translate(${n} ${n})`} fill="url(#rupee-edge)" stroke="#ff83d2" strokeOpacity=".13" strokeWidth=".6" />)}
+        <path className="holo-face" d={glyph} fill="url(#rupee-face)" stroke="#ffe1e8" strokeOpacity=".65" strokeWidth=".8" />
+        <g clipPath="url(#rupee-cut)"><path d="M100 114H310 M100 180H310 M100 246H310 M100 312H310" stroke="white" strokeOpacity=".14" strokeWidth=".6" /><rect className="holo-sheen" x="60" y="-150" width="300" height="100" fill="url(#rupee-sheen)" transform="rotate(-25 210 210)" /></g>
+        {[[15,130],[402,105],[15,280],[405,301],[80,48],[338,375],[6,210],[414,210]].map(([cx,cy],i)=><g key={i}><circle cx={cx} cy={cy} r="4" fill="#110b18" stroke={i%2 ? '#d17af7' : '#ffad55'} /><circle className="holo-node" cx={cx} cy={cy} r="1.5" fill="#ffe2ff" style={{animationDelay:`${i*.4}s`}} /></g>)}
+        <g stroke="#e4bded" strokeOpacity=".4" strokeWidth=".75"><path d="M128 59V48H166 M294 59V48H256 M128 349V361H166 M294 349V361H256" /></g>
       </svg>
-      <motion.div className="rupee-symbol" style={{ rotateX: staticFacing ? 0 : tiltX, rotateY: staticFacing ? 0 : tiltY }}><span className="grad">₹</span></motion.div>
-      <div className="rupee-scan" />
-    </div>
+      <span className="hologram-caption">MONEY <i /> TECHNOLOGY <i /> YOU</span>
+    </motion.div>
   );
 }
 
@@ -35,7 +49,7 @@ export function Hero() {
     return () => window.removeEventListener('resize', set);
   }, []);
 
-  // scroll choreography: the coin turns a full revolution and lifts; copy hands over to the second line
+  // The hologram lifts gently as the opening message hands over to the second scene.
   const scale = useTransform(p, [0, 0.55, 1], [1, 1.12, 0.92]);
   const coinY = useTransform(p, [0, 1], ['0%', '-6%']);
   const titleOpacity = useTransform(p, [0.15, 0.55], [1, 0]);
