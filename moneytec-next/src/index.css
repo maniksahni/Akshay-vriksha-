@@ -428,3 +428,23 @@ footer { background: #e9e5ed !important; }
  .hologram-caption { font-size:4px; letter-spacing:.15em; gap:5px; bottom:-7px; }
  .holo-wire { stroke-width:1.2; }
 }
+
+/* The rupee becomes a continuous scroll scene, with light travelling between its layers. */
+@media (min-width:640px) {
+ .tech-second-copy { width:min(650px,55vw); left:max(32px,calc((100vw - 1256px)/2)); right:auto; top:32vh !important; text-align:left; padding:0; }
+ .tech-second-copy .hero-kicker { justify-content:flex-start; font-size:9px; }
+ .tech-second-copy > .display { font-size:clamp(42px,5.2vw,70px); }
+ .tech-second-copy .body-lg { margin-left:0; font-size:17px; max-width:420px; }
+ .hero-scroll-console { position:absolute; z-index:15; left:max(32px,calc((100vw - 1256px)/2)); right:max(32px,calc((100vw - 1256px)/2)); bottom:28px; }
+ .console-track { height:1px; background:#ffffff1c; overflow:hidden; }
+ .console-track span { display:block; height:1px; width:100%; transform-origin:0 50%; background:linear-gradient(90deg,#ff9f0a,#ff375f,#bf5af2); }
+ .console-chapters { display:flex; gap:32px; padding-top:15px; }
+ .console-chapters span { font-size:8px; letter-spacing:.14em; color:#ffffff42; transition:color .4s; }
+ .console-chapters .is-current { color:#f2b9d7; }
+ .console-hint { position:absolute; right:0; bottom:0; color:#ffffff70; font-size:8px; letter-spacing:.16em; }
+ .console-hint b { display:inline-block; margin-left:10px; color:#eeafd0; animation:scroll-cue 2s ease-in-out infinite; }
+ .hologram-rupee { filter:drop-shadow(0 18px 32px #09030c); }
+}
+@keyframes scroll-cue { 50% { transform:translateY(4px); } }
+@media (max-width:639px) { .hero-scroll-console { display:none; } }
+@media (prefers-reduced-motion:reduce) { .holo-flow,.holo-sheen,.holo-node,.console-hint b { animation:none; } }
