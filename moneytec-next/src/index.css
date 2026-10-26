@@ -448,3 +448,63 @@ footer { background: #e9e5ed !important; }
 @keyframes scroll-cue { 50% { transform:translateY(4px); } }
 @media (max-width:639px) { .hero-scroll-console { display:none; } }
 @media (prefers-reduced-motion:reduce) { .holo-flow,.holo-sheen,.holo-node,.console-hint b { animation:none; } }
+
+/* Phone layouts show a focused view instead of long stacks of full-size cards. */
+.mobile-service-list,.mobile-plan-tabs { display:none; }
+@media (max-width:639px) {
+ .wrap,.wrap-wide { padding-left:18px; padding-right:18px; }
+ .services-grid { display:none; }
+ .mobile-service-list { display:grid; gap:9px; }
+ .mobile-service { border:1px solid #39303e; border-radius:15px; background:linear-gradient(120deg,#211925,#141218); overflow:hidden; }
+ .mobile-service summary { display:flex; align-items:center; gap:12px; padding:17px 15px; min-height:70px; cursor:pointer; list-style:none; font-size:15px; font-weight:500; line-height:1.35; letter-spacing:-.025em; }
+ .mobile-service summary::-webkit-details-marker { display:none; }
+ .mobile-service-number { color:#d99ac4; font-size:9px; letter-spacing:.08em; flex-shrink:0; }
+ .mobile-service-plus { margin-left:auto; padding-left:10px; font-size:22px; font-weight:300; color:#d99ac4; }
+ .mobile-service[open] .mobile-service-plus { transform:rotate(45deg); }
+ .mobile-service-body { padding:0 17px 18px 43px; font-size:13px; line-height:1.6; color:#bbb0c2; }
+ .mobile-service-body a { display:inline-flex; margin-top:14px; color:#f2bbdc; font-size:12px; min-height:32px; align-items:center; }
+ .section-heading h2 { font-size:35px; }
+ .section-heading > p { margin-top:14px; }
+ .social-grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; }
+ .social-card { position:relative; flex-direction:column; align-items:flex-start; gap:11px; padding:16px 13px; min-width:0; border-radius:16px; }
+ .social-card strong { font-size:14px; }
+ .social-card small { font-size:9px; overflow-wrap:anywhere; line-height:1.4; }
+ .social-icon { width:34px; height:34px; border-radius:10px; }
+ .social-icon svg { width:19px; height:19px; }
+ .social-card > svg:last-child { position:absolute; right:13px; top:16px; width:15px; }
+ .mobile-plan-tabs { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:6px; margin-top:22px; padding:5px; background:#e1dbe7; border-radius:13px; }
+ .mobile-plan-tabs button { border-radius:9px; min-height:42px; padding:7px 2px; font-size:11px; color:#73677c; line-height:1.3; }
+ .mobile-plan-tabs button[aria-pressed=true] { color:#21162a; background:#fff; box-shadow:0 2px 8px #39204812; font-weight:600; }
+ .plans-track { display:block; margin-top:12px; padding-top:10px; padding-bottom:0; }
+ .plans-track .plan-card { display:none; }
+ .plans-track .plan-active { display:flex; padding:21px; border-radius:20px; }
+ .plan-card > div:first-of-type > div:last-child p:first-child { font-size:20px; }
+ .plan-card dl { gap:13px 12px; font-size:12px; }
+ .plan-card dl dd { line-height:1.5; }
+ .plan-card > a { min-height:40px; align-items:center; margin-top:12px; }
+ #plans > .wrap-wide > .textlink { font-size:14px; }
+ #calculator > .wrap-wide > .mt-8 { gap:24px; margin-top:24px; }
+ #calculator .calculator-summary { padding:20px; border-radius:20px; }
+ .calculator-summary > .display { font-size:36px; }
+ .next-steps .grid { gap:22px; }
+ .next-steps .body-lg { margin-top:12px; }
+ .next-steps [role=group] { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:6px; margin-top:20px; }
+ .next-steps .route-choice { border-radius:11px; font-size:10px; padding:10px 5px; min-height:44px; line-height:1.4; }
+ .next-steps .route-panel { border-radius:20px; padding:20px; min-height:350px; }
+ .next-steps ol { margin:20px 0; }
+ .next-steps li { gap:11px; font-size:13px; }
+ .hero-credentials { gap:7px 12px; }
+ #start form { border-radius:20px; padding:18px; }
+ #start form .flex.flex-wrap { gap:7px; }
+ #start form button[type=button] { font-size:12px; padding-left:13px; padding-right:13px; }
+ #safety .mt-12 { gap:20px; }
+ #safety .mt-12 > div { padding-top:17px; }
+ #safety .mt-12 p:first-child { font-size:18px; }
+ #safety .mt-12 p:last-child { font-size:13px; }
+}
+@media (max-width:639px) {
+ .site-navigation { background:#101014 !important; border-bottom:1px solid #ffffff15 !important; backdrop-filter:none; }
+ .site-navigation > .wrap-wide,.site-navigation .wordmark { color:white !important; }
+ .plans-track .plan-active { min-height:332px; }
+}
+@media (max-width:359px) { .plans-track .plan-active { min-height:356px; } }

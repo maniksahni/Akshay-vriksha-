@@ -16,12 +16,14 @@ const QS = [
 
 export function Plans() {
   const [quiz, setQuiz] = useState(false);
+  const [mobilePlan, setMobilePlan] = useState(0);
   const [ans, setAns] = useState<number[]>([]);
   const done = ans.length === QS.length;
   const pick = done ? ans[0] : -1;
   const track = useRef<HTMLDivElement>(null);
   // on phone the cards are a swipe row: bring the matched one into view
   useEffect(() => {
+    if (pick >= 0) setMobilePlan(pick);
     const t = track.current;
     const card = t?.children[pick] as HTMLElement | undefined;
     if (!t || !card || t.scrollWidth <= t.clientWidth) return;
@@ -54,6 +56,9 @@ export function Plans() {
           </p>
         )}
 
+        <div className="mobile-plan-tabs" role="group" aria-label="Choose a planning timeline">
+          {PLANS.map((p,i)=><button key={p.name} type="button" aria-pressed={mobilePlan===i} onClick={()=>setMobilePlan(i)}>{p.horizon}</button>)}
+        </div>
         <motion.div
           ref={track}
           className="plans-track no-scrollbar -mx-5 mt-6 flex snap-x snap-mandatory gap-3 overflow-x-auto px-5 pb-2 pt-4 text-left md:mx-0 md:mt-8 md:grid md:grid-cols-3 md:gap-5 md:overflow-visible md:px-0"
@@ -67,7 +72,7 @@ export function Plans() {
             return (
               <div
                 key={p.name}
-                className={`relative flex w-[80vw] max-w-[330px] shrink-0 snap-center flex-col rounded-[24px] bg-white p-5 transition-shadow md:w-auto md:max-w-none md:rounded-[28px] md:p-8 ${best ? 'shadow-[0_0_0_2px_#0071E3,0_20px_50px_-20px_rgba(0,113,227,0.45)]' : ''}`}
+                className={`plan-card ${mobilePlan === i ? 'plan-active' : ''} relative flex w-[80vw] max-w-[330px] shrink-0 snap-center flex-col rounded-[24px] bg-white p-5 transition-shadow md:w-auto md:max-w-none md:rounded-[28px] md:p-8 ${best ? 'shadow-[0_0_0_2px_#0071E3,0_20px_50px_-20px_rgba(0,113,227,0.45)]' : ''}`}
               >
                 {best && <span className="absolute -top-3 left-5 rounded-full bg-link px-3 py-1 text-[12px] font-semibold text-white md:left-6">Your timeline</span>}
                 <div className="flex items-center gap-3 md:block">

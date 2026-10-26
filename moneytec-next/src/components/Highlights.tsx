@@ -71,6 +71,12 @@ export function Highlights() {
           <div><p className="section-index">01 / YOUR FINANCIAL WORLD</p><h2>One life.<br /><em>Many possibilities.</em></h2></div>
           <p>Your first SIP. Your family’s protection. Your next chapter. Start with what matters to you.</p>
         </div>
+        <div className="mobile-service-list">
+          {CARDS.map((c,i) => <details className="mobile-service" key={c.title}>
+            <summary><span className="mobile-service-number">0{i+1}</span><span>{c.title}</span><span className="mobile-service-plus" aria-hidden="true">+</span></summary>
+            <div className="mobile-service-body"><p>{c.body}</p><a href={wa(`Hi Gulshan! Tell me more: ${c.title}`)} target="_blank" rel="noreferrer">Discuss this with Gulshan ↗</a></div>
+          </details>)}
+        </div>
         <div className="services-grid">
           {CARDS.map((c, i) => (
             <FadeIn key={c.title} className={`service-panel service-panel-${i}`} delay={i * .05}>
