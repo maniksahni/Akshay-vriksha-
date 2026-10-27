@@ -65,7 +65,7 @@ export function Gulshan() {
           <p className="mentor-description">Behind every financial goal is a life worth understanding. Your plans deserve someone who listens.</p>
           <p className="mentor-bio">{FACTS.name} is an electronics engineer turned mutual fund distributor. For {FACTS.years}+ years, he has helped people start SIPs and explore protection for their families. From your first question to your next review, you can speak with him personally.</p>
           <div className="mentor-facts"><div><strong>{FACTS.years}<span>+</span></strong><small>Years of experience</small></div><div><strong>One-to-one</strong><small>Personal conversations</small></div></div>
-          <a href="#arn-verifier" className="mentor-registration"><span className="mentor-reg-dot" />AMFI Registered Mutual Fund Distributor<br /><b>{FACTS.arn}</b><span aria-hidden="true"> ↗</span></a>
+          <a href={FACTS.amfiLocator} target="_blank" rel="noopener noreferrer" className="mentor-registration"><span className="mentor-reg-dot" />AMFI Registered Mutual Fund Distributor<br /><b>{FACTS.arn}</b><span aria-hidden="true"> ↗</span></a>
           <div className="mentor-actions"><a href={wa('Hi Gulshan! I would like to talk about my financial goals.')} target="_blank" rel="noreferrer" className="hero-primary">Talk to Gulshan <span aria-hidden="true">↗</span></a><a href={`tel:+${FACTS.phoneIntl}`} className="hero-secondary">Call directly ↗</a></div>
           <p className="mentor-insurance">Kotak Life advisor · {FACTS.kotak}</p>
         </Reveal>
