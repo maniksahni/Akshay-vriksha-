@@ -201,23 +201,23 @@ input[type='range'].slider::-moz-range-thumb {
   .tile { transition: box-shadow .25s; }
   .tile:hover { box-shadow: 0 15px 38px -22px rgba(191,90,242,.4); }
 }
-@media (max-height: 740px) and (min-width: 640px) {
+@media (max-height: 740px) and (min-width: 768px) {
   .moneytec-hero .hero-coin { zoom: .72; margin-bottom: 3vh; }
   .moneytec-hero h1 { font-size: clamp(2.6rem,6vw,4.3rem); }
 }
-@media (max-width: 639px) {
+@media (max-width: 767px) {
   .site-utility { display: none; }
   .moneytec-hero h1 { font-size: clamp(2.2rem,8.5vw,3.3rem); }
   .moneytec-hero .hero-coin { margin-bottom: 7vh; }
   .calculator-summary { padding: 24px; }
 }
-@media (max-width: 639px) and (max-height: 720px) {
+@media (max-width: 767px) and (max-height: 720px) {
   .moneytec-hero .hero-coin { zoom: .78; margin-bottom: 4vh; }
 }
 
 .hero-mobile-intro { display: none; }
 /* Phones use a natural single-page flow: no multi-screen pinned scenes or hidden cards. */
-@media (max-width: 639px) {
+@media (max-width: 767px) {
   .wrap, .wrap-wide { padding-left: 20px; padding-right: 20px; }
   main > section:not(#top):not(#grow) { padding-top: 44px; padding-bottom: 44px; }
   main h2.display { font-size: clamp(1.7rem, 7.4vw, 2.15rem); line-height: 1.12; }
@@ -266,13 +266,13 @@ input[type='range'].slider::-moz-range-thumb {
   .next-steps .route-choice { font-size: 12px; padding: 11px 13px; }
 }
 
-@media (min-width: 640px) and (max-width: 900px) {
+@media (min-width: 768px) and (max-width: 900px) {
   .hero-title { font-size: clamp(3.5rem, 8vw, 5.1rem); }
   .hero-coin { right: -10%; opacity: .84; }
   .hero-copy { max-width: 62%; }
   .hero-credentials { max-width: 520px; }
 }
-@media (max-width: 639px) {
+@media (max-width: 767px) {
   .moneytec-hero { background: radial-gradient(ellipse at 50% 56%, #15131a 0%, #050506 54%, #000 100%); }
   .moneytec-hero > .sticky { padding-top: 52px; padding-bottom: 25px; }
   .hero-stage { display: block; min-height: 0; padding: 0 22px; }
@@ -293,7 +293,7 @@ input[type='range'].slider::-moz-range-thumb {
   .hero-ambient { width: 100vw; height: 100vw; top: 68%; right: -18%; opacity: .45 !important; }
   .hero-second-copy { display: none; }
 }
-@media (max-width: 639px) and (max-height: 740px) {
+@media (max-width: 767px) and (max-height: 740px) {
   .moneytec-hero > .sticky { padding-bottom: 16px; }
   .hero-stage { padding-left: 20px; padding-right: 20px; }
   .hero-title { font-size: clamp(2.8rem, 11vw, 3.4rem); }
@@ -349,20 +349,20 @@ input[type='range'].slider::-moz-range-thumb {
 footer { background: #e9e5ed !important; }
 .footer-signature { display: flex; align-items: start; justify-content: space-between; padding: 22px 0 45px; color: #211b28; font-size: clamp(70px,15.7vw,195px); line-height: 1; font-weight: 600; letter-spacing: -.085em; }
 .footer-signature span { margin-top: 12px; font-size: .4em; font-weight: 300; color: #9d6c9b; }
-@media (min-width: 640px) {
+@media (min-width: 768px) {
  .moneytec-hero .hero-stage { min-height: 0; }
  .moneytec-hero > .sticky { padding-bottom: 28px; }
  .hero-coin { right: 0; }
  .hero-second-copy { top: 31vh; }
 }
-@media (max-width: 900px) and (min-width:640px) {
+@media (max-width: 900px) and (min-width:768px) {
  .service-panel { grid-column: span 3; }
  .service-panel:last-child { grid-column: span 6; }
  .service-panel:last-child article { min-height: 240px; }
  .service-panel:last-child .service-art { position:absolute; right: 10%; top: 40px; }
  .hero-coin { right: -16%; }
 }
-@media (max-width: 639px) {
+@media (max-width: 767px) {
  .services-editorial { padding: 45px 0 !important; }
  .section-heading { display:block; margin-bottom:24px; }
  .section-index { font-size: 8px; }
@@ -402,7 +402,7 @@ footer { background: #e9e5ed !important; }
 #gulshan .gulshan-portrait { max-width:400px; }
 .gulshan-photo { object-position:50% 42%; }
 @media (min-width:768px) { .menu-backdrop { display:none; } }
-@media (max-width:639px) {
+@media (max-width:767px) {
  .rupee-symbol { font-size:110px; }
  .hero-orbit-label { right:-5px; bottom:-6px; }
  .social-card { padding:18px; }
@@ -424,13 +424,13 @@ footer { background: #e9e5ed !important; }
 @keyframes holo-flow { to { stroke-dashoffset:-280; } }
 @keyframes holo-sheen { 0%,20% { translate:0 -30px; opacity:0; } 25% { opacity:.6; } 65% { translate:0 560px; opacity:0; } 100% { translate:0 560px; opacity:0; } }
 @keyframes holo-node { 0%,100% { opacity:.25; } 50% { opacity:1; } }
-@media (max-width:639px) {
+@media (max-width:767px) {
  .hologram-caption { font-size:4px; letter-spacing:.15em; gap:5px; bottom:-7px; }
  .holo-wire { stroke-width:1.2; }
 }
 
 /* The rupee becomes a continuous scroll scene, with light travelling between its layers. */
-@media (min-width:640px) {
+@media (min-width:768px) {
  .tech-second-copy { width:min(650px,55vw); left:max(32px,calc((100vw - 1256px)/2)); right:auto; top:32vh !important; text-align:left; padding:0; }
  .tech-second-copy .hero-kicker { justify-content:flex-start; font-size:9px; }
  .tech-second-copy > .display { font-size:clamp(42px,5.2vw,70px); }
@@ -446,12 +446,12 @@ footer { background: #e9e5ed !important; }
  .hologram-rupee { filter:drop-shadow(0 18px 32px #09030c); }
 }
 @keyframes scroll-cue { 50% { transform:translateY(4px); } }
-@media (max-width:639px) { .hero-scroll-console { display:none; } }
+@media (max-width:767px) { .hero-scroll-console { display:none; } }
 @media (prefers-reduced-motion:reduce) { .holo-flow,.holo-sheen,.holo-node,.console-hint b { animation:none; } }
 
 /* Phone layouts show a focused view instead of long stacks of full-size cards. */
 .mobile-service-list,.mobile-plan-tabs { display:none; }
-@media (max-width:639px) {
+@media (max-width:767px) {
  .wrap,.wrap-wide { padding-left:18px; padding-right:18px; }
  .services-grid { display:none; }
  .mobile-service-list { display:grid; gap:9px; }
@@ -502,7 +502,7 @@ footer { background: #e9e5ed !important; }
  #safety .mt-12 p:first-child { font-size:18px; }
  #safety .mt-12 p:last-child { font-size:13px; }
 }
-@media (max-width:639px) {
+@media (max-width:767px) {
  .site-navigation { background:#101014 !important; border-bottom:1px solid #ffffff15 !important; backdrop-filter:none; }
  .site-navigation > .wrap-wide,.site-navigation .wordmark { color:white !important; }
  .plans-track .plan-active { min-height:332px; }
@@ -533,14 +533,14 @@ footer { background: #e9e5ed !important; }
 .mentor-reg-dot { position:absolute; left:0; top:8px; width:5px; height:5px; background:#ef93bb; border-radius:50%; }
 .mentor-actions { display:flex; align-items:center; gap:23px; flex-wrap:wrap; margin-top:23px; }
 .mentor-insurance { color:#887a93; font-size:10px; margin-top:17px; }
-@media (max-width:900px) and (min-width:640px) {
+@media (max-width:900px) and (min-width:768px) {
  .mentor-content { width:49%; }
  .mentor-content-wrap,#gulshan.mentor-scene { min-height:850px; }
  .mentor-photo-stage { right:35%; }
  .mentor-content h2 { font-size:43px; }
  .mentor-description { font-size:17px; }
 }
-@media (max-width:639px) {
+@media (max-width:767px) {
  main > #gulshan.mentor-scene { padding:0 !important; }
  #gulshan.mentor-scene { min-height:0; }
  .mentor-photo-stage { position:relative; inset:auto; height:460px; }
@@ -608,7 +608,7 @@ footer { background: #e9e5ed !important; }
 .goal-empty { padding:40px 0; color:#d1b8dd; font-size:16px; line-height:1.5; }
 .goal-empty > p { margin-top:15px; }
 @media (max-width:1023px) { .goal-planner { grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:25px; } .goal-money-grid { grid-template-columns:1fr; } }
-@media (max-width:639px) {
+@media (max-width:767px) {
  .planning-intro { margin-top:12px; font-size:13px; }
  .calculator-mode { margin-top:20px; border-radius:14px; padding:5px; }
  .calculator-mode button { font-size:13px; padding:12px; border-radius:10px; }
@@ -631,3 +631,133 @@ footer { background: #e9e5ed !important; }
 .moneytec-brand-symbol { display:block; width:30px; height:28px; flex-shrink:0; object-fit:contain; }
 .footer-signature > img { display:block; width:72%; max-width:850px; height:auto; }
 @media (max-width:359px) { .moneytec-brand-symbol { width:26px; height:25px; } }
+
+/* Compact phone composition: one scale, tighter rhythm, and full-size touch targets. */
+.mentor-story,.mobile-reading-progress { display:none; }
+@media (max-width:767px) {
+ html { scroll-padding-top:64px; }
+ section[id] { scroll-margin-top:66px; }
+ .wrap,.wrap-wide { padding-left:18px; padding-right:18px; }
+ main > section:not(#top):not(#grow):not(#gulshan) { padding-top:32px !important; padding-bottom:32px !important; }
+ main h2.display { font-size:clamp(24px,6.4vw,29px); line-height:1.12; }
+ .eyebrow { font-size:12px; }
+ .body-lg { font-size:13px; line-height:1.65; }
+ .site-navigation .wordmark { font-size:18px; }
+ .moneytec-brand-symbol { width:27px; height:26px; }
+ .site-navigation > .wrap-wide > .flex { gap:13px; }
+ .site-navigation a[href="#start"] { font-size:11px; }
+ .mobile-reading-progress { display:block; position:absolute; left:0; right:0; bottom:0; height:2px; background:#ffffff08; pointer-events:none; }
+ .mobile-reading-progress > span { display:block; height:100%; background:linear-gradient(90deg,#ff9f0a,#ff375f,#bf5af2); transform-origin:left; }
+ .mobile-section-menu .wrap-wide { display:grid; grid-template-columns:1fr 1fr; gap:0 18px; padding-top:12px; padding-bottom:12px; }
+ .mobile-section-menu a { font-size:14px; min-height:48px; display:flex; align-items:center; }
+ .moneytec-hero > .sticky { padding-bottom:18px; }
+ .moneytec-hero > .sticky > .relative:first-of-type { margin-top:22px; }
+ .moneytec-hero h1 { font-size:clamp(31px,8.4vw,42px); margin-top:17px; }
+ .hero-description { font-size:14px; margin-top:12px; }
+ .hero-mobile-intro { font-size:12px; margin-top:7px; max-width:420px; }
+ .hero-copy > .mt-7 { margin-top:16px; }
+ .hero-primary { min-height:44px; }
+ .hero-credentials { font-size:9px; margin-top:14px; }
+ .moneytec-hero .hero-coin { margin-top:12px !important; }
+ .hero-kicker { font-size:7px; }
+ #main > .border-b { padding-top:14px; padding-bottom:14px; }
+ #main > .border-b .wrap-wide { gap:7px 12px; font-size:10px; }
+ .section-heading { margin-bottom:20px; }
+ .section-heading h2 { font-size:32px; margin-top:14px; }
+ .section-heading > p { font-size:12px; line-height:1.65; margin-top:12px; }
+ .mobile-service-list { gap:7px; }
+ .mobile-service { border-radius:12px; }
+ .mobile-service summary { padding:12px 13px; min-height:56px; font-size:14px; gap:10px; }
+ .mobile-service-body { padding:0 15px 14px 37px; font-size:12px; }
+ #grow { padding:30px 0; }
+ #grow .display { font-size:25px; }
+ #grow .grid { margin-top:19px; }
+ #grow svg { margin-top:17px; height:90px; min-height:0; }
+ #grow .grid .display { font-size:clamp(19px,5.2vw,24px); }
+ #grow .mt-4 { margin-top:12px; }
+ .social-section .mt-7 { margin-top:20px; }
+ .social-grid { gap:8px; }
+ .social-card { padding:13px; gap:8px; border-radius:13px; }
+ .social-icon { width:30px; height:30px; }
+ .social-card strong { font-size:13px; }
+ .social-card small { margin-top:3px; }
+ .planning-intro { font-size:12px; margin-top:11px; }
+ .calculator-mode { margin-top:17px; }
+ .calculator-mode button { min-height:51px; padding:10px 12px; font-size:12px; }
+ #calculator .mt-8 { margin-top:23px; }
+ #calculator .text-\[21px\] { font-size:15px; line-height:1.45; }
+ #calculator .space-y-10 > :not([hidden]) ~ :not([hidden]) { margin-top:20px; }
+ #calculator [role=radio] { height:42px; font-size:12px; border-width:1px; border-radius:10px; }
+ #calculator .slider { height:32px; }
+ .calculator-summary { padding:19px !important; border-radius:17px !important; }
+ .calculator-summary > .display { font-size:34px; }
+ .calculator-summary .text-\[15px\] { font-size:13px; }
+ .calculator-summary .pill-blue { font-size:13px; min-height:44px; }
+ .goal-planner { margin-top:21px; gap:19px; }
+ .goal-choices { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:5px; }
+ .goal-choices button { font-size:10px; padding:8px 3px; min-height:40px; border-radius:10px; }
+ .goal-money-grid { grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:10px; margin-top:18px; }
+ .goal-money-grid label > span { display:block; font-size:11px; line-height:1.4; min-height:30px; }
+ .goal-money-input { padding:10px; margin-top:5px; border-radius:10px; gap:6px; }
+ .goal-money-input input { font-size:19px; }
+ .goal-money-input > span { font-size:16px; }
+ .goal-slider-field { margin-top:18px; }
+ .goal-slider-field label { font-size:12px; margin-bottom:3px; }
+ .goal-assumption-heading { margin-top:17px; padding-top:18px; }
+ .goal-rate-label { margin-top:13px; font-size:11px; }
+ .goal-result { padding:19px; border-radius:18px; }
+ .goal-result-label { margin-top:21px; font-size:12px; }
+ .goal-monthly { font-size:36px; }
+ .goal-journey { height:32px; margin-top:12px; }
+ .goal-insight { margin-top:17px; padding:12px; }
+ .goal-share { min-height:45px; padding:12px; font-size:11px; margin-top:17px; }
+ .mobile-plan-tabs { margin-top:17px; }
+ .plans-track { margin-top:8px; }
+ .plans-track .plan-active { min-height:350px; padding:18px; }
+ .plan-card > div:first-of-type > div:last-child p:first-child { font-size:18px; }
+ .plan-card dl { font-size:12px; }
+ #plans .plans-disclosure { margin-top:16px; font-size:10px; line-height:1.65; }
+ .mentor-photo-stage { height:330px; }
+ .mentor-photo { object-position:50% 24%; }
+ .mentor-photo-caption { bottom:20px; left:20px; }
+ .mentor-photo-caption strong { font-size:28px; }
+ .mentor-content-wrap { padding:0 20px 30px; }
+ .mentor-content h2 { font-size:34px; margin-top:14px; }
+ .mentor-description { font-size:14px; line-height:1.65; margin-top:16px; }
+ .mentor-content > .mentor-bio { display:none; }
+ .mentor-story { display:block; margin-top:14px; border-bottom:1px solid #ffffff16; }
+ .mentor-story summary { display:flex; align-items:center; justify-content:space-between; list-style:none; min-height:44px; cursor:pointer; font-size:12px; color:#d4b1d2; }
+ .mentor-story summary::-webkit-details-marker { display:none; }
+ .mentor-story summary > span { font-size:20px; font-weight:300; }
+ .mentor-story[open] summary > span { transform:rotate(45deg); }
+ .mentor-story-text { padding:0 0 14px; color:#a99fb1; font-size:12px; line-height:1.8; }
+ .mentor-facts { border-top:0; margin-top:0; padding:15px 0; }
+ .mentor-facts strong { font-size:23px; }
+ .mentor-registration { margin-top:16px; }
+ .mentor-actions { margin-top:17px; }
+ #safety .display { font-size:30px; margin-top:17px; }
+ #safety .mt-12 { gap:16px; margin-top:22px; }
+ #safety .mt-12 > div { padding-top:14px; }
+ #safety .mt-12 p:first-child { font-size:16px; }
+ #safety .mt-12 p:last-child { font-size:12px; margin-top:7px; }
+ #safety .mt-10 { margin-top:22px; }
+ #safety .textlink-dark { font-size:13px; }
+ .next-steps .route-panel { min-height:320px; padding:18px; border-radius:17px; }
+ .next-steps h3 { font-size:19px; }
+ .next-steps .route-panel ol { margin:17px 0; }
+ .next-steps .route-panel li { font-size:12px; gap:10px; }
+ .next-steps .route-panel .textlink { font-size:14px; }
+ #faq .mt-8 { margin-top:20px; }
+ #faq button { padding-top:14px; padding-bottom:14px; }
+ #faq button > span:first-child { font-size:14px; line-height:1.5; }
+ #faq .max-w-2xl { font-size:13px; }
+ #start h2 { font-size:34px; }
+ #start .body-lg { font-size:13px; }
+ #start form { margin-top:21px; padding:17px; border-radius:17px; }
+ #start form button[type=button] { font-size:11px; min-height:40px; height:auto; padding:10px 12px; }
+ #start form input { height:44px; font-size:16px; }
+ #start form button[type=submit] { min-height:44px; height:auto; font-size:13px; }
+ footer { font-size:10px !important; }
+ .footer-signature { padding:10px 0 24px; }
+}
+@media (max-width:359px) { .goal-money-input input { font-size:16px; } .plans-track .plan-active { min-height:350px; } }

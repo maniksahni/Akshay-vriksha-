@@ -94,7 +94,7 @@ export function Plans() {
           })}
         </motion.div>
         <p className="plans-swipe mt-1 text-[12px] text-graphite md:hidden">Swipe to compare ›</p>
-        <p className="mx-auto mt-6 max-w-2xl text-[12px] text-graphite">These are starting points for a conversation, not product recommendations. Suitability depends on your full financial circumstances and risk assessment.</p>
+        <p className="plans-disclosure mx-auto mt-6 max-w-2xl text-[12px] text-graphite">These are starting points for a conversation, not product recommendations. Suitability depends on your full financial circumstances and risk assessment.</p>
       </div>
     </section>
   );

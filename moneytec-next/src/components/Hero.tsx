@@ -52,7 +52,7 @@ export function Hero() {
   const [chapter, setChapter] = useState(0);
   useMotionValueEvent(p, 'change', value => { setSecondScene(value > .55); setChapter(value < .22 ? 0 : value < .55 ? 1 : 2); });
   useEffect(() => {
-    const set = () => { setMobile(window.innerWidth < 640); setSize(window.innerWidth < 640 ? 148 : window.innerWidth < 1024 ? 360 : 500); };
+    const set = () => { setMobile(window.innerWidth < 768); setSize(window.innerWidth < 768 ? 148 : window.innerWidth < 1024 ? 360 : 500); };
     set();
     window.addEventListener('resize', set);
     return () => window.removeEventListener('resize', set);

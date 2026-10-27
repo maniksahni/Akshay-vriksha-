@@ -1,4 +1,4 @@
-import { useMotionValueEvent, useScroll } from 'framer-motion';
+import { motion, useMotionValueEvent, useScroll } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { NAV, wa } from '../data';
@@ -20,7 +20,7 @@ export function Nav() {
   const [frosted, setFrosted] = useState(false);
   const [dark, setDark] = useState(true);
   const [open, setOpen] = useState(false);
-  const { scrollY } = useScroll();
+  const { scrollY, scrollYProgress } = useScroll();
   useMotionValueEvent(scrollY, 'change', (y) => {
     setFrosted(y > 44);
     // match the bar to whatever section is passing underneath it (sections marked data-dark)
@@ -66,6 +66,7 @@ export function Nav() {
             <a href="#start" onClick={() => setOpen(false)} className="inline-flex h-7 items-center rounded-full bg-link px-3 text-[12px] font-normal text-white hover:bg-[#0077ED]">Get started</a>
           </div>
         </div>
+        <div className="mobile-reading-progress" aria-hidden="true"><motion.span style={{scaleX:scrollYProgress}} /></div>
           {open && createPortal(<>
             <button type="button" className="menu-backdrop" aria-label="Close sections menu" onClick={() => setOpen(false)} />
             <nav

@@ -19,7 +19,7 @@ export function Grow() {
   const [year, setYear] = useState(0);
   const [mobile, setMobile] = useState(false);
   const [mobileYear, setMobileYear] = useState(10);
-  useEffect(() => { const media = matchMedia("(max-width: 639px)"); const sync = () => setMobile(media.matches); sync(); media.addEventListener("change", sync); return () => media.removeEventListener("change", sync); }, []);
+  useEffect(() => { const media = matchMedia("(max-width: 767px)"); const sync = () => setMobile(media.matches); sync(); media.addEventListener("change", sync); return () => media.removeEventListener("change", sync); }, []);
   const displayYear = mobile ? mobileYear : year;
   useMotionValueEvent(p, 'change', (v) => setYear(Math.round(Math.min(1, Math.max(0, (v - 0.05) / 0.85)) * YEARS)));
 
