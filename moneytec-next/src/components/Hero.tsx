@@ -106,7 +106,7 @@ export function Hero() {
             <p className="hero-mobile-intro">Goal-based mutual fund investing, insurance and NRI guidance with Gulshan Kohli.</p>
             <motion.div className="mt-7 flex flex-wrap items-center gap-x-6 gap-y-3" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1, delay: 0.5 }}>
               <a href="#start" tabIndex={!mobile && secondScene ? -1 : undefined} className="hero-primary">Start a conversation <span aria-hidden="true">↗</span></a>
-              <a href="#calculator" tabIndex={!mobile && secondScene ? -1 : undefined} className="hero-secondary">Explore your plan <span aria-hidden="true">↓</span></a>
+              <a href="#calculator" onClick={() => window.dispatchEvent(new Event('moneytec:plan-goal'))} tabIndex={!mobile && secondScene ? -1 : undefined} className="hero-secondary">Plan my goal <span aria-hidden="true">↓</span></a>
             </motion.div>
             <div className="hero-credentials" aria-label="Professional credentials">
               <span><i aria-hidden="true">✳</i> AMFI registered <b>ARN-105840</b></span>

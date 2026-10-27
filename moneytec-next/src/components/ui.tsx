@@ -113,3 +113,12 @@ export function sipValue(monthly: number, annualPct: number, months: number) {
   const i = Math.pow(1 + annualPct / 100, 1 / 12) - 1;
   return i === 0 ? monthly * months : monthly * ((Math.pow(1 + i, months) - 1) / i) * (1 + i);
 }
+
+/** Goal funding using effective monthly compounding and start-of-month contributions. */
+export function goalProjection(cost: number, savings: number, years: number, inflation: number, annualReturn: number) {
+  const target = cost * Math.pow(1 + inflation / 100, years);
+  const futureSavings = savings * Math.pow(1 + annualReturn / 100, years);
+  const gap = Math.max(0, target - futureSavings);
+  const monthly = gap / sipValue(1, annualReturn, years * 12);
+  return { target, futureSavings, gap, monthly };
+}

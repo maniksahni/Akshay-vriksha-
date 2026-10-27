@@ -559,3 +559,70 @@ footer { background: #e9e5ed !important; }
  .mentor-facts strong { font-size:25px; }
  .mentor-actions { gap:20px; }
 }
+
+/* An integrated planning studio: useful calculations, one coherent visual surface. */
+.planning-intro { max-width:600px; margin-top:16px; color:#82728b; font-size:16px; line-height:1.65; }
+.calculator-mode { display:grid; grid-template-columns:1fr 1fr; max-width:580px; gap:6px; padding:6px; background:#eae4ef; border:1px solid #ddd2e5; border-radius:18px; margin-top:28px; }
+.calculator-mode button { padding:14px 18px; text-align:left; font-size:15px; font-weight:600; color:#85738d; border-radius:12px; transition:background .2s,color .2s; }
+.calculator-mode button span { display:block; margin-top:4px; font-size:10px; font-weight:400; letter-spacing:.01em; }
+.calculator-mode button[aria-pressed=true] { background:#211627; color:#fff; box-shadow:0 6px 15px -8px #43204d; }
+.goal-planner { display:grid; grid-template-columns:1fr 420px; gap:56px; margin-top:36px; align-items:start; }
+.goal-step-label { font-size:9px; font-weight:600; letter-spacing:.18em; color:#a0608b; }
+.goal-choices { display:flex; flex-wrap:wrap; gap:8px; margin-top:17px; }
+.goal-choices button { min-height:42px; padding:10px 17px; border-radius:999px; font-size:12px; border:1px solid #dfd3e5; color:#7b6586; }
+.goal-choices button[aria-pressed=true] { border-color:#a66394; color:#6d3760; background:#eee2f0; }
+.goal-money-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:27px; }
+.goal-money-grid label > span { font-size:12px; color:#7c6b86; }
+.goal-money-input { display:flex; align-items:center; gap:10px; border:1px solid #d8c9e0; border-radius:13px; padding:13px 15px; margin-top:9px; background:white; }
+.goal-money-input:focus-within { outline:2px solid #ae6e9a; outline-offset:2px; }
+.goal-money-input > span { color:#b181a2; font-size:21px; }
+.goal-money-input input { min-width:0; width:100%; font-size:23px; letter-spacing:-.04em; color:#322039; background:transparent; outline:none; }
+.goal-input-help { font-size:11px; color:#9a8aa2; line-height:1.65; margin-top:11px; }
+.goal-input-error { color:#b32c59; font-size:12px; line-height:1.6; margin-top:12px; }
+.goal-slider-field { margin-top:25px; }
+.goal-slider-field label { display:flex; justify-content:space-between; gap:12px; font-size:13px; color:#786481; margin-bottom:7px; }
+.goal-slider-field strong { color:#4a2e54; font-weight:500; }
+.goal-assumption-heading { border-top:1px solid #e4d9e8; padding-top:25px; margin-top:24px; }
+.goal-rate-label { display:flex; justify-content:space-between; align-items:center; gap:15px; margin-top:19px; font-size:13px; color:#786481; }
+.goal-rate-label select { min-height:44px; border:1px solid #d8c9e0; padding:10px; border-radius:10px; color:#4a2e54; background:#fff; font-size:12px; }
+.goal-result { position:sticky; top:85px; padding:28px; border-radius:25px; color:#f6eef9; background:radial-gradient(ellipse at 0% 0%,#3e2542,transparent 70%),#17111d; box-shadow:0 30px 60px -40px #54275f80; border:1px solid #4b3355; }
+.goal-result-header { display:flex; align-items:center; gap:9px; color:#e4afd0; }
+.goal-result-header > span { font-size:8px; letter-spacing:.16em; }
+.goal-result-header i { width:5px; height:5px; margin-left:auto; background:#ee9abf; border-radius:50%; box-shadow:0 0 12px #ee9abf; }
+.goal-result-label { font-size:13px; color:#c5b3ce; margin-top:29px; }
+.goal-monthly { margin-top:7px; font-size:clamp(32px,3.7vw,48px); line-height:1.15; letter-spacing:-.065em; font-weight:600; overflow-wrap:anywhere; }
+.goal-result-sub { font-size:10px; color:#95809f; margin-top:8px; }
+.goal-journey { position:relative; display:flex; align-items:center; justify-content:space-between; height:45px; margin-top:15px; }
+.goal-journey > span { position:absolute; left:0; right:0; height:1px; background:linear-gradient(90deg,#ff9f0a,#ff375f,#bf5af2); }
+.goal-journey i,.goal-journey b { position:relative; display:block; height:5px; width:5px; border:1px solid #d6a9cf; border-radius:50%; background:#27192f; }
+.goal-journey b { height:9px; width:9px; background:#f0acdb; box-shadow:0 0 15px #f0acdb60; }
+.goal-breakdown { display:grid; gap:14px; margin-top:3px; }
+.goal-breakdown > div { display:flex; justify-content:space-between; align-items:baseline; gap:18px; font-size:12px; }
+.goal-breakdown dt { color:#a996b4; max-width:210px; }
+.goal-breakdown dd { color:#f6e7fa; font-weight:500; white-space:nowrap; }
+.goal-breakdown > div:last-child { border-top:1px solid #ffffff17; padding-top:15px; }
+.goal-insight { margin-top:22px; padding:15px; border:1px solid #ffffff10; border-radius:12px; background:#ffffff04; color:#b6a1c1; font-size:11px; line-height:1.7; }
+.goal-share { display:flex; justify-content:space-between; align-items:center; gap:10px; margin-top:22px; border-radius:12px; background:#f3e8f4; color:#35203f; padding:15px; font-size:12px; font-weight:600; }
+.goal-share:hover { background:#e8cae6; }
+.goal-fineprint { margin-top:16px; color:#95829f; font-size:9px; line-height:1.65; }
+.goal-empty { padding:40px 0; color:#d1b8dd; font-size:16px; line-height:1.5; }
+.goal-empty > p { margin-top:15px; }
+@media (max-width:1023px) { .goal-planner { grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:25px; } .goal-money-grid { grid-template-columns:1fr; } }
+@media (max-width:639px) {
+ .planning-intro { margin-top:12px; font-size:13px; }
+ .calculator-mode { margin-top:20px; border-radius:14px; padding:5px; }
+ .calculator-mode button { font-size:13px; padding:12px; border-radius:10px; }
+ .calculator-mode button span { font-size:8px; line-height:1.5; }
+ .goal-planner { grid-template-columns:1fr; gap:23px; margin-top:25px; }
+ .goal-choices { gap:6px; margin-top:13px; }
+ .goal-choices button { font-size:11px; padding:9px 13px; }
+ .goal-money-grid { gap:17px; margin-top:21px; }
+ .goal-money-input { padding:12px 14px; }
+ .goal-money-input input { font-size:24px; }
+ .goal-result { position:relative; top:auto; padding:22px; border-radius:20px; }
+ .goal-monthly { font-size:42px; }
+ .goal-breakdown { gap:12px; }
+ .goal-breakdown > div { font-size:11px; }
+ .goal-step-label { font-size:8px; }
+ .goal-rate-label { font-size:12px; }
+}

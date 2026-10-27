@@ -1,5 +1,6 @@
+import { GoalPlanner } from './GoalPlanner';
 import { motion } from 'framer-motion';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { wa } from '../data';
 import { EASE, inr, sipValue, useTween } from './ui';
 
@@ -29,6 +30,12 @@ function Segmented<T extends number>({ options, value, onChange, label, fmt }: {
 }
 
 export function Configure() {
+  const [mode, setMode] = useState<'sip' | 'goal'>('sip');
+  useEffect(() => {
+    const openGoal = () => setMode('goal');
+    window.addEventListener('moneytec:plan-goal', openGoal);
+    return () => window.removeEventListener('moneytec:plan-goal', openGoal);
+  }, []);
   const [monthly, setMonthly] = useState(5000);
   const [years, setYears] = useState(20);
   const [rate, setRate] = useState(12);
@@ -42,8 +49,12 @@ export function Configure() {
   return (
     <section id="calculator" className="bg-white py-16 sm:py-24">
       <div className="wrap-wide">
-        <p className="eyebrow text-[#BF5AF2]">Calculator</p>
-        <h2 className="display mt-1 text-[clamp(2rem,4.6vw,3.5rem)]">Configure your SIP.</h2>
+        <p className="eyebrow text-[#BF5AF2]">Your planning studio</p>
+        <h2 className="display mt-1 text-[clamp(2rem,4.6vw,3.5rem)]">Give your ambition a number.</h2>
+        <p className="planning-intro">Explore what your SIP could become, or work backwards from the life you want to build.</p>
+        <div className="calculator-mode" role="group" aria-label="Calculator mode"><button type="button" aria-pressed={mode==='sip'} onClick={()=>setMode('sip')}>Explore my SIP <span>Amount → future value</span></button><button type="button" aria-pressed={mode==='goal'} onClick={()=>setMode('goal')}>Plan my goal <span>Future goal → monthly SIP</span></button></div>
+        <div hidden={mode!=='goal'}><GoalPlanner /></div>
+        <div hidden={mode!=='sip'}>
 
         <div className="mt-8 grid gap-10 lg:grid-cols-[1fr_420px] lg:gap-14">
           <div className="space-y-10">
@@ -98,6 +109,7 @@ export function Configure() {
               <p className="mt-3 text-[11px] leading-snug text-graphite">Contributions at the start of each month, assuming {rate}% CAGR per year. Illustration only; returns are not guaranteed. Mutual fund investments are subject to market risks.</p>
             </div>
           </aside>
+        </div>
         </div>
       </div>
     </section>
