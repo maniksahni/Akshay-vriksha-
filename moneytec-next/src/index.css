@@ -626,3 +626,8 @@ footer { background: #e9e5ed !important; }
  .goal-step-label { font-size:8px; }
  .goal-rate-label { font-size:12px; }
 }
+
+/* A compact custom mark shared by navigation, favicon and brand assets. */
+.moneytec-brand-symbol { display:block; width:30px; height:28px; flex-shrink:0; object-fit:contain; }
+.footer-signature > img { display:block; width:72%; max-width:850px; height:auto; }
+@media (max-width:359px) { .moneytec-brand-symbol { width:26px; height:25px; } }

@@ -178,7 +178,7 @@ export function Footer() {
   return (
     <footer className="bg-cloud pb-10 pt-8 text-[12px] leading-relaxed text-slate">
       <div className="wrap-wide">
-        <div className="footer-signature" aria-hidden="true">moneytec<span>↗</span></div>
+        <div className="footer-signature" aria-label="Moneytec"><img src="./brand/moneytec-logo-light.svg" alt="Moneytec" width="330" height="64" /><span aria-hidden="true">↗</span></div>
         <p className="border-b border-mist pb-4">
           {FACTS.name} is an AMFI-registered mutual fund distributor ({FACTS.arn}) and a Kotak Life Insurance advisor ({FACTS.kotak}). {DISCLAIMER}
         </p>

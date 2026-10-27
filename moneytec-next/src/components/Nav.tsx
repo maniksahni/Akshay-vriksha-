@@ -5,8 +5,8 @@ import { NAV, wa } from '../data';
 
 export function Wordmark({ dark = true }: { dark?: boolean }) {
   return (
-    <span className={`wordmark inline-flex items-center gap-1.5 text-[19px] font-semibold tracking-[-0.03em] ${dark ? 'text-white' : 'text-coal'}`}>
-      <span className="grid h-6 w-6 place-items-center rounded-[7px] bg-gradient-to-br from-[#FF9F0A] via-[#FF375F] to-[#BF5AF2] text-[13px] font-bold text-white">₹</span>
+    <span className={`wordmark inline-flex items-center gap-2 text-[19px] font-semibold tracking-[-0.03em] ${dark ? 'text-white' : 'text-coal'}`}>
+      <img src="./brand/moneytec-symbol.svg" width="30" height="28" alt="" className="moneytec-brand-symbol" />
       moneytec
     </span>
   );
