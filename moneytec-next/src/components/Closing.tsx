@@ -52,28 +52,22 @@ export function Safety() {
 /* ---------------------------------------------------------------- meet Gulshan */
 export function Gulshan() {
   return (
-    <section id="gulshan" className="bg-white py-16 sm:py-28">
-      <div className="wrap-wide grid items-center gap-6 sm:gap-10 lg:grid-cols-2 lg:gap-16">
-        <Reveal>
-          <div className="relative mx-auto gulshan-portrait aspect-[4/5] w-full max-w-[260px] overflow-hidden rounded-[28px] sm:max-w-[440px] sm:rounded-[36px] bg-gradient-to-br from-[#f5f5f7] to-[#e8e8ed]">
-            <img src="./images/gulshan-kohli.webp" alt="Gulshan Kohli, mutual fund distributor" width="800" height="922" loading="lazy" decoding="async" className="gulshan-photo h-full w-full object-cover" />
-            <span className="absolute bottom-3 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-white/90 px-3 py-1.5 text-[11px] sm:bottom-5 sm:px-4 sm:py-2 sm:text-[13px] font-semibold shadow-sm">{FACTS.years}+ years · {FACTS.city}</span>
-          </div>
-        </Reveal>
-        <Reveal delay={0.1}>
-          <p className="eyebrow text-[#FF375F]">Meet Gulshan</p>
-          <h2 className="display mt-1 text-[clamp(2.2rem,5vw,3.8rem)]">A real person. On your side.</h2>
-          <p className="body-lg mt-4 text-slate">
-            {FACTS.name} is an electronics engineer turned mutual fund distributor. For {FACTS.years}+ years he’s helped people start SIPs, stick with them, and protect their families with the right cover. No call centres. No bots. You message him, he replies.
-          </p>
-          <div className="mt-6 grid grid-cols-2 gap-4 border-t border-mist pt-5">
-            <div><p className="text-[13px] text-graphite">AMFI-registered</p><p className="text-[19px] font-semibold tracking-[-0.02em]">{FACTS.arn}</p></div>
-            <div><p className="text-[13px] text-graphite">Kotak Life advisor</p><p className="text-[19px] font-semibold tracking-[-0.02em]">{FACTS.kotak}</p></div>
-          </div>
-          <div className="mt-7 flex flex-wrap items-center gap-x-6 gap-y-3">
-            <a href={wa('Hi Gulshan! Found you on moneytec. Can we talk about my money plans?')} target="_blank" rel="noreferrer" className="pill-blue">Message Gulshan</a>
-            <a href={`tel:+${FACTS.phoneIntl}`} className="textlink">Call {FACTS.phone} ›</a>
-          </div>
+    <section id="gulshan" data-dark className="mentor-scene" aria-labelledby="mentor-title">
+      <div className="mentor-photo-stage">
+        <img src="./images/gulshan-kohli.webp" alt="Gulshan Kohli, your personal point of contact at Moneytec" width="900" height="1037" loading="lazy" decoding="async" className="mentor-photo" />
+        <div className="mentor-photo-shade" />
+        <div className="mentor-photo-caption"><span>THE PERSON BEHIND MONEYTEC</span><strong>Gulshan Kohli</strong><small>{FACTS.city}</small></div>
+      </div>
+      <div className="wrap-wide mentor-content-wrap">
+        <Reveal className="mentor-content">
+          <p className="section-index">YOUR MONEY. A PERSONAL CONNECTION.</p>
+          <h2 id="mentor-title">A real person.<br /><em>On your side.</em></h2>
+          <p className="mentor-description">Behind every financial goal is a life worth understanding. Your plans deserve someone who listens.</p>
+          <p className="mentor-bio">{FACTS.name} is an electronics engineer turned mutual fund distributor. For {FACTS.years}+ years, he has helped people start SIPs and explore protection for their families. From your first question to your next review, you can speak with him personally.</p>
+          <div className="mentor-facts"><div><strong>{FACTS.years}<span>+</span></strong><small>Years of experience</small></div><div><strong>One-to-one</strong><small>Personal conversations</small></div></div>
+          <a href="#arn-verifier" className="mentor-registration"><span className="mentor-reg-dot" />AMFI Registered Mutual Fund Distributor<br /><b>{FACTS.arn}</b><span aria-hidden="true"> ↗</span></a>
+          <div className="mentor-actions"><a href={wa('Hi Gulshan! I would like to talk about my financial goals.')} target="_blank" rel="noreferrer" className="hero-primary">Talk to Gulshan <span aria-hidden="true">↗</span></a><a href={`tel:+${FACTS.phoneIntl}`} className="hero-secondary">Call directly ↗</a></div>
+          <p className="mentor-insurance">Kotak Life advisor · {FACTS.kotak}</p>
         </Reveal>
       </div>
     </section>

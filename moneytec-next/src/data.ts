@@ -20,7 +20,7 @@ export const NAV = [
   { label: 'Growth', href: '#grow' },
   { label: 'Calculator', href: '#calculator' },
   { label: 'Plans', href: '#plans' },
-  { label: 'Our approach', href: '#safety' },
+  { label: 'Verify ARN', href: '#arn-verifier' },
   { label: 'Gulshan', href: '#gulshan' },
   { label: 'FAQ', href: '#faq' },
 ];
