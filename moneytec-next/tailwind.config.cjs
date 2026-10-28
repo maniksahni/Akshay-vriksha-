@@ -1,27 +1,27 @@
-/** Apple-style tokens: paper white, near-black, quiet greys, one signature gradient. */
+/** Moneytec "night cinema" tokens: one ink-black world, warm aurora light, quiet glass. */
 module.exports = {
   content: [__dirname + '/index.html', __dirname + '/src/**/*.{ts,tsx}'],
   theme: {
     extend: {
       colors: {
-        snow: '#FBFBFD',
-        cloud: '#F5F5F7',
-        mist: '#E8E8ED',
-        graphite: '#86868B',
-        slate: '#6E6E73',
-        coal: '#1D1D1F',
-        night: '#000000',
-        link: '#0071E3',
-        linkdark: '#2997FF',
-        mint: '#30D158',
+        ink: '#07060B',
+        ink2: '#0E0C14',
+        ink3: '#16131E',
+        paper: '#F4F1F8',
+        haze: 'rgba(244,241,248,0.62)',
+        dim: 'rgba(244,241,248,0.42)',
+        line: 'rgba(255,255,255,0.09)',
+        amber: '#FF9F0A',
+        rose: '#FF375F',
+        violet: '#BF5AF2',
+        mint: '#5BF0B5',
+        sky: '#64D2FF',
       },
       fontFamily: {
         sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+        serif: ['"Instrument Serif"', 'Georgia', 'serif'],
       },
-      letterSpacing: {
-        tightest: '-0.045em',
-        tighter2: '-0.03em',
-      },
+      letterSpacing: { tightest: '-0.05em' },
     },
   },
   plugins: [],

@@ -1,75 +1,122 @@
-import { AnimatePresence, motion } from 'framer-motion';
-import { FormEvent, useState } from 'react';
+import { AnimatePresence, motion, useScroll, useTransform } from 'framer-motion';
+import { FormEvent, useRef, useState } from 'react';
 import { DISCLAIMER, FACTS, NAV, SOCIALS, wa } from '../data';
-import { EASE } from './ui';
+import { CountUp, EASE, FadeIn, spotlight, Title, useMobile } from './ui';
 
-function Reveal({ children, className = '', delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) {
+/* ---------------------------------------------------------------- meet Gulshan */
+const BIO = `${FACTS.name} is an electronics engineer turned mutual fund distributor. For ${FACTS.years}+ years, he has helped people start SIPs and explore protection for their families. From your first question to your next review, you can speak with him personally.`;
+
+function MentorDetails() {
   return (
-    <motion.div className={className} initial={{ opacity: 0, y: 28 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '0px 0px -10% 0px' }} transition={{ duration: 0.9, ease: EASE, delay }}>
-      {children}
-    </motion.div>
+    <div className="grid gap-10 lg:grid-cols-[1.1fr_1fr] lg:gap-20">
+      <div>
+        <p className="kicker">Your money. A personal connection.</p>
+        <Title className="display mt-4 text-[clamp(2.4rem,5.4vw,4.8rem)]" text="A real person. / *On your side.*" />
+        <p className="lede mt-5 max-w-lg">Behind every financial goal is a life worth understanding. Your plans deserve someone who listens.</p>
+      </div>
+      <FadeIn>
+        <p className="text-[15px] leading-relaxed text-haze sm:text-[17px]">{BIO}</p>
+        <div className="mt-8 grid grid-cols-2 gap-4 border-y border-line py-6">
+          <div><p className="display text-[clamp(2.2rem,4vw,3.4rem)]"><CountUp to={FACTS.years} suffix="+" className="grad" /></p><p className="text-[12px] text-dim">Years of experience</p></div>
+          <div><p className="display text-[clamp(1.6rem,3vw,2.6rem)] leading-[1.25]">One-to-one</p><p className="text-[12px] text-dim">Personal conversations</p></div>
+        </div>
+        <a href={FACTS.amfiLocator} target="_blank" rel="noopener noreferrer" className="group mt-6 flex items-center justify-between gap-4 rounded-2xl border border-line bg-white/[0.03] px-5 py-4 transition-colors hover:border-white/25">
+          <span className="flex items-center gap-3"><i className="pulse-dot h-2 w-2 rounded-full bg-mint" /><span><span className="block text-[12px] text-dim">AMFI Registered Mutual Fund Distributor</span><b className="text-[17px] tracking-[-0.01em]">{FACTS.arn}</b></span></span>
+          <span aria-hidden className="text-haze transition-transform group-hover:translate-x-1">↗</span>
+        </a>
+        <div className="mt-6 flex flex-wrap gap-3">
+          <a href={wa('Hi Gulshan! I would like to talk about my financial goals.')} target="_blank" rel="noreferrer" className="btn-light pr-2">Talk to Gulshan <span className="arrow">↗</span></a>
+          <a href={`tel:+${FACTS.phoneIntl}`} className="btn-ghost">Call directly ↗</a>
+        </div>
+        <p className="mt-4 text-[12px] text-dim">Kotak Life advisor · {FACTS.kotak}</p>
+      </FadeIn>
+    </div>
   );
 }
 
-/* ---------------------------------------------------------------- privacy-style trust */
+export function Gulshan() {
+  const mobile = useMobile();
+  const ref = useRef<HTMLDivElement>(null);
+  const { scrollYProgress: p } = useScroll({ target: ref, offset: ['start start', 'end end'] });
+  const clip = useTransform(p, [0, 0.6], ['inset(18% 34% 18% 34% round 40px)', 'inset(5% 7% 5% 7% round 32px)']);
+  const scale = useTransform(p, [0, 0.7], [1.25, 1]);
+  const nameY = useTransform(p, [0, 0.7], ['30%', '0%']);
+  const nameOpacity = useTransform(p, [0.25, 0.6], [0, 1]);
+  const introOpacity = useTransform(p, [0, 0.2], [1, 0]);
+
+  const img = <img src="./images/gulshan-kohli.webp" alt="Gulshan Kohli, your personal point of contact at Moneytec" width="900" height="1037" loading="lazy" decoding="async" className="h-full w-full object-cover object-[50%_22%]" />;
+
+  return (
+    <section id="gulshan" data-dark aria-labelledby="mentor-title" className="relative">
+      <h2 id="mentor-title" className="sr-only">Meet Gulshan Kohli</h2>
+      {mobile ? (
+        <div className="wrap pt-16">
+          <FadeIn>
+            <div className="relative mx-auto aspect-[4/5] max-h-[440px] overflow-hidden rounded-[28px]">
+              {img}
+              <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/10 to-transparent" />
+              <div className="absolute inset-x-5 bottom-5">
+                <p className="text-[10px] uppercase tracking-[0.22em] text-haze">The person behind moneytec</p>
+                <p className="serif mt-1 text-[40px] leading-none">Gulshan Kohli</p>
+                <p className="mt-1 text-[13px] text-haze">{FACTS.city}</p>
+              </div>
+            </div>
+          </FadeIn>
+        </div>
+      ) : (
+        <div ref={ref} className="relative h-[220svh]">
+          <div className="sticky top-0 h-[100svh] overflow-hidden">
+            <motion.p className="absolute inset-x-0 top-[9vh] z-10 text-center text-[11px] uppercase tracking-[0.3em] text-dim" style={{ opacity: introOpacity }}>The person behind moneytec</motion.p>
+            <motion.div className="absolute inset-0" style={{ clipPath: clip }}>
+              <motion.div className="h-full w-full" style={{ scale }}>{img}</motion.div>
+              <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/20 to-ink/30" />
+            </motion.div>
+            <motion.div className="absolute inset-x-0 bottom-[10vh] text-center" style={{ y: nameY, opacity: nameOpacity }}>
+              <p className="serif text-[clamp(4rem,12vw,11rem)] leading-[0.9] tracking-[-0.03em]">Gulshan Kohli</p>
+              <p className="mt-4 text-[13px] uppercase tracking-[0.3em] text-haze">{FACTS.city} · {FACTS.arn}</p>
+            </motion.div>
+          </div>
+        </div>
+      )}
+      <div className="wrap-wide py-10 sm:py-28"><MentorDetails /></div>
+    </section>
+  );
+}
+
 export function Safety() {
   return (
-    <section id="safety" data-dark className="bg-night py-20 text-white sm:py-32">
-      <div className="wrap text-center">
-        <Reveal>
-          <svg viewBox="0 0 64 64" className="mx-auto h-16 w-16" aria-hidden>
-            <defs><linearGradient id="lock" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stopColor="#64D2FF" /><stop offset="1" stopColor="#30D158" /></linearGradient></defs>
-            <rect x="12" y="28" width="40" height="30" rx="8" fill="url(#lock)" />
-            <path d="M20 28v-7a12 12 0 0 1 24 0v7" fill="none" stroke="url(#lock)" strokeWidth="5" strokeLinecap="round" />
-          </svg>
-          <h2 className="display mt-6 text-[clamp(2.2rem,5.6vw,4.4rem)]">
-            Your money never
-            <br />
-            <span className="grad-mint">touches us.</span>
-          </h2>
-          <p className="body-lg mx-auto mt-4 max-w-xl text-white/65">This website never collects your investment or premium payment. If you choose a product, payment follows the fund house or insurer’s process.</p>
-        </Reveal>
-        <div className="mt-12 grid gap-8 text-left sm:grid-cols-3">
+    <section id="safety" data-dark className="relative overflow-hidden py-14 sm:py-32">
+      <div className="pointer-events-none absolute left-1/2 top-1/3 h-[50vmin] w-[80vmin] -translate-x-1/2 rounded-full bg-mint/10 blur-[120px]" />
+      <div className="wrap relative">
+        <div className="text-center">
+          <div className="relative mx-auto grid h-24 w-24 place-items-center">
+            <div className="spin-slow absolute inset-0 rounded-full border border-dashed border-mint/40" />
+            <div className="absolute inset-3 rounded-full bg-mint/20 blur-xl" />
+            <svg viewBox="0 0 64 64" className="float-y relative h-12 w-12" aria-hidden>
+              <defs><linearGradient id="lock" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stopColor="#64D2FF" /><stop offset="1" stopColor="#5BF0B5" /></linearGradient></defs>
+              <rect x="12" y="28" width="40" height="30" rx="8" fill="url(#lock)" />
+              <path d="M20 28v-7a12 12 0 0 1 24 0v7" fill="none" stroke="url(#lock)" strokeWidth="5" strokeLinecap="round" />
+            </svg>
+          </div>
+          <h2 className="display mt-6 text-[clamp(2.4rem,6vw,5.2rem)]">Your money never<br /><span className="serif grad-mint">touches us.</span></h2>
+          <p className="lede mx-auto mt-5 max-w-xl">This website never collects your investment or premium payment. If you choose a product, payment follows the fund house or insurer’s process.</p>
+        </div>
+        <div className="mt-10 grid gap-3 sm:grid-cols-3 sm:gap-5">
           {[
             ['You stay in control.', 'Product decisions and payments are made by you through the relevant fund house or insurer.'],
             ['Your holdings are yours.', 'Mutual fund units and insurance policies are in your name, subject to the product terms.'],
             ['Check us yourself.', `AMFI-registered distributor ${FACTS.arn}. Kotak Life advisor ${FACTS.kotak}.`],
           ].map(([t, d], i) => (
-            <Reveal key={t} delay={i * 0.08}>
-              <p className="text-[21px] font-semibold tracking-[-0.02em]">{t}</p>
-              <p className="mt-2 text-[15px] leading-relaxed text-white/60">{d}</p>
-            </Reveal>
+            <FadeIn key={t} delay={i * 0.08} className="h-full">
+              <div onPointerMove={spotlight} className="glass spot h-full p-5 sm:p-6">
+                <p className="text-[11px] uppercase tracking-[0.2em] text-mint">0{i + 1}</p>
+                <p className="mt-2 text-[19px] font-semibold tracking-[-0.02em]">{t}</p>
+                <p className="mt-2 text-[14px] leading-relaxed text-haze">{d}</p>
+              </div>
+            </FadeIn>
           ))}
         </div>
-        <Reveal delay={0.2} className="mt-10">
-          <a href={FACTS.amfiLocator} target="_blank" rel="noreferrer" className="textlink-dark">Verify {FACTS.arn} on AMFI ↗</a>
-        </Reveal>
-      </div>
-    </section>
-  );
-}
-
-/* ---------------------------------------------------------------- meet Gulshan */
-export function Gulshan() {
-  return (
-    <section id="gulshan" data-dark className="mentor-scene" aria-labelledby="mentor-title">
-      <div className="mentor-photo-stage">
-        <img src="./images/gulshan-kohli.webp" alt="Gulshan Kohli, your personal point of contact at Moneytec" width="900" height="1037" loading="lazy" decoding="async" className="mentor-photo" />
-        <div className="mentor-photo-shade" />
-        <div className="mentor-photo-caption"><span>THE PERSON BEHIND MONEYTEC</span><strong>Gulshan Kohli</strong><small>{FACTS.city}</small></div>
-      </div>
-      <div className="wrap-wide mentor-content-wrap">
-        <Reveal className="mentor-content">
-          <p className="section-index">YOUR MONEY. A PERSONAL CONNECTION.</p>
-          <h2 id="mentor-title">A real person.<br /><em>On your side.</em></h2>
-          <p className="mentor-description">Behind every financial goal is a life worth understanding. Your plans deserve someone who listens.</p>
-          <p className="mentor-bio">{FACTS.name} is an electronics engineer turned mutual fund distributor. For {FACTS.years}+ years, he has helped people start SIPs and explore protection for their families. From your first question to your next review, you can speak with him personally.</p>
-          <details className="mentor-story"><summary>Gulshan’s story <span aria-hidden="true">+</span></summary>          <p className="mentor-story-text">{FACTS.name} is an electronics engineer turned mutual fund distributor. For {FACTS.years}+ years, he has helped people start SIPs and explore protection for their families. From your first question to your next review, you can speak with him personally.</p></details>
-          <div className="mentor-facts"><div><strong>{FACTS.years}<span>+</span></strong><small>Years of experience</small></div><div><strong>One-to-one</strong><small>Personal conversations</small></div></div>
-          <a href={FACTS.amfiLocator} target="_blank" rel="noopener noreferrer" className="mentor-registration"><span className="mentor-reg-dot" />AMFI Registered Mutual Fund Distributor<br /><b>{FACTS.arn}</b><span aria-hidden="true"> ↗</span></a>
-          <div className="mentor-actions"><a href={wa('Hi Gulshan! I would like to talk about my financial goals.')} target="_blank" rel="noreferrer" className="hero-primary">Talk to Gulshan <span aria-hidden="true">↗</span></a><a href={`tel:+${FACTS.phoneIntl}`} className="hero-secondary">Call directly ↗</a></div>
-          <p className="mentor-insurance">Kotak Life advisor · {FACTS.kotak}</p>
-        </Reveal>
+        <p className="mt-10 text-center"><a href={FACTS.amfiLocator} target="_blank" rel="noreferrer" className="link">Verify {FACTS.arn} on AMFI ↗</a></p>
       </div>
     </section>
   );
@@ -88,22 +135,24 @@ const FAQ = [
 export function Faq() {
   const [open, setOpen] = useState<number | null>(null);
   return (
-    <section id="faq" className="bg-snow py-16 sm:py-24">
-      <div className="wrap">
-        <h2 className="display text-[clamp(2rem,4.6vw,3.5rem)]">A little clarity goes a long way.</h2>
-        <div className="mt-8 border-t border-mist">
+    <section id="faq" data-dark className="py-14 sm:py-32">
+      <div className="wrap grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
+        <div>
+          <Title className="display mt-4 text-[clamp(2.2rem,4.6vw,4rem)]" text="A little clarity / *goes a long way.*" />
+        </div>
+        <div className="border-t border-line">
           {FAQ.map(([q, a], i) => {
             const on = open === i;
             return (
-              <div key={q} className="border-b border-mist">
-                <button className="flex w-full items-center justify-between gap-6 py-5 text-left" aria-expanded={on} onClick={() => setOpen(on ? null : i)}>
-                  <span className="text-[19px] font-semibold tracking-[-0.02em] sm:text-[24px]">{q}</span>
-                  <span className={`text-[28px] font-light text-link transition-transform duration-300 ${on ? 'rotate-45' : ''}`} aria-hidden>+</span>
+              <div key={q} className="border-b border-line">
+                <button type="button" className="group flex w-full items-center justify-between gap-6 py-5 text-left sm:py-6" aria-expanded={on} onClick={() => setOpen(on ? null : i)}>
+                  <span className="flex items-baseline gap-4"><span className="text-[11px] tabular-nums text-dim">0{i + 1}</span><span className={`text-[17px] font-semibold tracking-[-0.02em] transition-colors sm:text-[21px] ${on ? 'text-paper' : 'text-paper/85 group-hover:text-paper'}`}>{q}</span></span>
+                  <span className={`grid h-9 w-9 shrink-0 place-items-center rounded-full border text-[18px] transition-all duration-500 ${on ? 'rotate-45 border-transparent bg-paper text-ink' : 'border-white/15 text-paper'}`} aria-hidden>+</span>
                 </button>
                 <AnimatePresence initial={false}>
                   {on && (
-                    <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.35, ease: EASE }} className="overflow-hidden">
-                      <p className="max-w-2xl pb-6 text-[17px] leading-relaxed text-slate">{a}</p>
+                    <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.4, ease: EASE }} className="overflow-hidden">
+                      <p className="max-w-2xl pb-6 pl-8 text-[15px] leading-relaxed text-haze sm:text-[16px]">{a}</p>
                     </motion.div>
                   )}
                 </AnimatePresence>
@@ -131,44 +180,42 @@ export function Finale() {
     window.open(wa(`Hi Gulshan! I'm ${name || 'interested'} (${who}). I'd like help with: ${want.join(', ') || 'getting started'}.`), '_blank', 'noopener');
     setSent(true);
   };
-  const chip = (on: boolean) => `h-11 rounded-full border px-4 text-[15px] transition-colors ${on ? 'border-white bg-white text-black' : 'border-white/25 text-white/85 hover:border-white/60'}`;
 
   return (
-    <section id="start" data-dark className="relative overflow-hidden bg-night py-20 text-white sm:py-32">
-      <div className="pointer-events-none absolute left-1/2 top-0 h-[60vmin] w-[90vmin] -translate-x-1/2 rounded-full bg-[radial-gradient(ellipse,rgba(191,90,242,0.25),transparent_65%)] blur-2xl" />
-      <div className="wrap relative text-center">
-        <Reveal>
-          <h2 className="display text-[clamp(2.6rem,7vw,5.6rem)]">
-            Your next chapter<br /><span className="hero-serif grad">starts here.</span>
-          </h2>
-          <p className="body-lg mx-auto mt-4 max-w-lg text-white/65">Tell us a little. It opens WhatsApp with everything filled in, and Gulshan replies personally.</p>
-        </Reveal>
-        <Reveal delay={0.1}>
-          <form onSubmit={submit} className="mx-auto mt-10 max-w-2xl rounded-[28px] bg-white/[0.06] p-6 text-left ring-1 ring-white/10 sm:p-8">
+    <section id="start" data-dark className="relative overflow-hidden py-16 sm:py-36">
+      <div className="pointer-events-none absolute inset-0"><div className="aurora" /></div>
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-ink via-transparent to-ink" />
+      <div className="wrap relative grid gap-10 lg:grid-cols-2 lg:items-center lg:gap-16">
+        <div className="text-center lg:text-left">
+          <Title className="display mt-5 text-[clamp(2.8rem,7vw,6.4rem)]" text="Your next chapter / *starts here.*" />
+          <p className="lede mx-auto mt-5 max-w-md lg:mx-0">Tell us a little. It opens WhatsApp with everything filled in, and Gulshan replies personally.</p>
+        </div>
+        <FadeIn>
+          <form onSubmit={submit} className="glass ring-grad p-5 text-left sm:p-8">
             <AnimatePresence mode="wait" initial={false}>
               {sent ? (
                 <motion.div key="sent" initial={{ opacity: 0, scale: 0.97 }} animate={{ opacity: 1, scale: 1 }} className="py-10 text-center">
                   <p className="text-[28px] font-semibold tracking-[-0.03em]">Your draft is ready.</p>
-                  <p className="mt-2 text-white/65">Send your message in WhatsApp to start the conversation. Nothing has been submitted here.</p>
-                  <button type="button" onClick={() => setSent(false)} className="textlink-dark mt-4">Change something ›</button>
+                  <p className="mt-2 text-haze">Send your message in WhatsApp to start the conversation. Nothing has been submitted here.</p>
+                  <button type="button" onClick={() => setSent(false)} className="link mt-5">Change something ›</button>
                 </motion.div>
               ) : (
                 <motion.div key="form" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-                  <p className="text-[13px] font-medium text-white/50">I am</p>
-                  <div className="mt-2 flex flex-wrap gap-2">{WHO.map((w) => <button key={w} type="button" aria-pressed={who === w} onClick={() => setWho(w)} className={chip(who === w)}>{w}</button>)}</div>
-                  <p className="mt-5 text-[13px] font-medium text-white/50">I’d like to</p>
-                  <div className="mt-2 flex flex-wrap gap-2">{WANT.map((w) => <button key={w} type="button" aria-pressed={want.includes(w)} onClick={() => toggle(w)} className={chip(want.includes(w))}>{w}</button>)}</div>
-                  <label className="mt-5 block">
+                  <p className="text-[12px] uppercase tracking-[0.18em] text-dim">I am</p>
+                  <div className="mt-3 flex flex-wrap gap-2">{WHO.map((w) => <button key={w} type="button" aria-pressed={who === w} onClick={() => setWho(w)} className="chip">{w}</button>)}</div>
+                  <p className="mt-6 text-[12px] uppercase tracking-[0.18em] text-dim">I’d like to</p>
+                  <div className="mt-3 flex flex-wrap gap-2">{WANT.map((w) => <button key={w} type="button" aria-pressed={want.includes(w)} onClick={() => toggle(w)} className="chip">{w}</button>)}</div>
+                  <label className="mt-6 block">
                     <span className="sr-only">Your name</span>
-                    <input value={name} onChange={(e) => setName(e.target.value)} placeholder="Your name" autoComplete="name" className="h-14 w-full rounded-xl border border-white/20 bg-transparent px-4 text-[17px] placeholder:text-white/40 focus:border-linkdark focus:outline-none" />
+                    <input value={name} onChange={(e) => setName(e.target.value)} placeholder="Your name" autoComplete="name" className="field" />
                   </label>
-                  <button type="submit" className="pill-blue mt-5 h-12 w-full text-[17px]">Continue on WhatsApp</button>
-                  <p className="mt-3 text-center text-[12px] text-white/45">No obligation. Nothing is booked or invested from this website.</p>
+                  <button type="submit" className="btn-glow mt-5 h-14 w-full text-[16px]">Continue on WhatsApp</button>
+                  <p className="mt-3 text-center text-[12px] text-dim">No obligation. Nothing is booked or invested from this website.</p>
                 </motion.div>
               )}
             </AnimatePresence>
           </form>
-        </Reveal>
+        </FadeIn>
       </div>
     </section>
   );
@@ -177,21 +224,29 @@ export function Finale() {
 /* ---------------------------------------------------------------- footer */
 export function Footer() {
   return (
-    <footer className="bg-cloud pb-10 pt-8 text-[12px] leading-relaxed text-slate">
+    <footer className="relative overflow-hidden border-t border-line pt-14 text-[12px] leading-relaxed text-dim">
       <div className="wrap-wide">
-        <div className="footer-signature" aria-label="Moneytec"><img src="./brand/moneytec-logo-light.svg" alt="Moneytec" width="330" height="64" /><span aria-hidden="true">↗</span></div>
-        <p className="border-b border-mist pb-4">
-          {FACTS.name} is an AMFI-registered mutual fund distributor ({FACTS.arn}) and a Kotak Life Insurance advisor ({FACTS.kotak}). {DISCLAIMER}
-        </p>
-        <div className="flex flex-col gap-4 pt-4 sm:flex-row sm:items-center sm:justify-between">
-          <nav aria-label="Footer" className="flex flex-wrap gap-x-5 gap-y-1">
-            {NAV.map((n) => <a key={n.href} href={n.href} className="hover:underline">{n.label}</a>)}
-            <a href={wa('Hi!')} target="_blank" rel="noreferrer" className="hover:underline">WhatsApp</a>
-            {SOCIALS.map(s => <a key={s.name} href={s.href} target="_blank" rel="noreferrer" className="hover:underline">{s.name}</a>)}
-            <a href={`mailto:${FACTS.email}`} className="hover:underline">Email</a>
+        <div className="grid grid-cols-2 gap-8 sm:grid-cols-[1.4fr_1fr_1fr]">
+          <div className="col-span-2 sm:col-span-1">
+            <img src="./brand/moneytec-logo-dark.svg" alt="Moneytec" width="200" height="39" className="h-8 w-auto" />
+            <p className="mt-4 max-w-md">{FACTS.name} is an AMFI-registered mutual fund distributor ({FACTS.arn}) and a Kotak Life Insurance advisor ({FACTS.kotak}). {DISCLAIMER}</p>
+          </div>
+          <nav aria-label="Footer" className="flex flex-col gap-1.5">
+            <p className="mb-1 text-[11px] uppercase tracking-[0.2em] text-haze">Explore</p>
+            {NAV.map((n) => <a key={n.href} href={n.href} className="w-fit hover:text-paper">{n.label}</a>)}
           </nav>
-          <p>© {new Date().getFullYear()} moneytec · {FACTS.city}</p>
+          <div className="flex flex-col gap-1.5">
+            <p className="mb-1 text-[11px] uppercase tracking-[0.2em] text-haze">Connect</p>
+            <a href={wa('Hi!')} target="_blank" rel="noreferrer" className="w-fit hover:text-paper">WhatsApp</a>
+            <a href={`tel:+${FACTS.phoneIntl}`} className="w-fit hover:text-paper">{FACTS.phone}</a>
+            <a href={`mailto:${FACTS.email}`} className="w-fit hover:text-paper">Email</a>
+            {SOCIALS.map((s) => <a key={s.name} href={s.href} target="_blank" rel="noreferrer" className="w-fit hover:text-paper">{s.name}</a>)}
+          </div>
         </div>
+      </div>
+      <p aria-hidden className="grad mt-12 select-none text-center text-[23vw] font-semibold leading-[0.8] tracking-[-0.07em]">moneytec</p>
+      <div className="wrap-wide flex flex-col gap-2 border-t border-line py-5 sm:flex-row sm:justify-between">
+        <p>© {new Date().getFullYear()} moneytec · {FACTS.city}</p>
       </div>
     </footer>
   );

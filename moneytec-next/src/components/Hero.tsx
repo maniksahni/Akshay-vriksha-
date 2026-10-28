@@ -1,142 +1,362 @@
-import { motion, MotionValue, useMotionValue, useMotionValueEvent, useScroll, useSpring, useTransform } from 'framer-motion';
+import { motion, MotionValue, useMotionValue, useMotionValueEvent, useScroll, useTransform } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
 import { FACTS } from '../data';
-import { EASE, reduced } from './ui';
+import { EASE, reduced, useMobile } from './ui';
 
-/** Vector-built holographic rupee: crisp at every size, without canvas or WebGL. */
-function TechRupee({ size, tiltX, tiltY, progress, staticFacing = false }: { size: number; tiltX: MotionValue<number>; tiltY: MotionValue<number>; progress: MotionValue<number>; staticFacing?: boolean }) {
-  const depth = useTransform(progress, [0, .3, .65, 1], [0, 1, .35, 0]);
-  const rotate = useTransform(progress, [0, .4, .75, 1], [-9, 6, -5, 0]);
-  const wireDraw = useTransform(progress, [0, .3, 1], [.25, 1, 1]);
-  const layerA = useTransform(depth, d => `translate(${14 + d * 27}px, ${14 + d * 14}px)`);
-  const layerB = useTransform(depth, d => `translate(${11 + d * 20}px, ${11 + d * 11}px)`);
-  const layerC = useTransform(depth, d => `translate(${8 + d * 13}px, ${8 + d * 8}px)`);
-  const layerD = useTransform(depth, d => `translate(${5 + d * 6}px, ${5 + d * 5}px)`);
-  const layerE = useTransform(depth, d => `translate(${2 + d * 2}px, ${2 + d * 2}px)`);
-  const glyph = 'M128 78H294V101H235C250 113 259 127 262 145H294V168H262C255 205 228 225 185 230L286 333H246L128 211V202H166C206 202 225 190 231 168H128V145H231C226 116 205 101 166 101H128Z';
+const STOPS = [[255, 179, 64], [255, 55, 95], [191, 90, 242]];
+const BUCKETS = 18;
+const mix = (t: number) => {
+  const s = t < 0.5 ? 0 : 1;
+  const k = t < 0.5 ? t * 2 : (t - 0.5) * 2;
+  const [a, b] = [STOPS[s], STOPS[s + 1]];
+  return a.map((v, i) => Math.round(v + (b[i] - v) * k));
+};
+
+type P = { hx: number; hy: number; hz: number; sx: number; sy: number; sz: number; x: number; y: number; vx: number; vy: number; r: number; ph: number; g: boolean };
+
+/**
+ * The hero mark: a ₹ made of a few thousand points of light, with an orbit ring for the coin's edge.
+ * Points drift with the pointer, part around it, and scatter into a starfield as `disperse` goes 0 → 1.
+ */
+function RupeeField({ disperse, cx, cy, scale }: { disperse: MotionValue<number>; cx: number; cy: number; scale: number }) {
+  const canvas = useRef<HTMLCanvasElement>(null);
+  useEffect(() => {
+    const el = canvas.current!;
+    const ctx = el.getContext('2d')!;
+    const still = reduced();
+    let w = 0, h = 0, S = 0, dpr = 1, raf = 0, running = false, visible = true;
+    let buckets: P[][] = [];
+    let links: P[] = [];
+    let step = 3;
+    const colors: string[] = [];
+    const pointer = { x: -9999, y: -9999, tx: 0, ty: 0, sx: 0, sy: 0 };
+
+    const build = () => {
+      const box = el.parentElement!.getBoundingClientRect();
+      w = box.width; h = box.height;
+      const phone = w < 768;
+      dpr = Math.min(window.devicePixelRatio || 1, phone ? 1.6 : 2);
+      el.width = w * dpr; el.height = h * dpr;
+      el.style.width = `${w}px`; el.style.height = `${h}px`;
+      S = Math.min(w, h) * scale;
+
+      // sample the glyph from an offscreen canvas
+      const off = document.createElement('canvas');
+      const G = Math.ceil(S * 1.1);
+      off.width = off.height = G;
+      const o = off.getContext('2d')!;
+      o.fillStyle = '#fff';
+      o.textAlign = 'center';
+      o.textBaseline = 'middle';
+      o.font = `800 ${S * 0.86}px Inter, system-ui, sans-serif`;
+      o.fillText('₹', G / 2, G / 2 + S * 0.04);
+      const data = o.getImageData(0, 0, G, G).data;
+      step = Math.max(2, S / (phone ? 100 : 150));
+      const pts: [number, number, number][] = [];
+      for (let y = 0; y < G; y += step) for (let x = 0; x < G; x += step) {
+        if (data[(Math.floor(y) * G + Math.floor(x)) * 4 + 3] > 128) pts.push([x - G / 2 + (Math.random() - 0.5) * step * 0.6, y - G / 2 + (Math.random() - 0.5) * step * 0.6, (Math.random() - 0.5) * S * 0.12]);
+      }
+      const glyphCount = pts.length;
+      // the coin's edge: two thin rings, tilted, so rotation reads as depth
+      const R = S * 0.62;
+      const ringCount = Math.round(pts.length * 0.22);
+      for (let i = 0; i < ringCount; i++) {
+        const t = (i / ringCount) * Math.PI * 2;
+        const rr = R * (i % 2 ? 1 : 1.035);
+        pts.push([Math.cos(t) * rr, Math.sin(t) * rr, (i % 2 ? 1 : -1) * S * 0.05]);
+      }
+      // a sprinkle of dust around it
+      const dust = phone ? 140 : 420;
+      for (let i = 0; i < dust; i++) {
+        const t = Math.random() * Math.PI * 2;
+        const rr = R * (1.15 + Math.random() * 1.1);
+        pts.push([Math.cos(t) * rr, Math.sin(t) * rr * 0.75, (Math.random() - 0.5) * S]);
+      }
+
+      buckets = Array.from({ length: BUCKETS }, () => []);
+      const far = Math.max(w, h);
+      const glyph: P[] = [];
+      for (const [n, [hx, hy, hz]] of pts.entries()) {
+        const tcol = Math.min(0.999, Math.max(0, ((hx + hy) / (S * 1.3)) + 0.5));
+        const a = Math.random() * Math.PI * 2, b = Math.acos(Math.random() * 2 - 1), dist = far * (0.35 + Math.random() * 0.9);
+        buckets[Math.floor(tcol * BUCKETS)].push({
+          hx, hy, hz,
+          sx: Math.cos(a) * Math.sin(b) * dist * 1.3, sy: Math.sin(a) * Math.sin(b) * dist * 0.8, sz: Math.cos(b) * dist * 0.6,
+          x: cx * w + (Math.random() - 0.5) * w, y: cy * h + (Math.random() - 0.5) * h, vx: 0, vy: 0,
+          r: Math.random() < 0.06 ? 2.4 : 0.9 + Math.random() * 0.8, ph: Math.random() * 6.28, g: n < glyphCount,
+        });
+        const made = buckets[Math.floor(tcol * BUCKETS)];
+        if (n < glyphCount) glyph.push(made[made.length - 1]);
+      }
+      // wire each glyph point to a near neighbour, so the ₹ reads as a living mesh
+      const cell = step * 1.6, grid = new Map<string, P[]>();
+      const key = (x: number, y: number) => `${Math.floor(x / cell)},${Math.floor(y / cell)}`;
+      for (const q of glyph) { const k = key(q.hx, q.hy); (grid.get(k) ?? grid.set(k, []).get(k)!).push(q); }
+      links = [];
+      for (const q of glyph) {
+        if (Math.random() > 0.6) continue;
+        const gx = Math.floor(q.hx / cell), gy = Math.floor(q.hy / cell);
+        let best: P | null = null, bd = (step * 2.3) ** 2;
+        for (let i = -1; i <= 1; i++) for (let j = -1; j <= 1; j++) for (const o of grid.get(`${gx + i},${gy + j}`) ?? []) {
+          if (o === q) continue;
+          const dd = (o.hx - q.hx) ** 2 + (o.hy - q.hy) ** 2;
+          if (dd < bd && dd > step * step * 0.5) { bd = dd; best = o; }
+        }
+        if (best) links.push(q, best);
+      }
+      colors.length = 0;
+      for (let i = 0; i < BUCKETS; i++) colors.push(`rgb(${mix((i + 0.5) / BUCKETS).join(',')})`);
+    };
+
+    const frame = (time: number) => {
+      const t = time / 1000;
+      const d = disperse.get();
+      const e = d * d * (3 - 2 * d);
+      pointer.sx += (pointer.tx - pointer.sx) * 0.05;
+      pointer.sy += (pointer.ty - pointer.sy) * 0.05;
+      const ay = still ? 0.2 : Math.sin(t * 0.35) * 0.42 + pointer.sx * 0.5 + e * 1.2;
+      const ax = still ? -0.12 : Math.sin(t * 0.27) * 0.12 - 0.1 + pointer.sy * 0.25;
+      const cyA = Math.cos(ay), syA = Math.sin(ay), cxA = Math.cos(ax), sxA = Math.sin(ax);
+      const ox = cx * w, oy = cy * h, F = 900;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.clearRect(0, 0, w, h);
+      ctx.globalCompositeOperation = 'lighter';
+      const rep = Math.max(90, S * 0.22);
+      const scanY = ((t * 0.2) % 1.6 - 0.3) * S * 1.1 - S * 0.55;
+      const band = S * 0.03;
+      const hot: P[] = [];
+      for (let b = 0; b < BUCKETS; b++) {
+        ctx.fillStyle = colors[b];
+        for (const p of buckets[b]) {
+          const breathe = still ? 0 : Math.sin(t * 1.4 + p.ph) * 3;
+          const x0 = p.hx + (p.sx - p.hx) * e;
+          const y0 = p.hy + (p.sy - p.hy) * e + breathe;
+          const z0 = p.hz + (p.sz - p.hz) * e;
+          const x1 = x0 * cyA + z0 * syA;
+          const z1 = -x0 * syA + z0 * cyA;
+          const y1 = y0 * cxA - z1 * sxA;
+          const z2 = y0 * sxA + z1 * cxA;
+          const k = F / (F + Math.max(-420, z2));
+          const tx = ox + x1 * k, ty = oy + y1 * k;
+          p.vx += (tx - p.x) * 0.07; p.vy += (ty - p.y) * 0.07;
+          const dx = p.x - pointer.x, dy = p.y - pointer.y, dd = dx * dx + dy * dy;
+          if (dd < rep * rep) { const f = (1 - Math.sqrt(dd) / rep) * 7; const inv = 1 / (Math.sqrt(dd) + 0.01); p.vx += dx * inv * f; p.vy += dy * inv * f; }
+          p.vx *= 0.8; p.vy *= 0.8;
+          p.x += p.vx; p.y += p.vy;
+          const s = Math.min(3.2, p.r * k * (1 + e * 0.35));
+          if (!still && p.g && e < 0.5 && Math.abs(p.hy - scanY) < band) hot.push(p);
+          ctx.globalAlpha = Math.max(0.12, Math.min(1, 0.95 * k - e * 0.25 + (p.r > 2 ? 0.1 : 0)));
+          if (p.r > 2) {
+            ctx.beginPath(); ctx.arc(p.x, p.y, s * 0.6, 0, 6.283); ctx.fill();
+            ctx.globalAlpha *= 0.14; ctx.beginPath(); ctx.arc(p.x, p.y, s * 2.6, 0, 6.283); ctx.fill();
+          } else ctx.fillRect(p.x - s / 2, p.y - s / 2, s, s);
+        }
+      }
+      const fade = (1 - e) * (1 - e);
+      if (fade > 0.02) {
+        // mesh
+        ctx.globalAlpha = 0.2 * fade;
+        ctx.strokeStyle = '#ff6fa8';
+        ctx.lineWidth = 0.6;
+        ctx.beginPath();
+        for (let i = 0; i < links.length; i += 2) { ctx.moveTo(links[i].x, links[i].y); ctx.lineTo(links[i + 1].x, links[i + 1].y); }
+        ctx.stroke();
+        // scan beam
+        if (!still) {
+          ctx.fillStyle = '#fff';
+          ctx.globalAlpha = 0.75 * fade;
+          for (const p of hot) { ctx.beginPath(); ctx.arc(p.x, p.y, 1.1, 0, 6.283); ctx.fill(); }
+          const ly = oy + scanY;
+          const lg = ctx.createLinearGradient(ox - S * 0.6, 0, ox + S * 0.6, 0);
+          lg.addColorStop(0, 'rgba(255,255,255,0)'); lg.addColorStop(0.5, 'rgba(255,220,240,0.55)'); lg.addColorStop(1, 'rgba(255,255,255,0)');
+          ctx.globalAlpha = fade * (Math.abs(scanY) < S * 0.5 ? 1 : 0);
+          ctx.fillStyle = lg;
+          ctx.fillRect(ox - S * 0.6, ly - 0.75, S * 1.2, 1.5);
+          const glow = ctx.createLinearGradient(0, ly - band * 3, 0, ly + band * 3);
+          glow.addColorStop(0, 'rgba(255,55,95,0)'); glow.addColorStop(0.5, 'rgba(255,55,95,0.10)'); glow.addColorStop(1, 'rgba(255,55,95,0)');
+          ctx.fillStyle = glow;
+          ctx.fillRect(ox - S * 0.45, ly - band * 3, S * 0.9, band * 6);
+        }
+      }
+      ctx.globalAlpha = 1;
+      ctx.globalCompositeOperation = 'source-over';
+      if (running) raf = requestAnimationFrame(frame);
+    };
+    const start = () => { if (!running && visible && !document.hidden) { running = true; raf = requestAnimationFrame(frame); } };
+    const stop = () => { running = false; cancelAnimationFrame(raf); };
+
+    const toLocal = (x: number, y: number) => {
+      const r = el.getBoundingClientRect();
+      pointer.x = x - r.left; pointer.y = y - r.top;
+      pointer.tx = (pointer.x / w - 0.5) * 2; pointer.ty = (pointer.y / h - 0.5) * 2;
+    };
+    const onMove = (e: PointerEvent) => toLocal(e.clientX, e.clientY);
+    const onTouch = (e: TouchEvent) => { const t = e.touches[0]; if (t) toLocal(t.clientX, t.clientY); };
+    const onLeave = () => { pointer.x = pointer.y = -9999; pointer.tx = pointer.ty = 0; };
+    const onResize = () => { build(); };
+    const io = new IntersectionObserver(([en]) => { visible = en.isIntersecting; visible ? start() : stop(); });
+    const onVis = () => (document.hidden ? stop() : start());
+
+    let alive = true;
+    (document.fonts?.ready ?? Promise.resolve()).then(() => {
+      if (!alive) return;
+      build();
+      io.observe(el);
+      start();
+    });
+    window.addEventListener('pointermove', onMove, { passive: true });
+    window.addEventListener('touchstart', onTouch, { passive: true });
+    window.addEventListener('touchmove', onTouch, { passive: true });
+    window.addEventListener('touchend', onLeave, { passive: true });
+    document.addEventListener('pointerleave', onLeave);
+    window.addEventListener('resize', onResize);
+    document.addEventListener('visibilitychange', onVis);
+    return () => {
+      alive = false; stop(); io.disconnect();
+      window.removeEventListener('pointermove', onMove);
+      window.removeEventListener('touchstart', onTouch);
+      window.removeEventListener('touchmove', onTouch);
+      window.removeEventListener('touchend', onLeave);
+      document.removeEventListener('pointerleave', onLeave);
+      window.removeEventListener('resize', onResize);
+      document.removeEventListener('visibilitychange', onVis);
+    };
+  }, [disperse, cx, cy, scale]);
+  return <canvas ref={canvas} aria-hidden className="absolute inset-0" />;
+}
+
+/** A heads-up frame around the coin: corner brackets, circuit traces feeding in, and the ₹'s own facts. */
+function Hud({ size }: { size: string }) {
+  const tag = 'fill-[rgba(244,241,248,0.55)] font-mono';
+  const fs = size.endsWith('px') ? 10 : 7.5;
   return (
-    <motion.div className="tech-rupee hologram-rupee" style={{ width: size, height: size, perspective: 1200, rotateX: staticFacing ? 0 : tiltX, rotateY: staticFacing ? 0 : tiltY, rotateZ: staticFacing ? 0 : rotate }} aria-hidden="true">
-      <svg viewBox="0 0 420 420" className="hologram-art" fill="none">
-        <defs>
-          <linearGradient id="rupee-face" x1="120" y1="80" x2="290" y2="335" gradientUnits="userSpaceOnUse"><stop stopColor="#ffd688" /><stop offset=".22" stopColor="#ff9f2f" /><stop offset=".53" stopColor="#ff387d" /><stop offset=".8" stopColor="#d15dff" /><stop offset="1" stopColor="#f4cbff" /></linearGradient>
-          <linearGradient id="rupee-edge" x1="120" y1="80" x2="300" y2="340" gradientUnits="userSpaceOnUse"><stop stopColor="#cd6618" /><stop offset=".5" stopColor="#7f1b63" /><stop offset="1" stopColor="#491d7a" /></linearGradient>
-          <linearGradient id="rupee-network"><stop stopColor="#ff9f0a" /><stop offset=".5" stopColor="#ff375f" /><stop offset="1" stopColor="#bf5af2" /></linearGradient>
-          <linearGradient id="rupee-sheen" x1="0" y1="0" x2="1" y2="1"><stop stopColor="white" stopOpacity="0" /><stop offset=".5" stopColor="white" stopOpacity=".6" /><stop offset="1" stopColor="white" stopOpacity="0" /></linearGradient>
-          <pattern id="rupee-grid" width="21" height="21" patternUnits="userSpaceOnUse"><path d="M21 0H0V21" stroke="#d7b4ee" strokeOpacity=".09" strokeWidth=".5" /></pattern>
-          <clipPath id="rupee-cut"><path d={glyph} /></clipPath>
-        </defs>
-        <path d="M210 15 379 112V307L210 405 41 307V112Z" fill="url(#rupee-grid)" stroke="url(#rupee-network)" strokeOpacity=".16" />
-        <g className="holo-wire" stroke="url(#rupee-network)" strokeWidth=".8">
-          <motion.path d="M210 35 360 122V296L210 383 60 296V122Z" style={{pathLength: staticFacing ? 1 : wireDraw}} />
-          <path d="M15 130H79L110 160H130 M402 105H333L304 134H280 M15 280H77L115 242H144 M405 301H343L302 260H270 M80 48V89L121 129 M338 375V335L294 291 M6 210H105 M312 210H414" />
-        </g>
-        <g className="holo-flow" stroke="url(#rupee-network)" strokeWidth="1.7" strokeDasharray="5 135" strokeLinecap="round"><path d="M15 130H79L110 160H130 M402 105H333L304 134H280 M15 280H77L115 242H144 M405 301H343L302 260H270" /></g>
-        <path className="rupee-blueprint" d={glyph} transform="translate(-17 -14)" stroke="#e3a3fd" strokeWidth=".65" strokeDasharray="2 3" opacity=".3" />
-        {[layerA,layerB,layerC,layerD,layerE].map((transform,i) => <motion.path key={i} d={glyph} style={{transform:staticFacing ? `translate(${14-i*3}px,${14-i*3}px)` : transform}} fill="url(#rupee-edge)" stroke="#ff83d2" strokeOpacity=".32" strokeWidth=".8" />)}
-        <path className="holo-face" d={glyph} fill="url(#rupee-face)" stroke="#ffe1e8" strokeOpacity=".65" strokeWidth=".8" />
-        <g clipPath="url(#rupee-cut)"><path d="M100 114H310 M100 180H310 M100 246H310 M100 312H310" stroke="white" strokeOpacity=".14" strokeWidth=".6" /><rect className="holo-sheen" x="60" y="-150" width="300" height="100" fill="url(#rupee-sheen)" transform="rotate(-25 210 210)" /></g>
-        {[[15,130],[402,105],[15,280],[405,301],[80,48],[338,375],[6,210],[414,210]].map(([cx,cy],i)=><g key={i}><circle cx={cx} cy={cy} r="4" fill="#110b18" stroke={i%2 ? '#d17af7' : '#ffad55'} /><circle className="holo-node" cx={cx} cy={cy} r="1.5" fill="#ffe2ff" style={{animationDelay:`${i*.4}s`}} /></g>)}
-        <g stroke="#e4bded" strokeOpacity=".4" strokeWidth=".75"><path d="M128 59V48H166 M294 59V48H256 M128 349V361H166 M294 349V361H256" /></g>
-      </svg>
-      <span className="hologram-caption">MONEY <i /> TECHNOLOGY <i /> YOU</span>
-    </motion.div>
+    <svg viewBox="0 0 400 400" aria-hidden className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2" style={{ width: size, height: size }}>
+      <defs><linearGradient id="hud" x1="0" x2="1"><stop offset="0" stopColor="#FF9F0A" /><stop offset="0.5" stopColor="#FF375F" /><stop offset="1" stopColor="#BF5AF2" /></linearGradient></defs>
+      <g stroke="rgba(244,241,248,0.35)" strokeWidth="0.8" fill="none">
+        <path d="M70 92V70h22 M308 70h22v22 M330 308v22h-22 M92 330H70v-22" />
+      </g>
+      <g stroke="url(#hud)" strokeWidth="0.8" fill="none" opacity="0.55">
+        <path d="M0 150h40l18 18h24 M400 120h-46l-16 16h-22 M0 270h34l22-22h20 M400 290h-40l-20-20h-18" />
+      </g>
+      <g stroke="#fff" strokeWidth="1.4" fill="none" strokeLinecap="round" className="dash-flow" style={{ strokeDasharray: '3 60', animationDuration: '2.6s' }}>
+        <path d="M0 150h40l18 18h24 M400 120h-46l-16 16h-22 M0 270h34l22-22h20 M400 290h-40l-20-20h-18" />
+      </g>
+      {[[82, 168], [314, 136], [76, 248], [322, 270]].map(([x, y], i) => <circle key={i} cx={x} cy={y} r="2.2" fill={i % 2 ? '#BF5AF2' : '#FF9F0A'} className="pulse-dot" />)}
+      <text x="74" y="62" fontSize={fs} letterSpacing="1.4" className={tag}>U+20B9</text>
+      <text x="326" y="62" fontSize={fs} letterSpacing="1.4" textAnchor="end" className={tag}>INR · ISO 4217 · 356</text>
+      <text x="74" y="344" fontSize={fs} letterSpacing="1.4" className={tag}>ADOPTED 15·07·2010</text>
+      <text x="326" y="344" fontSize={fs} letterSpacing="1.4" textAnchor="end" className={tag}>MONEYTEC</text>
+    </svg>
+  );
+}
+
+/** A slow ring of type around the coin, like the milled edge of a medal. */
+function OrbitText({ size, vh }: { size: number; vh?: number }) {
+  const label = 'MONEYTEC · MONEY, WITH MEANING · GOAL-BASED SIPS · LIFE COVER · NRI INVESTING · ';
+  const dim = vh ? `${vh}vh` : `${size}px`;
+  return (
+    <svg viewBox="0 0 400 400" aria-hidden className="spin-slow pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 opacity-60" style={{ width: dim, height: dim, animationDuration: '60s' }}>
+      <defs><path id={`orbit-${size}`} d="M200 200 m-182 0 a182 182 0 1 1 364 0 a182 182 0 1 1 -364 0" /></defs>
+      <text fill="rgba(244,241,248,0.55)" fontSize="11" letterSpacing="5.2" fontFamily="Inter, sans-serif">
+        <textPath href={`#orbit-${size}`}>{label}</textPath>
+      </text>
+    </svg>
+  );
+}
+
+function HeroCopy({ mobile }: { mobile: boolean }) {
+  return (
+    <>
+      <motion.p className="kicker" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9, ease: EASE, delay: 0.2 }}>
+        Moneytec — Money, with meaning
+      </motion.p>
+      <h1 className="display mt-5 text-[clamp(3rem,8.4vw,8.6rem)]" aria-label="Make your money mean more.">
+        {['Make your', 'money', '*mean more.*'].map((line, i) => (
+          <span key={line} aria-hidden className="block overflow-hidden pb-[0.06em]">
+            <motion.span className="block" initial={{ y: '112%' }} animate={{ y: 0 }} transition={{ duration: 1.2, ease: EASE, delay: 0.35 + i * 0.1 }}>
+              {line.startsWith('*') ? <span className="serif grad pr-[0.05em] text-[1.08em]">{line.slice(1, -1)}</span> : line}
+            </motion.span>
+          </span>
+        ))}
+      </h1>
+      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1, delay: 0.8 }}>
+        <p className="mt-5 max-w-[30rem] text-[18px] leading-snug text-paper sm:text-[22px]">A clearer path to your goals, built around your life.</p>
+        {mobile && <p className="lede mt-2 max-w-[30rem]">Goal-based mutual fund investing, insurance and NRI guidance with {FACTS.name}.</p>}
+      </motion.div>
+      <motion.div className="mt-7 flex flex-wrap items-center gap-3" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9, ease: EASE, delay: 0.95 }}>
+        <a href="#start" className="btn-light pr-2">Start a conversation <span className="arrow">↗</span></a>
+        <a href="#calculator" onClick={() => window.dispatchEvent(new Event('moneytec:plan-goal'))} className="btn-ghost">{mobile ? 'Plan my goal' : 'Plan my goal ↓'}</a>
+      </motion.div>
+      <motion.div className="mt-8 flex flex-wrap gap-x-6 gap-y-2 text-[12px] text-dim" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1, delay: 1.15 }}>
+        <span className="flex items-center gap-2"><i className="pulse-dot h-1.5 w-1.5 rounded-full bg-mint" />AMFI registered <b className="font-medium text-paper">{FACTS.arn}</b></span>
+        <span className="flex items-center gap-2"><i aria-hidden className="text-amber">✳</i>Personal guidance <b className="font-medium text-paper">{FACTS.name}</b></span>
+      </motion.div>
+    </>
   );
 }
 
 export function Hero() {
+  const mobile = useMobile();
   const ref = useRef<HTMLElement>(null);
   const { scrollYProgress: p } = useScroll({ target: ref, offset: ['start start', 'end end'] });
-  const [size, setSize] = useState(360);
-  const [mobile, setMobile] = useState(false);
-  const [secondScene, setSecondScene] = useState(false);
-  const [chapter, setChapter] = useState(0);
-  useMotionValueEvent(p, 'change', value => { setSecondScene(value > .55); setChapter(value < .22 ? 0 : value < .55 ? 1 : 2); });
-  useEffect(() => {
-    const set = () => { setMobile(window.innerWidth < 768); setSize(window.innerWidth < 768 ? 148 : window.innerWidth < 1024 ? 360 : 500); };
-    set();
-    window.addEventListener('resize', set);
-    return () => window.removeEventListener('resize', set);
-  }, []);
+  const disperse = useTransform(p, [0.08, 0.62], [0, 1], { clamp: true });
+  const copyOpacity = useTransform(p, [0.04, 0.3], [1, 0]);
+  const copyY = useTransform(p, [0, 0.3], [0, -60]);
+  const copyBlur = useTransform(p, [0.04, 0.3], ['blur(0px)', 'blur(10px)']);
+  const twoOpacity = useTransform(p, [0.5, 0.7, 0.94, 1], [0, 1, 1, 0]);
+  const twoScale = useTransform(p, [0.5, 0.75], [0.92, 1]);
+  const floor = useTransform(p, [0, 1], ['0%', '-40%']);
+  const [two, setTwo] = useState(false);
+  useMotionValueEvent(p, 'change', (v) => setTwo(v > 0.55));
+  const still = useMotionValue(0);
 
-  // The hologram lifts gently as the opening message hands over to the second scene.
-  const scale = useTransform(p, [0, 0.55, 1], [1, 1.12, 0.92]);
-  const coinY = useTransform(p, [0, 1], ['0%', '-6%']);
-  const titleOpacity = useTransform(p, [0.15, 0.55], [1, 0]);
-  const titleY = useTransform(p, [0.15, 0.55], [0, -40]);
-  const line2Opacity = useTransform(p, [0.5, 0.72, 0.95, 1], [0, 1, 1, 0.9]);
-  const line2Y = useTransform(p, [0.5, 0.72], [40, 0]);
-  const glow = useTransform(p, [0, 0.6], [0.35, 0.75]);
-
-  // gentle pointer tilt
-  const tx = useMotionValue(10);
-  const ty = useMotionValue(0);
-  const tiltX = useSpring(tx, { stiffness: 60, damping: 14 });
-  const tiltY = useSpring(ty, { stiffness: 60, damping: 14 });
-  useEffect(() => {
-    if (reduced() || !window.matchMedia('(pointer: fine)').matches) return;
-    const move = (e: PointerEvent) => {
-      tx.set(10 - (e.clientY / window.innerHeight - 0.5) * 16);
-      ty.set((e.clientX / window.innerWidth - 0.5) * 24);
-    };
-    window.addEventListener('pointermove', move, { passive: true });
-    return () => window.removeEventListener('pointermove', move);
-  }, [tx, ty]);
+  if (mobile) {
+    return (
+      <section id="top" data-dark className="relative overflow-hidden pb-12 pt-[64px]">
+        <div className="pointer-events-none absolute inset-0"><div className="aurora opacity-40" /></div>
+        <div className="absolute inset-x-0 top-[40px] h-[340px]">
+          <div className="absolute left-1/2 top-1/2 h-[220px] w-[220px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-rose/25 blur-[60px]" />
+          <OrbitText size={290} />
+          <Hud size="250px" />
+          <RupeeField disperse={still} cx={0.5} cy={0.5} scale={0.72} />
+        </div>
+        <div className="wrap relative pt-[318px]"><HeroCopy mobile /></div>
+      </section>
+    );
+  }
 
   return (
-    <section id="top" data-dark ref={ref} className="moneytec-hero relative -mt-[52px] h-[240svh] bg-night text-white">
-      <div className="sticky top-0 flex h-[100svh] flex-col items-center overflow-hidden pt-[52px]">
-        {/* A restrained studio glow gives the metal mark depth without competing with the message. */}
-        <motion.div className="hero-ambient pointer-events-none absolute rounded-full bg-[radial-gradient(circle,rgba(255,55,95,0.28),rgba(191,90,242,0.18)_40%,transparent_70%)] blur-2xl" style={{ opacity: glow }} />
+    <section id="top" data-dark ref={ref} className="relative h-[240svh]">
+      <div className="sticky top-0 h-[100svh] overflow-hidden">
+        <div className="pointer-events-none absolute inset-0"><div className="aurora opacity-35" /></div>
+        <motion.div className="grid-floor pointer-events-none absolute inset-x-[-20%] bottom-[-30%] h-[70%] origin-bottom opacity-60" style={{ transform: 'perspective(600px) rotateX(68deg)', backgroundPositionY: floor }} />
+        <motion.div className="pointer-events-none absolute left-[70%] top-1/2 -translate-x-1/2 -translate-y-1/2" style={{ opacity: copyOpacity }}>
+          <div className="absolute left-1/2 top-1/2 h-[46vh] w-[46vh] -translate-x-1/2 -translate-y-1/2 rounded-full bg-rose/20 blur-[90px]" />
+          <OrbitText size={0} vh={92} />
+          <Hud size="80vh" />
+        </motion.div>
+        <RupeeField disperse={disperse} cx={0.7} cy={0.5} scale={0.74} />
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(60%_60%_at_25%_55%,rgba(7,6,11,0.75),transparent_70%)]" />
 
-        <motion.div className="hero-stage relative z-10 mx-auto flex w-full max-w-[1320px] flex-1 items-center px-5 sm:px-8" style={{ pointerEvents: !mobile && secondScene ? 'none' : 'auto' }}>
-          <motion.div aria-hidden={!mobile && secondScene} className="hero-copy relative z-10 w-full" style={{ opacity: mobile ? 1 : titleOpacity, y: mobile ? 0 : titleY }}>
-            <motion.p className="hero-kicker" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9, ease: EASE }}>
-              <span className="hero-kicker-mark" /> MONEYTEC <span className="hero-kicker-rule" /> MONEY, WITH MEANING
-            </motion.p>
-            <motion.h1
-              className="display hero-title mt-6"
-              initial={{ opacity: 0, y: 24 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1.1, ease: EASE, delay: 0.1 }}
-            >
-              Make your money<br />
-              <span className="hero-serif">mean <span className="grad">more.</span></span>
-            </motion.h1>
-            <p className="hero-description">A clearer path to your goals, built around your life.</p>
-            <p className="hero-mobile-intro">Goal-based mutual fund investing, insurance and NRI guidance with Gulshan Kohli.</p>
-            <motion.div className="mt-7 flex flex-wrap items-center gap-x-6 gap-y-3" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1, delay: 0.5 }}>
-              <a href="#start" tabIndex={!mobile && secondScene ? -1 : undefined} className="hero-primary">Start a conversation <span aria-hidden="true">↗</span></a>
-              <a href="#calculator" onClick={() => window.dispatchEvent(new Event('moneytec:plan-goal'))} tabIndex={!mobile && secondScene ? -1 : undefined} className="hero-secondary">Plan my goal <span aria-hidden="true">↓</span></a>
-            </motion.div>
-            <div className="hero-credentials" aria-label="Professional credentials">
-              <span><i aria-hidden="true">✳</i> AMFI registered <b>ARN-105840</b></span>
-              <span><i aria-hidden="true">✳</i> Personal guidance <b>Gulshan Kohli</b></span>
-            </div>
-          </motion.div>
-
-          <motion.div className="hero-coin relative z-0" style={{ scale: mobile ? 1 : scale, y: mobile ? 0 : coinY }} initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 1.4, ease: EASE, delay: 0.2 }}>
-          <div className="coin-halo" aria-hidden="true" /><TechRupee progress={p} size={size} tiltX={tiltX} tiltY={tiltY} staticFacing={mobile} />
-          <div className="absolute -bottom-10 left-1/2 h-10 w-[70%] -translate-x-1/2 rounded-[50%] bg-white/10 blur-xl" />
-            <div className="hero-orbit-label"><span className="hero-orbit-dot" /> BUILT AROUND YOU <span>MONEYTEC</span></div>
-          </motion.div>
+        <motion.div className="wrap-wide relative flex h-full flex-col justify-center pt-10" style={{ opacity: copyOpacity, y: copyY, filter: copyBlur, pointerEvents: two ? 'none' : 'auto' }} aria-hidden={two}>
+          <div className="max-w-[44rem]"><HeroCopy mobile={false} /></div>
         </motion.div>
 
-        <div className="hero-scroll-console" aria-hidden="true">
-          <div className="console-track"><motion.span style={{scaleX:p}} /></div>
-          <div className="console-chapters">{['01 / THE VISION','02 / THE CONNECTION','03 / YOUR NEXT CHAPTER'].map((label,i)=><span key={label} className={chapter===i ? 'is-current' : ''}>{label}</span>)}</div>
-          <span className="console-hint">SCROLL TO EXPLORE <b>↓</b></span>
+        <motion.div className="absolute inset-0 grid place-items-center px-6 text-center" style={{ opacity: twoOpacity, scale: twoScale, pointerEvents: two ? 'auto' : 'none' }} aria-hidden={!two}>
+          <div>
+            <p className="kicker justify-center">A more personal approach to money</p>
+            <p className="display mt-6 text-[clamp(2.6rem,6.4vw,6rem)]">Your goals.<br /><span className="serif grad">Connected by clarity.</span></p>
+            <p className="lede mx-auto mt-5 max-w-xl">Goal-based investing, family protection and NRI guidance, with {FACTS.name} alongside you.</p>
+            <a href="#highlights" tabIndex={two ? undefined : -1} className="link mt-8">See how it works ↓</a>
+          </div>
+        </motion.div>
+
+        <div className="pointer-events-none absolute inset-x-0 bottom-6">
+          <div className="wrap-wide flex items-end justify-between text-[11px] uppercase tracking-[0.2em] text-dim">
+            <span>Scroll to explore</span>
+            <div className="h-px w-40 overflow-hidden bg-white/10"><motion.span className="block h-full origin-left bg-gradient-to-r from-amber via-rose to-violet" style={{ scaleX: p }} /></div>
+          </div>
         </div>
-        <motion.div aria-hidden={mobile || !secondScene} className="hero-second-copy tech-second-copy absolute inset-x-0 top-[19vh] z-10 px-5 text-center" style={{ opacity: mobile ? 1 : line2Opacity, y: mobile ? 0 : line2Y, pointerEvents: secondScene ? 'auto' : 'none' }}>
-          <p className="hero-kicker justify-center"><span className="hero-kicker-mark" /> A MORE PERSONAL APPROACH TO MONEY</p>
-          <p className="display mt-6 text-[clamp(2.4rem,6vw,5.2rem)]">
-            Your goals.<br />
-            <span className="hero-serif grad">Connected by clarity.</span>
-          </p>
-          <p className="body-lg mx-auto mt-5 max-w-xl text-white/65">
-            Goal-based investing, family protection and NRI guidance, with {FACTS.name} alongside you.
-          </p>
-          <a href="#highlights" tabIndex={secondScene && !mobile ? undefined : -1} className="hero-secondary mt-7">See how it works <span aria-hidden="true">↓</span></a>
-        </motion.div>
       </div>
     </section>
   );

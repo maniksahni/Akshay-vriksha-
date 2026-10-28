@@ -1,6 +1,6 @@
-import { motion, useMotionValueEvent, useScroll, useTransform } from 'framer-motion';
-import { useEffect, useMemo, useRef, useState } from 'react';
-import { inr, sipValue } from './ui';
+import { AnimatePresence, motion, useMotionValueEvent, useScroll } from 'framer-motion';
+import { useMemo, useRef, useState } from 'react';
+import { inr, sipValue, useMobile } from './ui';
 
 const MONTHLY = 5000;
 const RATE = 12;
@@ -11,70 +11,96 @@ const MILESTONES = [
   { at: 20, line: 'See the longer view.', sub: 'Explore how the assumed return changes the illustration.' },
   { at: 30, line: 'Keep the goal in view.', sub: 'Review progress and suitability as your circumstances change.' },
 ];
+const W = 1000, H = 520;
+const MAX = sipValue(MONTHLY, RATE, YEARS * 12);
+const pt = (y: number) => [(y / YEARS) * W, H - (sipValue(MONTHLY, RATE, y * 12) / MAX) * (H - 24)] as const;
+const ptInvested = (y: number) => [(y / YEARS) * W, H - ((MONTHLY * 12 * y) / MAX) * (H - 24)] as const;
 
-/** Pinned scene: scroll through thirty years of one SIP; the number and the curve grow with you. */
+/** Pinned on laptop: scroll through thirty years of one SIP. On phone, a slider drives the same scene. */
 export function Grow() {
+  const mobile = useMobile();
   const ref = useRef<HTMLElement>(null);
   const { scrollYProgress: p } = useScroll({ target: ref, offset: ['start start', 'end end'] });
-  const [year, setYear] = useState(0);
-  const [mobile, setMobile] = useState(false);
-  const [mobileYear, setMobileYear] = useState(10);
-  useEffect(() => { const media = matchMedia("(max-width: 767px)"); const sync = () => setMobile(media.matches); sync(); media.addEventListener("change", sync); return () => media.removeEventListener("change", sync); }, []);
-  const displayYear = mobile ? mobileYear : year;
-  useMotionValueEvent(p, 'change', (v) => setYear(Math.round(Math.min(1, Math.max(0, (v - 0.05) / 0.85)) * YEARS)));
+  const [scrollYear, setScrollYear] = useState(0);
+  const [slideYear, setSlideYear] = useState(10);
+  useMotionValueEvent(p, 'change', (v) => setScrollYear(Math.min(YEARS, Math.max(0, ((v - 0.06) / 0.84) * YEARS))));
+  const year = mobile ? slideYear : scrollYear;
+  const whole = Math.round(year);
 
-  const value = sipValue(MONTHLY, RATE, displayYear * 12);
-  const invested = MONTHLY * 12 * displayYear;
-  const ms = MILESTONES.reduce((a, m) => (displayYear >= m.at ? m : a), MILESTONES[0]);
+  const value = sipValue(MONTHLY, RATE, year * 12);
+  const invested = MONTHLY * 12 * year;
+  const ms = MILESTONES.reduce((a, m) => (whole >= m.at ? m : a), MILESTONES[0]);
 
-  // the curve, precomputed; drawn up to the current scroll position
-  const W = 600, H = 220;
-  const path = useMemo(() => {
-    const max = sipValue(MONTHLY, RATE, YEARS * 12);
-    return Array.from({ length: YEARS + 1 }, (_, y) => `${y ? 'L' : 'M'}${((y / YEARS) * W).toFixed(1)},${(H - (sipValue(MONTHLY, RATE, y * 12) / max) * (H - 10)).toFixed(1)}`).join(' ');
-  }, []);
-  const draw = useTransform(p, [0.05, 0.9], [0, 1]);
+  const curve = useMemo(() => Array.from({ length: YEARS * 4 + 1 }, (_, i) => pt(i / 4)), []);
+  const upto = curve.filter(([x]) => x <= (year / YEARS) * W + 0.01);
+  const line = upto.map(([x, y], i) => `${i ? 'L' : 'M'}${x.toFixed(1)},${y.toFixed(1)}`).join(' ');
+  const area = upto.length > 1 ? `${line} L${upto[upto.length - 1][0]},${H} L0,${H} Z` : '';
+  const [tx, ty] = pt(year);
+  const [ix, iy] = ptInvested(year);
+  const ghost = curve.map(([x, y], i) => `${i ? 'L' : 'M'}${x.toFixed(1)},${y.toFixed(1)}`).join(' ');
 
-  return (
-    <section id="grow" ref={ref} className="relative h-[300svh] bg-snow">
-      <div className="sticky top-[52px] flex h-[calc(100svh-52px)] flex-col justify-center overflow-hidden">
-        <div className="wrap text-center">
-          <p className="eyebrow text-graphite">One SIP. {YEARS} years.</p>
-          <motion.p key={ms.line} className="display mt-2 text-[clamp(2.2rem,5.6vw,4.4rem)]" initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
-            {ms.line}
-          </motion.p>
-          <p className="body-lg mx-auto mt-2 max-w-lg text-slate">{ms.sub}</p>
-
-          <div className="mx-auto mt-8 grid max-w-3xl grid-cols-3 items-end gap-3 sm:mt-10">
-            <div>
-              <p className="text-[12px] font-medium text-graphite sm:text-sm">Year</p>
-              <p className="display text-[clamp(2rem,6vw,4rem)] tabular-nums">{displayYear}</p>
-            </div>
-            <div>
-              <p className="text-[12px] font-medium text-graphite sm:text-sm">You put in</p>
-              <p className="display text-[clamp(1.4rem,4vw,2.6rem)] tabular-nums text-slate">{inr(invested)}</p>
-            </div>
-            <div>
-              <p className="text-[12px] font-medium text-graphite sm:text-sm">It could be</p>
-              <p className="display grad text-[clamp(1.4rem,4.4vw,3rem)] tabular-nums">{inr(value)}</p>
-            </div>
+  const scene = (
+    <div className="wrap-wide relative w-full">
+      <p aria-hidden className="pointer-events-none absolute -top-[6vh] right-0 select-none text-[clamp(10rem,30vw,28rem)] font-semibold leading-none tracking-[-0.08em] text-transparent [-webkit-text-stroke:1px_rgba(255,255,255,0.07)]">{String(whole).padStart(2, '0')}</p>
+      <div className="relative grid gap-8 md:grid-cols-[0.75fr_1.6fr] md:items-center md:gap-12">
+        <div>
+          <p className="kicker">One SIP. {YEARS} years.</p>
+          <div className="relative mt-4 h-[2.3em] text-[clamp(2rem,4.6vw,4rem)] md:h-[2.2em]">
+            <AnimatePresence mode="wait">
+              <motion.p key={ms.line} className="display absolute inset-0" initial={{ opacity: 0, y: 20, filter: 'blur(6px)' }} animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }} exit={{ opacity: 0, y: -16, filter: 'blur(6px)' }} transition={{ duration: 0.45 }}>
+                {ms.line}
+              </motion.p>
+            </AnimatePresence>
           </div>
+          <p className="lede mt-2 max-w-sm">{ms.sub}</p>
+          <dl className="mt-8 grid grid-cols-3 gap-3 border-t border-line pt-6">
+            <div><dt className="text-[11px] uppercase tracking-[0.16em] text-dim">Year</dt><dd className="display mt-1 text-[clamp(1.8rem,3.6vw,3rem)] tabular-nums">{whole}</dd></div>
+            <div><dt className="text-[11px] uppercase tracking-[0.16em] text-dim">You put in</dt><dd className="display mt-1 text-[clamp(1.2rem,2.4vw,2rem)] tabular-nums text-haze">{inr(invested)}</dd></div>
+            <div><dt className="text-[11px] uppercase tracking-[0.16em] text-dim">It could be</dt><dd className="display grad mt-1 text-[clamp(1.2rem,2.6vw,2.2rem)] tabular-nums">{inr(value)}</dd></div>
+          </dl>
+          {mobile && (
+            <label className="mt-6 block text-[13px] text-haze">
+              Explore the timeline · <b className="text-paper">{slideYear} years</b>
+              <input className="slider" type="range" min="1" max="30" value={slideYear} onChange={(e) => setSlideYear(Number(e.target.value))} aria-label="Illustration timeline in years" style={{ ['--fill' as string]: `${((slideYear - 1) / 29) * 100}%` }} />
+            </label>
+          )}
+        </div>
 
-          <svg viewBox={`0 0 ${W} ${H}`} className="mx-auto mt-6 h-[20vh] min-h-[120px] w-full max-w-3xl" preserveAspectRatio="none" aria-hidden>
+        <div className="glass relative overflow-hidden p-3 sm:p-6">
+          <svg viewBox={`-10 -10 ${W + 20} ${H + 40}`} className="h-auto w-full" aria-hidden>
             <defs>
-              <linearGradient id="grow-line" x1="0" x2="1">
-                <stop offset="0" stopColor="#FF9F0A" />
-                <stop offset="0.5" stopColor="#FF375F" />
-                <stop offset="1" stopColor="#BF5AF2" />
-              </linearGradient>
+              <linearGradient id="g-line" x1="0" x2="1"><stop offset="0" stopColor="#FF9F0A" /><stop offset="0.5" stopColor="#FF375F" /><stop offset="1" stopColor="#BF5AF2" /></linearGradient>
+              <linearGradient id="g-area" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stopColor="#FF375F" stopOpacity="0.45" /><stop offset="1" stopColor="#BF5AF2" stopOpacity="0" /></linearGradient>
+              <filter id="g-glow" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="8" /></filter>
             </defs>
-            <path d={path} fill="none" stroke="#E8E8ED" strokeWidth="3" vectorEffect="non-scaling-stroke" />
-            <motion.path d={path} fill="none" stroke="url(#grow-line)" strokeWidth="4" strokeLinecap="round" vectorEffect="non-scaling-stroke" style={{ pathLength: mobile ? mobileYear / YEARS : draw }} />
+            {[0, 10, 20, 30].map((y) => (
+              <g key={y}>
+                <line x1={(y / YEARS) * W} x2={(y / YEARS) * W} y1="0" y2={H} stroke="#fff" strokeOpacity={whole >= y ? 0.14 : 0.05} strokeDasharray="4 6" vectorEffect="non-scaling-stroke" />
+                <text x={(y / YEARS) * W} y={H + 26} fill="#fff" fillOpacity={whole >= y ? 0.6 : 0.25} fontSize="18" textAnchor={y === 0 ? 'start' : y === 30 ? 'end' : 'middle'}>Year {y}</text>
+              </g>
+            ))}
+            <path d={ghost} fill="none" stroke="#fff" strokeOpacity="0.08" strokeWidth="2" vectorEffect="non-scaling-stroke" />
+            {area && <path d={area} fill="url(#g-area)" />}
+            <line x1="0" y1={H} x2={ix} y2={iy} stroke="#fff" strokeOpacity="0.35" strokeWidth="1.5" strokeDasharray="6 6" vectorEffect="non-scaling-stroke" />
+            <path d={line} fill="none" stroke="url(#g-line)" strokeWidth="10" strokeLinecap="round" filter="url(#g-glow)" opacity="0.6" vectorEffect="non-scaling-stroke" />
+            <path d={line} fill="none" stroke="url(#g-line)" strokeWidth="3.5" strokeLinecap="round" vectorEffect="non-scaling-stroke" />
+            <circle cx={tx} cy={ty} r="14" fill="#FF375F" opacity="0.25" />
+            <circle cx={tx} cy={ty} r="6" fill="#fff" />
           </svg>
-          {mobile && <label className="mt-4 block text-left text-sm text-slate">Explore the timeline · {mobileYear} years<input className="slider mt-2" type="range" min="1" max="30" value={mobileYear} onChange={e => setMobileYear(Number(e.target.value))} aria-label="Illustration timeline in years" /></label>}
-          <p className="mt-4 text-[11px] text-graphite">₹5,000 per month, assuming CAGR of 12% per year. Illustration only.<br />Returns are not guaranteed.<br />Mutual fund investments are subject to market risks.</p>
+          <div className="pointer-events-none mt-2 flex gap-4 text-[11px] text-dim sm:absolute sm:left-8 sm:top-7 sm:mt-0">
+            <span className="flex items-center gap-1.5"><i className="h-0.5 w-4 bg-gradient-to-r from-amber to-violet" />Illustrated value</span>
+            <span className="flex items-center gap-1.5"><i className="h-0 w-4 border-t border-dashed border-white/50" />Contributions</span>
+          </div>
         </div>
       </div>
+      <p className="mt-6 text-center text-[11px] leading-relaxed text-dim">₹5,000 per month, assuming CAGR of 12% per year. Illustration only. Returns are not guaranteed. Mutual fund investments are subject to market risks.</p>
+    </div>
+  );
+
+  if (mobile) return <section id="grow" data-dark className="py-14">{scene}</section>;
+  return (
+    <section id="grow" data-dark ref={ref} className="relative h-[300svh]">
+      <div className="sticky top-0 flex h-[100svh] items-center overflow-hidden pt-14">{scene}</div>
     </section>
   );
 }

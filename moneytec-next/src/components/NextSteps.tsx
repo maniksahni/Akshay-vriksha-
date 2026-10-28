@@ -1,5 +1,7 @@
+import { AnimatePresence, motion } from 'framer-motion';
 import { useState } from 'react';
 import { wa } from '../data';
+import { EASE, Title } from './ui';
 
 const ROUTES = [
   { title: 'Build wealth', detail: 'Give your monthly savings a purpose.', items: ['Choose the goal and when you need the money.', 'Explore a monthly amount in the SIP calculator.', 'Discuss suitability and scheme details with Gulshan.'], cta: 'Explore the calculator', href: '#calculator' },
@@ -11,23 +13,33 @@ export function NextSteps() {
   const [active, setActive] = useState(0);
   const route = ROUTES[active];
   return (
-    <section className="next-steps bg-snow py-16 sm:py-24" id="next-steps">
-      <div className="wrap-wide">
-        <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
-          <div>
-            <p className="eyebrow text-link">Your next move</p>
-            <h2 className="display mt-2 text-[clamp(2rem,4.6vw,3.5rem)]">Clarity first.<br /><span className="grad">Then, a plan.</span></h2>
-            <p className="body-lg mt-5 max-w-md text-slate">Useful tools to explore your options. Personal guidance to help you take the next step.</p>
-            <div className="mt-7 flex flex-wrap gap-2" role="group" aria-label="Choose your next step">
-              {ROUTES.map((r, i) => <button key={r.title} type="button" aria-pressed={active === i} onClick={() => setActive(i)} className={`route-choice rounded-full border px-4 py-3 text-sm font-medium ${active === i ? 'border-link bg-link text-white' : 'border-mist bg-white text-coal'}`}>{r.title}</button>)}
-            </div>
+    <section id="next-steps" data-dark className="py-14 sm:py-32">
+      <div className="wrap-wide grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
+        <div>
+          <p className="kicker">Your next move</p>
+          <Title className="display mt-4 text-[clamp(2.4rem,5.4vw,4.8rem)]" text="Clarity first. / *Then, a plan.*" />
+          <p className="lede mt-5 max-w-md">Useful tools to explore your options. Personal guidance to help you take the next step.</p>
+          <div className="mt-7 flex flex-wrap gap-2" role="group" aria-label="Choose your next step">
+            {ROUTES.map((r, i) => <button key={r.title} type="button" aria-pressed={active === i} onClick={() => setActive(i)} className="chip">{r.title}</button>)}
           </div>
-          <div className="route-panel rounded-[28px] bg-white p-6 sm:p-9" aria-live="polite">
-            <p className="text-xs font-semibold uppercase tracking-widest text-graphite">{route.title}</p>
-            <h3 className="mt-3 text-2xl font-semibold tracking-tight">{route.detail}</h3>
-            <ol className="my-7 space-y-5">{route.items.map((item, i) => <li key={item} className="flex items-start gap-4 text-[15px] leading-relaxed text-slate"><span className="step-number flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-xs font-semibold text-link">0{i + 1}</span><span className="pt-1">{item}</span></li>)}</ol>
-            <a className="textlink" href={route.href} {...(active ? { target: '_blank', rel: 'noreferrer' } : {})}>{route.cta} <span aria-hidden>↗</span></a>
-          </div>
+        </div>
+        <div className="glass ring-grad overflow-hidden p-6 sm:p-10" aria-live="polite">
+          <div className="pointer-events-none absolute -right-20 -top-20 h-56 w-56 rounded-full bg-violet/25 blur-[80px]" />
+          <AnimatePresence mode="wait">
+            <motion.div key={active} className="relative" initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -12 }} transition={{ duration: 0.4, ease: EASE }}>
+              <p className="text-[11px] uppercase tracking-[0.22em] text-dim">{route.title}</p>
+              <h3 className="mt-3 text-[26px] font-semibold tracking-[-0.03em] sm:text-[32px]">{route.detail}</h3>
+              <ol className="my-8 space-y-5">
+                {route.items.map((item, i) => (
+                  <li key={item} className="flex items-start gap-4 text-[15px] leading-relaxed text-haze">
+                    <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full border border-white/15 text-[12px] font-semibold text-paper">0{i + 1}</span>
+                    <span className="pt-1.5">{item}</span>
+                  </li>
+                ))}
+              </ol>
+              <a className="link" href={route.href} {...(active ? { target: '_blank', rel: 'noreferrer' } : {})}>{route.cta} ↗</a>
+            </motion.div>
+          </AnimatePresence>
         </div>
       </div>
     </section>

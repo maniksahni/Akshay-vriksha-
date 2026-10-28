@@ -1,74 +1,95 @@
-import { animate, motion, useInView, useMotionValue, useSpring } from 'framer-motion';
-import { MouseEvent, ReactNode, useEffect, useRef, useState } from 'react';
+import { animate, motion, MotionValue, useInView, useScroll, useTransform } from 'framer-motion';
+import { PointerEvent, ReactNode, useEffect, useRef, useState } from 'react';
 
 export const EASE = [0.22, 1, 0.36, 1] as const;
 export const reduced = () => typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-/** Words rise one by one from behind a mask the first time they enter view. */
-export function Rise({ children, className = '', delay = 0, as: Tag = 'h2' }: { children: string; className?: string; delay?: number; as?: 'h1' | 'h2' | 'h3' | 'p' }) {
-  const ref = useRef<HTMLHeadingElement>(null);
-  const inView = useInView(ref, { once: true, margin: '0px 0px -10% 0px' });
-  // "*word*" marks an accent word
-  const words = children.split(' ');
-  return (
-    <Tag ref={ref} className={className} aria-label={children.replace(/\*/g, '')}>
-      {words.map((w, i) => {
-        const accent = w.startsWith('*');
-        const clean = w.replace(/\*/g, '');
-        return w === '/' ? (
-          <br key={i} />
-        ) : (
-          <span key={i} aria-hidden className="inline-block overflow-hidden pb-[0.1em] align-top">
-            <motion.span
-              className={`inline-block ${accent ? 'font-serif font-normal italic tracking-normal text-lime' : ''}`}
-              initial={{ y: '105%' }}
-              animate={inView ? { y: 0 } : undefined}
-              transition={{ duration: 0.9, ease: EASE, delay: delay + i * 0.045 }}
-            >
-              {clean}
-              {' '}
-            </motion.span>
-          </span>
-        );
-      })}
-    </Tag>
-  );
+/** True below the md breakpoint; phones get lighter, unpinned versions of each scene. */
+export function useMobile() {
+  const [m, setM] = useState(() => typeof window !== 'undefined' && window.innerWidth < 768);
+  useEffect(() => {
+    const q = window.matchMedia('(max-width: 767px)');
+    const sync = () => setM(q.matches);
+    sync();
+    q.addEventListener('change', sync);
+    return () => q.removeEventListener('change', sync);
+  }, []);
+  return m;
 }
 
-export function FadeIn({ children, className = '', delay = 0, y = 24 }: { children: ReactNode; className?: string; delay?: number; y?: number }) {
+export function FadeIn({ children, className = '', delay = 0, y = 28 }: { children: ReactNode; className?: string; delay?: number; y?: number }) {
   return (
     <motion.div
       className={className}
-      initial={{ opacity: 0, y }}
-      whileInView={{ opacity: 1, y: 0 }}
+      initial={{ opacity: 0, y, filter: 'blur(8px)' }}
+      whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
       viewport={{ once: true, margin: '0px 0px -8% 0px' }}
-      transition={{ duration: 0.8, ease: EASE, delay }}
+      transition={{ duration: 0.9, ease: EASE, delay }}
     >
       {children}
     </motion.div>
   );
 }
 
-/** Follows the pointer a little while hovered. */
-export function Magnetic({ children, className = '', strength = 0.3 }: { children: ReactNode; className?: string; strength?: number }) {
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
-  const sx = useSpring(x, { stiffness: 200, damping: 15 });
-  const sy = useSpring(y, { stiffness: 200, damping: 15 });
-  const move = (e: MouseEvent<HTMLDivElement>) => {
-    const r = e.currentTarget.getBoundingClientRect();
-    x.set((e.clientX - r.left - r.width / 2) * strength);
-    y.set((e.clientY - r.top - r.height / 2) * strength);
-  };
+/** A heading whose lines rise from behind a mask. Lines split on "/", "*word*" turns into the serif accent. */
+export function Title({ text, className = '', as: Tag = 'h2', delay = 0 }: { text: string; className?: string; as?: 'h1' | 'h2' | 'p'; delay?: number }) {
+  const ref = useRef<HTMLHeadingElement>(null);
+  const inView = useInView(ref, { once: true, margin: '0px 0px -10% 0px' });
+  const lines = text.split(' / ');
   return (
-    <motion.div className={`inline-block ${className}`} style={{ x: sx, y: sy }} onMouseMove={move} onMouseLeave={() => { x.set(0); y.set(0); }}>
-      {children}
-    </motion.div>
+    <Tag ref={ref} className={className} aria-label={text.replace(/\*| \/ /g, (m) => (m === '*' ? '' : ' '))}>
+      {lines.map((line, i) => (
+        <span key={i} aria-hidden className="block overflow-hidden pb-[0.08em]">
+          <motion.span
+            className="block"
+            initial={{ y: '110%' }}
+            animate={inView ? { y: 0 } : undefined}
+            transition={{ duration: 1.05, ease: EASE, delay: delay + i * 0.09 }}
+          >
+            {line.split(/(\*[^*]+\*)/).map((part, k) =>
+              part.startsWith('*') ? <span key={k} className="serif grad pr-[0.06em]">{part.slice(1, -1)}</span> : <span key={k}>{part}</span>,
+            )}
+          </motion.span>
+        </span>
+      ))}
+    </Tag>
   );
 }
 
+/** Words light up one after another as the paragraph moves through the viewport. */
+export function ScrollLit({ text, className = '' }: { text: string; className?: string }) {
+  const ref = useRef<HTMLParagraphElement>(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ['start 0.85', 'end 0.45'] });
+  const words = text.split(' ');
+  return (
+    <p ref={ref} className={className} aria-label={text.replace(/\*/g, '')}>
+      {words.map((w, i) => (
+        <Word key={i} p={scrollYProgress} range={[i / words.length, (i + 1) / words.length]} accent={w.startsWith('*')}>
+          {w.replace(/\*/g, '')}
+        </Word>
+      ))}
+    </p>
+  );
+}
+function Word({ children, p, range, accent }: { children: string; p: MotionValue<number>; range: [number, number]; accent: boolean }) {
+  const opacity = useTransform(p, range, [0.14, 1]);
+  const y = useTransform(p, range, [6, 0]);
+  return (
+    <motion.span aria-hidden style={{ opacity, y }} className={`inline-block pr-[0.24em] ${accent ? 'serif grad' : ''}`}>
+      {children}
+    </motion.span>
+  );
+}
+
+/** Pointer spotlight for .spot cards. */
+export const spotlight = (e: PointerEvent<HTMLElement>) => {
+  const r = e.currentTarget.getBoundingClientRect();
+  e.currentTarget.style.setProperty('--mx', `${e.clientX - r.left}px`);
+  e.currentTarget.style.setProperty('--my', `${e.clientY - r.top}px`);
+};
+
 /** Smoothly tweens to a changing number. */
-export function useTween(value: number, duration = 0.5) {
+export function useTween(value: number, duration = 0.6) {
   const [v, setV] = useState(value);
   const prev = useRef(value);
   useEffect(() => {
@@ -79,25 +100,18 @@ export function useTween(value: number, duration = 0.5) {
   return v;
 }
 
-export function Marquee({ items, className = '', reverse = false }: { items: ReactNode[]; className?: string; reverse?: boolean }) {
-  const row = (
-    <div className="flex shrink-0 items-center">
-      {items.map((it, i) => (
-        <span key={i} className="flex items-center whitespace-nowrap px-5">
-          {it}
-          <span className="ml-10 text-[0.7em]">✦</span>
-        </span>
-      ))}
-    </div>
-  );
-  return (
-    <div className={`overflow-hidden ${className}`}>
-      <div className="flex w-max animate-marquee" style={{ animationDirection: reverse ? 'reverse' : 'normal' }}>
-        {row}
-        <div aria-hidden className="flex">{row}</div>
-      </div>
-    </div>
-  );
+/** Counts up once when it scrolls into view. */
+export function CountUp({ to, suffix = '', className = '' }: { to: number; suffix?: string; className?: string }) {
+  const ref = useRef<HTMLSpanElement>(null);
+  const inView = useInView(ref, { once: true });
+  const [n, setN] = useState(0);
+  useEffect(() => {
+    if (!inView) return;
+    if (reduced()) { setN(to); return; }
+    const c = animate(0, to, { duration: 1.6, ease: EASE, onUpdate: (v) => setN(Math.round(v)) });
+    return () => c.stop();
+  }, [inView, to]);
+  return <span ref={ref} className={className}>{n}{suffix}</span>;
 }
 
 /** Indian-style short money: ₹4.2 L, ₹1.9 Cr. */
