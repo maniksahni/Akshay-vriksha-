@@ -1,7 +1,7 @@
-import { motion, useScroll, useTransform } from 'framer-motion';
-import { useLayoutEffect, useRef, useState } from 'react';
+import { motion, MotionValue, useScroll, useTransform } from 'framer-motion';
+import { ReactNode, useLayoutEffect, useRef, useState } from 'react';
 import { wa } from '../data';
-import { EASE, spotlight, Title, useMobile } from './ui';
+import { EASE, spotlight, Title, untilt, useMobile } from './ui';
 
 /** Each service gets a small living illustration: lines draw, nodes pulse, nothing loud. */
 const ART = {
@@ -57,11 +57,29 @@ const CARDS = [
   { tag: 'Review', art: ART.review, tint: 'from-violet/25', title: 'Review your investments.', body: 'Organise existing SIPs and funds around your goals, timeline and comfort with risk.' },
 ];
 
+/** Coverflow: a card turns and recedes the further it is from the middle of the screen. */
+function Flow({ x, children }: { x: MotionValue<number>; children: ReactNode }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [left, setLeft] = useState(0);
+  const [w, setW] = useState(400);
+  useLayoutEffect(() => {
+    const m = () => { if (ref.current) { setLeft(ref.current.offsetLeft); setW(ref.current.offsetWidth); } };
+    m(); window.addEventListener('resize', m); return () => window.removeEventListener('resize', m);
+  }, []);
+  const d = useTransform(x, (v) => (left + v + w / 2 - window.innerWidth * 0.5) / window.innerWidth);
+  const rotateY = useTransform(d, [-0.7, 0, 0.7], [32, 0, -32]);
+  const scale = useTransform(d, [-0.8, 0, 0.8], [0.84, 1, 0.84]);
+  const opacity = useTransform(d, [-0.9, -0.3, 0, 0.3, 0.9], [0.35, 0.85, 1, 0.85, 0.35]);
+  const z = useTransform(d, [-0.7, 0, 0.7], [-160, 0, -160]);
+  return <motion.div ref={ref} className="shrink-0" style={{ rotateY, scale, opacity, z, transformStyle: 'preserve-3d' }}>{children}</motion.div>;
+}
+
 function Card({ c, i, compact }: { c: (typeof CARDS)[number]; i: number; compact: boolean }) {
   return (
     <article
       onPointerMove={spotlight}
-      className={`glass spot group flex shrink-0 snap-center flex-col overflow-hidden ${compact ? 'h-[290px] w-[76vw] max-w-[320px] p-5' : 'h-[min(66vh,560px)] w-[min(440px,36vw)] p-8'}`}
+      onPointerLeave={untilt}
+      className={`glass spot ${compact ? '' : 'tilt'} group flex shrink-0 snap-center flex-col overflow-hidden ${compact ? 'h-[290px] w-[76vw] max-w-[320px] p-5' : 'h-[min(66vh,560px)] w-[min(440px,36vw)] p-8'}`}
     >
       <div className={`pointer-events-none absolute inset-0 bg-gradient-to-b ${c.tint} to-transparent opacity-60`} />
       <div className="relative flex items-center justify-between text-[11px] uppercase tracking-[0.2em] text-dim">
@@ -120,8 +138,8 @@ export function Highlights() {
     <section id="highlights" data-dark ref={section} className="relative" style={{ height: `calc(100svh + ${dist}px)` }}>
       <div className="sticky top-0 flex h-[100svh] flex-col justify-center overflow-hidden">
         <div className="wrap-wide">{head}</div>
-        <motion.div ref={track} className="mt-10 flex w-max gap-5 pl-[max(2rem,calc((100vw-1320px)/2+2rem))] pr-[8vw]" style={{ x }}>
-          {CARDS.map((c, i) => <Card key={c.title} c={c} i={i} compact={false} />)}
+        <motion.div ref={track} className="mt-10 flex w-max gap-5 pl-[max(2rem,calc((100vw-1320px)/2+2rem))] pr-[30vw]" style={{ x, perspective: 1600 }}>
+          {CARDS.map((c, i) => <Flow key={c.title} x={x}><Card c={c} i={i} compact={false} /></Flow>)}
         </motion.div>
         <div className="wrap-wide mt-8 flex items-center gap-4 text-[11px] uppercase tracking-[0.2em] text-dim">
           <div className="h-px flex-1 overflow-hidden bg-white/10"><motion.span className="block h-full origin-left bg-gradient-to-r from-amber via-rose to-violet" style={{ scaleX: bar }} /></div>

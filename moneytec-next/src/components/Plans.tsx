@@ -1,7 +1,7 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { wa } from '../data';
-import { EASE, spotlight, Title } from './ui';
+import { EASE, Scene, spotlight, Title, untilt } from './ui';
 
 const PLANS = [
   { name: 'Near-term needs', tag: 'Keep liquidity in view', horizon: '3–5 years', drops: 'Prefers to avoid them', goals: 'Emergency fund, short-term goals', before: 'Check access to your money, exit conditions and capital risk.', orbit: 1, hue: '#64D2FF' },
@@ -40,7 +40,7 @@ export function Plans() {
   useEffect(() => { if (pick >= 0) setTab(pick); }, [pick]);
 
   const card = (p: (typeof PLANS)[number], i: number) => (
-    <div key={p.name} onPointerMove={spotlight} className={`glass spot relative flex w-full flex-col p-5 sm:p-7 ${i === pick ? 'ring-grad' : ''}`}>
+    <div key={p.name} onPointerMove={spotlight} onPointerLeave={untilt} className={`glass spot tilt relative flex w-full flex-col p-5 sm:p-7 ${i === pick ? 'ring-grad' : ''}`}>
       {i === pick && <span className="absolute -top-3 left-5 rounded-full bg-paper px-3 py-1 text-[11px] font-semibold text-ink">Your timeline</span>}
       <div className="flex items-center gap-4">
         <Orbits n={p.orbit} hue={p.hue} />
@@ -61,7 +61,7 @@ export function Plans() {
 
   return (
     <section id="plans" data-dark className="relative py-14 sm:py-32">
-      <div className="wrap-wide">
+      <Scene className="wrap-wide">
         <div className="text-center">
           <Title className="display mt-4 text-[clamp(2.4rem,5.6vw,5rem)]" text="What are you / *planning for?*" />
           <button type="button" onClick={() => { setQuiz(true); setAns([]); }} className="link mt-5">Prepare for your conversation ›</button>
@@ -104,15 +104,15 @@ export function Plans() {
             </motion.div>
           </AnimatePresence>
         </div>
-        <div className="mt-12 hidden gap-5 md:grid md:grid-cols-3">
+        <div className="mt-12 hidden gap-5 md:grid md:grid-cols-3" style={{ perspective: 1400 }}>
           {PLANS.map((p, i) => (
-            <motion.div key={p.name} className="flex" initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '0px 0px -10% 0px' }} transition={{ duration: 0.9, ease: EASE, delay: i * 0.1 }}>
+            <motion.div key={p.name} className="flex" initial={{ opacity: 0, y: 120, rotateX: 50, z: -200 }} whileInView={{ opacity: 1, y: 0, rotateX: 0, z: 0 }} viewport={{ once: true, margin: '0px 0px -15% 0px' }} transition={{ duration: 1.3, ease: EASE, delay: i * 0.16 }} style={{ transformOrigin: '50% 100%' }}>
               {card(p, i)}
             </motion.div>
           ))}
         </div>
         <p className="mx-auto mt-8 max-w-2xl text-center text-[12px] text-dim">These are starting points for a conversation, not product recommendations. Suitability depends on your full financial circumstances and risk assessment.</p>
-      </div>
+      </Scene>
     </section>
   );
 }

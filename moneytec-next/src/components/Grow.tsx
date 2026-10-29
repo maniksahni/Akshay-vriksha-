@@ -55,8 +55,8 @@ export function Grow() {
           <p className="lede mt-2 max-w-sm">{ms.sub}</p>
           <dl className="mt-8 grid grid-cols-3 gap-3 border-t border-line pt-6">
             <div><dt className="text-[11px] uppercase tracking-[0.16em] text-dim">Year</dt><dd className="display mt-1 text-[clamp(1.8rem,3.6vw,3rem)] tabular-nums">{whole}</dd></div>
-            <div><dt className="text-[11px] uppercase tracking-[0.16em] text-dim">You put in</dt><dd className="display mt-1 text-[clamp(1.2rem,2.4vw,2rem)] tabular-nums text-haze">{inr(invested)}</dd></div>
-            <div><dt className="text-[11px] uppercase tracking-[0.16em] text-dim">It could be</dt><dd className="display grad mt-1 text-[clamp(1.2rem,2.6vw,2.2rem)] tabular-nums">{inr(value)}</dd></div>
+            <div><dt className="text-[11px] uppercase tracking-[0.16em] text-dim">You put in</dt><dd className="display mt-1 whitespace-nowrap text-[clamp(1.2rem,2.4vw,2rem)] tabular-nums text-haze">{inr(invested)}</dd></div>
+            <div><dt className="text-[11px] uppercase tracking-[0.16em] text-dim">It could be</dt><dd className="display grad mt-1 whitespace-nowrap text-[clamp(1.2rem,2.4vw,2rem)] tabular-nums">{inr(value)}</dd></div>
           </dl>
           {mobile && (
             <label className="mt-6 block text-[13px] text-haze">
@@ -84,6 +84,18 @@ export function Grow() {
             <line x1="0" y1={H} x2={ix} y2={iy} stroke="#fff" strokeOpacity="0.35" strokeWidth="1.5" strokeDasharray="6 6" vectorEffect="non-scaling-stroke" />
             <path d={line} fill="none" stroke="url(#g-line)" strokeWidth="10" strokeLinecap="round" filter="url(#g-glow)" opacity="0.6" vectorEffect="non-scaling-stroke" />
             <path d={line} fill="none" stroke="url(#g-line)" strokeWidth="3.5" strokeLinecap="round" vectorEffect="non-scaling-stroke" />
+            {[10, 20, 30].map((my) => {
+              const [mx, mY] = pt(my);
+              const on = year >= my;
+              return (
+                <motion.g key={my} initial={false} animate={{ opacity: on ? 1 : 0, scale: on ? 1 : 0.4 }} transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }} style={{ transformOrigin: `${mx}px ${mY}px` }}>
+                  <circle cx={mx} cy={mY} r="22" fill="none" stroke="#FF9F0A" strokeOpacity="0.35" />
+                  <circle cx={mx} cy={mY} r="7" fill="#FF9F0A" />
+                  <rect x={mx - (my === 30 ? 180 : 75)} y={mY + (my === 30 ? 4 : -64)} width="150" height="36" rx="18" fill="rgba(7,6,11,0.85)" stroke="rgba(255,255,255,0.15)" />
+                  <text x={mx - (my === 30 ? 105 : 0)} y={mY + (my === 30 ? 28 : -40)} textAnchor="middle" fill="#F4F1F8" fontSize="17" fontWeight="600">{inr(sipValue(MONTHLY, RATE, my * 12))}</text>
+                </motion.g>
+              );
+            })}
             <circle cx={tx} cy={ty} r="14" fill="#FF375F" opacity="0.25" />
             <circle cx={tx} cy={ty} r="6" fill="#fff" />
           </svg>
@@ -97,10 +109,11 @@ export function Grow() {
     </div>
   );
 
-  if (mobile) return <section id="grow" data-dark className="py-14">{scene}</section>;
+  const warm = <div aria-hidden className="pointer-events-none absolute inset-0 bg-[radial-gradient(60%_50%_at_70%_60%,rgba(255,55,95,0.22),rgba(191,90,242,0.12)_45%,transparent_75%)] transition-opacity duration-300" style={{ opacity: Math.min(1, year / YEARS + 0.1) }} />;
+  if (mobile) return <section id="grow" data-dark className="relative overflow-hidden py-14">{warm}{scene}</section>;
   return (
     <section id="grow" data-dark ref={ref} className="relative h-[300svh]">
-      <div className="sticky top-0 flex h-[100svh] items-center overflow-hidden pt-14">{scene}</div>
+      <div className="sticky top-0 flex h-[100svh] items-center overflow-hidden pt-14">{warm}{scene}</div>
     </section>
   );
 }

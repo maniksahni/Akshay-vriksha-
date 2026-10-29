@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import { useEffect, useMemo, useState } from 'react';
 import { wa } from '../data';
 import { GoalPlanner } from './GoalPlanner';
-import { EASE, inr, sipValue, spotlight, Title, useTween } from './ui';
+import { EASE, inr, Scene, sipValue, spotlight, Title, useTween } from './ui';
 
 const AMOUNTS = [1000, 3000, 5000, 10000, 25000, 50000];
 const DURATIONS = [5, 10, 15, 20, 25, 30];
@@ -53,7 +53,7 @@ export function Configure() {
   return (
     <section id="calculator" data-dark className="relative overflow-hidden py-14 sm:py-32">
       <div className="pointer-events-none absolute -right-40 top-20 h-[50vmin] w-[50vmin] rounded-full bg-violet/15 blur-[120px]" />
-      <div className="wrap-wide relative">
+      <Scene className="wrap-wide relative">
         <div className="flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
           <div>
             <p className="kicker">Your planning studio</p>
@@ -131,7 +131,7 @@ export function Configure() {
             </aside>
           </div>
         </div>
-      </div>
+      </Scene>
     </section>
   );
 }

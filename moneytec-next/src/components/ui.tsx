@@ -81,12 +81,38 @@ function Word({ children, p, range, accent }: { children: string; p: MotionValue
   );
 }
 
-/** Pointer spotlight for .spot cards. */
+/** Pointer spotlight for .spot cards; cards that also carry .tilt lean toward the pointer. */
 export const spotlight = (e: PointerEvent<HTMLElement>) => {
-  const r = e.currentTarget.getBoundingClientRect();
-  e.currentTarget.style.setProperty('--mx', `${e.clientX - r.left}px`);
-  e.currentTarget.style.setProperty('--my', `${e.clientY - r.top}px`);
+  const el = e.currentTarget, r = el.getBoundingClientRect();
+  const x = e.clientX - r.left, y = e.clientY - r.top;
+  el.style.setProperty('--mx', `${x}px`);
+  el.style.setProperty('--my', `${y}px`);
+  if (e.pointerType === 'mouse') {
+    el.style.setProperty('--ry', `${((x / r.width) - 0.5) * 10}deg`);
+    el.style.setProperty('--rx', `${(0.5 - y / r.height) * 8}deg`);
+  }
 };
+export const untilt = (e: PointerEvent<HTMLElement>) => {
+  e.currentTarget.style.setProperty('--rx', '0deg');
+  e.currentTarget.style.setProperty('--ry', '0deg');
+};
+
+/** Each section rises out of depth as it arrives: scale, lift and a soft unblur, tied to scroll. Phones get a plain fade. */
+export function Scene({ children, className = '' }: { children: ReactNode; className?: string }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const mobile = useMobile();
+  const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'start 0.3'] });
+  const scale = useTransform(scrollYProgress, [0, 1], [0.86, 1]);
+  const y = useTransform(scrollYProgress, [0, 1], [120, 0]);
+  const opacity = useTransform(scrollYProgress, [0, 0.6], [0.15, 1]);
+  const rotateX = useTransform(scrollYProgress, [0, 1], [14, 0]);
+  if (mobile || reduced()) return <div className={className}>{children}</div>;
+  return (
+    <div ref={ref} style={{ perspective: 1400 }}>
+      <motion.div className={className} style={{ scale, y, opacity, rotateX, transformOrigin: '50% 0%' }}>{children}</motion.div>
+    </div>
+  );
+}
 
 /** Smoothly tweens to a changing number. */
 export function useTween(value: number, duration = 0.6) {

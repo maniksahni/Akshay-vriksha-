@@ -1,7 +1,7 @@
 import { AnimatePresence, motion, useScroll, useTransform } from 'framer-motion';
 import { FormEvent, useRef, useState } from 'react';
 import { DISCLAIMER, FACTS, NAV, SOCIALS, wa } from '../data';
-import { CountUp, EASE, FadeIn, spotlight, Title, useMobile } from './ui';
+import { CountUp, EASE, FadeIn, Scene, spotlight, Title, untilt, useMobile } from './ui';
 
 /* ---------------------------------------------------------------- meet Gulshan */
 const BIO = `${FACTS.name} is an electronics engineer turned mutual fund distributor. For ${FACTS.years}+ years, he has helped people start SIPs and explore protection for their families. From your first question to your next review, you can speak with him personally.`;
@@ -83,9 +83,35 @@ export function Gulshan() {
   );
 }
 
+function VaultRings() {
+  const ref = useRef<HTMLDivElement>(null);
+  const { scrollYProgress: p } = useScroll({ target: ref, offset: ['start end', 'end start'] });
+  const rot = useTransform(p, [0, 1], [-60, 60]);
+  const rot2 = useTransform(p, [0, 1], [40, -80]);
+  const scale = useTransform(p, [0, 0.5], [0.6, 1.15]);
+  const o = useTransform(p, [0, 0.35, 0.8, 1], [0, 1, 1, 0.2]);
+  return (
+    <div ref={ref} aria-hidden className="pointer-events-none absolute inset-x-0 top-0 flex h-[110vmin] max-h-[1100px] justify-center">
+      <motion.svg viewBox="0 0 600 600" className="h-full w-auto" style={{ scale, opacity: o }}>
+        <motion.g style={{ rotate: rot, transformOrigin: '300px 300px' }}>
+          <circle cx="300" cy="300" r="280" fill="none" stroke="#5BF0B5" strokeOpacity="0.14" strokeDasharray="2 10" />
+          {Array.from({ length: 24 }).map((_, i) => <rect key={i} x="298" y="18" width="4" height="18" rx="2" fill="#5BF0B5" opacity={i % 3 ? 0.12 : 0.35} transform={`rotate(${i * 15} 300 300)`} />)}
+        </motion.g>
+        <motion.g style={{ rotate: rot2, transformOrigin: '300px 300px' }}>
+          <circle cx="300" cy="300" r="220" fill="none" stroke="#64D2FF" strokeOpacity="0.16" />
+          <circle cx="300" cy="300" r="220" fill="none" stroke="#64D2FF" strokeOpacity="0.5" strokeWidth="2" strokeDasharray="60 1322" />
+        </motion.g>
+        <circle cx="300" cy="300" r="160" fill="none" stroke="#5BF0B5" strokeOpacity="0.1" strokeDasharray="1 6" />
+      </motion.svg>
+    </div>
+  );
+}
+
 export function Safety() {
+  const mobile = useMobile();
   return (
     <section id="safety" data-dark className="relative overflow-hidden py-14 sm:py-32">
+      {!mobile && <VaultRings />}
       <div className="pointer-events-none absolute left-1/2 top-1/3 h-[50vmin] w-[80vmin] -translate-x-1/2 rounded-full bg-mint/10 blur-[120px]" />
       <div className="wrap relative">
         <div className="text-center">
@@ -108,7 +134,7 @@ export function Safety() {
             ['Check us yourself.', `AMFI-registered distributor ${FACTS.arn}. Kotak Life advisor ${FACTS.kotak}.`],
           ].map(([t, d], i) => (
             <FadeIn key={t} delay={i * 0.08} className="h-full">
-              <div onPointerMove={spotlight} className="glass spot h-full p-5 sm:p-6">
+              <div onPointerMove={spotlight} onPointerLeave={untilt} className="glass spot tilt h-full p-5 sm:p-6">
                 <p className="text-[11px] uppercase tracking-[0.2em] text-mint">0{i + 1}</p>
                 <p className="mt-2 text-[19px] font-semibold tracking-[-0.02em]">{t}</p>
                 <p className="mt-2 text-[14px] leading-relaxed text-haze">{d}</p>
@@ -136,8 +162,8 @@ export function Faq() {
   const [open, setOpen] = useState<number | null>(null);
   return (
     <section id="faq" data-dark className="py-14 sm:py-32">
-      <div className="wrap grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
-        <div>
+      <Scene className="wrap grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
+        <div className="lg:sticky lg:top-28 lg:self-start">
           <Title className="display mt-4 text-[clamp(2.2rem,4.6vw,4rem)]" text="A little clarity / *goes a long way.*" />
         </div>
         <div className="border-t border-line">
@@ -160,7 +186,7 @@ export function Faq() {
             );
           })}
         </div>
-      </div>
+      </Scene>
     </section>
   );
 }
@@ -170,6 +196,12 @@ const WHO = ['Student', 'Working', 'Business owner', 'NRI'];
 const WANT = ['Start a SIP', 'Save tax', 'Life cover', 'Health cover', 'Portfolio check-up'];
 
 export function Finale() {
+  const zoomRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress: zp } = useScroll({ target: zoomRef, offset: ['start end', 'center center'] });
+  const zScale = useTransform(zp, [0, 1], [1.5, 1]);
+  const zBlur = useTransform(zp, [0, 0.8], ['blur(18px)', 'blur(0px)']);
+  const zOpacity = useTransform(zp, [0, 0.7], [0, 1]);
+  const glow = useTransform(zp, [0, 1], [0.2, 1]);
   const [who, setWho] = useState('Working');
   const [want, setWant] = useState<string[]>(['Start a SIP']);
   const [name, setName] = useState('');
@@ -183,13 +215,13 @@ export function Finale() {
 
   return (
     <section id="start" data-dark className="relative overflow-hidden py-16 sm:py-36">
-      <div className="pointer-events-none absolute inset-0"><div className="aurora" /></div>
+      <motion.div className="pointer-events-none absolute inset-0" style={{ opacity: glow }}><div className="aurora" /></motion.div>
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-ink via-transparent to-ink" />
       <div className="wrap relative grid gap-10 lg:grid-cols-2 lg:items-center lg:gap-16">
-        <div className="text-center lg:text-left">
+        <motion.div ref={zoomRef} className="text-center lg:text-left" style={{ scale: zScale, filter: zBlur, opacity: zOpacity, transformOrigin: '30% 50%' }}>
           <Title className="display mt-5 text-[clamp(2.8rem,7vw,6.4rem)]" text="Your next chapter / *starts here.*" />
           <p className="lede mx-auto mt-5 max-w-md lg:mx-0">Tell us a little. It opens WhatsApp with everything filled in, and Gulshan replies personally.</p>
-        </div>
+        </motion.div>
         <FadeIn>
           <form onSubmit={submit} className="glass ring-grad p-5 text-left sm:p-8">
             <AnimatePresence mode="wait" initial={false}>
@@ -222,6 +254,21 @@ export function Finale() {
 }
 
 /* ---------------------------------------------------------------- footer */
+function Letter({ ch, i, p }: { ch: string; i: number; p: ReturnType<typeof useScroll>['scrollYProgress'] }) {
+  const start = 0.05 + i * 0.06;
+  const y = useTransform(p, [start, start + 0.4], ['105%', '0%']);
+  const rotate = useTransform(p, [start, start + 0.4], [12, 0]);
+  return <motion.span className="grad inline-block" style={{ y, rotate, transformOrigin: '0% 100%', backgroundSize: '800% 100%', backgroundPosition: `${(i / 7) * 100}% 0` }}>{ch}</motion.span>;
+}
+function FooterMark() {
+  const ref = useRef<HTMLParagraphElement>(null);
+  const { scrollYProgress: p } = useScroll({ target: ref, offset: ['start end', 'end end'] });
+  return (
+    <p ref={ref} aria-hidden className="mt-12 select-none overflow-hidden pb-[0.06em] text-center text-[23vw] font-semibold leading-[0.84] tracking-[-0.07em]">
+      {'moneytec'.split('').map((ch, i) => <Letter key={i} ch={ch} i={i} p={p} />)}
+    </p>
+  );
+}
 export function Footer() {
   return (
     <footer className="relative overflow-hidden border-t border-line pt-14 text-[12px] leading-relaxed text-dim">
@@ -244,7 +291,7 @@ export function Footer() {
           </div>
         </div>
       </div>
-      <p aria-hidden className="grad mt-12 select-none text-center text-[23vw] font-semibold leading-[0.8] tracking-[-0.07em]">moneytec</p>
+      <FooterMark />
       <div className="wrap-wide flex flex-col gap-2 border-t border-line py-5 sm:flex-row sm:justify-between">
         <p>© {new Date().getFullYear()} moneytec · {FACTS.city}</p>
       </div>

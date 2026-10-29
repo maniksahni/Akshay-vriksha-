@@ -83,6 +83,7 @@
     background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 50%), rgba(255, 159, 10, 0.13), rgba(191, 90, 242, 0.08) 35%, transparent 65%);
   }
   .spot:hover::after { opacity: 1; }
+  .tilt { transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)); transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1); will-change: transform; }
   .ring-grad { position: relative; }
   .ring-grad::before {
     content: '';
