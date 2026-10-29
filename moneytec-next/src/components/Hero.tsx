@@ -27,6 +27,7 @@ function RupeeField({ disperse, cx, cy, scale }: { disperse: MotionValue<number>
     let w = 0, h = 0, S = 0, dpr = 1, raf = 0, running = false, visible = true;
     let buckets: P[][] = [];
     let links: P[] = [];
+    let phone = false;
     let step = 3;
     const colors: string[] = [];
     const pointer = { x: -9999, y: -9999, tx: 0, ty: 0, sx: 0, sy: 0 };
@@ -34,8 +35,9 @@ function RupeeField({ disperse, cx, cy, scale }: { disperse: MotionValue<number>
     const build = () => {
       const box = el.parentElement!.getBoundingClientRect();
       w = box.width; h = box.height;
-      const phone = w < 768;
-      dpr = Math.min(window.devicePixelRatio || 1, phone ? 1.6 : 2);
+      phone = w < 768;
+      // canvas pixels are the main cost: cap the density, phones lower still
+      dpr = Math.min(window.devicePixelRatio || 1, phone ? 1.25 : 1.5);
       el.width = w * dpr; el.height = h * dpr;
       el.style.width = `${w}px`; el.style.height = `${h}px`;
       S = Math.min(w, h) * scale;
@@ -51,7 +53,7 @@ function RupeeField({ disperse, cx, cy, scale }: { disperse: MotionValue<number>
       o.font = `800 ${S * 0.86}px Inter, system-ui, sans-serif`;
       o.fillText('₹', G / 2, G / 2 + S * 0.04);
       const data = o.getImageData(0, 0, G, G).data;
-      step = Math.max(2, S / (phone ? 100 : 150));
+      step = Math.max(2.5, S / (phone ? 68 : 118));
       const pts: [number, number, number][] = [];
       for (let y = 0; y < G; y += step) for (let x = 0; x < G; x += step) {
         if (data[(Math.floor(y) * G + Math.floor(x)) * 4 + 3] > 128) pts.push([x - G / 2 + (Math.random() - 0.5) * step * 0.6, y - G / 2 + (Math.random() - 0.5) * step * 0.6, (Math.random() - 0.5) * S * 0.12]);
@@ -66,7 +68,7 @@ function RupeeField({ disperse, cx, cy, scale }: { disperse: MotionValue<number>
         pts.push([Math.cos(t) * rr, Math.sin(t) * rr, (i % 2 ? 1 : -1) * S * 0.05]);
       }
       // a sprinkle of dust around it
-      const dust = phone ? 140 : 420;
+      const dust = phone ? 50 : 240;
       for (let i = 0; i < dust; i++) {
         const t = Math.random() * Math.PI * 2;
         const rr = R * (1.15 + Math.random() * 1.1);
@@ -94,7 +96,7 @@ function RupeeField({ disperse, cx, cy, scale }: { disperse: MotionValue<number>
       for (const q of glyph) { const k = key(q.hx, q.hy); (grid.get(k) ?? grid.set(k, []).get(k)!).push(q); }
       links = [];
       for (const q of glyph) {
-        if (Math.random() > 0.6) continue;
+        if (Math.random() > (phone ? 0.35 : 0.5)) continue;
         const gx = Math.floor(q.hx / cell), gy = Math.floor(q.hy / cell);
         let best: P | null = null, bd = (step * 2.3) ** 2;
         for (let i = -1; i <= 1; i++) for (let j = -1; j <= 1; j++) for (const o of grid.get(`${gx + i},${gy + j}`) ?? []) {
@@ -114,8 +116,8 @@ function RupeeField({ disperse, cx, cy, scale }: { disperse: MotionValue<number>
       const e = d * d * (3 - 2 * d);
       pointer.sx += (pointer.tx - pointer.sx) * 0.05;
       pointer.sy += (pointer.ty - pointer.sy) * 0.05;
-      const ay = still ? 0.2 : Math.sin(t * 0.35) * 0.42 + pointer.sx * 0.5 + e * 1.2;
-      const ax = still ? -0.12 : Math.sin(t * 0.27) * 0.12 - 0.1 + pointer.sy * 0.25;
+      const ay = still ? 0.2 : phone ? Math.sin(t * 0.4) * 0.16 : Math.sin(t * 0.35) * 0.42 + pointer.sx * 0.5 + e * 1.2;
+      const ax = still ? -0.12 : phone ? -0.06 : Math.sin(t * 0.27) * 0.12 - 0.1 + pointer.sy * 0.25;
       const cyA = Math.cos(ay), syA = Math.sin(ay), cxA = Math.cos(ax), sxA = Math.sin(ax);
       const ox = cx * w, oy = cy * h, F = 900;
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
@@ -197,13 +199,9 @@ function RupeeField({ disperse, cx, cy, scale }: { disperse: MotionValue<number>
     const io = new IntersectionObserver(([en]) => { visible = en.isIntersecting; visible ? start() : stop(); });
     const onVis = () => (document.hidden ? stop() : start());
 
-    let alive = true;
-    (document.fonts?.ready ?? Promise.resolve()).then(() => {
-      if (!alive) return;
-      build();
-      io.observe(el);
-      start();
-    });
+    build();
+    io.observe(el);
+    start();
     window.addEventListener('pointermove', onMove, { passive: true });
     window.addEventListener('touchstart', onTouch, { passive: true });
     window.addEventListener('touchmove', onTouch, { passive: true });
@@ -212,7 +210,7 @@ function RupeeField({ disperse, cx, cy, scale }: { disperse: MotionValue<number>
     window.addEventListener('resize', onResize);
     document.addEventListener('visibilitychange', onVis);
     return () => {
-      alive = false; stop(); io.disconnect();
+      stop(); io.disconnect();
       window.removeEventListener('pointermove', onMove);
       window.removeEventListener('touchstart', onTouch);
       window.removeEventListener('touchmove', onTouch);
@@ -315,8 +313,7 @@ export function Hero() {
       <section id="top" data-dark className="relative overflow-hidden pb-12 pt-[64px]">
         <div className="pointer-events-none absolute inset-0"><div className="aurora opacity-40" /></div>
         <div className="absolute inset-x-0 top-[40px] h-[340px]">
-          <div className="absolute left-1/2 top-1/2 h-[220px] w-[220px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-rose/25 blur-[60px]" />
-          <OrbitText size={290} />
+          <div className="absolute left-1/2 top-1/2 h-[220px] w-[220px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(closest-side,rgba(255,55,95,0.40),transparent)]" />
           <Hud size="250px" />
           <RupeeField disperse={still} cx={0.5} cy={0.5} scale={0.72} />
         </div>
@@ -331,7 +328,7 @@ export function Hero() {
         <div className="pointer-events-none absolute inset-0"><div className="aurora opacity-35" /></div>
         <motion.div className="grid-floor pointer-events-none absolute inset-x-[-20%] bottom-[-30%] h-[70%] origin-bottom opacity-60" style={{ transform: 'perspective(600px) rotateX(68deg)', backgroundPositionY: floor }} />
         <motion.div className="pointer-events-none absolute left-[70%] top-1/2 -translate-x-1/2 -translate-y-1/2" style={{ opacity: copyOpacity }}>
-          <div className="absolute left-1/2 top-1/2 h-[46vh] w-[46vh] -translate-x-1/2 -translate-y-1/2 rounded-full bg-rose/20 blur-[90px]" />
+          <div className="absolute left-1/2 top-1/2 h-[46vh] w-[46vh] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(closest-side,rgba(255,55,95,0.32),transparent)]" />
           <OrbitText size={0} vh={92} />
           <Hud size="80vh" />
         </motion.div>

@@ -17,12 +17,16 @@ export function useMobile() {
   return m;
 }
 
+const phoneNow = () => typeof window !== 'undefined' && window.innerWidth < 768;
+
 export function FadeIn({ children, className = '', delay = 0, y = 28 }: { children: ReactNode; className?: string; delay?: number; y?: number }) {
+  // blur is a full-layer repaint every frame; phones get the lift and fade only
+  const blur = !phoneNow();
   return (
     <motion.div
       className={className}
-      initial={{ opacity: 0, y, filter: 'blur(8px)' }}
-      whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+      initial={{ opacity: 0, y, ...(blur ? { filter: 'blur(8px)' } : {}) }}
+      whileInView={{ opacity: 1, y: 0, ...(blur ? { filter: 'blur(0px)' } : {}) }}
       viewport={{ once: true, margin: '0px 0px -8% 0px' }}
       transition={{ duration: 0.9, ease: EASE, delay }}
     >

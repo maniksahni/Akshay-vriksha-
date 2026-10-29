@@ -52,7 +52,7 @@ export function Configure() {
 
   return (
     <section id="calculator" data-dark className="relative overflow-hidden py-14 sm:py-32">
-      <div className="pointer-events-none absolute -right-40 top-20 h-[50vmin] w-[50vmin] rounded-full bg-violet/15 blur-[120px]" />
+      <div className="pointer-events-none absolute -right-40 top-20 h-[50vmin] w-[50vmin] rounded-full bg-[radial-gradient(closest-side,rgba(191,90,242,0.24),transparent)]" />
       <Scene className="wrap-wide relative">
         <div className="flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
           <div>
@@ -99,7 +99,7 @@ export function Configure() {
 
             <aside className="lg:sticky lg:top-24 lg:self-start">
               <div onPointerMove={spotlight} className="glass ring-grad spot overflow-hidden p-5 sm:p-8">
-                <div className="pointer-events-none absolute -top-24 left-1/2 h-48 w-72 -translate-x-1/2 rounded-full bg-rose/30 blur-[80px]" />
+                <div className="pointer-events-none absolute -top-24 left-1/2 h-48 w-72 -translate-x-1/2 rounded-full bg-[radial-gradient(closest-side,rgba(255,55,95,0.48),transparent)]" />
                 <div className="relative flex items-center gap-5">
                   <GrowthRing share={total ? growth / total : 0} />
                   <div className="min-w-0">

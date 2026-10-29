@@ -18,7 +18,7 @@ export function Ticker() {
     </div>
   );
   return (
-    <div className="relative z-10 border-y border-line bg-ink2/80 py-4 text-[13px] text-haze backdrop-blur">
+    <div className="relative z-10 border-y border-line bg-ink2 py-4 text-[13px] text-haze">
       <div className="hidden overflow-hidden md:block">
         <div className="marquee flex w-max">{row(false)}{row(true)}{row(true)}{row(true)}</div>
       </div>

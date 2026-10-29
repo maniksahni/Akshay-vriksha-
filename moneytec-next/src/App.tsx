@@ -1,4 +1,3 @@
-import Lenis from 'lenis';
 import { useEffect } from 'react';
 import { Faq, Finale, Footer, Gulshan, Safety } from './components/Closing';
 import { Configure } from './components/Configure';
@@ -16,11 +15,16 @@ import { reduced } from './components/ui';
 function useSmoothScroll() {
   useEffect(() => {
     if (reduced() || !window.matchMedia('(pointer: fine)').matches) return;
-    const lenis = new Lenis({ duration: 1.15, easing: (t) => 1 - Math.pow(1 - t, 4), anchors: { offset: -80 } });
-    let raf = requestAnimationFrame(function loop(t) { lenis.raf(t); raf = requestAnimationFrame(loop); });
-    const menu = (e: Event) => ((e as CustomEvent<boolean>).detail ? lenis.stop() : lenis.start());
-    window.addEventListener('moneytec:menu', menu);
-    return () => { cancelAnimationFrame(raf); window.removeEventListener('moneytec:menu', menu); lenis.destroy(); };
+    let raf = 0, live = true, cleanup = () => {};
+    import('lenis').then(({ default: Lenis }) => {
+      if (!live) return;
+      const lenis = new Lenis({ duration: 1.15, easing: (t) => 1 - Math.pow(1 - t, 4), anchors: { offset: -80 } });
+      raf = requestAnimationFrame(function loop(t) { lenis.raf(t); raf = requestAnimationFrame(loop); });
+      const menu = (e: Event) => ((e as CustomEvent<boolean>).detail ? lenis.stop() : lenis.start());
+      window.addEventListener('moneytec:menu', menu);
+      cleanup = () => { window.removeEventListener('moneytec:menu', menu); lenis.destroy(); };
+    });
+    return () => { live = false; cancelAnimationFrame(raf); cleanup(); };
   }, []);
 }
 

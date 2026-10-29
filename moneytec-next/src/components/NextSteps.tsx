@@ -24,7 +24,7 @@ export function NextSteps() {
           </div>
         </div>
         <div className="glass ring-grad overflow-hidden p-6 sm:p-10" aria-live="polite" style={{ perspective: 1200 }}>
-          <div className="pointer-events-none absolute -right-20 -top-20 h-56 w-56 rounded-full bg-violet/25 blur-[80px]" />
+          <div className="pointer-events-none absolute -right-20 -top-20 h-56 w-56 rounded-full bg-[radial-gradient(closest-side,rgba(191,90,242,0.40),transparent)]" />
           <AnimatePresence mode="wait">
             <motion.div key={active} className="relative" initial={{ opacity: 0, rotateY: -70, x: 40 }} animate={{ opacity: 1, rotateY: 0, x: 0 }} exit={{ opacity: 0, rotateY: 70, x: -40 }} transition={{ duration: 0.55, ease: EASE }} style={{ transformOrigin: '50% 50%' }}>
               <p className="text-[11px] uppercase tracking-[0.22em] text-dim">{route.title}</p>

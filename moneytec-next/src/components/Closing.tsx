@@ -112,7 +112,7 @@ export function Safety() {
   return (
     <section id="safety" data-dark className="relative overflow-hidden py-14 sm:py-32">
       {!mobile && <VaultRings />}
-      <div className="pointer-events-none absolute left-1/2 top-1/3 h-[50vmin] w-[80vmin] -translate-x-1/2 rounded-full bg-mint/10 blur-[120px]" />
+      <div className="pointer-events-none absolute left-1/2 top-1/3 h-[50vmin] w-[80vmin] -translate-x-1/2 rounded-full bg-[radial-gradient(closest-side,rgba(91,240,181,0.16),transparent)]" />
       <div className="wrap relative">
         <div className="text-center">
           <div className="relative mx-auto grid h-24 w-24 place-items-center">
