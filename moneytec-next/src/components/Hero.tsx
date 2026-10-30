@@ -6,15 +6,6 @@ import { FACTS } from '../data';
 import { EASE, useMobile } from './ui';
 import { useIntroDone } from './Intro';
 
-/** The ₹'s own facts, set like an engraving under the coin. */
-function FactLine({ className = '' }: { className?: string }) {
-  return (
-    <p aria-hidden className={`pointer-events-none whitespace-nowrap font-mono text-[10px] tracking-[0.32em] text-paper/45 ${className}`}>
-      U+20B9 <span className="text-rose">·</span> INR <span className="text-rose">·</span> ISO 4217 <span className="text-rose">·</span> 356 <span className="text-rose">·</span> 15·07·2010
-    </p>
-  );
-}
-
 /** Each character rises out of its own mask, one after another. */
 function SplitLine({ text, play, delay, accent }: { text: string; play: boolean; delay: number; accent?: boolean }) {
   const chars = text.split('');
@@ -59,33 +50,33 @@ function Credentials() {
 }
 
 /**
- * The opening, composed like a jeweller's window: the gold ₹ (drawn by the Stage behind this section) sits in
- * the centre with "Small steps." to its left and "Lasting growth." to its right, its engraving beneath. Along the
- * floor, behind a hairline: the verse, the promise and the next step.
+ * The opening: the gold ₹ (drawn by the Stage behind this section) fills the screen like a coin held up to the
+ * light, the headline rests across its lower half, and the next step sits just beneath. Along the floor, behind
+ * a hairline: the verse, the promise and the credentials. Scrolling carries you into the coin.
  */
 export function Hero() {
   const mobile = useMobile();
   const play = useIntroDone();
   const ref = useRef<HTMLElement>(null);
   const { scrollYProgress: p } = useScroll({ target: ref, offset: ['start start', 'end start'] });
-  const leftX = useTransform(p, [0, 1], ['0%', '-18%']);
-  const rightX = useTransform(p, [0, 1], ['0%', '18%']);
-  const fade = useTransform(p, [0, 0.7], [1, 0]);
+  const fade = useTransform(p, [0, 0.55], [1, 0]);
+  const lift = useTransform(p, [0, 1], [0, -120]);
+  const grow = useTransform(p, [0, 1], [1, 1.12]);
 
   if (mobile) {
     return (
-      <section id="top" className="lux-hero-mobile relative overflow-hidden">
+      <section id="top" className="lux-hero-mobile lux-hero-full-mobile relative overflow-hidden">
         <div className="wrap relative text-center">
-          <motion.p className="lux-eyebrow justify-center" {...rise(play, 0.1)}>Moneytec — Money, with meaning</motion.p>
-          <h1 className="lux-title mt-5" aria-label="Small steps. Lasting growth.">
+          <h1 className="lux-title lux-full-title mt-[250px]" aria-label="Small steps. Lasting growth.">
             <SplitLine text="Small steps." play={play} delay={0.2} />
             <SplitLine text="Lasting growth." play={play} delay={0.45} accent />
           </h1>
-          <motion.div className="mt-7" {...rise(play, 0.9)}>
+          <motion.div className="mt-7" {...rise(play, 0.9)}><Actions mobile /></motion.div>
+          <motion.div className="mt-10" {...rise(play, 1.05)}>
+            <p className="lux-eyebrow mb-8 justify-center">Moneytec — Money, with meaning</p>
             <HeroWisdom />
             <p className="lux-promise">Goal-based investing, family protection and NRI guidance with {FACTS.name}.</p>
           </motion.div>
-          <motion.div className="mt-7" {...rise(play, 1.05)}><Actions mobile /></motion.div>
           <motion.div className="mt-7" {...rise(play, 1.2, 0)}><Credentials /></motion.div>
         </div>
       </section>
@@ -93,25 +84,24 @@ export function Hero() {
   }
 
   return (
-    <section id="top" ref={ref} className="lux-hero relative">
-      <div className="lux-hero-grid wrap-wide">
-        <motion.div style={{ opacity: fade }}>
-          <motion.p className="lux-eyebrow justify-center" {...rise(play, 0.1)}>Moneytec — Money, with meaning</motion.p>
+    <section id="top" ref={ref} className="lux-hero lux-hero-full relative">
+      <div className="lux-full-scrim" aria-hidden />
+      <div className="wrap-wide relative h-full">
+        <motion.div className="lux-full-center" style={{ opacity: fade, y: lift, scale: grow }}>
+          <h1 className="lux-title lux-full-title" aria-label="Small steps. Lasting growth.">
+            <SplitLine text="Small steps." play={play} delay={0.35} />
+            <SplitLine text="Lasting growth." play={play} delay={0.65} accent />
+          </h1>
+          <motion.div className="mt-8 flex justify-center" {...rise(play, 1.15)}><Actions mobile={false} /></motion.div>
         </motion.div>
 
-        <h1 className="lux-title lux-hero-title" aria-label="Small steps. Lasting growth.">
-          <motion.span className="lux-hero-left" style={{ x: leftX, opacity: fade }}><SplitLine text="Small steps." play={play} delay={0.3} /></motion.span>
-          <span className="lux-hero-coin" aria-hidden />
-          <motion.span className="lux-hero-right" style={{ x: rightX, opacity: fade }}><SplitLine text="Lasting growth." play={play} delay={0.6} accent /></motion.span>
-        </h1>
-        <motion.div style={{ opacity: fade }}>
-          <motion.div {...rise(play, 1.3, 0)}><FactLine className="text-center" /></motion.div>
-        </motion.div>
-
-        <motion.div className="lux-hero-floor" style={{ opacity: fade }}>
-          <motion.div {...rise(play, 1.0)}><HeroWisdom /></motion.div>
-          <motion.div {...rise(play, 1.15)}><p className="lux-promise">Goal-based investing, family protection and NRI guidance with {FACTS.name}.</p></motion.div>
-          <motion.div className="lux-hero-cta" {...rise(play, 1.3)}><Actions mobile={false} /><Credentials /></motion.div>
+        <motion.div className="lux-full-floor" style={{ opacity: fade }}>
+          <motion.div {...rise(play, 1.3)}><HeroWisdom /></motion.div>
+          <motion.div className="text-center" {...rise(play, 1.4)}>
+            <p className="lux-eyebrow justify-center">Moneytec — Money, with meaning</p>
+            <p className="lux-promise mt-3">Goal-based investing, family protection and NRI guidance with {FACTS.name}.</p>
+          </motion.div>
+          <motion.div className="flex justify-end" {...rise(play, 1.5)}><Credentials /></motion.div>
         </motion.div>
       </div>
     </section>

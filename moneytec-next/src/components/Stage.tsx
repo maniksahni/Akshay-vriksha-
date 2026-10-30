@@ -6,7 +6,7 @@ import type { AuroraHandle } from './AuroraField';
 
 /**
  * A fixed layer behind the page: a faint warm light field everywhere, and the gold ₹ that owns the opening.
- * As you scroll past the hero the ₹ turns once, rises and fades away, leaving the rest of the site calm.
+ * As you scroll past the hero the ₹ swells toward you and dissolves, leaving the rest of the site calm.
  */
 /** `at` pins a cue to a point inside a pinned section (0 = pin starts, 1 = pin ends) instead of its centre. */
 type Cue = { sel: string; at?: number; pose: RupeePose; field: number; o: number };
@@ -14,12 +14,15 @@ type Cue = { sel: string; at?: number; pose: RupeePose; field: number; o: number
 // spins are whole turns (plus a slight lean) so the ₹ always reads the right way round when it settles
 const TURN = Math.PI * 2;
 const LAPTOP: Cue[] = [
-  { sel: '#top', at: 0, pose: { x: 0.5, y: -0.16, s: 0.54, spin: 0, glow: 1 }, field: 0, o: 1 },
-  { sel: '#highlights', pose: { x: 0.5, y: -1.6, s: 0.6, spin: TURN * 1.5, glow: 0 }, field: 0.6, o: 0 },
+  { sel: '#top', at: 0, pose: { x: 0.5, y: -0.12, s: 0.98, spin: 0, glow: 1 }, field: 0, o: 1 },
+  // scrolling on carries you into the coin: it swells past the camera and dissolves
+  { sel: '.lux-masthead', pose: { x: 0.5, y: -0.1, s: 2.2, spin: TURN * 0.3, glow: 0.3 }, field: 0.4, o: 0.15 },
+  { sel: '#highlights', pose: { x: 0.5, y: -0.1, s: 3.4, spin: TURN * 0.5, glow: 0 }, field: 0.6, o: 0 },
 ];
 const PHONE: Cue[] = [
-  { sel: '#top', pose: { x: 0.5, y: -0.54, s: 0.36, spin: 0, glow: 1 }, field: 0, o: 1 },
-  { sel: '#highlights', pose: { x: 0.5, y: -1.6, s: 0.3, spin: TURN, glow: 0 }, field: 0.6, o: 0 },
+  { sel: '#top', pose: { x: 0.5, y: -0.44, s: 0.42, spin: 0, glow: 1 }, field: 0, o: 1 },
+  { sel: '.lux-masthead', pose: { x: 0.5, y: -0.5, s: 1, spin: TURN * 0.3, glow: 0.3 }, field: 0.4, o: 0.15 },
+  { sel: '#highlights', pose: { x: 0.5, y: -0.5, s: 1.4, spin: TURN * 0.5, glow: 0 }, field: 0.6, o: 0 },
 ];
 
 const smooth = (t: number) => t * t * (3 - 2 * t);
@@ -78,6 +81,7 @@ export function Stage() {
         flat.current.style.top = `${50 + pose.y * 50}%`;
         flat.current.style.scale = String(pose.s);
         flat.current.style.setProperty('--o', String(o));
+        flat.current.style.display = o < 0.05 ? 'none' : '';
       }
     };
 
