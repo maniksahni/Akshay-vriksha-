@@ -930,3 +930,25 @@ a.lux-masthead-cell:hover { background: rgba(255,55,95,.05); color: var(--ivory)
 }
 /* italic serif glyphs overhang their box; give the mask room on the right without shifting the line */
 .goal-slot { padding-right: .32em; margin-right: -.32em; }
+
+/* ---------------------------------------------------------------- phone rhythm
+   One consistent gap between chapters on phones (about 80px), and no stray margins above headings. */
+@media (max-width: 767px) {
+  #main > section:not(#top):not(#gulshan) { padding-top: 40px !important; padding-bottom: 40px !important; }
+  #main > section#gulshan > .wrap-wide { padding-top: 32px; padding-bottom: 40px; }
+  .lux-head { margin-bottom: 24px; }
+  .lux-h2 { margin-top: 14px; }
+  .lux-row-link { padding: 20px 2px; }
+  .lux-foot { margin-top: 20px; }
+  #safety .text-center > div:first-child { transform: scale(.72); margin: -10px auto -14px; }
+  #safety h2 { margin-top: 12px; }
+  #start .lede { margin-top: 12px; }
+  footer { padding-top: 40px; }
+  footer > p[aria-hidden] { margin-top: 28px; }
+}
+@media (max-width: 767px) {
+  .kicker { font-size: 10px; letter-spacing: .2em; gap: 10px; }
+  .kicker::before { width: 18px; }
+  #grow p[aria-hidden].select-none { font-size: 120px; top: -10px; }
+  #plans h2 { margin-top: 0; }
+}

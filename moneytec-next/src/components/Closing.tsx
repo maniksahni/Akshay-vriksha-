@@ -51,7 +51,7 @@ export function Gulshan() {
     <section id="gulshan" data-dark aria-labelledby="mentor-title" className="relative">
       <h2 id="mentor-title" className="sr-only">Meet Gulshan Kohli</h2>
       {mobile ? (
-        <div className="wrap pt-16">
+        <div className="wrap pt-10 sm:pt-16">
           <FadeIn>
             <div className="relative mx-auto aspect-[4/5] max-h-[440px] overflow-hidden rounded-[28px]">
               {img}
@@ -166,7 +166,7 @@ export function Faq() {
     <section id="faq" className="py-14 sm:py-32">
       <Scene className="wrap grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
         <div className="lg:sticky lg:top-28 lg:self-start">
-          <Title className="display mt-4 text-[clamp(2.2rem,4.6vw,4rem)]" text="A little clarity / *goes a long way.*" />
+          <Title className="display sm:mt-4 text-[clamp(2.2rem,4.6vw,4rem)]" text="A little clarity / *goes a long way.*" />
         </div>
         <div className="border-t border-line">
           {FAQ.map(([q, a], i) => {
@@ -222,7 +222,7 @@ export function Finale() {
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-ink via-transparent to-ink" />
       <div className="wrap relative grid gap-10 lg:grid-cols-2 lg:items-center lg:gap-16">
         <motion.div ref={zoomRef} className="text-center lg:text-left" style={{ scale: mobile ? 1 : zScale, filter: mobile ? 'none' : zBlur, opacity: mobile ? 1 : zOpacity, transformOrigin: '30% 50%' }}>
-          <Title className="display mt-5 text-[clamp(2.8rem,7vw,6.4rem)]" text="Your next chapter / *starts here.*" />
+          <Title className="display sm:mt-5 text-[clamp(2.8rem,7vw,6.4rem)]" text="Your next chapter / *starts here.*" />
           <p className="lede mx-auto mt-5 max-w-md lg:mx-0">Tell us a little. It opens WhatsApp with everything filled in, and Gulshan replies personally.</p>
         </motion.div>
         <FadeIn>
