@@ -4,7 +4,6 @@ import { AnimatePresence, motion, useScroll, useTransform } from 'framer-motion'
 import { useEffect, useRef, useState } from 'react';
 import { FACTS } from '../data';
 import { EASE, reduced, useMobile } from './ui';
-import { useIntroDone } from './Intro';
 
 /** Each character rises out of its own mask, one after another. */
 function SplitLine({ text, play, delay, accent }: { text: string; play: boolean; delay: number; accent?: boolean }) {
@@ -94,7 +93,7 @@ function Credentials() {
  */
 export function Hero() {
   const mobile = useMobile();
-  const play = useIntroDone();
+  const play = true; // the headline plays as soon as the page appears
   const ref = useRef<HTMLElement>(null);
   const { scrollYProgress: p } = useScroll({ target: ref, offset: ['start start', 'end start'] });
   const fade = useTransform(p, [0, 0.55], [1, 0]);

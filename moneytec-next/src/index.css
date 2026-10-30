@@ -388,12 +388,10 @@ a,button,input,select,summary { -webkit-tap-highlight-color:rgba(255,159,10,.15)
 }
 
 /* ================================================================== immersive layer
-   Cinematic finish over the existing system: opening curtain, cursor, liquid hero, kinetic type,
+   Cinematic finish over the existing system: cursor, liquid hero, kinetic type,
    living borders on cards and light that sweeps across buttons. Content and structure are unchanged. */
 @property --spin { syntax: '<angle>'; inherits: false; initial-value: 0deg; }
 
-/* ---- opening curtain */
-.intro-count { font-size: clamp(64px, 12vw, 180px); line-height: .8; background: linear-gradient(180deg, #fff, rgba(255,255,255,.25)); -webkit-background-clip: text; background-clip: text; color: transparent; }
 
 /* ---- cursor */
 .cursor-layer { position: fixed; inset: 0; pointer-events: none; z-index: 95; display: none; }
