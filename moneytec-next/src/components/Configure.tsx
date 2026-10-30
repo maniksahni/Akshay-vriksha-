@@ -31,7 +31,7 @@ function GrowthRing({ share }: { share: number }) {
   const r = 52, c = 2 * Math.PI * r;
   return (
     <svg viewBox="0 0 120 120" className="h-24 w-24 shrink-0 -rotate-90 sm:h-28 sm:w-28" aria-hidden>
-      <defs><linearGradient id="ring" x1="0" x2="1"><stop offset="0" stopColor="#FF9F0A" /><stop offset="0.5" stopColor="#FF375F" /><stop offset="1" stopColor="#BF5AF2" /></linearGradient></defs>
+      <defs><linearGradient id="ring" x1="0" x2="1"><stop offset="0" stopColor="#E8CFA0" /><stop offset="0.5" stopColor="#C9A06A" /><stop offset="1" stopColor="#8E6A43" /></linearGradient></defs>
       <circle cx="60" cy="60" r={r} fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="10" />
       <motion.circle cx="60" cy="60" r={r} fill="none" stroke="url(#ring)" strokeWidth="10" strokeLinecap="round" strokeDasharray={c} animate={{ strokeDashoffset: c * (1 - share) }} transition={{ duration: 0.7, ease: EASE }} />
     </svg>
@@ -60,7 +60,7 @@ export function Configure() {
 
   return (
     <section id="calculator" data-dark className="relative overflow-hidden py-14 sm:py-32">
-      <div className="pointer-events-none absolute -right-40 top-20 h-[50vmin] w-[50vmin] rounded-full bg-[radial-gradient(closest-side,rgba(191,90,242,0.24),transparent)]" />
+      <div className="pointer-events-none absolute -right-40 top-20 h-[50vmin] w-[50vmin] rounded-full bg-[radial-gradient(closest-side,rgba(142,106,67,0.24),transparent)]" />
       <Scene className="wrap-wide relative">
         <div className="flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
           <div>
@@ -107,7 +107,7 @@ export function Configure() {
 
             <aside className="lg:sticky lg:top-24 lg:self-start">
               <div onPointerMove={spotlight} className="glass ring-grad spot overflow-hidden p-5 sm:p-8">
-                <div className="pointer-events-none absolute -top-24 left-1/2 h-48 w-72 -translate-x-1/2 rounded-full bg-[radial-gradient(closest-side,rgba(255,55,95,0.48),transparent)]" />
+                <div className="pointer-events-none absolute -top-24 left-1/2 h-48 w-72 -translate-x-1/2 rounded-full bg-[radial-gradient(closest-side,rgba(201,160,106,0.48),transparent)]" />
                 <div className="relative flex items-center gap-5">
                   <GrowthRing share={total ? growth / total : 0} />
                   <div className="min-w-0">

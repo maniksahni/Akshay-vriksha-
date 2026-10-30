@@ -95,14 +95,14 @@ function VaultRings() {
     <div ref={ref} aria-hidden className="pointer-events-none absolute inset-x-0 top-0 flex h-[110vmin] max-h-[1100px] justify-center">
       <motion.svg viewBox="0 0 600 600" className="h-full w-auto" style={{ scale, opacity: o }}>
         <motion.g style={{ rotate: rot, transformOrigin: '300px 300px' }}>
-          <circle cx="300" cy="300" r="280" fill="none" stroke="#5BF0B5" strokeOpacity="0.14" strokeDasharray="2 10" />
-          {Array.from({ length: 24 }).map((_, i) => <rect key={i} x="298" y="18" width="4" height="18" rx="2" fill="#5BF0B5" opacity={i % 3 ? 0.12 : 0.35} transform={`rotate(${i * 15} 300 300)`} />)}
+          <circle cx="300" cy="300" r="280" fill="none" stroke="#B8C4A2" strokeOpacity="0.14" strokeDasharray="2 10" />
+          {Array.from({ length: 24 }).map((_, i) => <rect key={i} x="298" y="18" width="4" height="18" rx="2" fill="#B8C4A2" opacity={i % 3 ? 0.12 : 0.35} transform={`rotate(${i * 15} 300 300)`} />)}
         </motion.g>
         <motion.g style={{ rotate: rot2, transformOrigin: '300px 300px' }}>
-          <circle cx="300" cy="300" r="220" fill="none" stroke="#64D2FF" strokeOpacity="0.16" />
-          <circle cx="300" cy="300" r="220" fill="none" stroke="#64D2FF" strokeOpacity="0.5" strokeWidth="2" strokeDasharray="60 1322" />
+          <circle cx="300" cy="300" r="220" fill="none" stroke="#A8B4C2" strokeOpacity="0.16" />
+          <circle cx="300" cy="300" r="220" fill="none" stroke="#A8B4C2" strokeOpacity="0.5" strokeWidth="2" strokeDasharray="60 1322" />
         </motion.g>
-        <circle cx="300" cy="300" r="160" fill="none" stroke="#5BF0B5" strokeOpacity="0.1" strokeDasharray="1 6" />
+        <circle cx="300" cy="300" r="160" fill="none" stroke="#B8C4A2" strokeOpacity="0.1" strokeDasharray="1 6" />
       </motion.svg>
     </div>
   );
@@ -113,14 +113,14 @@ export function Safety() {
   return (
     <section id="safety" data-dark className="relative overflow-hidden py-14 sm:py-32">
       {!mobile && <VaultRings />}
-      <div className="pointer-events-none absolute left-1/2 top-1/3 h-[50vmin] w-[80vmin] -translate-x-1/2 rounded-full bg-[radial-gradient(closest-side,rgba(91,240,181,0.16),transparent)]" />
+      <div className="pointer-events-none absolute left-1/2 top-1/3 h-[50vmin] w-[80vmin] -translate-x-1/2 rounded-full bg-[radial-gradient(closest-side,rgba(184,196,162,0.16),transparent)]" />
       <div className="wrap relative">
         <div className="text-center">
           <div className="relative mx-auto grid h-24 w-24 place-items-center">
             <div className="spin-slow absolute inset-0 rounded-full border border-dashed border-mint/40" />
             <div className="absolute inset-3 rounded-full bg-mint/20 blur-xl" />
             <svg viewBox="0 0 64 64" className="float-y relative h-12 w-12" aria-hidden>
-              <defs><linearGradient id="lock" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stopColor="#64D2FF" /><stop offset="1" stopColor="#5BF0B5" /></linearGradient></defs>
+              <defs><linearGradient id="lock" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stopColor="#A8B4C2" /><stop offset="1" stopColor="#B8C4A2" /></linearGradient></defs>
               <rect x="12" y="28" width="40" height="30" rx="8" fill="url(#lock)" />
               <path d="M20 28v-7a12 12 0 0 1 24 0v7" fill="none" stroke="url(#lock)" strokeWidth="5" strokeLinecap="round" />
             </svg>
@@ -163,7 +163,7 @@ const FAQ = [
 export function Faq() {
   const [open, setOpen] = useState<number | null>(null);
   return (
-    <section id="faq" data-dark className="py-14 sm:py-32">
+    <section id="faq" className="py-14 sm:py-32">
       <Scene className="wrap grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
         <div className="lg:sticky lg:top-28 lg:self-start">
           <Title className="display mt-4 text-[clamp(2.2rem,4.6vw,4rem)]" text="A little clarity / *goes a long way.*" />
@@ -218,7 +218,7 @@ export function Finale() {
 
   return (
     <section id="start" data-dark className="relative overflow-hidden py-16 sm:py-36">
-      <motion.div className="pointer-events-none absolute inset-0" style={{ opacity: glow }}><div className="aurora" /></motion.div>
+      <motion.div className="pointer-events-none absolute inset-0" style={{ opacity: glow }}><div className="aurora opacity-50" /></motion.div>
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-ink via-transparent to-ink" />
       <div className="wrap relative grid gap-10 lg:grid-cols-2 lg:items-center lg:gap-16">
         <motion.div ref={zoomRef} className="text-center lg:text-left" style={{ scale: mobile ? 1 : zScale, filter: mobile ? 'none' : zBlur, opacity: mobile ? 1 : zOpacity, transformOrigin: '30% 50%' }}>

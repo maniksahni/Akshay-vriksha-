@@ -69,7 +69,7 @@ export function GoalPlanner() {
 
       <aside className="lg:sticky lg:top-24 lg:self-start" aria-label="Goal planning illustration">
         <div className="glass ring-grad overflow-hidden p-5 sm:p-8">
-          <div className="pointer-events-none absolute -top-24 left-1/2 h-48 w-72 -translate-x-1/2 rounded-full bg-[radial-gradient(closest-side,rgba(255,159,10,0.40),transparent)]" />
+          <div className="pointer-events-none absolute -top-24 left-1/2 h-48 w-72 -translate-x-1/2 rounded-full bg-[radial-gradient(closest-side,rgba(232,207,160,0.40),transparent)]" />
           <div className="relative flex items-center gap-2 text-[11px] uppercase tracking-[0.2em] text-dim"><Target size={15} aria-hidden="true" /><span>Your {goal} blueprint</span></div>
           {valid ? (
             <div className="relative">

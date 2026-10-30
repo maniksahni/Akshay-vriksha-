@@ -4,6 +4,9 @@ import { Configure } from './components/Configure';
 import { Grow } from './components/Grow';
 import { Hero } from './components/Hero';
 import { Highlights } from './components/Highlights';
+import { Intro } from './components/Intro';
+import { Cursor } from './components/Cursor';
+import { Stage } from './components/Stage';
 import { InstagramReels } from './components/InstagramReels';
 import { Ticker } from './components/Ticker';
 import { Nav } from './components/Nav';
@@ -19,6 +22,7 @@ function useSmoothScroll() {
     import('lenis').then(({ default: Lenis }) => {
       if (!live) return;
       const lenis = new Lenis({ duration: 1.15, easing: (t) => 1 - Math.pow(1 - t, 4), anchors: { offset: -80 } });
+      (window as Window & { __lenis?: unknown }).__lenis = lenis;
       raf = requestAnimationFrame(function loop(t) { lenis.raf(t); raf = requestAnimationFrame(loop); });
       const menu = (e: Event) => ((e as CustomEvent<boolean>).detail ? lenis.stop() : lenis.start());
       window.addEventListener('moneytec:menu', menu);
@@ -36,6 +40,9 @@ export default function App() {
       <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-paper focus:px-5 focus:py-3 focus:text-ink">
         Skip to content
       </a>
+      <Intro />
+      <Cursor />
+      <Stage />
       <div className="grain" aria-hidden />
       <Nav />
       <main id="main">
