@@ -32,7 +32,7 @@ function GrowthRing({ share }: { share: number }) {
   const r = 52, c = 2 * Math.PI * r;
   return (
     <svg viewBox="0 0 120 120" className="calc-ring h-24 w-24 shrink-0 -rotate-90 sm:h-28 sm:w-28" aria-hidden>
-      <defs><linearGradient id="ring" x1="0" x2="1"><stop offset="0" stopColor="#E8CFA0" /><stop offset="0.5" stopColor="#C9A06A" /><stop offset="1" stopColor="#8E6A43" /></linearGradient></defs>
+      <defs><linearGradient id="ring" x1="0" x2="1"><stop offset="0" stopColor="#FF9F0A" /><stop offset="0.5" stopColor="#FF375F" /><stop offset="1" stopColor="#BF5AF2" /></linearGradient></defs>
       <circle cx="60" cy="60" r={r} fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="10" />
       <motion.circle cx="60" cy="60" r={r} fill="none" stroke="url(#ring)" strokeWidth="10" strokeLinecap="round" strokeDasharray={c} animate={{ strokeDashoffset: c * (1 - share) }} transition={{ duration: 0.7, ease: EASE }} />
     </svg>
@@ -40,7 +40,7 @@ function GrowthRing({ share }: { share: number }) {
 }
 
 /**
- * The illustration as a living chart: the gold curve is the illustrated value, the dashed line what you put
+ * The illustration as a living chart: the gradient curve is the illustrated value, the dashed line what you put
  * in, and the gap between them is growth. It redraws whenever the amount, horizon or return changes.
  */
 function GrowthChart({ monthly, rate, years, compact }: { monthly: number; rate: number; years: number; compact: boolean }) {
@@ -58,19 +58,19 @@ function GrowthChart({ monthly, rate, years, compact }: { monthly: number; rate:
     <div className="calc-chart">
       <svg viewBox={`0 -6 ${W} ${H + 26}`} className="h-auto w-full" aria-hidden>
         <defs>
-          <linearGradient id="calc-area" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stopColor="#D9B47E" stopOpacity=".28" /><stop offset="1" stopColor="#D9B47E" stopOpacity="0" /></linearGradient>
-          <linearGradient id="calc-line" x1="0" x2="1"><stop offset="0" stopColor="#8E6A43" /><stop offset=".6" stopColor="#D9B47E" /><stop offset="1" stopColor="#F3DFB6" /></linearGradient>
-          <pattern id="calc-hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="6" stroke="#D9B47E" strokeOpacity=".22" strokeWidth="1.2" /></pattern>
+          <linearGradient id="calc-area" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stopColor="#FF375F" stopOpacity=".28" /><stop offset="1" stopColor="#FF375F" stopOpacity="0" /></linearGradient>
+          <linearGradient id="calc-line" x1="0" x2="1"><stop offset="0" stopColor="#BF5AF2" /><stop offset=".6" stopColor="#FF375F" /><stop offset="1" stopColor="#FFD688" /></linearGradient>
+          <pattern id="calc-hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="6" stroke="#FF375F" strokeOpacity=".22" strokeWidth="1.2" /></pattern>
         </defs>
-        {[0.25, 0.5, 0.75].map((f) => <line key={f} x1="0" x2={W} y1={H * f} y2={H * f} stroke="#E9D7B4" strokeOpacity=".07" />)}
+        {[0.25, 0.5, 0.75].map((f) => <line key={f} x1="0" x2={W} y1={H * f} y2={H * f} stroke="#FFFFFF" strokeOpacity=".07" />)}
         <motion.path initial={false} animate={{ d: area }} transition={t} fill="url(#calc-area)" />
         <motion.path initial={false} animate={{ d: gap }} transition={t} fill="url(#calc-hatch)" />
-        <motion.path initial={false} animate={{ d: line('c') }} transition={t} fill="none" stroke="#EFE8DC" strokeOpacity=".45" strokeWidth="1.2" strokeDasharray="4 4" />
+        <motion.path initial={false} animate={{ d: line('c') }} transition={t} fill="none" stroke="#F4F1F8" strokeOpacity=".45" strokeWidth="1.2" strokeDasharray="4 4" />
         <motion.path initial={false} animate={{ d: line('v') }} transition={t} fill="none" stroke="url(#calc-line)" strokeWidth="2.4" strokeLinecap="round" />
-        <motion.circle initial={false} animate={{ cy: pts[N].v }} transition={t} cx={W} r="4.5" fill="#F3DFB6" />
-        <motion.circle initial={false} animate={{ cy: pts[N].v }} transition={t} cx={W} r="11" fill="#D9B47E" opacity=".2" />
-        <text x="0" y={H + 18} fill="#EFE8DC" fillOpacity=".4" fontSize="10">Year 0</text>
-        <text x={W} y={H + 18} fill="#EFE8DC" fillOpacity=".4" fontSize="10" textAnchor="end">Year {years}</text>
+        <motion.circle initial={false} animate={{ cy: pts[N].v }} transition={t} cx={W} r="4.5" fill="#FFD688" />
+        <motion.circle initial={false} animate={{ cy: pts[N].v }} transition={t} cx={W} r="11" fill="#FF375F" opacity=".2" />
+        <text x="0" y={H + 18} fill="#F4F1F8" fillOpacity=".4" fontSize="10">Year 0</text>
+        <text x={W} y={H + 18} fill="#F4F1F8" fillOpacity=".4" fontSize="10" textAnchor="end">Year {years}</text>
       </svg>
       <div className="calc-chart-legend">
         <span><i className="calc-key-line" />Illustrated value</span>
@@ -117,7 +117,7 @@ export function Configure() {
 
   const result = (
               <div onPointerMove={spotlight} className="glass ring-grad spot overflow-hidden p-5 sm:p-8">
-                <div className="pointer-events-none absolute -top-24 left-1/2 h-48 w-72 -translate-x-1/2 rounded-full bg-[radial-gradient(closest-side,rgba(201,160,106,0.48),transparent)]" />
+                <div className="pointer-events-none absolute -top-24 left-1/2 h-48 w-72 -translate-x-1/2 rounded-full bg-[radial-gradient(closest-side,rgba(255,55,95,0.48),transparent)]" />
                 <div className="calc-head relative flex items-center gap-5">
                   <GrowthRing share={total ? growth / total : 0} />
                   <div className="min-w-0">
@@ -151,7 +151,7 @@ export function Configure() {
 
   return (
     <section id="calculator" ref={section} data-dark className="relative overflow-hidden py-14 sm:py-32">
-      <div className="pointer-events-none absolute -right-40 top-20 h-[50vmin] w-[50vmin] rounded-full bg-[radial-gradient(closest-side,rgba(142,106,67,0.24),transparent)]" />
+      <div className="pointer-events-none absolute -right-40 top-20 h-[50vmin] w-[50vmin] rounded-full bg-[radial-gradient(closest-side,rgba(191,90,242,0.24),transparent)]" />
       <Scene className="wrap-wide relative">
         <div className="flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
           <div>

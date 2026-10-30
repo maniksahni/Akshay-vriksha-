@@ -69,8 +69,8 @@ export function Grow() {
         <div className="glass relative overflow-hidden p-3 sm:p-6">
           <svg viewBox={`-10 -10 ${W + 20} ${H + 40}`} className="h-auto w-full" aria-hidden>
             <defs>
-              <linearGradient id="g-line" x1="0" x2="1"><stop offset="0" stopColor="#E8CFA0" /><stop offset="0.5" stopColor="#C9A06A" /><stop offset="1" stopColor="#8E6A43" /></linearGradient>
-              <linearGradient id="g-area" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stopColor="#C9A06A" stopOpacity="0.45" /><stop offset="1" stopColor="#8E6A43" stopOpacity="0" /></linearGradient>
+              <linearGradient id="g-line" x1="0" x2="1"><stop offset="0" stopColor="#FF9F0A" /><stop offset="0.5" stopColor="#FF375F" /><stop offset="1" stopColor="#BF5AF2" /></linearGradient>
+              <linearGradient id="g-area" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stopColor="#FF375F" stopOpacity="0.45" /><stop offset="1" stopColor="#BF5AF2" stopOpacity="0" /></linearGradient>
               <filter id="g-glow" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="8" /></filter>
             </defs>
             {[0, 10, 20, 30].map((y) => (
@@ -89,14 +89,14 @@ export function Grow() {
               const on = year >= my;
               return (
                 <motion.g key={my} initial={false} animate={{ opacity: on ? 1 : 0, scale: on ? 1 : 0.4 }} transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }} style={{ transformOrigin: `${mx}px ${mY}px` }}>
-                  <circle cx={mx} cy={mY} r="22" fill="none" stroke="#E8CFA0" strokeOpacity="0.35" />
-                  <circle cx={mx} cy={mY} r="7" fill="#E8CFA0" />
-                  <rect x={mx - (my === 30 ? 180 : 75)} y={mY + (my === 30 ? 4 : -64)} width="150" height="36" rx="18" fill="rgba(11,10,9,0.85)" stroke="rgba(255,255,255,0.15)" />
+                  <circle cx={mx} cy={mY} r="22" fill="none" stroke="#FF9F0A" strokeOpacity="0.35" />
+                  <circle cx={mx} cy={mY} r="7" fill="#FF9F0A" />
+                  <rect x={mx - (my === 30 ? 180 : 75)} y={mY + (my === 30 ? 4 : -64)} width="150" height="36" rx="18" fill="rgba(7,6,11,0.85)" stroke="rgba(255,255,255,0.15)" />
                   <text x={mx - (my === 30 ? 105 : 0)} y={mY + (my === 30 ? 28 : -40)} textAnchor="middle" fill="#F4F1F8" fontSize="17" fontWeight="600">{inr(sipValue(MONTHLY, RATE, my * 12))}</text>
                 </motion.g>
               );
             })}
-            <circle cx={tx} cy={ty} r="14" fill="#C9A06A" opacity="0.25" />
+            <circle cx={tx} cy={ty} r="14" fill="#FF375F" opacity="0.25" />
             <circle cx={tx} cy={ty} r="6" fill="#fff" />
           </svg>
           <div className="pointer-events-none mt-2 flex gap-4 text-[11px] text-dim sm:absolute sm:left-8 sm:top-7 sm:mt-0">
@@ -109,7 +109,7 @@ export function Grow() {
     </div>
   );
 
-  const warm = <div aria-hidden className="pointer-events-none absolute inset-0 bg-[radial-gradient(60%_50%_at_70%_60%,rgba(201,160,106,0.22),rgba(142,106,67,0.12)_45%,transparent_75%)] transition-opacity duration-300" style={{ opacity: Math.min(1, year / YEARS + 0.1) }} />;
+  const warm = <div aria-hidden className="pointer-events-none absolute inset-0 bg-[radial-gradient(60%_50%_at_70%_60%,rgba(255,55,95,0.22),rgba(191,90,242,0.12)_45%,transparent_75%)] transition-opacity duration-300" style={{ opacity: Math.min(1, year / YEARS + 0.1) }} />;
   if (mobile) return <section id="grow" data-dark className="relative overflow-hidden py-14">{warm}{scene}</section>;
   return (
     <section id="grow" data-dark ref={ref} className="relative h-[300svh]">

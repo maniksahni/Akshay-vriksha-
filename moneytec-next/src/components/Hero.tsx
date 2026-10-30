@@ -50,7 +50,7 @@ function Credentials() {
 }
 
 /**
- * The opening: the gold ₹ (drawn by the Stage behind this section) fills the screen like a coin held up to the
+ * The opening: the chrome ₹ (drawn by the Stage behind this section) fills the screen like a coin held up to the
  * light, the headline rests across its lower half, and the next step sits just beneath. Along the floor, behind
  * a hairline: the verse, the promise and the credentials. Scrolling carries you into the coin.
  */

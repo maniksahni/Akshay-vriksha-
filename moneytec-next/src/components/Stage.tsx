@@ -5,7 +5,7 @@ import type { RupeeHandle, RupeePose } from './RupeeScene';
 import type { AuroraHandle } from './AuroraField';
 
 /**
- * A fixed layer behind the page: a faint warm light field everywhere, and the gold ₹ that owns the opening.
+ * A fixed layer behind the page: a faint light field everywhere, and the chrome ₹ that owns the opening.
  * As you scroll past the hero the ₹ swells toward you and dissolves, leaving the rest of the site calm.
  */
 /** `at` pins a cue to a point inside a pinned section (0 = pin starts, 1 = pin ends) instead of its centre. */
@@ -140,7 +140,7 @@ export function Stage() {
       <div className="aurora opacity-30" />
       <canvas ref={field} className="stage-field" style={{ opacity: ready.field ? 1 : 0 }} />
       <svg ref={flat} viewBox="118 68 186 275" className="stage-flat" style={{ opacity: ready.coin ? 0 : undefined }}>
-        <defs><linearGradient id="flat-rupee" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stopColor="#F3DFB6" /><stop offset=".45" stopColor="#C9A06A" /><stop offset="1" stopColor="#8E6A43" /></linearGradient></defs>
+        <defs><linearGradient id="flat-rupee" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stopColor="#FFD688" /><stop offset=".45" stopColor="#FF375F" /><stop offset="1" stopColor="#BF5AF2" /></linearGradient></defs>
         <path d={RUPEE_PATH} fill="url(#flat-rupee)" />
       </svg>
       <canvas ref={coin} className="stage-coin" style={{ visibility: ready.coin ? 'visible' : 'hidden' }} />

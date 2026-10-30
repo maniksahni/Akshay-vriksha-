@@ -61,7 +61,7 @@ export function Intro() {
           <div className="relative flex flex-col items-center">
             <svg viewBox="118 68 186 275" className="h-[22vh] min-h-[140px] overflow-visible">
               <defs>
-                <linearGradient id="intro-g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stopColor="#F3DFB6" /><stop offset=".45" stopColor="#C9A06A" /><stop offset="1" stopColor="#8E6A43" /></linearGradient>
+                <linearGradient id="intro-g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stopColor="#FFD688" /><stop offset=".45" stopColor="#FF375F" /><stop offset="1" stopColor="#BF5AF2" /></linearGradient>
               </defs>
               <motion.path d={RUPEE_PATH} fill="none" stroke="url(#intro-g)" strokeWidth="2" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 1.3, ease: EASE }} />
               <motion.path d={RUPEE_PATH} fill="url(#intro-g)" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.6, delay: 1.05 }} />

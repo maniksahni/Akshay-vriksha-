@@ -1,6 +1,6 @@
 /**
- * A full-bleed liquid light field in raw WebGL (no three.js): domain-warped noise painted in warm black,
- * bronze and champagne gold, with a soft lens of light that follows the pointer. Cheap enough for laptops; phones
+ * A full-bleed liquid light field in raw WebGL (no three.js): domain-warped noise painted with the brand's
+ * amber, rose and violet, with a soft lens of light that follows the pointer. Cheap enough for laptops; phones
  * render it at a lower resolution and frame rate.
  */
 export type AuroraHandle = { setPointer: (x: number, y: number) => void; setScroll: (p: number) => void; dispose: () => void };
@@ -38,10 +38,10 @@ void main(){
   vec2 r = vec2(fbm(p * 1.6 + 2.2 * q + vec2(1.7, 9.2) + t * 1.3), fbm(p * 1.6 + 2.2 * q + vec2(8.3, 2.8) - t));
   float f = fbm(p * 1.2 + 2.6 * r);
 
-  vec3 ink = vec3(0.043, 0.039, 0.035);
-  vec3 amber = vec3(0.91, 0.81, 0.63);
-  vec3 rose = vec3(0.79, 0.63, 0.42);
-  vec3 violet = vec3(0.36, 0.27, 0.18);
+  vec3 ink = vec3(0.027, 0.024, 0.043);
+  vec3 amber = vec3(1.0, 0.62, 0.04);
+  vec3 rose = vec3(1.0, 0.216, 0.373);
+  vec3 violet = vec3(0.75, 0.35, 0.95);
 
   vec3 col = mix(ink, violet * 0.55, smoothstep(0.25, 0.85, f));
   col = mix(col, rose * 0.85, smoothstep(0.45, 0.95, length(q) * f));
@@ -49,11 +49,11 @@ void main(){
 
   // silk ribbons: thin bright contours through the field
   float bands = abs(sin(f * 18.0 + t * 6.0));
-  col += vec3(1.0, 0.9, 0.75) * pow(1.0 - bands, 22.0) * 0.08 * smoothstep(0.35, 0.8, f);
+  col += vec3(1.0, 0.75, 0.85) * pow(1.0 - bands, 22.0) * 0.1 * smoothstep(0.35, 0.8, f);
 
   col += rose * 0.22 * exp(-d * 4.5);                      // light under the pointer
   col *= 1.0 - smoothstep(0.35, 1.25, length((uv - vec2(0.5, 0.45)) * vec2(1.35, 1.0))); // vignette
-  col *= 0.5 - uScroll * 0.32;                            // dims as you leave the hero
+  col *= 0.62 - uScroll * 0.38;                            // dims as you leave the hero
   col += (hash(gl_FragCoord.xy + uTime) - 0.5) * 0.025;     // film grain to break banding
   gl_FragColor = vec4(col, 1.0);
 }`;

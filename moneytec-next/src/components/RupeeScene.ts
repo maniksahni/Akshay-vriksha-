@@ -13,23 +13,23 @@ export type RupeePose = { x: number; y: number; s: number; spin: number; glow: n
 export type RupeeHandle = { setPose: (p: RupeePose) => void; setPointer: (x: number, y: number) => void; setVelocity: (v: number) => void; kick: () => void; dispose: () => void };
 
 /**
- * A jeweller's studio: long softboxes in pale gold, gold and bronze plus white strips, so
- * the metal reads as polished gold instead of a grey room.
+ * A studio built from the brand's own light: long softboxes in amber, rose and violet plus white strips, so
+ * the chrome reflects the palette instead of a grey room.
  */
 function brandStudio() {
   const room = new Scene();
-  room.add(new Mesh(new BoxGeometry(20, 14, 20), new MeshBasicMaterial({ color: '#0B0A09', side: BackSide })));
+  room.add(new Mesh(new BoxGeometry(20, 14, 20), new MeshBasicMaterial({ color: '#07060B', side: BackSide })));
   const panel = (w: number, h: number, color: string, x: number, y: number, z: number, ry = 0, rx = 0, k = 1) => {
     const m = new Mesh(new PlaneGeometry(w, h), new MeshBasicMaterial({ color: new Color(color).multiplyScalar(k), side: DoubleSide }));
     m.position.set(x, y, z); m.rotation.set(rx, ry, 0);
     room.add(m);
   };
-  panel(9, 2.2, '#E8CFA0', -6, 4, 2, Math.PI / 2.4, -0.3, 3.2);   // warm key, upper left
-  panel(9, 2.6, '#C9A06A', 7, 0, 1, -Math.PI / 2.2, 0, 3.4);       // gold fill, right
-  panel(12, 3, '#8E6A43', 0, -5.5, 2, 0, -Math.PI / 2, 3.4);       // bronze floor bounce
+  panel(9, 2.2, '#FF9F0A', -6, 4, 2, Math.PI / 2.4, -0.3, 3.2);   // warm key, upper left
+  panel(9, 2.6, '#FF375F', 7, 0, 1, -Math.PI / 2.2, 0, 3.4);       // rose fill, right
+  panel(12, 3, '#BF5AF2', 0, -5.5, 2, 0, -Math.PI / 2, 3.4);       // violet floor bounce
   panel(14, 0.35, '#ffffff', 0, 6.5, 3, 0, Math.PI / 2, 6);        // white strips for crisp glints
   panel(0.35, 10, '#ffffff', -8, 0, -3, Math.PI / 3, 0, 5);
-  panel(10, 7, '#fff1dc', 0, 1, 9.5, Math.PI, 0, 2.4);              // soft front so faces never go black
+  panel(10, 7, '#FFE6F2', 0, 1, 9.5, Math.PI, 0, 2.4);              // soft front so faces never go black
   return room;
 }
 
@@ -87,10 +87,10 @@ export function mountRupee(canvas: HTMLCanvasElement, { phone, still, pose }: { 
   geo.center();
   geo.computeVertexNormals();
   const chrome = phone
-    ? new MeshStandardMaterial({ color: new Color('#f3d9a8'), metalness: 1, roughness: 0.18, envMapIntensity: 1.2 })
+    ? new MeshStandardMaterial({ color: new Color('#ffe0ee'), metalness: 1, roughness: 0.16, envMapIntensity: 1.25 })
     : new MeshPhysicalMaterial({
-      color: new Color('#f3d9a8'), metalness: 1, roughness: 0.14, clearcoat: 1, clearcoatRoughness: 0.04,
-      iridescence: 0.18, iridescenceIOR: 1.6, iridescenceThicknessRange: [300, 600], envMapIntensity: 1.25,
+      color: new Color('#fff0f6'), metalness: 1, roughness: 0.1, clearcoat: 1, clearcoatRoughness: 0.03,
+      iridescence: 0.85, iridescenceIOR: 1.8, iridescenceThicknessRange: [200, 820], envMapIntensity: 1.35,
     });
   const rupee = new Mesh(geo, chrome);
   const s = 3.1 / 255;
@@ -112,9 +112,9 @@ export function mountRupee(canvas: HTMLCanvasElement, { phone, still, pose }: { 
       void main(){
         float f = pow(1.0 - abs(dot(vN, vV)), 2.2);
         float k = clamp(vY / 260.0 + 0.5 + 0.15 * sin(uTime * 0.8), 0.0, 1.0);
-        vec3 c = mix(vec3(1.0, 0.86, 0.6), vec3(0.85, 0.62, 0.32), smoothstep(0.0, 0.55, k));
-        c = mix(c, vec3(0.55, 0.38, 0.2), smoothstep(0.5, 1.0, k));
-        gl_FragColor = vec4(c, f * 0.55 * uPower);
+        vec3 c = mix(vec3(1.0, 0.62, 0.1), vec3(1.0, 0.22, 0.42), smoothstep(0.0, 0.55, k));
+        c = mix(c, vec3(0.75, 0.35, 0.95), smoothstep(0.5, 1.0, k));
+        gl_FragColor = vec4(c, f * 0.75 * uPower);
       }`,
   }));
   aura.scale.copy(rupee.scale);
@@ -123,10 +123,10 @@ export function mountRupee(canvas: HTMLCanvasElement, { phone, still, pose }: { 
   const coin = new Group();
   const ringMat = new MeshStandardMaterial({ color: '#f1e4ff', metalness: 1, roughness: 0.14, envMapIntensity: 1.4 });
   coin.add(new Mesh(new TorusGeometry(2.55, 0.055, 24, 260), ringMat));
-  coin.add(new Mesh(new TorusGeometry(2.38, 0.012, 8, 260), new MeshStandardMaterial({ color: '#E8CFA0', emissive: new Color('#C9A06A'), emissiveIntensity: 1.2 })));
-  coin.add(new Mesh(new TorusGeometry(2.95, 0.006, 6, 260), new MeshBasicMaterial({ color: new Color('#F0D9AE').multiplyScalar(1.4), transparent: true, opacity: 0.5 })));
+  coin.add(new Mesh(new TorusGeometry(2.38, 0.012, 8, 260), new MeshStandardMaterial({ color: '#FF9F0A', emissive: new Color('#FF375F'), emissiveIntensity: 1.2 })));
+  coin.add(new Mesh(new TorusGeometry(2.95, 0.006, 6, 260), new MeshBasicMaterial({ color: new Color('#FFB340').multiplyScalar(1.4), transparent: true, opacity: 0.5 })));
   const TICKS = phone ? 90 : 160;
-  const ticks = new InstancedMesh(new BoxGeometry(0.018, 0.13, 0.05), new MeshStandardMaterial({ color: '#ffffff', metalness: 1, roughness: 0.25, emissive: new Color('#8E6A43'), emissiveIntensity: 0.5 }), TICKS);
+  const ticks = new InstancedMesh(new BoxGeometry(0.018, 0.13, 0.05), new MeshStandardMaterial({ color: '#ffffff', metalness: 1, roughness: 0.25, emissive: new Color('#BF5AF2'), emissiveIntensity: 0.5 }), TICKS);
   const m = new Matrix4(), o = new Object3D();
   for (let i = 0; i < TICKS; i++) {
     const a = (i / TICKS) * Math.PI * 2;
@@ -147,10 +147,10 @@ export function mountRupee(canvas: HTMLCanvasElement, { phone, still, pose }: { 
     g.fillStyle = gr; g.fillRect(0, 0, 256, 256);
     return new CanvasTexture(c);
   };
-  const halo = new Sprite(new SpriteMaterial({ map: radial([[0, 'rgba(201,160,106,0.7)'], [0.35, 'rgba(142,106,67,0.28)'], [1, 'rgba(0,0,0,0)']]), blending: AdditiveBlending, depthWrite: false, transparent: true }));
+  const halo = new Sprite(new SpriteMaterial({ map: radial([[0, 'rgba(255,55,95,0.7)'], [0.35, 'rgba(191,90,242,0.28)'], [1, 'rgba(0,0,0,0)']]), blending: AdditiveBlending, depthWrite: false, transparent: true }));
   halo.scale.set(10, 10, 1);
   halo.position.z = -1.6;
-  const core = new Sprite(new SpriteMaterial({ map: radial([[0, 'rgba(255,240,220,0.9)'], [0.15, 'rgba(255,170,90,0.35)'], [1, 'rgba(0,0,0,0)']]), blending: AdditiveBlending, depthWrite: false, transparent: true }));
+  const core = new Sprite(new SpriteMaterial({ map: radial([[0, 'rgba(255,240,245,0.9)'], [0.15, 'rgba(255,170,90,0.35)'], [1, 'rgba(0,0,0,0)']]), blending: AdditiveBlending, depthWrite: false, transparent: true }));
   core.scale.set(3.6, 3.6, 1);
   core.position.z = -1.1;
 
@@ -158,7 +158,7 @@ export function mountRupee(canvas: HTMLCanvasElement, { phone, still, pose }: { 
   const G = 0; // the galaxy is retired for a calmer, more precious mark
   const gPos = new Float32Array(G * 3), gCol = new Float32Array(G * 3), gSize = new Float32Array(G), gSeed = new Float32Array(G);
   const gRad = new Float32Array(G), gAng = new Float32Array(G), gH = new Float32Array(G);
-  const warm = [new Color('#F0D9AE'), new Color('#C9A06A'), new Color('#8E6A43'), new Color('#ffd6f0'), new Color('#ffffff')];
+  const warm = [new Color('#FFB340'), new Color('#FF375F'), new Color('#BF5AF2'), new Color('#ffd6f0'), new Color('#ffffff')];
   for (let i = 0; i < G; i++) {
     const arm = i % 3;
     const r = 3.1 + Math.pow(Math.random(), 1.8) * 2.6;
@@ -182,8 +182,8 @@ export function mountRupee(canvas: HTMLCanvasElement, { phone, still, pose }: { 
   const galaxyPivot = new Group();
   galaxyPivot.add(galaxy);
 
-  // ---- sparks rising past the coin like heat off gold
-  const S = phone ? 26 : 60; // a few motes of gold dust
+  // ---- sparks rising past the coin
+  const S = phone ? 26 : 60; // a few motes of light
   const sPos = new Float32Array(S * 3), sCol = new Float32Array(S * 3), sSize = new Float32Array(S), sSeed = new Float32Array(S), sVel = new Float32Array(S);
   for (let i = 0; i < S; i++) {
     sPos.set([(Math.random() - 0.5) * 6, -4 + Math.random() * 8, (Math.random() - 0.5) * 3], i * 3);
@@ -229,7 +229,7 @@ export function mountRupee(canvas: HTMLCanvasElement, { phone, still, pose }: { 
 
   // ---- light: the brand gradient painted onto chrome, plus a white sweep for travelling glints
   scene.add(new AmbientLight('#ffffff', 0.2));
-  const lights = [new PointLight('#E8CFA0', 170, 30, 2), new PointLight('#C9A06A', 200, 30, 2), new PointLight('#8E6A43', 200, 30, 2)];
+  const lights = [new PointLight('#FF9F0A', 170, 30, 2), new PointLight('#FF375F', 200, 30, 2), new PointLight('#BF5AF2', 200, 30, 2)];
   lights.forEach((l) => scene.add(l));
   const sweep = new PointLight('#ffffff', 120, 12, 2);
   scene.add(sweep);

@@ -4,9 +4,9 @@ import { wa } from '../data';
 import { EASE, Scene, spotlight, Title, untilt } from './ui';
 
 const PLANS = [
-  { name: 'Near-term needs', tag: 'Keep liquidity in view', horizon: '3–5 years', drops: 'Prefers to avoid them', goals: 'Emergency fund, short-term goals', before: 'Check access to your money, exit conditions and capital risk.', orbit: 1, hue: '#A8B4C2' },
-  { name: 'Life milestones', tag: 'Plan around a date', horizon: '5–10 years', drops: 'Can sit through some', goals: 'Car, wedding, a home down-payment', before: 'Estimate your target, timeline and a comfortable monthly amount.', orbit: 2, hue: '#B8C4A2' },
-  { name: 'Wealth for Generations', tag: 'Plan for changing markets', horizon: '10–30+ years', drops: 'Can affect your plan', goals: 'Retirement, kids’ education, wealth', before: 'Review affordability, inflation and your ability to stay invested.', orbit: 3, hue: '#C9A06A' },
+  { name: 'Near-term needs', tag: 'Keep liquidity in view', horizon: '3–5 years', drops: 'Prefers to avoid them', goals: 'Emergency fund, short-term goals', before: 'Check access to your money, exit conditions and capital risk.', orbit: 1, hue: '#64D2FF' },
+  { name: 'Life milestones', tag: 'Plan around a date', horizon: '5–10 years', drops: 'Can sit through some', goals: 'Car, wedding, a home down-payment', before: 'Estimate your target, timeline and a comfortable monthly amount.', orbit: 2, hue: '#5BF0B5' },
+  { name: 'Wealth for Generations', tag: 'Plan for changing markets', horizon: '10–30+ years', drops: 'Can affect your plan', goals: 'Retirement, kids’ education, wealth', before: 'Review affordability, inflation and your ability to stay invested.', orbit: 3, hue: '#FF375F' },
 ];
 const QS = [
   { q: 'When will you need the money?', a: ['3–5 years', '5–10 years', '10–30+ years'] },
