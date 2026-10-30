@@ -1,3 +1,4 @@
+import { BrandLogo } from './BrandLogo';
 import { AnimatePresence, motion, useScroll, useTransform } from 'framer-motion';
 import { FormEvent, useRef, useState } from 'react';
 import { DISCLAIMER, FACTS, NAV, SOCIALS, wa } from '../data';
@@ -21,14 +22,14 @@ function MentorDetails() {
           <div><p className="display text-[clamp(1.6rem,3vw,2.6rem)] leading-[1.25]">One-to-one</p><p className="text-[12px] text-dim">Personal conversations</p></div>
         </div>
         <a href={FACTS.amfiLocator} target="_blank" rel="noopener noreferrer" className="group mt-6 flex items-center justify-between gap-4 rounded-2xl border border-line bg-white/[0.03] px-5 py-4 transition-colors hover:border-white/25">
-          <span className="flex items-center gap-3"><i className="pulse-dot h-2 w-2 rounded-full bg-mint" /><span><span className="block text-[12px] text-dim">AMFI Registered Mutual Fund Distributor</span><b className="text-[17px] tracking-[-0.01em]">{FACTS.arn}</b></span></span>
+          <span className="mentor-amfi-credential flex items-center gap-3"><BrandLogo brand="amfi" /><span><span className="block text-[12px] text-dim">AMFI Registered Mutual Fund Distributor</span><b className="text-[17px] tracking-[-0.01em]">{FACTS.arn}</b></span></span>
           <span aria-hidden className="text-haze transition-transform group-hover:translate-x-1">↗</span>
         </a>
         <div className="mt-6 flex flex-wrap gap-3">
-          <a href={wa('Hi Gulshan! I would like to talk about my financial goals.')} target="_blank" rel="noreferrer" className="btn-light pr-2">Talk to Gulshan <span className="arrow">↗</span></a>
+          <a href={wa('Hi Gulshan! I would like to talk about my financial goals.')} target="_blank" rel="noreferrer" className="btn-light pr-2"><img src="./brand/partners/whatsapp.svg" alt="" width="17" height="17" />Talk to Gulshan <span className="arrow">↗</span></a>
           <a href={`tel:+${FACTS.phoneIntl}`} className="btn-ghost">Call directly ↗</a>
         </div>
-        <p className="mt-4 text-[12px] text-dim">Kotak Life advisor · {FACTS.kotak}</p>
+        <a href="https://www.kotaklife.com/" target="_blank" rel="noopener noreferrer" className="mentor-kotak-credential"><BrandLogo brand="kotak" /><span>Kotak Life advisor<b>{FACTS.kotak}</b></span><span aria-hidden="true">↗</span></a>
       </FadeIn>
     </div>
   );
@@ -142,7 +143,8 @@ export function Safety() {
             </FadeIn>
           ))}
         </div>
-        <p className="mt-10 text-center"><a href={FACTS.amfiLocator} target="_blank" rel="noreferrer" className="link">Verify {FACTS.arn} on AMFI ↗</a></p>
+        <div className="safety-brand-links"><a href={FACTS.amfiLocator} target="_blank" rel="noreferrer" aria-label="AMFI official distributor lookup"><BrandLogo brand="amfi" /></a><a href="https://www.kotaklife.com/" target="_blank" rel="noreferrer" aria-label="Kotak Life official website"><BrandLogo brand="kotak" /></a></div>
+        <p className="mt-6 text-center"><a href={FACTS.amfiLocator} target="_blank" rel="noreferrer" className="link">Verify {FACTS.arn} on AMFI ↗</a></p>
       </div>
     </section>
   );
@@ -241,7 +243,7 @@ export function Finale() {
                     <span className="sr-only">Your name</span>
                     <input value={name} onChange={(e) => setName(e.target.value)} placeholder="Your name" autoComplete="name" className="field" />
                   </label>
-                  <button type="submit" className="btn-glow mt-5 h-14 w-full text-[16px]">Continue on WhatsApp</button>
+                  <button type="submit" className="btn-glow mt-5 h-14 w-full text-[16px]"><img src="./brand/partners/whatsapp.svg" alt="" width="19" height="19" className="platform-action-logo" />Continue on WhatsApp</button>
                   <p className="mt-3 text-center text-[12px] text-dim">No obligation. Nothing is booked or invested from this website.</p>
                 </motion.div>
               )}
@@ -276,6 +278,7 @@ export function Footer() {
         <div className="grid grid-cols-2 gap-8 sm:grid-cols-[1.4fr_1fr_1fr]">
           <div className="col-span-2 sm:col-span-1">
             <img src="./brand/moneytec-logo-dark.svg" alt="Moneytec" width="200" height="39" className="h-8 w-auto" />
+            <div className="footer-credential-logos"><a href={FACTS.amfiLocator} target="_blank" rel="noreferrer" aria-label="Verify registration on AMFI"><BrandLogo brand="amfi" /></a><a href="https://www.kotaklife.com/" target="_blank" rel="noreferrer" aria-label="Kotak Life official website"><BrandLogo brand="kotak" /></a></div>
             <p className="mt-4 max-w-md">{FACTS.name} is an AMFI-registered mutual fund distributor ({FACTS.arn}) and a Kotak Life Insurance advisor ({FACTS.kotak}). {DISCLAIMER}</p>
           </div>
           <nav aria-label="Footer" className="flex flex-col gap-1.5">
@@ -284,16 +287,17 @@ export function Footer() {
           </nav>
           <div className="flex flex-col gap-1.5">
             <p className="mb-1 text-[11px] uppercase tracking-[0.2em] text-haze">Connect</p>
-            <a href={wa('Hi!')} target="_blank" rel="noreferrer" className="w-fit hover:text-paper">WhatsApp</a>
+            <a href={wa('Hi!')} target="_blank" rel="noreferrer" className="footer-platform-link w-fit hover:text-paper"><img src="./brand/partners/whatsapp.svg" alt="" width="15" height="15" />WhatsApp</a>
             <a href={`tel:+${FACTS.phoneIntl}`} className="w-fit hover:text-paper">{FACTS.phone}</a>
             <a href={`mailto:${FACTS.email}`} className="w-fit hover:text-paper">Email</a>
-            {SOCIALS.map((s) => <a key={s.name} href={s.href} target="_blank" rel="noreferrer" className="w-fit hover:text-paper">{s.name}</a>)}
+            {SOCIALS.map((s) => <a key={s.name} href={s.href} target="_blank" rel="noreferrer" className="footer-platform-link w-fit hover:text-paper"><img src={`./brand/partners/${s.icon}.svg`} alt="" width="15" height="15" />{s.name}</a>)}
           </div>
         </div>
       </div>
       <FooterMark />
       <div className="wrap-wide flex flex-col gap-2 border-t border-line py-5 sm:flex-row sm:justify-between">
         <p>© {new Date().getFullYear()} moneytec · {FACTS.city}</p>
+        <a href="./brand/partners/CREDITS.txt" target="_blank" rel="noreferrer" className="hover:text-paper">Logo credits</a>
       </div>
     </footer>
   );

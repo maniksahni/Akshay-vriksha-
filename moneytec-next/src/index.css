@@ -194,3 +194,63 @@ details > summary::-webkit-details-marker { display: none; }
   *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
   .grain { display: none; }
 }
+
+/* Supplied Sanskrit verse: local subset font, calm editorial composition. */
+@font-face { font-family:'Moneytec Devanagari'; src:url('/fonts/shloka-devanagari.woff2') format('woff2'); font-weight:500; font-style:normal; font-display:swap; }
+.wisdom-section { padding:48px 0 60px; }
+.wisdom-frame { position:relative; display:grid; grid-template-columns:.78fr 1.22fr; gap:56px; align-items:center; padding:44px; border:1px solid #c4a2db24; border-radius:28px; overflow:hidden; background:radial-gradient(ellipse at 0% 100%,#ff9f0a09,transparent 50%),linear-gradient(115deg,#21152b99,#100d1799); }
+.wisdom-frame::before { content:''; position:absolute; top:0; left:44px; right:44px; height:1px; background:linear-gradient(90deg,transparent,#f6b96c66,#d785d466,transparent); }
+.wisdom-context h2 { font-size:clamp(30px,3.2vw,44px); font-weight:500; line-height:1.08; letter-spacing:-.04em; margin-top:20px; }
+.wisdom-drops { display:flex; align-items:center; gap:13px; position:relative; max-width:190px; margin-top:27px; }
+.wisdom-drops > span { position:absolute; inset:50% 0 auto; height:1px; background:linear-gradient(90deg,#c68f49,#ba6ba5); opacity:.3; }
+.wisdom-drops i,.wisdom-drops b { position:relative; height:4px; width:4px; background:#dca36b; border-radius:50%; }
+.wisdom-drops b { height:8px; width:8px; background:#eec596; box-shadow:0 0 15px #eea56444; }
+.wisdom-verse { border-left:1px solid #eac9ed20; padding-left:38px; }
+.wisdom-verse blockquote { font-family:'Moneytec Devanagari','Noto Serif Devanagari',serif; font-weight:500; font-size:clamp(17px,1.65vw,23px); line-height:1.95; color:#f4d1a5; }
+.wisdom-verse blockquote > span { display:block; }
+.wisdom-meaning { margin-top:17px; font-size:13px; line-height:1.7; color:#baabbf; max-width:460px; }
+.wisdom-connection { margin-top:10px; font-size:11px; line-height:1.7; color:#8e7f99; }
+.wisdom-link { display:inline-flex; align-items:center; gap:14px; margin-top:21px; font-size:12px; color:#e2b79c; }
+.wisdom-link:hover { color:white; }
+/* Untinted brand artwork lives on a neutral surface beside its actual relationship. */
+.credential-logo { display:inline-flex; align-items:center; justify-content:center; background:#fff; border-radius:9px; padding:9px 12px; flex-shrink:0; }
+.credential-logo img { display:block; object-fit:contain; width:100%; height:auto; }
+.credential-logo-amfi { width:115px; }
+.credential-logo-kotak { width:122px; }
+.ticker-credential { display:inline-flex; align-items:center; gap:12px; }
+.ticker-credential .credential-logo { width:85px; padding:6px 9px; border-radius:6px; }
+.mentor-kotak-credential { display:flex; align-items:center; gap:14px; border:1px solid #ffffff16; padding:16px 20px; border-radius:16px; margin-top:12px; color:#a196ac; font-size:12px; background:#ffffff04; }
+.mentor-kotak-credential b { display:block; color:#eee1f5; font-weight:500; font-size:14px; margin-top:4px; }
+.mentor-kotak-credential > span:last-child { margin-left:auto; }
+.safety-brand-links { display:flex; justify-content:center; align-items:center; flex-wrap:wrap; gap:14px; margin-top:30px; }
+.service-kotak-logo { position:absolute; top:0; right:0; width:100px; padding:7px 9px; border-radius:7px; }
+.platform-action-logo { filter:brightness(0) invert(1); }
+.footer-platform-link { display:inline-flex; align-items:center; gap:7px; }
+@media (max-width:767px) {
+ .wisdom-section { padding:28px 0 34px; }
+ .wisdom-frame { grid-template-columns:1fr; padding:24px 20px; gap:21px; border-radius:20px; }
+ .wisdom-frame::before { left:20px; right:20px; }
+ .wisdom-context h2 { margin-top:14px; font-size:30px; }
+ .wisdom-context h2 br { display:none; }
+ .wisdom-context h2 .serif::before { content:' '; }
+ .wisdom-context .kicker { font-size:9px; }
+ .wisdom-drops { display:none; }
+ .wisdom-verse { border-left:0; border-top:1px solid #eac9ed20; padding:20px 0 0; }
+ .wisdom-verse blockquote { font-size:clamp(15px,4.1vw,19px); line-height:2.05; }
+ .wisdom-meaning { margin-top:14px; font-size:12px; }
+ .wisdom-connection { font-size:10px; }
+ .wisdom-link { margin-top:16px; min-height:34px; }
+ .ticker-credential { justify-content:center; gap:9px; font-size:10px; }
+ .ticker-credential strong { max-width:180px; text-align:left; }
+ .ticker-credential .credential-logo { width:72px; padding:6px; }
+ .mentor-amfi-credential { flex-wrap:wrap; }
+ .mentor-amfi-credential .credential-logo { width:98px; }
+ .mentor-kotak-credential { padding:15px; font-size:11px; gap:12px; }
+ .mentor-kotak-credential .credential-logo { width:98px; }
+ .safety-brand-links { margin-top:24px; gap:12px; }
+ .service-kotak-logo { width:84px; padding:6px 8px; }
+}
+.hero-amfi-logo { width:62px; padding:5px 7px; border-radius:5px; }
+@media (max-width:767px) { .hero-amfi-logo { width:52px; padding:4px 5px; } .ticker-credential > span:last-child { min-width:0; } }
+.footer-credential-logos { display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-top:22px; }
+.footer-credential-logos .credential-logo { width:92px; padding:7px 9px; border-radius:6px; }

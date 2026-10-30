@@ -1,9 +1,6 @@
-import { ArrowUpRight, Facebook, Instagram, Youtube } from 'lucide-react';
+import { ArrowUpRight } from 'lucide-react';
 import { SOCIALS } from '../data';
 import { Scene, spotlight, untilt } from './ui';
-
-const X = () => <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" aria-hidden><path d="M18.9 2h3.3L15 10.3 23.5 22h-6.7l-5.2-7.1L5.4 22H2l7.9-9L1.5 2h6.9l4.7 6.5L18.9 2ZM17.7 20h1.8L7.4 3.9H5.5L17.7 20Z" /></svg>;
-const ICON = { instagram: <Instagram size={22} />, facebook: <Facebook size={22} />, youtube: <Youtube size={22} />, x: <X /> } as const;
 
 export function InstagramReels() {
   return (
@@ -20,7 +17,7 @@ export function InstagramReels() {
           {SOCIALS.map((s) => (
             <a key={s.name} onPointerMove={spotlight} onPointerLeave={untilt} className="glass spot tilt group flex flex-col gap-6 p-4 sm:p-6" href={s.href} target="_blank" rel="noreferrer">
               <span className="flex items-center justify-between">
-                <span className="grid h-11 w-11 place-items-center rounded-2xl bg-gradient-to-br from-amber/30 via-rose/25 to-violet/30 text-paper">{ICON[s.icon as keyof typeof ICON]}</span>
+                <span className="grid h-11 w-11 place-items-center rounded-2xl bg-gradient-to-br from-amber/30 via-rose/25 to-violet/30 text-paper"><img src={`./brand/partners/${s.icon}.svg`} alt="" width="22" height="22" /></span>
                 <ArrowUpRight size={18} className="text-dim transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-paper" aria-hidden />
               </span>
               <span>

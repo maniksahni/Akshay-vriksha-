@@ -1,3 +1,4 @@
+import { BrandLogo } from './BrandLogo';
 import { motion, MotionValue, useMotionValue, useMotionValueEvent, useScroll, useTransform } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
 import { FACTS } from '../data';
@@ -83,7 +84,7 @@ function HeroCopy({ mobile }: { mobile: boolean }) {
         <a href="#calculator" onClick={() => window.dispatchEvent(new Event('moneytec:plan-goal'))} className="btn-ghost">{mobile ? 'Plan my goal' : 'Plan my goal ↓'}</a>
       </motion.div>
       <motion.div className="mt-8 flex flex-wrap gap-x-6 gap-y-2 text-[12px] text-dim" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1, delay: 1.15 }}>
-        <span className="flex items-center gap-2"><i className="pulse-dot h-1.5 w-1.5 rounded-full bg-mint" />AMFI registered <b className="font-medium text-paper">{FACTS.arn}</b></span>
+        <span className="flex items-center gap-2"><BrandLogo brand="amfi" className="hero-amfi-logo" />AMFI registered <b className="font-medium text-paper">{FACTS.arn}</b></span>
         <span className="flex items-center gap-2"><i aria-hidden className="text-amber">✳</i>Personal guidance <b className="font-medium text-paper">{FACTS.name}</b></span>
       </motion.div>
     </>

@@ -1,3 +1,4 @@
+import { BrandLogo } from './BrandLogo';
 import { motion, MotionValue, useScroll, useTransform } from 'framer-motion';
 import { ReactNode, useLayoutEffect, useRef, useState } from 'react';
 import { wa } from '../data';
@@ -85,7 +86,7 @@ function Card({ c, i, compact }: { c: (typeof CARDS)[number]; i: number; compact
       <div className="relative flex items-center justify-between text-[11px] uppercase tracking-[0.2em] text-dim">
         <span>0{i + 1}</span><span>{c.tag}</span>
       </div>
-      <div className={`relative mx-auto w-full ${compact ? 'mt-2 h-[110px]' : 'mt-6 h-[44%]'} transition-transform duration-700 group-hover:scale-[1.04]`}>{c.art}</div>
+      <div className={`relative mx-auto w-full ${compact ? 'mt-2 h-[110px]' : 'mt-6 h-[44%]'} transition-transform duration-700 group-hover:scale-[1.04]`}>{c.art}{c.tag === 'Protect' && <BrandLogo brand="kotak" className="service-kotak-logo" />}</div>
       <div className="relative mt-auto">
         <h3 className={`font-semibold tracking-[-0.035em] ${compact ? 'text-[20px] leading-tight' : 'text-[30px] leading-[1.08]'}`}>{c.title}</h3>
         <p className={`mt-2 text-haze ${compact ? 'text-[13px] leading-snug' : 'text-[15px] leading-relaxed'}`}>{c.body}</p>
