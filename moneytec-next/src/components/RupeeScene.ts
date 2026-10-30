@@ -115,7 +115,7 @@ export function mountRupee(canvas: HTMLCanvasElement, { centerX, phone, still }:
 
   const t0 = performance.now();
   const frame = () => {
-    const t = (performance.now() - t0) / 1000;
+    const t = still ? 0 : (performance.now() - t0) / 1000;
     sx += (px - sx) * 0.06; sy += (py - sy) * 0.06;
     const e = progress * progress * (3 - 2 * progress);
     const sway = still ? 0 : Math.sin(t * 0.55) * (phone ? 0.28 : 0.4);
@@ -134,19 +134,22 @@ export function mountRupee(canvas: HTMLCanvasElement, { centerX, phone, still }:
     renderer.render(scene, camera);
     if (running) raf = requestAnimationFrame(frame);
   };
-  const start = () => { if (!running && visible && !document.hidden) { running = true; raf = requestAnimationFrame(frame); } };
+  const start = () => {
+    if (still) { if (visible && !document.hidden) frame(); return; }
+    if (!running && visible && !document.hidden) { running = true; raf = requestAnimationFrame(frame); }
+  };
   const stop = () => { running = false; cancelAnimationFrame(raf); };
   const io = new IntersectionObserver(([en]) => { visible = en.isIntersecting; visible ? start() : stop(); });
   io.observe(canvas);
   const onVis = () => (document.hidden ? stop() : start());
   document.addEventListener('visibilitychange', onVis);
-  const ro = new ResizeObserver(resize);
+  const ro = new ResizeObserver(() => { resize(); if (still) frame(); });
   ro.observe(canvas.parentElement!);
   if (still) frame(); else start();
 
   return {
     setProgress: (p) => { progress = p; if (still) frame(); },
-    setPointer: (x, y) => { px = x; py = y; },
+    setPointer: (x, y) => { if (!still) { px = x; py = y; } },
     dispose: () => {
       stop(); io.disconnect(); ro.disconnect();
       document.removeEventListener('visibilitychange', onVis);

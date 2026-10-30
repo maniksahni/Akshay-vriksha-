@@ -12,7 +12,13 @@ function Segmented<T extends number>({ options, value, onChange, label, fmt }: {
   return (
     <div role="radiogroup" aria-label={label} className="grid grid-cols-3 gap-2">
       {options.map((o) => (
-        <button key={o} type="button" role="radio" aria-checked={o === value} onClick={() => onChange(o)} className="seg">
+        <button key={o} type="button" role="radio" aria-checked={o === value} tabIndex={o === value ? 0 : -1} onClick={() => onChange(o)} onKeyDown={e => {
+          const index = options.indexOf(value);
+          const next = e.key === 'Home' ? 0 : e.key === 'End' ? options.length - 1 : ['ArrowRight', 'ArrowDown'].includes(e.key) ? (index + 1) % options.length : ['ArrowLeft', 'ArrowUp'].includes(e.key) ? (index - 1 + options.length) % options.length : -1;
+          if (next < 0) return;
+          e.preventDefault(); onChange(options[next]);
+          (e.currentTarget.parentElement?.children[next] as HTMLElement)?.focus();
+        }} className="seg">
           {fmt(o)}
         </button>
       ))}

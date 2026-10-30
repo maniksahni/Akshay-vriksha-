@@ -198,6 +198,7 @@ const WHO = ['Student', 'Working', 'Business owner', 'NRI'];
 const WANT = ['Start a SIP', 'Save tax', 'Life cover', 'Health cover', 'Portfolio check-up'];
 
 export function Finale() {
+  const mobile = useMobile();
   const zoomRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress: zp } = useScroll({ target: zoomRef, offset: ['start end', 'center center'] });
   const zScale = useTransform(zp, [0, 1], [1.5, 1]);
@@ -220,7 +221,7 @@ export function Finale() {
       <motion.div className="pointer-events-none absolute inset-0" style={{ opacity: glow }}><div className="aurora" /></motion.div>
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-ink via-transparent to-ink" />
       <div className="wrap relative grid gap-10 lg:grid-cols-2 lg:items-center lg:gap-16">
-        <motion.div ref={zoomRef} className="text-center lg:text-left" style={{ scale: zScale, filter: zBlur, opacity: zOpacity, transformOrigin: '30% 50%' }}>
+        <motion.div ref={zoomRef} className="text-center lg:text-left" style={{ scale: mobile ? 1 : zScale, filter: mobile ? 'none' : zBlur, opacity: mobile ? 1 : zOpacity, transformOrigin: '30% 50%' }}>
           <Title className="display mt-5 text-[clamp(2.8rem,7vw,6.4rem)]" text="Your next chapter / *starts here.*" />
           <p className="lede mx-auto mt-5 max-w-md lg:mx-0">Tell us a little. It opens WhatsApp with everything filled in, and Gulshan replies personally.</p>
         </motion.div>

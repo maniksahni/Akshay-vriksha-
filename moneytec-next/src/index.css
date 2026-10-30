@@ -254,3 +254,46 @@ details > summary::-webkit-details-marker { display: none; }
 @media (max-width:767px) { .hero-amfi-logo { width:52px; padding:4px 5px; } .ticker-credential > span:last-child { min-width:0; } }
 .footer-credential-logos { display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-top:22px; }
 .footer-credential-logos .credential-logo { width:92px; padding:7px 9px; border-radius:6px; }
+
+/* Final composition: compact phone intro, consistent spacing and comfortable controls. */
+.slider { min-height:30px; touch-action:pan-y; }
+a,button,input,select,summary { -webkit-tap-highlight-color:rgba(255,159,10,.15); }
+@media (max-width:767px) {
+ .hero-mobile .mobile-rupee-stage { top:44px; height:248px; }
+ .hero-mobile .mobile-rupee-caption { top:282px; }
+ .hero-mobile .hero-mobile-copy { padding-top:238px; }
+ .hero-mobile h1 { font-size:clamp(32px,8.8vw,48px); line-height:1.04; margin-top:17px; }
+ .hero-mobile .hero-mobile-copy > div:first-of-type > p:first-child { font-size:16px; }
+ .hero-mobile .lede { font-size:13px; line-height:1.6; }
+ .hero-mobile-copy > .mt-7 { gap:8px; margin-top:20px; }
+ .hero-mobile .btn { padding-left:18px; padding-right:18px; font-size:13px; height:44px; }
+ .hero-mobile .btn-light { padding-right:8px; }
+ .hero-mobile-copy > .mt-8 { margin-top:20px; gap:10px 16px; font-size:11px; }
+ #highlights .glass h3 { font-size:19px; }
+ #highlights article { min-height:310px; }
+ #plans .glass > div:first-child > div:last-child > p:first-child { overflow-wrap:normal; }
+ #plans .glass dl { line-height:1.5; }
+ #calculator .glass[role=group] { border-radius:18px; }
+ #calculator [role=group][aria-label="Calculator mode"] button,#calculator [role=group][aria-label="Calculator mode"] button > .absolute { border-radius:13px; }
+ #calculator [role=group][aria-label="Calculator mode"] button { padding:11px 13px; }
+ #calculator [role=group][aria-label="Calculator mode"] button span:last-child { font-size:9px; }
+ #calculator aside .btn-light { white-space:normal; height:auto; min-height:48px; padding-top:12px; padding-bottom:12px; line-height:1.45; }
+ #calculator aside dd { flex-shrink:0; }
+ #calculator aside dt { min-width:0; }
+ .wisdom-context h2 { font-size:28px; }
+ #start form .btn-glow { font-size:14px; min-height:48px; }
+ .mentor-kotak-credential .credential-logo { width:112px; }
+ .mentor-amfi-credential .credential-logo { width:112px; }
+ footer .footer-credential-logos { margin-top:18px; }
+ footer .footer-platform-link { min-height:30px; }
+ .menu-sheet { overflow-y:auto; overscroll-behavior:contain; }
+ .menu-sheet > div:first-child > a { font-size:25px; padding-top:11px; padding-bottom:11px; min-height:48px; }
+}
+@media (min-width:768px) and (max-height:780px) {
+ #top h1 { font-size:clamp(50px,7.5vw,93px); }
+ #top .max-w-\[44rem\] { max-width:620px; }
+}
+@media (max-width:767px) {
+ .wisdom-context h2 br { display:initial; }
+ .wisdom-context h2 .serif::before { content:none; }
+}
