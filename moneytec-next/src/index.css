@@ -923,3 +923,12 @@ a.lux-masthead-cell:hover { background: rgba(255,55,95,.05); color: var(--ivory)
 /* brand gradient on the hero accent line and the original warm cream for the verse */
 .lux-full-title .gold-text { background-image: linear-gradient(100deg, #FFB340 0%, #FF375F 45%, #BF5AF2 85%); }
 .lux-full-floor .hero-wisdom blockquote, .lux-hero-mobile .hero-wisdom blockquote, .lux-hero-floor .hero-wisdom blockquote { color: #f2cea2; }
+
+/* hero: "Tomorrow's" holds while the goal word rolls over beneath a clean mask */
+.goal-slot { position: relative; display: inline-block; overflow: hidden; vertical-align: bottom; padding-bottom: .12em; margin-bottom: -.12em; padding-right: .06em; }
+.goal-word { white-space: nowrap; }
+@media (max-width: 767px) {
+  .lux-hero-mobile .goal-slot { display: block; }
+}
+/* italic serif glyphs overhang their box; give the mask room on the right without shifting the line */
+.goal-slot { padding-right: .32em; margin-right: -.32em; }

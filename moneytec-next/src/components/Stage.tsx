@@ -6,7 +6,7 @@ import type { AuroraHandle } from './AuroraField';
 
 /**
  * A fixed layer behind the page: a faint light field everywhere, and the chrome ₹ that owns the opening.
- * As you scroll past the hero the ₹ swells toward you and dissolves, leaving the rest of the site calm.
+ * As you scroll past the hero the ₹ rises away with it and fades, leaving the rest of the site calm.
  */
 /** `at` pins a cue to a point inside a pinned section (0 = pin starts, 1 = pin ends) instead of its centre. */
 type Cue = { sel: string; at?: number; pose: RupeePose; field: number; o: number };
@@ -15,14 +15,12 @@ type Cue = { sel: string; at?: number; pose: RupeePose; field: number; o: number
 const TURN = Math.PI * 2;
 const LAPTOP: Cue[] = [
   { sel: '#top', at: 0, pose: { x: 0.5, y: -0.12, s: 0.98, spin: 0, glow: 1 }, field: 0, o: 1 },
-  // scrolling on carries you into the coin: it swells past the camera and dissolves
-  { sel: '.lux-masthead', pose: { x: 0.5, y: -0.1, s: 2.2, spin: TURN * 0.3, glow: 0.3 }, field: 0.4, o: 0.15 },
-  { sel: '#highlights', pose: { x: 0.5, y: -0.1, s: 3.4, spin: TURN * 0.5, glow: 0 }, field: 0.6, o: 0 },
+  // leaving the hero, the ₹ rises with it and is gone before the next section arrives
+  { sel: '.lux-masthead', pose: { x: 0.5, y: -1.5, s: 0.8, spin: TURN * 0.25, glow: 0 }, field: 0.5, o: 0 },
 ];
 const PHONE: Cue[] = [
   { sel: '#top', pose: { x: 0.5, y: -0.44, s: 0.42, spin: 0, glow: 1 }, field: 0, o: 1 },
-  { sel: '.lux-masthead', pose: { x: 0.5, y: -0.5, s: 1, spin: TURN * 0.3, glow: 0.3 }, field: 0.4, o: 0.15 },
-  { sel: '#highlights', pose: { x: 0.5, y: -0.5, s: 1.4, spin: TURN * 0.5, glow: 0 }, field: 0.6, o: 0 },
+  { sel: '.lux-masthead', pose: { x: 0.5, y: -1.6, s: 0.36, spin: TURN * 0.25, glow: 0 }, field: 0.5, o: 0 },
 ];
 
 const smooth = (t: number) => t * t * (3 - 2 * t);
