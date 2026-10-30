@@ -1,8 +1,8 @@
+import { TrendingUp, ShieldCheck, Globe2, BookOpen, ScanLine } from 'lucide-react';
 import { BrandLogo } from './BrandLogo';
-import { motion, MotionValue, useScroll, useTransform } from 'framer-motion';
-import { ReactNode, useLayoutEffect, useRef, useState } from 'react';
+import { motion } from 'framer-motion';
 import { wa } from '../data';
-import { EASE, spotlight, Title, untilt, useMobile } from './ui';
+import { EASE, FadeIn, spotlight, Title, untilt } from './ui';
 
 /** Each service gets a small living illustration: lines draw, nodes pulse, nothing loud. */
 const ART = {
@@ -58,94 +58,33 @@ const CARDS = [
   { tag: 'Review', art: ART.review, tint: 'from-violet/25', title: 'Review your investments.', body: 'Organise existing SIPs and funds around your goals, timeline and comfort with risk.' },
 ];
 
-/** Coverflow: a card turns and recedes the further it is from the middle of the screen. */
-function Flow({ x, children }: { x: MotionValue<number>; children: ReactNode }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const [left, setLeft] = useState(0);
-  const [w, setW] = useState(400);
-  useLayoutEffect(() => {
-    const m = () => { if (ref.current) { setLeft(ref.current.offsetLeft); setW(ref.current.offsetWidth); } };
-    m(); window.addEventListener('resize', m); return () => window.removeEventListener('resize', m);
-  }, []);
-  const d = useTransform(x, (v) => (left + v + w / 2 - window.innerWidth * 0.5) / window.innerWidth);
-  const rotateY = useTransform(d, [-0.7, 0, 0.7], [32, 0, -32]);
-  const scale = useTransform(d, [-0.8, 0, 0.8], [0.84, 1, 0.84]);
-  const opacity = useTransform(d, [-0.9, -0.3, 0, 0.3, 0.9], [0.35, 0.85, 1, 0.85, 0.35]);
-  const z = useTransform(d, [-0.7, 0, 0.7], [-160, 0, -160]);
-  return <motion.div ref={ref} className="shrink-0" style={{ rotateY, scale, opacity, z, transformStyle: 'preserve-3d' }}>{children}</motion.div>;
-}
+const SERVICE_ICONS = [<TrendingUp key="build" />, <ShieldCheck key="protect" />, <Globe2 key="connect" />, <BookOpen key="understand" />, <ScanLine key="review" />];
 
-function Card({ c, i, compact }: { c: (typeof CARDS)[number]; i: number; compact: boolean }) {
-  return (
-    <article
-      onPointerMove={spotlight}
-      onPointerLeave={untilt}
-      className={`glass spot ${compact ? '' : 'tilt'} group flex shrink-0 snap-center flex-col overflow-hidden ${compact ? 'h-[290px] w-[76vw] max-w-[320px] p-5' : 'h-[min(66vh,560px)] w-[min(440px,36vw)] p-8'}`}
-    >
-      <div className={`pointer-events-none absolute inset-0 bg-gradient-to-b ${c.tint} to-transparent opacity-60`} />
-      <div className="relative flex items-center justify-between text-[11px] uppercase tracking-[0.2em] text-dim">
-        <span>0{i + 1}</span><span>{c.tag}</span>
-      </div>
-      <div className={`relative mx-auto w-full ${compact ? 'mt-2 h-[110px]' : 'mt-6 h-[44%]'} transition-transform duration-700 group-hover:scale-[1.04]`}>{c.art}{c.tag === 'Protect' && <BrandLogo brand="kotak" className="service-kotak-logo" />}</div>
-      <div className="relative mt-auto">
-        <h3 className={`font-semibold tracking-[-0.035em] ${compact ? 'text-[20px] leading-tight' : 'text-[30px] leading-[1.08]'}`}>{c.title}</h3>
-        <p className={`mt-2 text-haze ${compact ? 'text-[13px] leading-snug' : 'text-[15px] leading-relaxed'}`}>{c.body}</p>
-        <a href={wa(`Hi Gulshan! Tell me more: ${c.title}`)} target="_blank" rel="noreferrer" className={`link ${compact ? 'mt-3 text-[13px]' : 'mt-5'}`}>Let’s talk ↗</a>
-      </div>
-    </article>
-  );
-}
-
-/** Laptop: the section pins and the five services glide past sideways. Phone: a swipe row. */
+/** A direct next step after the landing: five services, visible together rather than a pinned carousel. */
 export function Highlights() {
-  const mobile = useMobile();
-  const section = useRef<HTMLElement>(null);
-  const track = useRef<HTMLDivElement>(null);
-  const [dist, setDist] = useState(0);
-  useLayoutEffect(() => {
-    if (mobile) return;
-    const measure = () => setDist(Math.max(0, (track.current?.scrollWidth ?? 0) - window.innerWidth));
-    measure();
-    window.addEventListener('resize', measure);
-    return () => window.removeEventListener('resize', measure);
-  }, [mobile]);
-  const { scrollYProgress: p } = useScroll({ target: section, offset: ['start start', 'end end'] });
-  const x = useTransform(p, [0.05, 0.95], [0, -dist]);
-  const bar = useTransform(p, [0.05, 0.95], [0, 1]);
-
-  const head = (
-    <div className="flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
-      <div>
-        <p className="kicker">01 / Your financial world</p>
-        <Title className="display mt-4 text-[clamp(2.4rem,5.6vw,5rem)]" text="One life. / *Many possibilities.*" />
-      </div>
-      <p className="lede max-w-sm">Your first SIP. Your family’s protection. Your next chapter. Start with what matters to you.</p>
-    </div>
-  );
-
-  if (mobile) {
-    return (
-      <section id="highlights" data-dark className="py-16">
-        <div className="wrap">{head}</div>
-        <div className="no-scrollbar mt-8 flex snap-x snap-mandatory gap-3 overflow-x-auto px-5 pb-2">
-          {CARDS.map((c, i) => <Card key={c.title} c={c} i={i} compact />)}
-        </div>
-        <p className="wrap mt-3 text-[12px] text-dim">Swipe to explore ›</p>
-      </section>
-    );
-  }
-
   return (
-    <section id="highlights" data-dark ref={section} className="relative" style={{ height: `calc(100svh + ${dist}px)` }}>
-      <div className="sticky top-0 flex h-[100svh] flex-col justify-center overflow-hidden">
-        <div className="wrap-wide">{head}</div>
-        <motion.div ref={track} className="mt-10 flex w-max gap-5 pl-[max(2rem,calc((100vw-1320px)/2+2rem))] pr-[30vw]" style={{ x, perspective: 1600 }}>
-          {CARDS.map((c, i) => <Flow key={c.title} x={x}><Card c={c} i={i} compact={false} /></Flow>)}
-        </motion.div>
-        <div className="wrap-wide mt-8 flex items-center gap-4 text-[11px] uppercase tracking-[0.2em] text-dim">
-          <div className="h-px flex-1 overflow-hidden bg-white/10"><motion.span className="block h-full origin-left bg-gradient-to-r from-amber via-rose to-violet" style={{ scaleX: bar }} /></div>
-          <span>Keep scrolling</span>
+    <section id="highlights" data-dark className="expertise-section">
+      <div className="wrap-wide">
+        <div className="expertise-heading">
+          <div><p className="kicker">01 / Built around your life</p><Title className="display expertise-title" text="Your priorities. / *A clearer path.*" /></div>
+          <div className="expertise-heading-aside"><p>Build for tomorrow. Protect what matters today. Start with the conversation that feels right for you.</p><a href="#calculator" onClick={()=>window.dispatchEvent(new Event('moneytec:plan-goal'))}>Find my starting point <span aria-hidden="true">↗</span></a></div>
         </div>
+        <div className="expertise-grid">
+          {CARDS.map((c,i)=><FadeIn key={c.tag} className={`expertise-tile expertise-tile-${i}`} delay={i*.05}>
+            <article className="spot" onPointerMove={spotlight} onPointerLeave={untilt}>
+              <div className="expertise-topline"><span>0{i+1} / {c.tag}</span>{c.tag === 'Protect' ? <BrandLogo brand="kotak" /> : <span aria-hidden="true">↗</span>}</div>
+              <div className="expertise-illustration">{c.art}</div>
+              <div className="expertise-copy"><h3>{c.title}</h3><p>{c.body}</p><a href={i === 0 ? '#calculator' : wa(`Hi Gulshan! Tell me more: ${c.title}`)} onClick={i === 0 ? () => window.dispatchEvent(new Event('moneytec:plan-sip')) : undefined} {...(i === 0 ? {} : {target:'_blank', rel:'noreferrer'})}>{['Plan my SIP','Explore life cover','Discuss NRI investing','Get some clarity','Review my portfolio'][i]} <span aria-hidden="true">↗</span></a></div>
+            </article>
+          </FadeIn>)}
+        </div>
+        <div className="expertise-phone">
+          {CARDS.map((c,i)=><details key={c.tag} className="expertise-disclosure">
+            <summary><span className="expertise-summary-icon" aria-hidden="true">{SERVICE_ICONS[i]}</span><span><small>0{i+1} / {c.tag}</small><strong>{c.title}</strong></span><span className="expertise-summary-plus" aria-hidden="true">+</span></summary>
+            <div className="expertise-disclosure-body">{c.tag==='Protect' && <BrandLogo brand="kotak" />}<p>{c.body}</p><a href={i === 0 ? '#calculator' : wa(`Hi Gulshan! Tell me more: ${c.title}`)} onClick={i === 0 ? () => window.dispatchEvent(new Event('moneytec:plan-sip')) : undefined} {...(i === 0 ? {} : {target:'_blank', rel:'noreferrer'})}>{i === 0 ? 'Explore the SIP calculator' : 'Discuss this with Gulshan'} ↗</a></div>
+          </details>)}
+        </div>
+        <div className="expertise-bottom"><span>A conversation first. A decision when you’re ready.</span><a href="#gulshan">Meet the person behind your plan <span aria-hidden="true">↗</span></a></div>
       </div>
     </section>
   );

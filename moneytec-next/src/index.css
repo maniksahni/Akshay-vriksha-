@@ -197,21 +197,6 @@ details > summary::-webkit-details-marker { display: none; }
 
 /* Supplied Sanskrit verse: local subset font, calm editorial composition. */
 @font-face { font-family:'Moneytec Devanagari'; src:url('/fonts/shloka-devanagari.woff2') format('woff2'); font-weight:500; font-style:normal; font-display:swap; }
-.wisdom-section { padding:48px 0 60px; }
-.wisdom-frame { position:relative; display:grid; grid-template-columns:.78fr 1.22fr; gap:56px; align-items:center; padding:44px; border:1px solid #c4a2db24; border-radius:28px; overflow:hidden; background:radial-gradient(ellipse at 0% 100%,#ff9f0a09,transparent 50%),linear-gradient(115deg,#21152b99,#100d1799); }
-.wisdom-frame::before { content:''; position:absolute; top:0; left:44px; right:44px; height:1px; background:linear-gradient(90deg,transparent,#f6b96c66,#d785d466,transparent); }
-.wisdom-context h2 { font-size:clamp(30px,3.2vw,44px); font-weight:500; line-height:1.08; letter-spacing:-.04em; margin-top:20px; }
-.wisdom-drops { display:flex; align-items:center; gap:13px; position:relative; max-width:190px; margin-top:27px; }
-.wisdom-drops > span { position:absolute; inset:50% 0 auto; height:1px; background:linear-gradient(90deg,#c68f49,#ba6ba5); opacity:.3; }
-.wisdom-drops i,.wisdom-drops b { position:relative; height:4px; width:4px; background:#dca36b; border-radius:50%; }
-.wisdom-drops b { height:8px; width:8px; background:#eec596; box-shadow:0 0 15px #eea56444; }
-.wisdom-verse { border-left:1px solid #eac9ed20; padding-left:38px; }
-.wisdom-verse blockquote { font-family:'Moneytec Devanagari','Noto Serif Devanagari',serif; font-weight:500; font-size:clamp(17px,1.65vw,23px); line-height:1.95; color:#f4d1a5; }
-.wisdom-verse blockquote > span { display:block; }
-.wisdom-meaning { margin-top:17px; font-size:13px; line-height:1.7; color:#baabbf; max-width:460px; }
-.wisdom-connection { margin-top:10px; font-size:11px; line-height:1.7; color:#8e7f99; }
-.wisdom-link { display:inline-flex; align-items:center; gap:14px; margin-top:21px; font-size:12px; color:#e2b79c; }
-.wisdom-link:hover { color:white; }
 /* Untinted brand artwork lives on a neutral surface beside its actual relationship. */
 .credential-logo { display:inline-flex; align-items:center; justify-content:center; background:#fff; border-radius:9px; padding:9px 12px; flex-shrink:0; }
 .credential-logo img { display:block; object-fit:contain; width:100%; height:auto; }
@@ -227,19 +212,6 @@ details > summary::-webkit-details-marker { display: none; }
 .platform-action-logo { filter:brightness(0) invert(1); }
 .footer-platform-link { display:inline-flex; align-items:center; gap:7px; }
 @media (max-width:767px) {
- .wisdom-section { padding:28px 0 34px; }
- .wisdom-frame { grid-template-columns:1fr; padding:24px 20px; gap:21px; border-radius:20px; }
- .wisdom-frame::before { left:20px; right:20px; }
- .wisdom-context h2 { margin-top:14px; font-size:30px; }
- .wisdom-context h2 br { display:none; }
- .wisdom-context h2 .serif::before { content:' '; }
- .wisdom-context .kicker { font-size:9px; }
- .wisdom-drops { display:none; }
- .wisdom-verse { border-left:0; border-top:1px solid #eac9ed20; padding:20px 0 0; }
- .wisdom-verse blockquote { font-size:clamp(15px,4.1vw,19px); line-height:2.05; }
- .wisdom-meaning { margin-top:14px; font-size:12px; }
- .wisdom-connection { font-size:10px; }
- .wisdom-link { margin-top:16px; min-height:34px; }
  .ticker-credential { justify-content:center; gap:9px; font-size:10px; }
  .ticker-credential strong { max-width:180px; text-align:left; }
  .ticker-credential .credential-logo { width:72px; padding:6px; }
@@ -260,7 +232,6 @@ details > summary::-webkit-details-marker { display: none; }
 a,button,input,select,summary { -webkit-tap-highlight-color:rgba(255,159,10,.15); }
 @media (max-width:767px) {
  .hero-mobile .mobile-rupee-stage { top:44px; height:248px; }
- .hero-mobile .mobile-rupee-caption { top:282px; }
  .hero-mobile .hero-mobile-copy { padding-top:238px; }
  .hero-mobile h1 { font-size:clamp(32px,8.8vw,48px); line-height:1.04; margin-top:17px; }
  .hero-mobile .hero-mobile-copy > div:first-of-type > p:first-child { font-size:16px; }
@@ -280,7 +251,6 @@ a,button,input,select,summary { -webkit-tap-highlight-color:rgba(255,159,10,.15)
  #calculator aside .btn-light { white-space:normal; height:auto; min-height:48px; padding-top:12px; padding-bottom:12px; line-height:1.45; }
  #calculator aside dd { flex-shrink:0; }
  #calculator aside dt { min-width:0; }
- .wisdom-context h2 { font-size:28px; }
  #start form .btn-glow { font-size:14px; min-height:48px; }
  .mentor-kotak-credential .credential-logo { width:112px; }
  .mentor-amfi-credential .credential-logo { width:112px; }
@@ -294,6 +264,125 @@ a,button,input,select,summary { -webkit-tap-highlight-color:rgba(255,159,10,.15)
  #top .max-w-\[44rem\] { max-width:620px; }
 }
 @media (max-width:767px) {
- .wisdom-context h2 br { display:initial; }
- .wisdom-context h2 .serif::before { content:none; }
+}
+
+/* The philosophy is the first impression: Sanskrit, purpose and action in one hero. */
+.hero-wisdom { max-width:550px; margin-top:22px; padding:19px 0 0 22px; border-left:1px solid #e7aa7255; position:relative; }
+.hero-wisdom::before { content:''; position:absolute; height:5px; width:5px; border-radius:50%; left:-3px; top:0; background:#edbc8a; box-shadow:0 0 14px #e8a46466; }
+.hero-wisdom-label { font-size:8px; letter-spacing:.22em; color:#9a839a; margin-bottom:10px; }
+.hero-wisdom blockquote { font-family:'Moneytec Devanagari','Noto Serif Devanagari',serif; font-weight:500; font-size:clamp(17px,1.45vw,22px); line-height:1.95; color:#f2cea2; }
+.hero-wisdom blockquote > span { display:block; }
+.hero-wisdom-meaning { max-width:455px; margin-top:10px; font-size:12px; line-height:1.7; color:#b3a2b8; }
+.hero-services-line { max-width:470px; margin-top:19px; font-size:14px; line-height:1.65; color:#d1c4d7; }
+.hero-with-wisdom .hero-intro-column { max-width:620px; }
+.hero-with-wisdom h1 { font-size:clamp(46px,6vw,86px); }
+.hero-with-wisdom .hero-intro-column > .mt-7 { margin-top:23px; }
+.hero-with-wisdom .hero-intro-column > .mt-8 { margin-top:24px; font-size:11px; }
+@media (min-width:768px) and (max-height:800px) {
+ .hero-with-wisdom h1 { font-size:clamp(46px,5.2vw,72px) !important; }
+ .hero-with-wisdom .hero-wisdom { margin-top:16px; padding-top:10px; }
+ .hero-with-wisdom .hero-wisdom blockquote { font-size:20px; }
+ .hero-with-wisdom .hero-wisdom-meaning { font-size:12px; }
+ .hero-with-wisdom .hero-services-line { font-size:13px; margin-top:15px; }
+}
+@media (max-width:767px) {
+ .hero-mobile .mobile-rupee-stage { top:62px; height:202px; }
+ .hero-mobile .hero-mobile-copy { padding-top:205px; }
+ .hero-mobile h1 { font-size:clamp(31px,8.7vw,46px); }
+ .hero-mobile .hero-wisdom { margin-top:17px; padding:10px 0 0 14px; }
+ .hero-wisdom-label { font-size:7px; letter-spacing:.16em; margin-bottom:8px; }
+ .hero-wisdom blockquote { font-size:clamp(15px,4.05vw,19px); line-height:1.95; }
+ .hero-wisdom-meaning { font-size:11px; margin-top:10px; max-width:410px; }
+ .hero-services-line { font-size:12px; line-height:1.65; margin-top:15px; max-width:420px; }
+ .hero-mobile-copy > .mt-7 { margin-top:17px; }
+ .hero-mobile-copy > .mt-8 { margin-top:17px; gap:9px 16px; }
+ .hero-mobile { padding-bottom:31px; }
+}
+@media (max-width:767px) and (min-width:600px) and (max-height:520px) {
+ .hero-mobile .mobile-rupee-stage { left:62%; width:38%; top:95px; height:260px; }
+ .hero-mobile .hero-mobile-copy { padding-top:25px; }
+ .hero-mobile h1 { font-size:36px; max-width:60%; }
+ .hero-mobile .hero-wisdom { max-width:60%; }
+ .hero-mobile .hero-wisdom blockquote { font-size:17px; }
+ .hero-mobile .hero-services-line { max-width:60%; }
+ .hero-mobile .hero-mobile-copy > .mt-8 { max-width:65%; }
+}
+
+/* First scroll: a compact editorial service system in the same cinematic palette. */
+.expertise-section { padding:90px 0 75px; background:radial-gradient(ellipse at 0% 50%,#3a163218,transparent 58%),#09070e; border-bottom:1px solid #ffffff0c; }
+.expertise-heading { display:flex; justify-content:space-between; align-items:flex-end; gap:40px; margin-bottom:34px; }
+.expertise-title { font-size:clamp(40px,4.6vw,64px); margin-top:19px; }
+.expertise-heading-aside { max-width:310px; padding-bottom:5px; }
+.expertise-heading-aside p { font-size:14px; line-height:1.75; color:#a99cb5; }
+.expertise-heading-aside a { display:inline-flex; align-items:center; gap:22px; color:#e5b4cf; font-size:12px; margin-top:20px; }
+.expertise-grid { display:grid; grid-template-columns:repeat(6,minmax(0,1fr)); gap:15px; }
+.expertise-tile { grid-column:span 2; min-width:0; border:1px solid #b29ac326; border-radius:23px; overflow:hidden; background:linear-gradient(140deg,#211627,#100d16); transition:border-color .3s; }
+.expertise-tile:nth-child(-n+2) { grid-column:span 3; }
+.expertise-tile article { position:relative; padding:25px; height:100%; min-height:340px; display:flex; flex-direction:column; overflow:hidden; }
+.expertise-tile:nth-child(-n+2) article { min-height:300px; }
+.expertise-tile-0 { background:radial-gradient(ellipse at 90% 10%,#7a3f3a30,transparent 65%),#19101e; }
+.expertise-tile-1 { background:radial-gradient(ellipse at 90% 10%,#2d4d733c,transparent 65%),#11131d; }
+.expertise-topline { display:flex; align-items:center; justify-content:space-between; gap:15px; min-height:28px; font-size:9px; letter-spacing:.16em; text-transform:uppercase; color:#ae97bc; }
+.expertise-topline > span:last-child:not(.credential-logo) { color:#d8a1c7; font-size:19px; }
+.expertise-topline .credential-logo { width:96px; padding:6px 8px; border-radius:6px; }
+.expertise-illustration { width:145px; height:100px; margin:15px 0 17px auto; }
+.expertise-tile:nth-child(-n+2) .expertise-illustration { position:absolute; right:28px; top:75px; width:180px; height:120px; margin:0; opacity:.85; }
+.expertise-copy { margin-top:auto; position:relative; }
+.expertise-copy h3 { font-size:23px; font-weight:500; letter-spacing:-.035em; line-height:1.15; max-width:300px; }
+.expertise-copy p { color:#aa9bb5; font-size:12px; line-height:1.75; margin-top:12px; max-width:330px; }
+.expertise-tile:nth-child(-n+2) .expertise-copy h3 { font-size:29px; max-width:285px; }
+.expertise-tile:nth-child(-n+2) .expertise-copy p { max-width:330px; padding-right:40px; }
+.expertise-copy a { display:flex; justify-content:space-between; align-items:center; gap:15px; border-top:1px solid #ffffff13; padding-top:15px; margin-top:22px; font-size:12px; color:#edc7e1; }
+.expertise-copy a > span { font-size:17px; }
+.expertise-tile:hover { border-color:#bf7fa670; }
+.expertise-phone { display:none; }
+.expertise-bottom { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:15px; margin-top:25px; font-size:11px; color:#7c6d87; }
+.expertise-bottom a { color:#c4a1bf; }
+.expertise-bottom a > span { margin-left:12px; }
+@media (min-width:768px) and (max-width:1050px) {
+ .expertise-tile:nth-child(-n+2) .expertise-illustration { width:125px; height:90px; top:85px; right:16px; opacity:.6; }
+ .expertise-tile:nth-child(-n+2) .expertise-copy h3 { font-size:25px; max-width:235px; }
+ .expertise-tile article { padding:21px; }
+}
+@media (max-width:767px) {
+ .expertise-section { padding:37px 0 34px; }
+ .expertise-heading { display:block; margin-bottom:23px; }
+ .expertise-title { font-size:34px; margin-top:15px; }
+ .expertise-heading-aside { margin-top:15px; max-width:440px; padding:0; }
+ .expertise-heading-aside p { font-size:12px; line-height:1.7; }
+ .expertise-heading-aside a { margin-top:13px; min-height:34px; font-size:11px; }
+ .expertise-grid { display:none; }
+ .expertise-phone { display:grid; gap:9px; }
+ .expertise-disclosure { border:1px solid #b29ac32b; background:linear-gradient(110deg,#25162d80,#110d18); border-radius:16px; overflow:hidden; }
+ .expertise-disclosure summary { display:flex; align-items:center; gap:11px; cursor:pointer; min-height:83px; padding:13px; list-style:none; }
+ .expertise-disclosure summary::-webkit-details-marker { display:none; }
+ .expertise-summary-icon { width:44px; height:40px; flex-shrink:0; }
+ .expertise-disclosure summary small { display:block; color:#9e7eaa; letter-spacing:.12em; font-size:8px; text-transform:uppercase; margin-bottom:5px; }
+ .expertise-disclosure summary strong { display:block; font-size:15px; font-weight:500; letter-spacing:-.025em; line-height:1.35; }
+ .expertise-summary-plus { margin-left:auto; flex-shrink:0; padding-left:7px; font-size:23px; color:#ce93b7; font-weight:300; }
+ .expertise-disclosure[open] .expertise-summary-plus { transform:rotate(45deg); }
+ .expertise-disclosure-body { padding:0 18px 17px 68px; font-size:12px; color:#ad9db7; line-height:1.75; }
+ .expertise-disclosure-body p { margin-top:6px; }
+ .expertise-disclosure-body .credential-logo { width:105px; padding:6px 8px; margin-bottom:9px; }
+ .expertise-disclosure-body a { display:inline-flex; align-items:center; min-height:35px; color:#e6b6d3; margin-top:9px; font-size:11px; }
+ .expertise-bottom { margin-top:21px; font-size:10px; line-height:1.6; gap:10px; }
+}
+@media (min-width:768px) {
+ .expertise-tile:nth-child(-n+2) article { display:grid; grid-template-columns:minmax(0,1fr) 160px; grid-template-rows:auto 1fr; gap:20px; min-height:330px; }
+ .expertise-tile:nth-child(-n+2) .expertise-topline { grid-column:1/-1; }
+ .expertise-tile:nth-child(-n+2) .expertise-illustration { position:static; grid-area:2/2; width:160px; height:120px; margin:0; align-self:center; }
+ .expertise-tile:nth-child(-n+2) .expertise-copy { grid-area:2/1; margin-top:0; align-self:center; }
+ .expertise-tile:nth-child(-n+2) .expertise-copy h3,.expertise-tile:nth-child(-n+2) .expertise-copy p { max-width:none; padding-right:0; }
+}
+@media (min-width:768px) and (max-width:1050px) {
+ .expertise-tile:nth-child(-n+2) article { grid-template-columns:minmax(0,1fr) 100px; gap:15px; }
+ .expertise-tile:nth-child(-n+2) .expertise-illustration { width:100px; height:95px; }
+ .expertise-tile:nth-child(-n+2) .expertise-copy h3 { font-size:23px; }
+}
+@media (max-width:767px) {
+ .expertise-summary-icon { display:grid; place-items:center; width:41px; height:41px; border-radius:12px; background:linear-gradient(145deg,#ce894511,#bf5af214); border:1px solid #e1b0e018; color:#efa7ca; }
+ .expertise-summary-icon svg { width:21px; height:21px; }
+ .expertise-disclosure:nth-child(2) .expertise-summary-icon { color:#8cc3f0; }
+ .expertise-disclosure:nth-child(3) .expertise-summary-icon { color:#7fd7bb; }
+ .expertise-disclosure:nth-child(4) .expertise-summary-icon { color:#e3c18c; }
 }

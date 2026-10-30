@@ -42,8 +42,10 @@ export function Configure() {
   const [mode, setMode] = useState<'sip' | 'goal'>('sip');
   useEffect(() => {
     const openGoal = () => setMode('goal');
+    const openSip = () => setMode('sip');
     window.addEventListener('moneytec:plan-goal', openGoal);
-    return () => window.removeEventListener('moneytec:plan-goal', openGoal);
+    window.addEventListener('moneytec:plan-sip', openSip);
+    return () => { window.removeEventListener('moneytec:plan-goal', openGoal); window.removeEventListener('moneytec:plan-sip', openSip); };
   }, []);
   const [monthly, setMonthly] = useState(5000);
   const [years, setYears] = useState(20);

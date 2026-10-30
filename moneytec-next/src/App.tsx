@@ -1,4 +1,3 @@
-import { Wisdom } from './components/Wisdom';
 import { useEffect } from 'react';
 import { Faq, Finale, Footer, Gulshan, Safety } from './components/Closing';
 import { Configure } from './components/Configure';
@@ -41,7 +40,6 @@ export default function App() {
       <Nav />
       <main id="main">
         <Hero />
-        <Wisdom />
         <Ticker />
         <Highlights />
         <Grow />

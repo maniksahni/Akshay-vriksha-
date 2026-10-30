@@ -1,5 +1,6 @@
+import { HeroWisdom } from './Wisdom';
 import { BrandLogo } from './BrandLogo';
-import { motion, MotionValue, useMotionValue, useMotionValueEvent, useScroll, useTransform } from 'framer-motion';
+import { motion, MotionValue, useMotionValue, useScroll, useTransform } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
 import { FACTS } from '../data';
 import { EASE, reduced, useMobile } from './ui';
@@ -66,8 +67,8 @@ function HeroCopy({ mobile, inactive = false }: { mobile: boolean; inactive?: bo
       <motion.p className="kicker" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9, ease: EASE, delay: 0.2 }}>
         Moneytec — Money, with meaning
       </motion.p>
-      <h1 className="display mt-5 text-[clamp(3rem,8.4vw,8.6rem)]" aria-label="Make your money mean more.">
-        {(mobile ? ['Make your money', '*mean more.*'] : ['Make your', 'money', '*mean more.*']).map((line, i) => (
+      <h1 className="display mt-5 text-[clamp(3rem,8.4vw,8.6rem)]" aria-label="Small steps. Lasting growth.">
+        {['Small steps.', '*Lasting growth.*'].map((line, i) => (
           <span key={line} aria-hidden className="block overflow-hidden pb-[0.06em]">
             <motion.span className="block" initial={{ y: '112%' }} animate={{ y: 0 }} transition={{ duration: 1.2, ease: EASE, delay: 0.35 + i * 0.1 }}>
               {line.startsWith('*') ? <span className="serif grad pr-[0.05em] text-[1.08em]">{line.slice(1, -1)}</span> : line}
@@ -76,8 +77,8 @@ function HeroCopy({ mobile, inactive = false }: { mobile: boolean; inactive?: bo
         ))}
       </h1>
       <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1, delay: 0.8 }}>
-        <p className="mt-5 max-w-[30rem] text-[18px] leading-snug text-paper sm:text-[22px]">A clearer path to your goals, built around your life.</p>
-        {mobile && <p className="lede mt-2 max-w-[30rem]">Goal-based mutual fund investing, insurance and NRI guidance with {FACTS.name}.</p>}
+        <HeroWisdom />
+        <p className="hero-services-line">Goal-based investing, family protection and NRI guidance with {FACTS.name}.</p>
       </motion.div>
       <motion.div className="mt-7 flex flex-wrap items-center gap-3" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9, ease: EASE, delay: 0.95 }}>
         <a href="#start" tabIndex={inactive ? -1 : undefined} className="btn-light pr-2">Start a conversation <span className="arrow">↗</span></a>
@@ -94,16 +95,12 @@ function HeroCopy({ mobile, inactive = false }: { mobile: boolean; inactive?: bo
 export function Hero() {
   const mobile = useMobile();
   const ref = useRef<HTMLElement>(null);
-  const { scrollYProgress: p } = useScroll({ target: ref, offset: ['start start', 'end end'] });
+  const { scrollYProgress: p } = useScroll({ target: ref, offset: ['start start', 'end start'] });
   const disperse = useTransform(p, [0.08, 0.62], [0, 1], { clamp: true });
-  const copyOpacity = useTransform(p, [0.04, 0.3], [1, 0]);
-  const copyY = useTransform(p, [0, 0.3], [0, -60]);
-  const copyBlur = useTransform(p, [0.04, 0.3], ['blur(0px)', 'blur(10px)']);
-  const twoOpacity = useTransform(p, [0.5, 0.7, 0.94, 1], [0, 1, 1, 0]);
-  const twoScale = useTransform(p, [0.5, 0.75], [0.92, 1]);
+  const copyOpacity = useTransform(p, [0, .85], [1, .15]);
+  const copyY = useTransform(p, [0, 1], [0, -35]);
+  const copyBlur = useTransform(p, [0, 1], ['blur(0px)', 'blur(2px)']);
   const floor = useTransform(p, [0, 1], ['0%', '-40%']);
-  const [two, setTwo] = useState(false);
-  useMotionValueEvent(p, 'change', (v) => setTwo(v > 0.55));
   const still = useMotionValue(0);
 
   if (mobile) {
@@ -114,15 +111,14 @@ export function Hero() {
           <div className="absolute left-1/2 top-1/2 h-[220px] w-[220px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(closest-side,rgba(255,55,95,0.40),transparent)]" />
           <Rupee3D progress={still} centerX={0.5} glyph="160px" />
         </div>
-        <div className="mobile-rupee-caption absolute inset-x-0 top-[374px] flex justify-center"><FactLine className="" /></div>
         <div className="hero-mobile-copy wrap relative pt-[334px]"><HeroCopy mobile /></div>
       </section>
     );
   }
 
   return (
-    <section id="top" data-dark ref={ref} className="relative h-[240svh]">
-      <div className="sticky top-0 h-[100svh] overflow-hidden">
+    <section id="top" data-dark ref={ref} className="hero-with-wisdom relative h-[100svh]">
+      <div className="relative h-[100svh] overflow-hidden">
         <div className="pointer-events-none absolute inset-0"><div className="aurora opacity-35" /></div>
         <motion.div className="grid-floor pointer-events-none absolute inset-x-[-20%] bottom-[-30%] h-[70%] origin-bottom opacity-60" style={{ transform: 'perspective(600px) rotateX(68deg)', backgroundPositionY: floor }} />
         <motion.div className="pointer-events-none absolute left-[70%] top-1/2 -translate-x-1/2 -translate-y-1/2" style={{ opacity: copyOpacity }}>
@@ -132,17 +128,8 @@ export function Hero() {
         <Rupee3D progress={disperse} centerX={0.7} glyph="35vh" />
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(60%_60%_at_25%_55%,rgba(7,6,11,0.75),transparent_70%)]" />
 
-        <motion.div className="wrap-wide relative flex h-full flex-col justify-center pt-10" style={{ opacity: copyOpacity, y: copyY, filter: copyBlur, pointerEvents: two ? 'none' : 'auto' }} aria-hidden={two}>
-          <div className="max-w-[44rem]"><HeroCopy mobile={false} inactive={two} /></div>
-        </motion.div>
-
-        <motion.div className="absolute inset-0 grid place-items-center px-6 text-center" style={{ opacity: twoOpacity, scale: twoScale, pointerEvents: two ? 'auto' : 'none' }} aria-hidden={!two}>
-          <div>
-            <p className="kicker justify-center">A more personal approach to money</p>
-            <p className="display mt-6 text-[clamp(2.6rem,6.4vw,6rem)]">Your goals.<br /><span className="serif grad">Connected by clarity.</span></p>
-            <p className="lede mx-auto mt-5 max-w-xl">Goal-based investing, family protection and NRI guidance, with {FACTS.name} alongside you.</p>
-            <a href="#highlights" tabIndex={two ? undefined : -1} className="link mt-8">See how it works ↓</a>
-          </div>
+        <motion.div className="wrap-wide relative flex h-full flex-col justify-center pt-10" style={{ opacity: copyOpacity, y: copyY, filter: copyBlur }}>
+          <div className="hero-intro-column max-w-[44rem]"><HeroCopy mobile={false} /></div>
         </motion.div>
 
         <div className="pointer-events-none absolute inset-x-0 bottom-6">
