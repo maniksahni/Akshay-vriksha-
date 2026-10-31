@@ -9,7 +9,7 @@ import { EASE, reduced, useMobile } from './ui';
 function SplitLine({ text, play, delay, accent }: { text: string; play: boolean; delay: number; accent?: boolean }) {
   const chars = text.split('');
   return (
-    <span aria-hidden className="block overflow-hidden pb-[0.12em]">
+    <span aria-hidden className="text-mask block overflow-hidden pb-[0.12em]">
       <span className={`block ${accent ? 'italic' : ''}`}>
         {chars.map((ch, i) => (
           <motion.span

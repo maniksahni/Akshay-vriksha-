@@ -267,7 +267,7 @@ function FooterMark() {
   const ref = useRef<HTMLParagraphElement>(null);
   const { scrollYProgress: p } = useScroll({ target: ref, offset: ['start end', 'end end'] });
   return (
-    <p ref={ref} aria-hidden className="mt-12 select-none overflow-hidden pb-[0.06em] text-center text-[23vw] font-semibold leading-[0.84] tracking-[-0.07em]">
+    <p ref={ref} aria-hidden className="text-mask mt-12 select-none overflow-hidden pb-[0.06em] text-center text-[23vw] font-semibold leading-[0.84] tracking-[-0.07em]">
       {'moneytec'.split('').map((ch, i) => <Letter key={i} ch={ch} i={i} p={p} />)}
     </p>
   );

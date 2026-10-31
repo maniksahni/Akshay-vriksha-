@@ -1008,3 +1008,9 @@ a.lux-masthead-cell:hover { background: rgba(255,55,95,.05); color: var(--ivory)
   .lux-row-head { grid-column: 1; }
   .lux-row-art { grid-column: 2; grid-row: 1; }
 }
+
+/* ---------------------------------------------------------------- text masks that Safari honours
+   Safari lets GPU-animated letters escape an overflow:hidden parent, so moving words showed above and below
+   their line. clip-path clips them in every browser; the side insets leave room for italic overhangs. */
+.text-mask, .goal-slot { clip-path: inset(0 -0.6em 0 -0.6em); -webkit-clip-path: inset(0 -0.6em 0 -0.6em); }
+.goal-slot { overflow: visible; isolation: isolate; }

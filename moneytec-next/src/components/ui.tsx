@@ -43,7 +43,7 @@ export function Title({ text, className = '', as: Tag = 'h2', delay = 0 }: { tex
   return (
     <Tag ref={ref} className={className} aria-label={text.replace(/\*| \/ /g, (m) => (m === '*' ? '' : ' '))}>
       {lines.map((line, i) => (
-        <span key={i} aria-hidden className="block overflow-hidden pb-[0.08em]">
+        <span key={i} aria-hidden className="text-mask block overflow-hidden pb-[0.08em]">
           <motion.span
             className="block"
             initial={{ y: '110%' }}
