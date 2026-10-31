@@ -1064,3 +1064,17 @@ a.lux-masthead-cell:hover { background: rgba(255,55,95,.05); color: var(--ivory)
   .calc-controls [role=radiogroup] { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; overflow: visible; margin: 0; padding: 0; }
   .calc-controls .seg { width: 100%; padding: 0 4px; font-size: 12px !important; height: 34px !important; }
 }
+
+/* goal word as one piece: the gradient spans the whole word and the word travels as a unit */
+.goal-word {
+  background-image: linear-gradient(100deg, #FFB340 0%, #FF375F 45%, #BF5AF2 85%); -webkit-background-clip: text; background-clip: text; color: transparent;
+  transform: translate3d(0, 105%, 0); opacity: 0; will-change: transform, opacity;
+  transition: transform .9s cubic-bezier(.22,1,.36,1), opacity .5s ease;
+}
+.goal-word[data-state='in'] { transform: none; opacity: 1; transition-delay: .12s; }
+.goal-word[data-state='out'] { transform: translate3d(0, -105%, 0); opacity: 0; transition-duration: .7s, .4s; }
+.goal-word[data-state='wait'] { transition: none; }
+/* phones: the goal word has its own line, so its cell is simply the full line and the word stays dead centre */
+@media (max-width: 767px) {
+  .lux-hero-mobile .goal-slot { display: grid; width: auto !important; margin: 0 !important; padding: 0 0 .12em !important; justify-items: center; transition: none; }
+}

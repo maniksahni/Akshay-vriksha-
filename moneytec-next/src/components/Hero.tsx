@@ -31,23 +31,9 @@ function SplitLine({ text, play, delay, accent }: { text: string; play: boolean;
 /** Goals the site already plans for; the headline's last word cycles through them. */
 const GOALS = ['Freedom.', 'Home.', 'Education.', 'Retirement.'];
 
-/** One goal word, split into letters that rise in (or lift away) one after another on the GPU. */
+/** One goal word, kept whole so the typeface's own letter spacing stays intact; it rises in or lifts away. */
 function GoalWord({ word, state }: { word: string; state: 'in' | 'out' | 'wait' }) {
-  const chars = word.split('');
-  return (
-    <span className="goal-word italic" data-state={state}>
-      {chars.map((ch, k) => (
-        <span
-          key={k}
-          className="goal-ch"
-          // each letter shows its own slice of one gradient spread across the whole word
-          style={{ ['--d' as string]: `${k * 32}ms`, backgroundSize: `${chars.length * 100}% 100%`, backgroundPosition: `${(k / Math.max(1, chars.length - 1)) * 100}% 0` }}
-        >
-          {ch}
-        </span>
-      ))}
-    </span>
-  );
+  return <span className="goal-word italic" data-state={state}>{word}</span>;
 }
 
 /**
