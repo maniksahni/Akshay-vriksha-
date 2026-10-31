@@ -19,10 +19,31 @@
     <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..800&family=Instrument+Serif:ital@0;1&display=swap" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
     <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" /></noscript>
-    <script type="module" crossorigin src="./assets/index-BamPDBjs.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/index-CT9hy9LQ.css">
+    <script type="module" crossorigin src="./assets/index-CDseAUC6.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-qXCUGMZ_.css">
   </head>
   <body>
     <div id="root"></div>
+    <script>
+      // Phones often reopen a saved copy of this page. Ask the server which build is current (bypassing the
+      // cache) and, if this copy is older, reload once so visitors always get the latest site.
+      (function () {
+        function check() {
+          try {
+            var mine = document.querySelector('script[type="module"][src*="assets/index-"]');
+            if (!mine || !window.fetch) return;
+            fetch(location.pathname + '?fresh=' + Date.now(), { cache: 'no-store' }).then(function (r) { return r.text(); }).then(function (html) {
+              var latest = html.match(/assets\/index-[\w-]+\.js/);
+              if (latest && mine.getAttribute('src').indexOf(latest[0]) < 0 && sessionStorage.getItem('mt-refreshed') !== latest[0]) {
+                sessionStorage.setItem('mt-refreshed', latest[0]);
+                location.reload();
+              }
+            }).catch(function () {});
+          } catch (e) {}
+        }
+        check();
+        window.addEventListener('pageshow', function (e) { if (e.persisted) check(); });
+      })();
+    </script>
   </body>
 </html>
