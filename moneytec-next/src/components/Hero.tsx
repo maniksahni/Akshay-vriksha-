@@ -1,5 +1,4 @@
 import { HeroWisdom } from './Wisdom';
-import { BrandLogo } from './BrandLogo';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { FACTS } from '../data';
@@ -108,14 +107,6 @@ function Actions({ mobile }: { mobile: boolean }) {
     </div>
   );
 }
-function Credentials() {
-  return (
-    <div className="lux-credentials">
-      <span><BrandLogo brand="amfi" className="hero-amfi-logo" />AMFI registered <b>{FACTS.arn}</b></span>
-      <span><i aria-hidden>✳</i>Personal guidance <b>{FACTS.name}</b></span>
-    </div>
-  );
-}
 
 /**
  * The opening: the chrome ₹ (drawn by the Stage behind this section) fills the screen like a coin held up to the
@@ -146,7 +137,6 @@ export function Hero() {
             <HeroWisdom />
             <p className="lux-promise">Goal-based investing, family protection and NRI guidance with {FACTS.name}.</p>
           </motion.div>
-          <motion.div className="mt-7" {...rise(play, 1.2, 0)}><Credentials /></motion.div>
         </div>
       </section>
     );
@@ -170,7 +160,6 @@ export function Hero() {
             <p className="lux-promise mt-3">Goal-based investing, family protection and NRI guidance with {FACTS.name}.</p>
           </motion.div>
           <motion.div className="lux-floor-verse" {...rise(play, 1.4)}><HeroWisdom /></motion.div>
-          <motion.div className="flex justify-end" {...rise(play, 1.5)}><Credentials /></motion.div>
         </motion.div>
       </div>
     </section>

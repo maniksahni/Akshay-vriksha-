@@ -56,7 +56,7 @@ export function Grow() {
       <div className="relative grid gap-8 md:grid-cols-[0.75fr_1.6fr] md:items-center md:gap-12">
         <div>
           <p className="kicker">One SIP. {YEARS} years.</p>
-          <div className="relative mt-4 h-[2.3em] text-[clamp(2rem,4.6vw,4rem)] md:h-[2.2em]">
+          <div className="grow-line relative mt-4 h-[2.3em] text-[clamp(2rem,4.6vw,4rem)] md:h-[2.2em]">
             <AnimatePresence mode="wait">
               <motion.p key={ms.line} className="display absolute inset-0" initial={{ opacity: 0, y: 20, filter: 'blur(6px)' }} animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }} exit={{ opacity: 0, y: -16, filter: 'blur(6px)' }} transition={{ duration: 0.45 }}>
                 {ms.line}

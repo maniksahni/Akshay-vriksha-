@@ -1045,3 +1045,22 @@ a.lux-masthead-cell:hover { background: rgba(255,55,95,.05); color: var(--ivory)
 @keyframes glowPulse { 50% { transform: scale(1.18); opacity: .6; } }
 @media (prefers-reduced-motion: reduce) { .stage .aurora, .stage-glow::after { animation: none; } }
 .goal-word { width: max-content; }
+
+/* ---------------------------------------------------------------- launch fixes (phone)
+   The hero floor loses its duplicate credentials (the strip below carries them); the strip becomes a tidy
+   2x2 of centred cells on phones; the growth headline stops reserving a second line; calculator options wrap
+   into a neat grid instead of running off the edge. */
+.lux-full-floor { grid-template-columns: 1fr minmax(0, 560px) 1fr; }
+@media (max-width: 1180px) and (min-width: 768px) { .lux-full-floor { grid-template-columns: 1fr 1fr; } .lux-full-floor > :nth-child(2) { display: block; } }
+@media (max-width: 767px) {
+  .lux-masthead-row { display: grid; grid-template-columns: 1fr 1fr; padding: 0; }
+  .lux-masthead-cell { flex-direction: column; justify-content: center; text-align: center; gap: 8px; padding: 16px 10px; font-size: 11px; line-height: 1.45; border-left: 0; border-top: 0; }
+  .lux-masthead-cell + .lux-masthead-cell { border-top: 0; }
+  .lux-masthead-cell:nth-child(2) { border-left: 1px solid var(--hair); }
+  .lux-masthead-cell:nth-child(n+3) { grid-column: 1 / -1; border-top: 1px solid var(--hair); padding: 12px 16px; }
+  .lux-masthead-cell .credential-logo { width: 92px; padding: 5px 7px; }
+  .grow-line { height: 1.25em !important; font-size: 30px !important; }
+  #grow p[aria-hidden].select-none { font-size: 96px; top: 0; }
+  .calc-controls [role=radiogroup] { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; overflow: visible; margin: 0; padding: 0; }
+  .calc-controls .seg { width: 100%; padding: 0 4px; font-size: 12px !important; height: 34px !important; }
+}
