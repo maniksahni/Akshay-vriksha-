@@ -33,6 +33,7 @@ export function Stage() {
   const field = useRef<HTMLCanvasElement>(null);
   const coin = useRef<HTMLCanvasElement>(null);
   const flat = useRef<SVGSVGElement>(null);
+  const glow = useRef<HTMLDivElement>(null);
   const [ready, setReady] = useState({ field: false, coin: false });
 
   useEffect(() => {
@@ -78,6 +79,11 @@ export function Stage() {
         pose = { x: (r.left + r.width / 2) / W, y: ((r.top + r.height / 2) / H) * 2 - 1, s: (r.height / 2) * 2 * PHONE_HALF_H / (2.95 * H), spin: window.scrollY * 0.004, glow: 1 };
         o = Math.max(0, Math.min(1, r.bottom / (r.height * 0.7)));
         f = 0;
+        // a soft halo travels with the coin so it glows against the night even mid-spin
+        if (glow.current) {
+          glow.current.style.transform = `translate3d(${r.left + r.width / 2}px, ${r.top + r.height / 2}px, 0) translate(-50%, -50%)`;
+          glow.current.style.opacity = String(o);
+        }
       }
       rupee?.setPose(pose, !!slot);
       aurora?.setScroll(f);
@@ -171,6 +177,7 @@ export function Stage() {
         <defs><linearGradient id="flat-rupee" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stopColor="#FFD688" /><stop offset=".45" stopColor="#FF375F" /><stop offset="1" stopColor="#BF5AF2" /></linearGradient></defs>
         <path d={RUPEE_PATH} fill="url(#flat-rupee)" />
       </svg>
+      <div ref={glow} className="stage-glow" />
       <canvas ref={coin} className="stage-coin" style={{ visibility: ready.coin ? 'visible' : 'hidden' }} />
     </div>
   );

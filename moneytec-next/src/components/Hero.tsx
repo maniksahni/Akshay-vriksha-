@@ -60,16 +60,18 @@ function GoalLine({ play, delay }: { play: boolean; delay: number }) {
   const [prev, setPrev] = useState(-1);
   const [shown, setShown] = useState(false);
   const [widths, setWidths] = useState<number[]>([]);
-  const measure = useRef<HTMLSpanElement>(null);
+  const slot = useRef<HTMLSpanElement>(null);
 
+  // measure the words exactly as drawn (letter by letter), so the cell always fits the word it shows
   useLayoutEffect(() => {
-    const el = measure.current;
+    const el = slot.current;
     if (!el) return;
-    const run = () => setWidths(Array.from(el.children, (c) => (c as HTMLElement).getBoundingClientRect().width));
+    const words = Array.from(el.children) as HTMLElement[];
+    const run = () => setWidths(words.map((w) => w.getBoundingClientRect().width));
     run();
     document.fonts?.ready.then(run);
     const ro = new ResizeObserver(run);
-    ro.observe(el);
+    words.forEach((w) => ro.observe(w));
     return () => ro.disconnect();
   }, []);
 
@@ -89,10 +91,9 @@ function GoalLine({ play, delay }: { play: boolean; delay: number }) {
       <motion.span className="goal-lead inline-block italic" initial={{ y: '110%', opacity: 0 }} animate={play ? { y: 0, opacity: 1 } : undefined} transition={{ duration: 1.3, ease: EASE, delay }}>
         Tomorrow’s{'\u00A0'}
       </motion.span>
-      <span className="goal-slot" style={widths[i] ? { width: `${widths[i]}px` } : undefined}>
+      <span ref={slot} className="goal-slot" style={widths[i] ? { width: `${widths[i]}px` } : undefined}>
         {GOALS.map((w, k) => <GoalWord key={w} word={w} state={shown && k === i ? 'in' : k === prev ? 'out' : 'wait'} />)}
       </span>
-      <span ref={measure} className="goal-measure">{GOALS.map((w) => <span key={w} className="italic">{w}</span>)}</span>
     </span>
   );
 }
