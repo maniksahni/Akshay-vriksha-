@@ -952,3 +952,13 @@ a.lux-masthead-cell:hover { background: rgba(255,55,95,.05); color: var(--ivory)
   #grow p[aria-hidden].select-none { font-size: 120px; top: -10px; }
   #plans h2 { margin-top: 0; }
 }
+
+/* ---------------------------------------------------------------- phone performance
+   The stage keeps one fixed height (the tallest viewport) so Safari's sliding toolbars never resize the 3D
+   canvas mid-scroll, and phones draw the ₹ without a CSS glow filter (that re-composited every frame). */
+.stage { bottom: auto; height: 100vh; height: 100lvh; }
+.coin-slot { position: absolute; left: 50%; top: 72px; width: 300px; height: 300px; translate: -50% 0; pointer-events: none; }
+@media (max-width: 767px) {
+  .stage-coin { filter: none !important; }
+  .stage-flat { height: 170px; }
+}

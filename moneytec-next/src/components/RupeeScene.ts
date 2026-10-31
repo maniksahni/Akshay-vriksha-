@@ -10,7 +10,7 @@ import { RUPEE_PATH } from './rupeePath';
 
 /** Where the ₹ should be: x across the screen (0..1), y from centre (-1 top .. 1 bottom), size, extra spin, glow 0..1. */
 export type RupeePose = { x: number; y: number; s: number; spin: number; glow: number };
-export type RupeeHandle = { setPose: (p: RupeePose) => void; setPointer: (x: number, y: number) => void; setVelocity: (v: number) => void; kick: () => void; dispose: () => void };
+export type RupeeHandle = { setPose: (p: RupeePose, immediate?: boolean) => void; setPointer: (x: number, y: number) => void; setVelocity: (v: number) => void; kick: () => void; dispose: () => void };
 
 /**
  * A studio built from the brand's own light: long softboxes in amber, rose and violet plus white strips, so
@@ -66,7 +66,7 @@ function glowPoints(pixel: number) {
  * depth, leans toward the pointer and glides to whatever pose the page asks for as you scroll.
  */
 export function mountRupee(canvas: HTMLCanvasElement, { phone, still, pose }: { phone: boolean; still: boolean; pose: RupeePose }): RupeeHandle {
-  const renderer = new WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: 'high-performance' });
+  const renderer = new WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: phone ? 'default' : 'high-performance' });
   const dpr = Math.min(window.devicePixelRatio || 1, phone ? 1.5 : 1.5);
   renderer.setPixelRatio(dpr);
   renderer.toneMapping = ACESFilmicToneMapping;
@@ -86,12 +86,11 @@ export function mountRupee(canvas: HTMLCanvasElement, { phone, still, pose }: { 
   const geo = new ExtrudeGeometry(shapes, { depth: 60, bevelEnabled: true, bevelThickness: 10, bevelSize: 6, bevelSegments: phone ? 5 : 10, curveSegments: phone ? 18 : 40 });
   geo.center();
   geo.computeVertexNormals();
-  const chrome = phone
-    ? new MeshStandardMaterial({ color: new Color('#ffe0ee'), metalness: 1, roughness: 0.16, envMapIntensity: 1.25 })
-    : new MeshPhysicalMaterial({
-      color: new Color('#fff0f6'), metalness: 1, roughness: 0.1, clearcoat: 1, clearcoatRoughness: 0.03,
-      iridescence: 0.85, iridescenceIOR: 1.8, iridescenceThicknessRange: [200, 820], envMapIntensity: 1.35,
-    });
+  // the same iridescent chrome everywhere; phones skip only the clearcoat layer, which costs most per pixel
+  const chrome = new MeshPhysicalMaterial({
+    color: new Color('#fff0f6'), metalness: 1, roughness: 0.1, clearcoat: phone ? 0 : 1, clearcoatRoughness: 0.03,
+    iridescence: 0.85, iridescenceIOR: 1.8, iridescenceThicknessRange: [200, 820], envMapIntensity: 1.35,
+  });
   const rupee = new Mesh(geo, chrome);
   const s = 3.1 / 255;
   rupee.scale.set(s, -s, s); // SVG y runs down
@@ -336,7 +335,8 @@ export function mountRupee(canvas: HTMLCanvasElement, { phone, still, pose }: { 
   if (still) frame(); else start();
 
   return {
-    setPose: (p) => { Object.assign(want, p); if (still) frame(); },
+    // immediate: jump there this frame (phones pin the ₹ to a spot in the page, so it must not trail the scroll)
+    setPose: (p, immediate) => { Object.assign(want, p); if (immediate) Object.assign(cur, p); if (still) frame(); },
     setPointer: (x, y) => { if (!still) { px = x; py = y; } },
     setVelocity: (v) => { vel = Math.max(-1.5, Math.min(1.5, v)); },
     kick: () => { if (still) return; const t = (performance.now() - t0) / 1000; if (t - kickAt < 0.5) return; kicks += 1; kickAt = t; },

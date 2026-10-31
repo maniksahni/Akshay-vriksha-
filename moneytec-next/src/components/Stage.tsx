@@ -24,6 +24,8 @@ const PHONE: Cue[] = [
 ];
 
 const smooth = (t: number) => t * t * (3 - 2 * t);
+// half the visible height, in scene units, of the phone camera (32° field of view at distance 11.5)
+const PHONE_HALF_H = Math.tan((32 * Math.PI) / 360) * 11.5;
 const mix = (a: number, b: number, t: number) => a + (b - a) * t;
 
 export function Stage() {
@@ -66,8 +68,18 @@ export function Stage() {
       const now = performance.now();
       rupee?.setVelocity(((window.scrollY - lastY) / Math.max(8, now - lastT)) * 0.6);
       lastY = window.scrollY; lastT = now;
-      const { pose, field: f, o } = poseAt(window.scrollY);
-      rupee?.setPose(pose);
+      let { pose, field: f, o } = poseAt(window.scrollY);
+      // phones: the ₹ is pinned to its slot in the hero, so it sits right on any screen height and scrolls
+      // away with the page exactly, no trailing
+      const slot = mobile ? document.querySelector<HTMLElement>('.coin-slot') : null;
+      if (slot && coin.current) {
+        const r = slot.getBoundingClientRect(), st = coin.current.getBoundingClientRect();
+        const W = st.width || window.innerWidth, H = st.height || window.innerHeight;
+        pose = { x: (r.left + r.width / 2) / W, y: ((r.top + r.height / 2) / H) * 2 - 1, s: (r.height / 2) * 2 * PHONE_HALF_H / (2.95 * H), spin: window.scrollY * 0.004, glow: 1 };
+        o = Math.max(0, Math.min(1, r.bottom / (r.height * 0.7)));
+        f = 0;
+      }
+      rupee?.setPose(pose, !!slot);
       aurora?.setScroll(f);
       if (coin.current) {
         coin.current.style.setProperty('--o', String(o));
@@ -94,6 +106,20 @@ export function Stage() {
       rupee?.setPointer(x, y); aurora?.setPointer(x, y);
     };
     if (fine) window.addEventListener('pointermove', move, { passive: true });
+    // phones: the ₹ leans toward your finger as you touch and scroll, and (where the browser allows it
+    // without a permission prompt) toward the way you tilt the phone
+    const touch = (e: TouchEvent) => { const t = e.touches[0]; if (t) rupee?.setPointer((t.clientX / window.innerWidth) * 2 - 1, (t.clientY / window.innerHeight) * 2 - 1); };
+    const release = () => rupee?.setPointer(0, 0);
+    const tilt = (e: DeviceOrientationEvent) => {
+      if (e.gamma == null || e.beta == null) return;
+      rupee?.setPointer(Math.max(-1, Math.min(1, e.gamma / 30)), Math.max(-1, Math.min(1, (e.beta - 45) / 30)));
+    };
+    const askFirst = typeof DeviceOrientationEvent !== 'undefined' && typeof (DeviceOrientationEvent as unknown as { requestPermission?: unknown }).requestPermission === 'function';
+    if (mobile) {
+      window.addEventListener('touchmove', touch, { passive: true });
+      window.addEventListener('touchend', release, { passive: true });
+      if (!askFirst && !reduced()) window.addEventListener('deviceorientation', tilt, { passive: true });
+    }
     // a click (or tap) on empty space flicks the ₹ round; links, buttons and fields keep their own clicks
     const flick = (e: PointerEvent) => { if (!(e.target as HTMLElement).closest('a, button, input, select, label, summary, textarea, form')) rupee?.kick(); };
     window.addEventListener('pointerdown', flick);
@@ -104,7 +130,8 @@ export function Stage() {
     const idle = (window as Window & { requestIdleCallback?: (cb: () => void, o?: { timeout: number }) => number }).requestIdleCallback;
     let timer = 0;
     const go = () => {
-      import('./AuroraField').then(({ mountAurora }) => {
+      // phones keep the still CSS glow: a second full-screen WebGL layer is what made them stutter
+      if (!mobile) import('./AuroraField').then(({ mountAurora }) => {
         if (dead || !field.current) return;
         try { aurora = mountAurora(field.current, { phone: mobile, still: reduced() }); apply(); setReady((r) => ({ ...r, field: true })); } catch { /* CSS aurora stays */ }
       });
@@ -126,6 +153,9 @@ export function Stage() {
       window.removeEventListener('scroll', apply);
       window.removeEventListener('pointermove', move);
       window.removeEventListener('pointerdown', flick);
+      window.removeEventListener('touchmove', touch);
+      window.removeEventListener('touchend', release);
+      window.removeEventListener('deviceorientation', tilt);
       window.clearInterval(calm);
       window.removeEventListener('load', later);
       if (!idle) window.clearTimeout(timer);

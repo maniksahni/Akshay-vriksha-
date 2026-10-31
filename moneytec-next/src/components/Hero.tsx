@@ -103,6 +103,7 @@ export function Hero() {
   if (mobile) {
     return (
       <section id="top" className="lux-hero-mobile lux-hero-full-mobile relative overflow-hidden">
+        <div className="coin-slot" aria-hidden />
         <div className="wrap relative text-center">
           <h1 className="lux-title lux-full-title mt-[250px]" aria-label="Today’s rupee. Tomorrow’s freedom.">
             <SplitLine text="Today’s rupee." play={play} delay={0.2} />
