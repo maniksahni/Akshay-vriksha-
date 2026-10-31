@@ -962,3 +962,13 @@ a.lux-masthead-cell:hover { background: rgba(255,55,95,.05); color: var(--ivory)
   .stage-coin { filter: none !important; }
   .stage-flat { height: 170px; }
 }
+
+/* the verse sits at the centre of the hero floor */
+.lux-floor-verse { text-align: center; }
+.lux-floor-verse .hero-wisdom { margin: 0 auto !important; }
+.lux-full-floor .lux-eyebrow { justify-content: flex-start; }
+.lux-full-floor .lux-eyebrow::before { display: none; }
+.lux-full-floor .lux-promise { margin: 12px 0 0; text-align: left; }
+.lux-hero-mobile .hero-wisdom, .lux-hero-mobile .hero-wisdom * { text-align: center; }
+/* the outgoing and incoming goal words share one line inside the mask, so neither ever shows below it */
+.goal-slot { white-space: nowrap; }

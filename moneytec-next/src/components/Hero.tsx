@@ -30,7 +30,7 @@ function SplitLine({ text, play, delay, accent }: { text: string; play: boolean;
 }
 
 /** Goals the site already plans for; the headline's last word cycles through them. */
-const GOALS = ['freedom.', 'home.', 'education.', 'retirement.'];
+const GOALS = ['Freedom.', 'Home.', 'Education.', 'Retirement.'];
 
 /** "Tomorrow's" stays put while the goal after it rolls over, one every few seconds. */
 function GoalLine({ play, delay }: { play: boolean; delay: number }) {
@@ -105,8 +105,8 @@ export function Hero() {
       <section id="top" className="lux-hero-mobile lux-hero-full-mobile relative overflow-hidden">
         <div className="coin-slot" aria-hidden />
         <div className="wrap relative text-center">
-          <h1 className="lux-title lux-full-title mt-[250px]" aria-label="Today’s rupee. Tomorrow’s freedom.">
-            <SplitLine text="Today’s rupee." play={play} delay={0.2} />
+          <h1 className="lux-title lux-full-title mt-[250px]" aria-label="Today’s Rupee. Tomorrow’s Freedom.">
+            <SplitLine text="Today’s Rupee." play={play} delay={0.2} />
             <GoalLine play={play} delay={0.45} />
           </h1>
           <motion.div className="mt-7" {...rise(play, 0.9)}><Actions mobile /></motion.div>
@@ -126,19 +126,19 @@ export function Hero() {
       <div className="lux-full-scrim" aria-hidden />
       <div className="wrap-wide relative h-full">
         <motion.div className="lux-full-center" style={{ opacity: fade, y: lift, scale: grow }}>
-          <h1 className="lux-title lux-full-title" aria-label="Today’s rupee. Tomorrow’s freedom.">
-            <SplitLine text="Today’s rupee." play={play} delay={0.35} />
+          <h1 className="lux-title lux-full-title" aria-label="Today’s Rupee. Tomorrow’s Freedom.">
+            <SplitLine text="Today’s Rupee." play={play} delay={0.35} />
             <GoalLine play={play} delay={0.65} />
           </h1>
           <motion.div className="mt-8 flex justify-center" {...rise(play, 1.15)}><Actions mobile={false} /></motion.div>
         </motion.div>
 
         <motion.div className="lux-full-floor" style={{ opacity: fade }}>
-          <motion.div {...rise(play, 1.3)}><HeroWisdom /></motion.div>
-          <motion.div className="text-center" {...rise(play, 1.4)}>
-            <p className="lux-eyebrow justify-center">Moneytec — Money, with meaning</p>
+          <motion.div {...rise(play, 1.3)}>
+            <p className="lux-eyebrow">Moneytec — Money, with meaning</p>
             <p className="lux-promise mt-3">Goal-based investing, family protection and NRI guidance with {FACTS.name}.</p>
           </motion.div>
+          <motion.div className="lux-floor-verse" {...rise(play, 1.4)}><HeroWisdom /></motion.div>
           <motion.div className="flex justify-end" {...rise(play, 1.5)}><Credentials /></motion.div>
         </motion.div>
       </div>

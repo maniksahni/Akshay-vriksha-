@@ -23,5 +23,26 @@
   <body>
     <div id="root"></div>
     <script type="module" src="./src/main.tsx"></script>
+    <script>
+      // Phones often reopen a saved copy of this page. Ask the server which build is current (bypassing the
+      // cache) and, if this copy is older, reload once so visitors always get the latest site.
+      (function () {
+        function check() {
+          try {
+            var mine = document.querySelector('script[type="module"][src*="assets/index-"]');
+            if (!mine || !window.fetch) return;
+            fetch(location.pathname + '?fresh=' + Date.now(), { cache: 'no-store' }).then(function (r) { return r.text(); }).then(function (html) {
+              var latest = html.match(/assets\/index-[\w-]+\.js/);
+              if (latest && mine.getAttribute('src').indexOf(latest[0]) < 0 && sessionStorage.getItem('mt-refreshed') !== latest[0]) {
+                sessionStorage.setItem('mt-refreshed', latest[0]);
+                location.reload();
+              }
+            }).catch(function () {});
+          } catch (e) {}
+        }
+        check();
+        window.addEventListener('pageshow', function (e) { if (e.persisted) check(); });
+      })();
+    </script>
   </body>
 </html>
