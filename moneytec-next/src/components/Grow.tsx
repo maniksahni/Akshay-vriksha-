@@ -1,6 +1,6 @@
-import { AnimatePresence, motion, useMotionValueEvent, useScroll } from 'framer-motion';
-import { useMemo, useRef, useState } from 'react';
-import { inr, sipValue, useMobile } from './ui';
+import { animate, AnimatePresence, motion, useInView, useMotionValueEvent, useScroll } from 'framer-motion';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { EASE, inr, reduced, sipValue, useMobile } from './ui';
 
 const MONTHLY = 5000;
 const RATE = 12;
@@ -25,6 +25,17 @@ export function Grow() {
   const [slideYear, setSlideYear] = useState(10);
   useMotionValueEvent(p, 'change', (v) => setScrollYear(Math.min(YEARS, Math.max(0, ((v - 0.06) / 0.84) * YEARS))));
   const year = mobile ? slideYear : scrollYear;
+  // phones: chart text is drawn larger, since the 1000-unit chart is shrunk to a third of its size
+  const k = mobile ? 2.3 : 1;
+  // phones: the first time the chart comes into view, the thirty years play out on their own
+  const chart = useRef<HTMLDivElement>(null);
+  const seen = useInView(chart, { once: true, amount: 0.5 });
+  const play = useRef<ReturnType<typeof animate> | null>(null);
+  useEffect(() => {
+    if (!mobile || !seen || reduced()) return;
+    play.current = animate(1, YEARS, { duration: 4.5, ease: EASE, onUpdate: setSlideYear });
+    return () => play.current?.stop();
+  }, [mobile, seen]);
   const whole = Math.round(year);
 
   const value = sipValue(MONTHLY, RATE, year * 12);
@@ -60,14 +71,14 @@ export function Grow() {
           </dl>
           {mobile && (
             <label className="mt-6 block text-[13px] text-haze">
-              Explore the timeline · <b className="text-paper">{slideYear} years</b>
-              <input className="slider" type="range" min="1" max="30" value={slideYear} onChange={(e) => setSlideYear(Number(e.target.value))} aria-label="Illustration timeline in years" style={{ ['--fill' as string]: `${((slideYear - 1) / 29) * 100}%` }} />
+              Explore the timeline · <b className="text-paper">{Math.round(slideYear)} years</b>
+              <input className="slider" type="range" min="1" max="30" value={Math.round(slideYear)} onPointerDown={() => play.current?.stop()} onChange={(e) => { play.current?.stop(); setSlideYear(Number(e.target.value)); }} aria-label="Illustration timeline in years" style={{ ['--fill' as string]: `${((slideYear - 1) / 29) * 100}%` }} />
             </label>
           )}
         </div>
 
-        <div className="glass relative overflow-hidden p-3 sm:p-6">
-          <svg viewBox={`-10 -10 ${W + 20} ${H + 40}`} className="h-auto w-full" aria-hidden>
+        <div ref={chart} className="glass relative overflow-hidden p-3 sm:p-6">
+          <svg viewBox={`-10 -10 ${W + 20} ${H + 20 + 26 * k}`} className="h-auto w-full" aria-hidden>
             <defs>
               <linearGradient id="g-line" x1="0" x2="1"><stop offset="0" stopColor="#FF9F0A" /><stop offset="0.5" stopColor="#FF375F" /><stop offset="1" stopColor="#BF5AF2" /></linearGradient>
               <linearGradient id="g-area" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stopColor="#FF375F" stopOpacity="0.45" /><stop offset="1" stopColor="#BF5AF2" stopOpacity="0" /></linearGradient>
@@ -76,7 +87,7 @@ export function Grow() {
             {[0, 10, 20, 30].map((y) => (
               <g key={y}>
                 <line x1={(y / YEARS) * W} x2={(y / YEARS) * W} y1="0" y2={H} stroke="#fff" strokeOpacity={whole >= y ? 0.14 : 0.05} strokeDasharray="4 6" vectorEffect="non-scaling-stroke" />
-                <text x={(y / YEARS) * W} y={H + 26} fill="#fff" fillOpacity={whole >= y ? 0.6 : 0.25} fontSize="18" textAnchor={y === 0 ? 'start' : y === 30 ? 'end' : 'middle'}>Year {y}</text>
+                <text x={(y / YEARS) * W} y={H + 26 * k} fill="#fff" fillOpacity={whole >= y ? 0.6 : 0.25} fontSize={18 * k} textAnchor={y === 0 ? 'start' : y === 30 ? 'end' : 'middle'}>Year {y}</text>
               </g>
             ))}
             <path d={ghost} fill="none" stroke="#fff" strokeOpacity="0.08" strokeWidth="2" vectorEffect="non-scaling-stroke" />
@@ -91,13 +102,13 @@ export function Grow() {
                 <motion.g key={my} initial={false} animate={{ opacity: on ? 1 : 0, scale: on ? 1 : 0.4 }} transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }} style={{ transformOrigin: `${mx}px ${mY}px` }}>
                   <circle cx={mx} cy={mY} r="22" fill="none" stroke="#FF9F0A" strokeOpacity="0.35" />
                   <circle cx={mx} cy={mY} r="7" fill="#FF9F0A" />
-                  <rect x={mx - (my === 30 ? 180 : 75)} y={mY + (my === 30 ? 4 : -64)} width="150" height="36" rx="18" fill="rgba(7,6,11,0.85)" stroke="rgba(255,255,255,0.15)" />
-                  <text x={mx - (my === 30 ? 105 : 0)} y={mY + (my === 30 ? 28 : -40)} textAnchor="middle" fill="#F4F1F8" fontSize="17" fontWeight="600">{inr(sipValue(MONTHLY, RATE, my * 12))}</text>
+                  <rect x={mx - (my === 30 ? 180 : 75) * k} y={mY + (my === 30 ? 4 : -64) * k} width={150 * k} height={36 * k} rx={18 * k} fill="rgba(7,6,11,0.85)" stroke="rgba(255,255,255,0.15)" />
+                  <text x={mx - (my === 30 ? 105 : 0) * k} y={mY + (my === 30 ? 28 : -40) * k} textAnchor="middle" fill="#F4F1F8" fontSize={17 * k} fontWeight="600">{inr(sipValue(MONTHLY, RATE, my * 12))}</text>
                 </motion.g>
               );
             })}
-            <circle cx={tx} cy={ty} r="14" fill="#FF375F" opacity="0.25" />
-            <circle cx={tx} cy={ty} r="6" fill="#fff" />
+            <circle cx={tx} cy={ty} r={14 * Math.sqrt(k)} fill="#FF375F" opacity="0.25" />
+            <circle cx={tx} cy={ty} r={6 * Math.sqrt(k)} fill="#fff" />
           </svg>
           <div className="pointer-events-none mt-2 flex gap-4 text-[11px] text-dim sm:absolute sm:left-8 sm:top-7 sm:mt-0">
             <span className="flex items-center gap-1.5"><i className="h-0.5 w-4 bg-gradient-to-r from-amber to-violet" />Illustrated value</span>

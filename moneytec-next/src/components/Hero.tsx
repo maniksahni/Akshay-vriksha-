@@ -1,7 +1,7 @@
 import { HeroWisdom } from './Wisdom';
 import { BrandLogo } from './BrandLogo';
-import { AnimatePresence, motion, useScroll, useTransform } from 'framer-motion';
-import { useEffect, useRef, useState } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { FACTS } from '../data';
 import { EASE, reduced, useMobile } from './ui';
 
@@ -32,37 +32,67 @@ function SplitLine({ text, play, delay, accent }: { text: string; play: boolean;
 /** Goals the site already plans for; the headline's last word cycles through them. */
 const GOALS = ['Freedom.', 'Home.', 'Education.', 'Retirement.'];
 
-/** "Tomorrow's" stays put while the goal after it rolls over, one every few seconds. */
+/** One goal word, split into letters that rise in (or lift away) one after another on the GPU. */
+function GoalWord({ word, state }: { word: string; state: 'in' | 'out' | 'wait' }) {
+  const chars = word.split('');
+  return (
+    <span className="goal-word italic" data-state={state}>
+      {chars.map((ch, k) => (
+        <span
+          key={k}
+          className="goal-ch"
+          // each letter shows its own slice of one gradient spread across the whole word
+          style={{ ['--d' as string]: `${k * 32}ms`, backgroundSize: `${chars.length * 100}% 100%`, backgroundPosition: `${(k / Math.max(1, chars.length - 1)) * 100}% 0` }}
+        >
+          {ch}
+        </span>
+      ))}
+    </span>
+  );
+}
+
+/**
+ * "Tomorrow's" holds while the goal after it rolls over every few seconds. All words share one masked cell;
+ * the cell's width glides to fit the next word, so the centred line eases instead of jumping.
+ */
 function GoalLine({ play, delay }: { play: boolean; delay: number }) {
   const [i, setI] = useState(0);
+  const [prev, setPrev] = useState(-1);
+  const [shown, setShown] = useState(false);
+  const [widths, setWidths] = useState<number[]>([]);
+  const measure = useRef<HTMLSpanElement>(null);
+
+  useLayoutEffect(() => {
+    const el = measure.current;
+    if (!el) return;
+    const run = () => setWidths(Array.from(el.children, (c) => (c as HTMLElement).getBoundingClientRect().width));
+    run();
+    document.fonts?.ready.then(run);
+    const ro = new ResizeObserver(run);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
+
   useEffect(() => {
-    if (!play || reduced()) return;
+    if (!play) return;
+    let t = 0;
+    const show = window.setTimeout(() => setShown(true), (delay + 0.15) * 1000);
     const start = window.setTimeout(() => {
-      const t = window.setInterval(() => setI((n) => (n + 1) % GOALS.length), 2600);
-      cleanup = () => window.clearInterval(t);
-    }, (delay + 1.8) * 1000);
-    let cleanup = () => {};
-    return () => { window.clearTimeout(start); cleanup(); };
+      if (reduced()) return;
+      t = window.setInterval(() => setI((n) => { setPrev(n); return (n + 1) % GOALS.length; }), 3000);
+    }, (delay + 2.2) * 1000);
+    return () => { window.clearTimeout(show); window.clearTimeout(start); window.clearInterval(t); };
   }, [play, delay]);
+
   return (
-    <span aria-hidden className="goal-line block overflow-hidden pb-[0.12em]">
-      <motion.span className="inline-block italic" initial={{ y: '110%', opacity: 0 }} animate={play ? { y: 0, opacity: 1 } : undefined} transition={{ duration: 1.3, ease: EASE, delay }}>
+    <span aria-hidden className="goal-line block pb-[0.12em]">
+      <motion.span className="goal-lead inline-block italic" initial={{ y: '110%', opacity: 0 }} animate={play ? { y: 0, opacity: 1 } : undefined} transition={{ duration: 1.3, ease: EASE, delay }}>
         Tomorrow’s{'\u00A0'}
       </motion.span>
-      <span className="goal-slot">
-        <AnimatePresence mode="popLayout" initial={false}>
-          <motion.span
-            key={GOALS[i]}
-            className="goal-word gold-text inline-block italic"
-            initial={{ y: '110%', opacity: 0 }}
-            animate={play ? { y: 0, opacity: 1 } : undefined}
-            exit={{ y: '-110%', opacity: 0 }}
-            transition={{ duration: i ? 0.8 : 1.3, ease: EASE, delay: i ? 0 : delay + 0.15 }}
-          >
-            {GOALS[i]}
-          </motion.span>
-        </AnimatePresence>
+      <span className="goal-slot" style={widths[i] ? { width: `${widths[i]}px` } : undefined}>
+        {GOALS.map((w, k) => <GoalWord key={w} word={w} state={shown && k === i ? 'in' : k === prev ? 'out' : 'wait'} />)}
       </span>
+      <span ref={measure} className="goal-measure">{GOALS.map((w) => <span key={w} className="italic">{w}</span>)}</span>
     </span>
   );
 }

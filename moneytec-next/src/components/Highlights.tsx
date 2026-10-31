@@ -62,7 +62,7 @@ const SERVICE_ICONS = [<TrendingUp key="build" />, <ShieldCheck key="protect" />
 
 const LINKS = ['Plan my SIP', 'Explore life cover', 'Discuss NRI investing', 'Get some clarity', 'Review my portfolio'];
 
-/** One service as a full-width row: number, title, detail, action. Its illustration surfaces on hover. */
+/** One service as a full-width row: number, its living illustration, title, detail and action. */
 function Row({ c, i }: { c: (typeof CARDS)[number]; i: number }) {
   const first = i === 0;
   return (
@@ -81,11 +81,13 @@ function Row({ c, i }: { c: (typeof CARDS)[number]; i: number }) {
         data-cursor={LINKS[i]}
       >
         <span className="lux-row-num">0{i + 1}</span>
-        <span className="lux-row-tag"><span className="lux-row-icon" aria-hidden>{SERVICE_ICONS[i]}</span>{c.tag}{c.tag === 'Protect' && <BrandLogo brand="kotak" />}</span>
-        <span className="lux-row-title">{c.title}</span>
+        <span className="lux-row-art" aria-hidden>{c.art}</span>
+        <span className="lux-row-head">
+          <span className="lux-row-tag"><span className="lux-row-icon" aria-hidden>{SERVICE_ICONS[i]}</span>{c.tag}{c.tag === 'Protect' && <BrandLogo brand="kotak" />}</span>
+          <span className="lux-row-title">{c.title}</span>
+        </span>
         <span className="lux-row-body">{c.body}</span>
         <span className="lux-row-cta">{LINKS[i]} <span aria-hidden>↗</span></span>
-        <span className="lux-row-art" aria-hidden>{c.art}</span>
       </a>
     </motion.li>
   );
