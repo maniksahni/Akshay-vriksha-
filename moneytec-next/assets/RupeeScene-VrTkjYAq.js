@@ -1,4 +1,4 @@
-import{R as $c}from"./index-_8Ud9mGG.js";/**
+import{R as $c}from"./index-BWrtaaJb.js";/**
  * @license
  * Copyright 2010-2024 Three.js Authors
  * SPDX-License-Identifier: MIT
