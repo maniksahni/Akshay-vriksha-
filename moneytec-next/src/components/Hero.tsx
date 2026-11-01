@@ -111,14 +111,14 @@ export function Hero() {
   if (mobile) {
     return (
       <section id="top" className="lux-hero-mobile lux-hero-full-mobile relative overflow-hidden">
-        <div className="coin-slot" aria-hidden />
-        <div className="wrap relative text-center">
-          <h1 className="lux-title lux-full-title mt-[250px]" aria-label="Today’s Rupee. Tomorrow’s Freedom.">
+        <div className="wrap hero-phone-layout relative text-center">
+          <div className="coin-slot" aria-hidden />
+          <h1 className="lux-title lux-full-title" aria-label="Today’s Rupee. Tomorrow’s Freedom.">
             <SplitLine text="Today’s Rupee." play={play} delay={0.2} />
             <GoalLine play={play} delay={0.45} />
           </h1>
-          <motion.div className="mt-7" {...rise(play, 0.9)}><Actions mobile /></motion.div>
-          <motion.div className="mt-10" {...rise(play, 1.05)}>
+          <motion.div className="hero-phone-actions" {...rise(play, 0.9)}><Actions mobile /></motion.div>
+          <motion.div className="hero-phone-intro" {...rise(play, 1.05)}>
             <p className="lux-eyebrow justify-center">Moneytec — Money, with meaning</p>
             <p className="lux-promise mx-auto mt-3">Goal-based investing, family protection and NRI guidance with {FACTS.name}.</p>
             <div className="lux-mobile-verse"><HeroWisdom /></div>

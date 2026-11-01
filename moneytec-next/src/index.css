@@ -814,3 +814,52 @@ img.brand-facebook { padding: 0; width: 21px; height: 21px; border-radius: 50%; 
   background: none;
   font-weight: 600;
 }
+
+/* One opening screen on phones: the visual takes only the space left by the copy. */
+@media (max-width: 767px) {
+  .lux-hero-full-mobile { height: 100svh; min-height: 0; padding: 76px 0 14px; }
+  .hero-phone-layout { height: 100%; display: grid; grid-template-rows: minmax(64px, 1fr) auto auto auto; gap: clamp(8px, 1.5svh, 14px); }
+  .hero-phone-layout .coin-slot { position: relative; left: auto; top: auto; translate: none; justify-self: center; align-self: center; height: 100%; max-height: min(28svh, 240px); width: auto; aspect-ratio: 1; }
+  .lux-hero-full-mobile .lux-full-title { margin-top: 0; font-size: clamp(34px, 5.1svh, 48px); line-height: .94; }
+  .hero-phone-actions .lux-actions { flex-wrap: nowrap; gap: 8px; }
+  .hero-phone-actions .btn { height: 42px; padding-left: 14px; padding-right: 14px; font-size: 12px; white-space: nowrap; }
+  .hero-phone-actions .btn-light { padding-right: 5px; }
+  .hero-phone-actions .arrow { width: 30px; height: 30px; margin-left: 4px; }
+  .hero-phone-intro .lux-eyebrow { font-size: 8px; letter-spacing: .16em; gap: 7px; }
+  .hero-phone-intro .lux-eyebrow::before, .hero-phone-intro .lux-eyebrow::after { width: 12px; }
+  .hero-phone-intro .lux-promise { margin: 7px auto 0; font-size: clamp(15px, 2.2svh, 19px); max-width: 360px; line-height: 1.25; }
+  .hero-phone-intro .lux-mobile-verse { margin-top: 10px; padding-top: 10px; }
+  .hero-phone-intro .hero-wisdom-label { font-size: 8px; letter-spacing: .2em; margin-bottom: 5px; }
+  .hero-phone-intro .hero-wisdom blockquote { font-size: clamp(14px, 3.9vw, 17px); line-height: 1.65; }
+  .hero-phone-intro .hero-wisdom-meaning { font-size: 10px; line-height: 1.45; margin: 5px auto 0; max-width: 360px; }
+}
+@media (max-width: 767px) and (max-height: 620px) and (orientation: portrait) {
+  .lux-hero-full-mobile { padding-top: 72px; padding-bottom: 10px; }
+  .hero-phone-layout { gap: 6px; }
+  .hero-phone-intro .lux-mobile-verse { margin-top: 7px; padding-top: 7px; }
+}
+/* Landscape phones keep the same content together beside the visual. */
+@media (max-width: 767px) and (orientation: landscape) {
+  .lux-hero-full-mobile { padding-top: 72px; padding-bottom: 10px; }
+  .hero-phone-layout { grid-template-columns: 30% 1fr; grid-template-rows: auto auto 1fr; gap: 6px 18px; align-items: center; }
+  .hero-phone-layout .coin-slot { grid-column: 1; grid-row: 1 / 4; max-height: 50svh; }
+  .hero-phone-layout .lux-full-title { grid-column: 2; font-size: 28px; }
+  .hero-phone-layout .goal-lead { display: inline; }
+  .hero-phone-layout .goal-slot { display: inline-grid; }
+  .hero-phone-actions, .hero-phone-intro { grid-column: 2; }
+  .hero-phone-intro .lux-promise { font-size: 14px; margin-top: 4px; }
+  .hero-phone-intro .lux-mobile-verse { margin-top: 5px; padding-top: 5px; }
+  .hero-phone-intro .hero-wisdom blockquote { font-size: 13px; line-height: 1.5; }
+  .hero-phone-intro .hero-wisdom-meaning { font-size: 9px; }
+  .hero-phone-actions .btn { height: 34px; font-size: 11px; }
+  .hero-phone-actions .arrow { height: 25px; width: 25px; }
+}
+@media (max-width: 767px) and (max-height: 360px) and (orientation: landscape) {
+  .hero-phone-layout { gap: 4px 14px; }
+  .hero-phone-layout .lux-full-title { font-size: 24px; }
+  .hero-phone-intro .lux-eyebrow { font-size: 7px; }
+  .hero-phone-intro .lux-promise { font-size: 13px; margin-top: 3px; }
+  .hero-phone-intro .hero-wisdom-label { margin-bottom: 3px; font-size: 7px; }
+  .hero-phone-intro .hero-wisdom blockquote { font-size: 12px; }
+  .hero-phone-intro .hero-wisdom-meaning { margin-top: 3px; line-height: 1.3; }
+}
