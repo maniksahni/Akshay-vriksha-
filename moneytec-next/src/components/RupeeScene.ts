@@ -65,7 +65,7 @@ function glowPoints(pixel: number) {
  * milled coin edge, circled by a slow galaxy of light and lifted by rising sparks. It arrives spinning out of
  * depth, leans toward the pointer and glides to whatever pose the page asks for as you scroll.
  */
-export function mountRupee(canvas: HTMLCanvasElement, { phone, still, pose }: { phone: boolean; still: boolean; pose: RupeePose }): RupeeHandle {
+export function mountRupee(canvas: HTMLCanvasElement, { phone, still, calm = false, pose }: { phone: boolean; still: boolean; calm?: boolean; pose: RupeePose }): RupeeHandle {
   const renderer = new WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: phone ? 'default' : 'high-performance' });
   const dpr = Math.min(window.devicePixelRatio || 1, phone ? 1.5 : 1.5);
   renderer.setPixelRatio(dpr);
@@ -261,7 +261,8 @@ export function mountRupee(canvas: HTMLCanvasElement, { phone, still, pose }: { 
     last = now;
     const t = still ? 0 : (now - t0) / 1000;
     // arrival: spins in out of depth over the first two seconds
-    const arrive = still ? 1 : easeOut(Math.min(1, t / 2.2));
+    // calm (Reduce Motion): no spinning entrance, the ₹ and its ring are simply there
+    const arrive = still || calm ? 1 : easeOut(Math.min(1, t / 2.2));
     sx += (px - sx) * 0.06; sy += (py - sy) * 0.06;
     // glide toward the requested pose (instantly when motion is reduced)
     const k = still ? 1 : 1 - Math.pow(0.0025, dt);
@@ -280,7 +281,7 @@ export function mountRupee(canvas: HTMLCanvasElement, { phone, still, pose }: { 
     coin.rotation.x = 0.25 + mark.rotation.x * 0.6;
     coin.rotation.z = still ? 0 : t * 0.06;
     // the ring grows in with the arrival; with motion reduced it is simply there at full size
-    coin.scale.setScalar(still ? 1 : 0.3 + 0.7 * easeOut(Math.min(1, Math.max(0, (t - 0.3) / 1.6))));
+    coin.scale.setScalar(still || calm ? 1 : 0.3 + 0.7 * easeOut(Math.min(1, Math.max(0, (t - 0.3) / 1.6))));
     galaxyPivot.rotation.y = sx * 0.25;
     galaxyPivot.rotation.z = -sy * 0.15 + 0.12;
     hero.position.set((cur.x - 0.5) * 2 * halfW, -cur.y * halfH + (still ? 0 : Math.sin(t * 0.9) * 0.08), -(1 - arrive) * 10);
@@ -342,7 +343,7 @@ export function mountRupee(canvas: HTMLCanvasElement, { phone, still, pose }: { 
     setPose: (p, immediate) => { Object.assign(want, p); if (immediate) Object.assign(cur, p); if (still) frame(); },
     setPointer: (x, y) => { if (!still) { px = x; py = y; } },
     setVelocity: (v) => { vel = Math.max(-1.5, Math.min(1.5, v)); },
-    kick: () => { if (still) return; const t = (performance.now() - t0) / 1000; if (t - kickAt < 0.5) return; kicks += 1; kickAt = t; },
+    kick: () => { if (still || calm) return; const t = (performance.now() - t0) / 1000; if (t - kickAt < 0.5) return; kicks += 1; kickAt = t; },
     dispose: () => {
       stop(); io.disconnect(); ro.disconnect();
       document.removeEventListener('visibilitychange', onVis);

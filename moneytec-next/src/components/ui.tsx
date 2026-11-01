@@ -1,4 +1,4 @@
-import { animate, motion, MotionValue, useInView, useScroll, useTransform } from 'framer-motion';
+import { animate, motion, useInView, useScroll, useTransform } from 'framer-motion';
 import { PointerEvent, ReactNode, useEffect, useRef, useState } from 'react';
 
 export const EASE = [0.22, 1, 0.36, 1] as const;
@@ -57,31 +57,6 @@ export function Title({ text, className = '', as: Tag = 'h2', delay = 0 }: { tex
         </span>
       ))}
     </Tag>
-  );
-}
-
-/** Words light up one after another as the paragraph moves through the viewport. */
-export function ScrollLit({ text, className = '' }: { text: string; className?: string }) {
-  const ref = useRef<HTMLParagraphElement>(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ['start 0.85', 'end 0.45'] });
-  const words = text.split(' ');
-  return (
-    <p ref={ref} className={className} aria-label={text.replace(/\*/g, '')}>
-      {words.map((w, i) => (
-        <Word key={i} p={scrollYProgress} range={[i / words.length, (i + 1) / words.length]} accent={w.startsWith('*')}>
-          {w.replace(/\*/g, '')}
-        </Word>
-      ))}
-    </p>
-  );
-}
-function Word({ children, p, range, accent }: { children: string; p: MotionValue<number>; range: [number, number]; accent: boolean }) {
-  const opacity = useTransform(p, range, [0.14, 1]);
-  const y = useTransform(p, range, [6, 0]);
-  return (
-    <motion.span aria-hidden style={{ opacity, y }} className={`inline-block pr-[0.24em] ${accent ? 'serif grad' : ''}`}>
-      {children}
-    </motion.span>
   );
 }
 

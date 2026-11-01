@@ -113,19 +113,14 @@ export function Stage() {
       rupee?.setPointer(x, y); aurora?.setPointer(x, y);
     };
     if (fine) window.addEventListener('pointermove', move, { passive: true });
-    // phones: the ₹ leans toward your finger as you touch and scroll, and (where the browser allows it
-    // without a permission prompt) toward the way you tilt the phone
+    // phones: the ₹ leans toward your finger while you touch, then settles back; no tilt-to-lean, so the ring
+    // faces the same way on Android, iPhone and laptop
     const touch = (e: TouchEvent) => { const t = e.touches[0]; if (t) rupee?.setPointer((t.clientX / window.innerWidth) * 2 - 1, (t.clientY / window.innerHeight) * 2 - 1); };
     const release = () => rupee?.setPointer(0, 0);
-    const tilt = (e: DeviceOrientationEvent) => {
-      if (e.gamma == null || e.beta == null) return;
-      rupee?.setPointer(Math.max(-1, Math.min(1, e.gamma / 30)), Math.max(-1, Math.min(1, (e.beta - 45) / 30)));
-    };
-    const askFirst = typeof DeviceOrientationEvent !== 'undefined' && typeof (DeviceOrientationEvent as unknown as { requestPermission?: unknown }).requestPermission === 'function';
     if (mobile) {
       window.addEventListener('touchmove', touch, { passive: true });
       window.addEventListener('touchend', release, { passive: true });
-      if (!askFirst && !reduced()) window.addEventListener('deviceorientation', tilt, { passive: true });
+      window.addEventListener('touchcancel', release, { passive: true });
     }
     // a click (or tap) on empty space flicks the ₹ round; links, buttons and fields keep their own clicks
     const flick = (e: PointerEvent) => { if (!(e.target as HTMLElement).closest('a, button, input, select, label, summary, textarea, form')) rupee?.kick(); };
@@ -140,12 +135,13 @@ export function Stage() {
       // phones get the same liquid light as laptops, drawn small and only while the hero is on screen
       import('./AuroraField').then(({ mountAurora }) => {
         if (dead || !field.current) return;
-        try { aurora = mountAurora(field.current, { phone: mobile, still: reduced() }); apply(); setReady((r) => ({ ...r, field: true })); } catch { /* CSS aurora stays */ }
+        try { aurora = mountAurora(field.current, { phone: mobile, still: false }); apply(); setReady((r) => ({ ...r, field: true })); } catch { /* CSS aurora stays */ }
       });
       import('./RupeeScene').then(({ mountRupee }) => {
         if (dead || !coin.current) return;
         try {
-          rupee = mountRupee(coin.current, { phone: mobile, still: reduced(), pose: poseAt(window.scrollY).pose });
+          // phones and laptops show the same living scene; Reduce Motion only drops the spinning entrance and tap-spins
+          rupee = mountRupee(coin.current, { phone: mobile, still: false, calm: reduced(), pose: poseAt(window.scrollY).pose });
           apply();
           requestAnimationFrame(() => setReady((r) => ({ ...r, coin: true })));
         } catch { /* the flat ₹ stays */ }
@@ -162,7 +158,7 @@ export function Stage() {
       window.removeEventListener('pointerdown', flick);
       window.removeEventListener('touchmove', touch);
       window.removeEventListener('touchend', release);
-      window.removeEventListener('deviceorientation', tilt);
+      window.removeEventListener('touchcancel', release);
       window.clearInterval(calm);
       window.removeEventListener('load', later);
       if (!idle) window.clearTimeout(timer);
