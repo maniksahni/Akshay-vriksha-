@@ -68,8 +68,8 @@ export function Grow() {
           <p className="lede mt-2 max-w-sm">{ms.sub}</p>
           <dl className="mt-8 grid grid-cols-3 gap-3 border-t border-line pt-6">
             <div><dt className="text-[11px] uppercase tracking-[0.16em] text-dim">Year</dt><dd className="display mt-1 text-[clamp(1.8rem,3.6vw,3rem)] tabular-nums">{whole}</dd></div>
-            <div><dt className="text-[11px] uppercase tracking-[0.16em] text-dim">You put in</dt><dd className="display mt-1 whitespace-nowrap text-[clamp(1.2rem,2.4vw,2rem)] tabular-nums text-haze">{inr(invested)}</dd></div>
-            <div><dt className="text-[11px] uppercase tracking-[0.16em] text-dim">It could be</dt><dd className="display grad mt-1 whitespace-nowrap text-[clamp(1.2rem,2.4vw,2rem)] tabular-nums">{inr(value)}</dd></div>
+            <div><dt className="text-[11px] uppercase tracking-[0.16em] text-dim">You put in</dt><dd className="display financial-value mt-1 whitespace-nowrap text-[clamp(1.2rem,2.4vw,2rem)] tabular-nums">{inr(invested)}</dd></div>
+            <div><dt className="text-[11px] uppercase tracking-[0.16em] text-dim">It could be</dt><dd className="display financial-value mt-1 whitespace-nowrap text-[clamp(1.2rem,2.4vw,2rem)] tabular-nums">{inr(value)}</dd></div>
           </dl>
           {mobile && (
             <label className="mt-6 block text-[13px] text-haze">
@@ -105,7 +105,7 @@ export function Grow() {
                   <circle cx={mx} cy={mY} r="22" fill="none" stroke="#FF9F0A" strokeOpacity="0.35" />
                   <circle cx={mx} cy={mY} r="7" fill="#FF9F0A" />
                   <rect x={mx - (my === 30 ? 180 : 75) * k} y={mY + (my === 30 ? 4 : -64) * k} width={150 * k} height={36 * k} rx={18 * k} fill="rgba(7,6,11,0.85)" stroke="rgba(255,255,255,0.15)" />
-                  <text x={mx - (my === 30 ? 105 : 0) * k} y={mY + (my === 30 ? 28 : -40) * k} textAnchor="middle" fill="#F4F1F8" fontSize={17 * k} fontWeight="600">{inr(sipValue(MONTHLY, RATE, my * 12))}</text>
+                  <text x={mx - (my === 30 ? 105 : 0) * k} y={mY + (my === 30 ? 28 : -40) * k} textAnchor="middle" fill="#FFFFFF" fontSize={17 * k} fontWeight="600">{inr(sipValue(MONTHLY, RATE, my * 12))}</text>
                 </motion.g>
               );
             })}

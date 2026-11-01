@@ -74,7 +74,7 @@ export function GoalPlanner() {
           {valid ? (
             <div className="relative">
               <p className="mt-5 text-[13px] text-haze">Illustrated monthly SIP</p>
-              <p className="display grad mt-1 text-[clamp(2.4rem,5.4vw,3.6rem)] tabular-nums" aria-live="polite">{inr(monthly, false)}</p>
+              <p className="display financial-value mt-1 text-[clamp(2.4rem,5.4vw,3.6rem)] tabular-nums" aria-live="polite">{inr(monthly, false)}</p>
               <p className="text-[12px] text-dim">for {years} years · rounded up to the next ₹100</p>
               <div className="mt-6" aria-hidden>
                 <div className="flex justify-between text-[11px] text-dim"><span>Cost today</span><span>Future cost</span></div>
@@ -85,7 +85,7 @@ export function GoalPlanner() {
               </div>
               <dl className="mt-6 space-y-2.5 border-t border-line pt-5 text-[13px]">
                 {[['Goal cost today', inr(amount)], ['Future cost with inflation', inr(result.target)], ['Illustrated value of existing savings', inr(result.futureSavings)], ['Remaining target for SIPs', inr(result.gap)]].map(([k, v]) => (
-                  <div key={k} className="flex justify-between gap-4"><dt className="text-haze">{k}</dt><dd className="font-semibold tabular-nums">{v}</dd></div>
+                  <div key={k} className="flex justify-between gap-4"><dt className="text-haze">{k}</dt><dd className="financial-value tabular-nums">{v}</dd></div>
                 ))}
               </dl>
               <p className="mt-5 rounded-2xl bg-white/[0.04] p-4 text-[13px] leading-relaxed text-haze">

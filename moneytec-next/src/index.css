@@ -543,7 +543,7 @@ a.lux-masthead-cell:hover { background: rgba(255,55,95,.05); color: var(--ivory)
 #calculator .seg[aria-checked='true'] { color: var(--gold-1); }
 #calculator p.text-\[17px\] { font-family: 'Instrument Serif', Georgia, serif; font-weight: 400; font-size: 24px; letter-spacing: -.01em; }
 #calculator p.text-\[17px\] .text-dim { font-family: Inter, system-ui, sans-serif; font-size: 13px; letter-spacing: 0; margin-left: 6px; }
-#calculator aside .display.grad { font-size: clamp(2.6rem, 5vw, 3.8rem); }
+#calculator aside .display.financial-value { font-size: clamp(2.6rem, 5vw, 3.8rem); }
 .slider::-webkit-slider-runnable-track { background: linear-gradient(90deg, #BF5AF2, #FF375F, #FFD688) 0 / var(--fill) 100% no-repeat, rgba(255,255,255,.12); height: 3px; }
 .slider::-webkit-slider-thumb { background: var(--ivory); box-shadow: 0 0 0 6px rgba(255,55,95,.22), 0 0 24px rgba(255,55,95,.5); }
 .calc-chart { border: 1px solid var(--hair); border-radius: 16px; padding: 14px 14px 10px; background: linear-gradient(180deg, rgba(255,55,95,.05), transparent); }
@@ -805,4 +805,12 @@ img.brand-facebook { padding: 0; width: 21px; height: 21px; border-radius: 50%; 
 /* Reduce Motion: the goal word swaps by a gentle cross-fade in place, never by travelling */
 @media (prefers-reduced-motion: reduce) {
   .goal-word, .goal-word[data-state] { transform: none !important; transition: opacity .7s ease !important; }
+}
+
+/* Readable financial outputs, including the compact phone result. */
+.financial-value, .calc-peek-value.financial-value {
+  color: #fff;
+  -webkit-text-fill-color: #fff;
+  background: none;
+  font-weight: 600;
 }

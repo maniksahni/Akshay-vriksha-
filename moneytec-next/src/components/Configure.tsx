@@ -124,12 +124,12 @@ export function Configure() {
                   <GrowthRing share={total ? growth / total : 0} />
                   <div className="min-w-0">
                     <p className="calc-label text-[13px] text-haze">Illustrated value after {years} years</p>
-                    <p className="calc-total display grad mt-1 text-[clamp(2.2rem,5vw,3.4rem)] tabular-nums">{inr(tTotal)}</p>
+                    <p className="calc-total display financial-value mt-1 text-[clamp(2.2rem,5vw,3.4rem)] tabular-nums">{inr(tTotal)}</p>
                   </div>
                 </div>
                 <div className="calc-split relative mt-6 space-y-2.5 border-t border-line pt-5 text-[14px]">
-                  <div className="flex justify-between"><span className="text-haze">You put in</span><span className="font-semibold tabular-nums">{inr(invested)}</span></div>
-                  <div className="flex justify-between"><span className="text-haze">Growth</span><span className="font-semibold tabular-nums text-mint">+{inr(growth)}</span></div>
+                  <div className="flex justify-between"><span className="text-haze">You put in</span><span className="financial-value tabular-nums">{inr(invested)}</span></div>
+                  <div className="flex justify-between"><span className="text-haze">Growth</span><span className="financial-value tabular-nums">+{inr(growth)}</span></div>
                 </div>
                 <div className="calc-block relative mt-6"><GrowthChart monthly={monthly} rate={rate} years={years} compact={mobile} /></div>
                 <div className="calc-block relative mt-6">
@@ -137,14 +137,14 @@ export function Configure() {
                   <div className="calc-compare mt-3 space-y-3">
                     <div>
                       <div className="calc-bar h-2.5 overflow-hidden rounded-full bg-white/[0.08]"><motion.div className="h-full rounded-full bg-gradient-to-r from-amber via-rose to-violet" initial={{ width: 0 }} whileInView={{ width: '100%' }} viewport={{ once: true }} transition={{ duration: 1, ease: EASE }} /></div>
-                      <p className="mt-1.5 flex justify-between text-[12px]"><span>Start now</span><span className="font-semibold tabular-nums">{inr(tTotal)}</span></p>
+                      <p className="mt-1.5 flex justify-between text-[12px]"><span>Start now</span><span className="financial-value tabular-nums">{inr(tTotal)}</span></p>
                     </div>
                     <div>
                       <div className="calc-bar h-2.5 overflow-hidden rounded-full bg-white/[0.08]"><motion.div className="h-full rounded-full bg-white/35" animate={{ width: `${total ? (late / total) * 100 : 0}%` }} transition={{ duration: 0.5, ease: EASE }} /></div>
-                      <p className="mt-1.5 flex justify-between text-[12px] text-haze"><span>Start in 5 years</span><span className="font-semibold tabular-nums">{inr(tLate)}</span></p>
+                      <p className="mt-1.5 flex justify-between text-[12px] text-haze"><span>Start in 5 years</span><span className="financial-value tabular-nums">{inr(tLate)}</span></p>
                     </div>
                   </div>
-                  <p className="calc-diff mt-3 text-[13px] font-semibold text-amber">Illustrated difference: {inr(total - late)}.</p>
+                  <p className="calc-diff mt-3 text-[13px] financial-value">Illustrated difference: {inr(total - late)}.</p>
                 </div>
                 <a href={wa(`Hi Gulshan! I'd like to discuss a SIP illustration: ${inr(monthly, false)} monthly for ${years} years, assuming ${rate}% annually. Illustrated value ${inr(total)}; contributions ${inr(invested)}. I understand returns are not guaranteed.`)} target="_blank" rel="noreferrer" className="btn-light relative mt-6 w-full pr-2">Discuss this illustration <span className="arrow">↗</span></a>
                 <p className="calc-note relative mt-3 text-[11px] leading-snug text-dim">Contributions at the start of each month, assuming {rate}% CAGR per year. Illustration only; returns are not guaranteed. Mutual fund investments are subject to market risks.</p>
@@ -183,7 +183,7 @@ export function Configure() {
                 <label className="calc-fine mt-5 block">
                   <span className="flex items-baseline justify-between text-[13px] text-haze">
                     <span>Or fine-tune it</span>
-                    <span className="font-semibold tabular-nums text-paper">{inr(monthly, false)}</span>
+                    <span className="financial-value tabular-nums">{inr(monthly, false)}</span>
                   </span>
                   <input type="range" className="slider" min={500} max={100000} step={500} value={monthly} aria-label="Monthly amount" onChange={(e) => fineTune(Number(e.target.value))} style={{ ['--fill' as string]: `${((monthly - 500) / 99500) * 100}%` }} />
                 </label>
@@ -201,7 +201,7 @@ export function Configure() {
             {mobile ? (
               <button type="button" className="calc-peek" onClick={() => setSheet(true)} aria-expanded={sheet} aria-controls="calc-sheet">
                 <span className="calc-label">Illustrated value after {years} years</span>
-                <span className="calc-peek-value">{inr(tTotal)} <span aria-hidden>↑</span></span>
+                <span className="calc-peek-value financial-value">{inr(tTotal)} <span aria-hidden>↑</span></span>
               </button>
             ) : (
               <aside className="calc-result lg:sticky lg:top-24 lg:self-start">{result}</aside>
