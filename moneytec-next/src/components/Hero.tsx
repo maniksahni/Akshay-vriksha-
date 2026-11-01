@@ -120,7 +120,7 @@ export function Hero() {
           <motion.div className="hero-phone-actions" {...rise(play, 0.9)}><Actions mobile /></motion.div>
           <motion.div className="hero-phone-intro" {...rise(play, 1.05)}>
             <p className="lux-eyebrow justify-center">Moneytec — Money, with meaning</p>
-            <p className="lux-promise mx-auto mt-3"><span className="phone-line">Goal-based investing. Family protection.</span> <span className="phone-line">NRI guidance. With {FACTS.name}.</span></p>
+            <p className="lux-promise mx-auto mt-3"><span className="phone-line">Goal-based investing · Family protection</span> <span className="phone-line">NRI guidance with {FACTS.name}</span></p>
             <div className="lux-mobile-verse"><HeroWisdom /></div>
           </motion.div>
         </div>
@@ -143,7 +143,7 @@ export function Hero() {
         <motion.div className="lux-full-floor" style={{ opacity: fade }}>
           <motion.div {...rise(play, 1.3)}>
             <p className="lux-eyebrow">Moneytec — Money, with meaning</p>
-            <p className="lux-promise mt-3"><span className="phone-line">Goal-based investing. Family protection.</span> <span className="phone-line">NRI guidance. With {FACTS.name}.</span></p>
+            <p className="lux-promise mt-3"><span className="phone-line">Goal-based investing · Family protection</span> <span className="phone-line">NRI guidance with {FACTS.name}</span></p>
           </motion.div>
           <motion.div className="lux-floor-verse" {...rise(play, 1.4)}><HeroWisdom /></motion.div>
         </motion.div>
