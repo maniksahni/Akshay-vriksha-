@@ -120,12 +120,14 @@ export function mountRupee(canvas: HTMLCanvasElement, { phone, still, pose }: { 
 
   // ---- coin edge: a polished ring, a glowing inner line and milled ticks
   const coin = new Group();
-  const ringMat = new MeshStandardMaterial({ color: '#f1e4ff', metalness: 1, roughness: 0.14, envMapIntensity: 1.4 });
+  // the rim and ticks carry their own glow: iPhone Safari can render the studio reflections dark, and pure
+  // metal with nothing to reflect would vanish into the night
+  const ringMat = new MeshStandardMaterial({ color: '#f1e4ff', metalness: 1, roughness: 0.14, envMapIntensity: 1.4, emissive: new Color('#cdb6ff'), emissiveIntensity: 0.55 });
   coin.add(new Mesh(new TorusGeometry(2.55, 0.055, 24, 260), ringMat));
   coin.add(new Mesh(new TorusGeometry(2.38, 0.012, 8, 260), new MeshStandardMaterial({ color: '#FF9F0A', emissive: new Color('#FF375F'), emissiveIntensity: 1.2 })));
   coin.add(new Mesh(new TorusGeometry(2.95, 0.006, 6, 260), new MeshBasicMaterial({ color: new Color('#FFB340').multiplyScalar(1.4), transparent: true, opacity: 0.5 })));
   const TICKS = phone ? 90 : 160;
-  const ticks = new InstancedMesh(new BoxGeometry(0.018, 0.13, 0.05), new MeshStandardMaterial({ color: '#ffffff', metalness: 1, roughness: 0.25, emissive: new Color('#BF5AF2'), emissiveIntensity: 0.5 }), TICKS);
+  const ticks = new InstancedMesh(new BoxGeometry(0.018, 0.13, 0.05), new MeshStandardMaterial({ color: '#ffffff', metalness: 1, roughness: 0.25, emissive: new Color('#f0dcff'), emissiveIntensity: 0.75 }), TICKS);
   const m = new Matrix4(), o = new Object3D();
   for (let i = 0; i < TICKS; i++) {
     const a = (i / TICKS) * Math.PI * 2;
