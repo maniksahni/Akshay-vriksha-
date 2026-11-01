@@ -248,25 +248,10 @@ a,button,input,select,summary { -webkit-tap-highlight-color:rgba(255,159,10,.15)
 /* First scroll: a compact editorial service system in the same cinematic palette. */
 
 /* ================================================================== immersive layer
-   Cinematic finish over the existing system: cursor, liquid hero, kinetic type,
+   Cinematic finish over the existing system: liquid hero, kinetic type,
    living borders on cards and light that sweeps across buttons. Content and structure are unchanged. */
 @property --spin { syntax: '<angle>'; inherits: false; initial-value: 0deg; }
 
-/* ---- cursor */
-.cursor-layer { position: fixed; inset: 0; pointer-events: none; z-index: 95; display: none; }
-.has-cursor .cursor-layer { display: block; }
-.has-cursor, .has-cursor body, .has-cursor a, .has-cursor button, .has-cursor summary, .has-cursor label, .has-cursor [role='button'] { cursor: none; }
-.has-cursor input[type='range'] { cursor: none; }
-.cursor-dot, .cursor-ring { position: fixed; left: 0; top: 0; will-change: transform; }
-.cursor-dot { width: 6px; height: 6px; margin: -3px 0 0 -3px; border-radius: 50%; background: #fff; mix-blend-mode: difference; }
-.cursor-ring { width: 38px; height: 38px; margin: -19px 0 0 -19px; display: grid; place-items: center; }
-.cursor-ring::before { content: ''; position: absolute; inset: 0; border-radius: 50%; border: 1px solid rgba(255,255,255,.45); transition: transform .45s cubic-bezier(.22,1,.36,1), background .3s, border-color .3s; }
-.cursor-ring.is-hover::before { transform: scale(1.9); border-color: transparent; background: radial-gradient(circle, rgba(255,55,95,.22), rgba(191,90,242,.12) 60%, transparent 72%); }
-.cursor-ring.has-label::before { transform: scale(2.6); background: linear-gradient(135deg, #FF9F0A, #FF375F 55%, #BF5AF2); border-color: transparent; }
-.cursor-ring.is-text::before { transform: scaleX(.06) scaleY(.75); background: #fff; border-color: transparent; }
-.cursor-ring.is-down::before { transform: scale(.8); }
-.cursor-label { position: relative; font-size: 10px; font-weight: 600; letter-spacing: .02em; color: #fff; white-space: nowrap; opacity: 0; transform: scale(.6); transition: opacity .3s, transform .45s cubic-bezier(.22,1,.36,1); }
-.cursor-ring.has-label .cursor-label { opacity: 1; transform: scale(1); }
 
 /* ---- hero */
 
@@ -410,12 +395,6 @@ body { letter-spacing: -0.005em; }
 footer { background: radial-gradient(70% 50% at 50% 100%, rgba(255,55,95,.08), transparent 70%), #07060B; }
 .stage-coin { filter: drop-shadow(0 0 30px rgba(255,55,95,.28)) drop-shadow(0 0 80px rgba(191,90,242,.18)); }
 
-/* cursor: one small bright point and a hairline ring */
-.cursor-dot { background: var(--gold-1); mix-blend-mode: normal; width: 5px; height: 5px; margin: -2.5px 0 0 -2.5px; }
-.cursor-ring::before { border-color: rgba(255,55,95,.5); }
-.cursor-ring.is-hover::before { background: rgba(255,55,95,.08); border-color: rgba(255,55,95,.7); transform: scale(1.6); }
-.cursor-ring.has-label::before { background: var(--ivory); }
-.cursor-label { color: #07060B; }
 
 /* ---------------------------------------------------------------- hero */
 .lux-hero { height: 100svh; min-height: 740px; }

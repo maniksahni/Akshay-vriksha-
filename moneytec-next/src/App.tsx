@@ -4,7 +4,6 @@ import { Configure } from './components/Configure';
 import { Grow } from './components/Grow';
 import { Hero } from './components/Hero';
 import { Highlights } from './components/Highlights';
-import { Cursor } from './components/Cursor';
 import { Stage } from './components/Stage';
 import { InstagramReels } from './components/InstagramReels';
 import { Ticker } from './components/Ticker';
@@ -39,7 +38,6 @@ export default function App() {
       <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-paper focus:px-5 focus:py-3 focus:text-ink">
         Skip to content
       </a>
-      <Cursor />
       <Stage />
       <div className="grain" aria-hidden />
       <Nav />
