@@ -80,6 +80,7 @@ export function Stage() {
         o = Math.max(0, Math.min(1, r.bottom / (r.height * 0.7)));
         f = 0;
         // a soft halo travels with the coin so it glows against the night even mid-spin
+        if (field.current) field.current.style.display = o < 0.01 ? 'none' : '';
         if (glow.current) {
           glow.current.style.transform = `translate3d(${r.left + r.width / 2}px, ${r.top + r.height / 2}px, 0) translate(-50%, -50%)`;
           glow.current.style.opacity = String(o);
@@ -136,8 +137,8 @@ export function Stage() {
     const idle = (window as Window & { requestIdleCallback?: (cb: () => void, o?: { timeout: number }) => number }).requestIdleCallback;
     let timer = 0;
     const go = () => {
-      // phones keep the still CSS glow: a second full-screen WebGL layer is what made them stutter
-      if (!mobile) import('./AuroraField').then(({ mountAurora }) => {
+      // phones get the same liquid light as laptops, drawn small and only while the hero is on screen
+      import('./AuroraField').then(({ mountAurora }) => {
         if (dead || !field.current) return;
         try { aurora = mountAurora(field.current, { phone: mobile, still: reduced() }); apply(); setReady((r) => ({ ...r, field: true })); } catch { /* CSS aurora stays */ }
       });

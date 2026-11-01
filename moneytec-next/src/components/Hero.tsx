@@ -119,9 +119,9 @@ export function Hero() {
           </h1>
           <motion.div className="mt-7" {...rise(play, 0.9)}><Actions mobile /></motion.div>
           <motion.div className="mt-10" {...rise(play, 1.05)}>
-            <p className="lux-eyebrow mb-8 justify-center">Moneytec — Money, with meaning</p>
-            <HeroWisdom />
-            <p className="lux-promise">Goal-based investing, family protection and NRI guidance with {FACTS.name}.</p>
+            <p className="lux-eyebrow justify-center">Moneytec — Money, with meaning</p>
+            <p className="lux-promise mx-auto mt-3">Goal-based investing, family protection and NRI guidance with {FACTS.name}.</p>
+            <div className="lux-mobile-verse"><HeroWisdom /></div>
           </motion.div>
         </div>
       </section>

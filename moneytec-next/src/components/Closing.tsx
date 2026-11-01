@@ -244,7 +244,7 @@ export function Finale() {
                     <span className="sr-only">Your name</span>
                     <input value={name} onChange={(e) => setName(e.target.value)} placeholder="Your name" autoComplete="name" className="field" />
                   </label>
-                  <button type="submit" className="btn-glow mt-5 h-14 w-full text-[16px]"><img src="./brand/partners/whatsapp.svg" alt="" width="19" height="19" className="platform-action-logo" />Continue on WhatsApp</button>
+                  <button type="submit" className="btn-glow mt-5 h-14 w-full text-[16px]"><img src="./brand/partners/whatsapp.svg" alt="" width="19" height="19" className="brand-chip brand-whatsapp" />Continue on WhatsApp</button>
                   <p className="mt-3 text-center text-[12px] text-dim">No obligation. Nothing is booked or invested from this website.</p>
                 </motion.div>
               )}
@@ -288,10 +288,10 @@ export function Footer() {
           </nav>
           <div className="flex flex-col gap-1.5">
             <p className="mb-1 text-[11px] uppercase tracking-[0.2em] text-haze">Connect</p>
-            <a href={wa('Hi!')} target="_blank" rel="noreferrer" className="footer-platform-link w-fit hover:text-paper"><img src="./brand/partners/whatsapp.svg" alt="" width="15" height="15" />WhatsApp</a>
+            <a href={wa('Hi!')} target="_blank" rel="noreferrer" className="footer-platform-link w-fit hover:text-paper"><img src="./brand/partners/whatsapp.svg" alt="" width="15" height="15" className="brand-chip brand-whatsapp" />WhatsApp</a>
             <a href={`tel:+${FACTS.phoneIntl}`} className="w-fit hover:text-paper">{FACTS.phone}</a>
             <a href={`mailto:${FACTS.email}`} className="w-fit hover:text-paper">Email</a>
-            {SOCIALS.map((s) => <a key={s.name} href={s.href} target="_blank" rel="noreferrer" className="footer-platform-link w-fit hover:text-paper"><img src={`./brand/partners/${s.icon}.svg`} alt="" width="15" height="15" />{s.name}</a>)}
+            {SOCIALS.map((s) => <a key={s.name} href={s.href} target="_blank" rel="noreferrer" className="footer-platform-link w-fit hover:text-paper"><img src={`./brand/partners/${s.icon}.svg`} alt="" width="15" height="15" className={`brand-chip brand-${s.icon}`} />{s.name}</a>)}
           </div>
         </div>
       </div>

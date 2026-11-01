@@ -69,8 +69,8 @@ function GrowthChart({ monthly, rate, years, compact }: { monthly: number; rate:
         <motion.path initial={false} animate={{ d: line('v') }} transition={t} fill="none" stroke="url(#calc-line)" strokeWidth="2.4" strokeLinecap="round" />
         <motion.circle initial={false} animate={{ cy: pts[N].v }} transition={t} cx={W} r="4.5" fill="#FFD688" />
         <motion.circle initial={false} animate={{ cy: pts[N].v }} transition={t} cx={W} r="11" fill="#FF375F" opacity=".2" />
-        <text x="0" y={H + 18} fill="#F4F1F8" fillOpacity=".4" fontSize="10">Year 0</text>
-        <text x={W} y={H + 18} fill="#F4F1F8" fillOpacity=".4" fontSize="10" textAnchor="end">Year {years}</text>
+        <text x="0" y={H + 18} fill="#FFFFFF" fillOpacity=".9" fontSize="11">Year 0</text>
+        <text x={W} y={H + 18} fill="#FFFFFF" fillOpacity=".9" fontSize="11" textAnchor="end">Year {years}</text>
       </svg>
       <div className="calc-chart-legend">
         <span><i className="calc-key-line" />Illustrated value</span>

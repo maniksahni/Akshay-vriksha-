@@ -87,7 +87,7 @@ export function Grow() {
             {[0, 10, 20, 30].map((y) => (
               <g key={y}>
                 <line x1={(y / YEARS) * W} x2={(y / YEARS) * W} y1="0" y2={H} stroke="#fff" strokeOpacity={whole >= y ? 0.14 : 0.05} strokeDasharray="4 6" vectorEffect="non-scaling-stroke" />
-                <text x={(y / YEARS) * W} y={H + 26 * k} fill="#fff" fillOpacity={whole >= y ? 0.6 : 0.25} fontSize={18 * k} textAnchor={y === 0 ? 'start' : y === 30 ? 'end' : 'middle'}>Year {y}</text>
+                <text x={(y / YEARS) * W} y={H + 26 * k} fill="#fff" fillOpacity={whole >= y ? 0.95 : 0.6} fontSize={18 * k} textAnchor={y === 0 ? 'start' : y === 30 ? 'end' : 'middle'}>Year {y}</text>
               </g>
             ))}
             <path d={ghost} fill="none" stroke="#fff" strokeOpacity="0.08" strokeWidth="2" vectorEffect="non-scaling-stroke" />

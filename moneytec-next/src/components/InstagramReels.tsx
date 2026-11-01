@@ -17,7 +17,7 @@ export function InstagramReels() {
           {SOCIALS.map((s) => (
             <a key={s.name} onPointerMove={spotlight} onPointerLeave={untilt} className="glass spot tilt group flex flex-col gap-6 p-4 sm:p-6" href={s.href} target="_blank" rel="noreferrer">
               <span className="flex items-center justify-between">
-                <span className="grid h-11 w-11 place-items-center rounded-2xl bg-gradient-to-br from-amber/30 via-rose/25 to-violet/30 text-paper"><img src={`./brand/partners/${s.icon}.svg`} alt="" width="22" height="22" /></span>
+                <span className={`brand-tile brand-${s.icon} grid h-11 w-11 place-items-center rounded-2xl`}><img src={`./brand/partners/${s.icon}.svg`} alt="" width="22" height="22" /></span>
                 <ArrowUpRight size={18} className="text-dim transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-paper" aria-hidden />
               </span>
               <span>

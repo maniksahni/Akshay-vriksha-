@@ -1078,3 +1078,36 @@ a.lux-masthead-cell:hover { background: rgba(255,55,95,.05); color: var(--ivory)
 @media (max-width: 767px) {
   .lux-hero-mobile .goal-slot { display: grid; width: auto !important; margin: 0 !important; padding: 0 0 .12em !important; justify-items: center; transition: none; }
 }
+
+/* ---------------------------------------------------------------- white tone
+   Text that carries meaning is near-white: the verse, descriptions, small labels, chart labels and legends. */
+.hero-wisdom blockquote, .lux-full-floor .hero-wisdom blockquote, .lux-hero-mobile .hero-wisdom blockquote, .lux-hero-floor .hero-wisdom blockquote {
+  color: #ffffff !important; text-shadow: 0 0 18px rgba(255,255,255,.28), 0 0 42px rgba(255,159,10,.18);
+}
+.hero-wisdom-meaning, .lux-hero-mobile .hero-wisdom-meaning, .lux-full-floor .hero-wisdom-meaning { color: rgba(255,255,255,.86) !important; }
+.lede, .lux-head-aside p, .lux-row-body, .expertise-heading-aside p { color: rgba(255,255,255,.84) !important; }
+.lux-foot, .lux-credentials, .lux-masthead-cell { color: rgba(255,255,255,.82); }
+.lux-row-tag { color: rgba(255,255,255,.7); }
+.lux-promise { color: #fff; }
+.calc-chart-legend, #grow .text-dim, #calculator .text-dim, #calculator .text-haze { color: rgba(255,255,255,.82) !important; }
+.calc-label { color: rgba(255,255,255,.85) !important; }
+/* every logo shows its real brand colours on a white tile */
+.brand-tile { background: #fff; box-shadow: 0 6px 18px -8px rgba(0,0,0,.6); }
+.brand-chip { background: #fff; border-radius: 5px; padding: 3px; box-sizing: content-box; }
+.btn .brand-chip { border-radius: 50%; padding: 4px; }
+@media (max-width: 767px) {
+  .lux-mobile-verse { margin-top: 28px; padding-top: 24px; border-top: 1px solid var(--hair); }
+  .lux-hero-mobile .lux-promise { margin-top: 12px; }
+}
+.lux-masthead-cell.lux-masthead-link { color: #FF5C7A; }
+/* logos in their own brand shades, app-icon style: each tile wears the brand colour, the mark sits on top */
+.brand-tile.brand-instagram, .brand-chip.brand-instagram { background: radial-gradient(circle at 30% 107%, #FDF497 0%, #FDF497 5%, #FD5949 45%, #D6249F 60%, #285AEB 90%); }
+.brand-tile.brand-facebook, .brand-chip.brand-facebook { background: #1877F2; }
+.brand-tile.brand-youtube, .brand-chip.brand-youtube { background: #FFFFFF; }
+.brand-tile.brand-x, .brand-chip.brand-x { background: #000000; box-shadow: inset 0 0 0 1px rgba(255,255,255,.18); }
+.brand-tile.brand-whatsapp, .brand-chip.brand-whatsapp { background: #25D366; }
+.brand-instagram > img, .brand-whatsapp > img { filter: brightness(0) invert(1); }
+/* small inline icons carry their own coloured mark on a light chip (a filter would also bleach the chip) */
+img.brand-instagram, img.brand-whatsapp { background: #FFFFFF !important; filter: none; }
+.brand-tile.brand-facebook > img { width: 30px; height: 30px; }
+img.brand-facebook { padding: 0; width: 21px; height: 21px; border-radius: 50%; }
