@@ -2,7 +2,7 @@ import { HeroWisdom } from './Wisdom';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { FACTS } from '../data';
-import { EASE, reduced, useMobile } from './ui';
+import { EASE, useMobile } from './ui';
 
 /** Each character rises out of its own mask, one after another. */
 function SplitLine({ text, play, delay, accent }: { text: string; play: boolean; delay: number; accent?: boolean }) {
@@ -65,7 +65,7 @@ function GoalLine({ play, delay }: { play: boolean; delay: number }) {
     let t = 0;
     const show = window.setTimeout(() => setShown(true), (delay + 0.15) * 1000);
     const start = window.setTimeout(() => {
-      if (reduced()) return;
+      // with Reduce Motion on, the words still change; they cross-fade in place instead of travelling
       t = window.setInterval(() => setI((n) => { setPrev(n); return (n + 1) % GOALS.length; }), 3000);
     }, (delay + 2.2) * 1000);
     return () => { window.clearTimeout(show); window.clearTimeout(start); window.clearInterval(t); };

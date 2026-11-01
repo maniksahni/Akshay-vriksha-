@@ -32,7 +32,9 @@ export function Grow() {
   const seen = useInView(chart, { once: true, amount: 0.5 });
   const play = useRef<ReturnType<typeof animate> | null>(null);
   useEffect(() => {
-    if (!mobile || !seen || reduced()) return;
+    if (!mobile || !seen) return;
+    // with Reduce Motion on, show the full thirty years at once rather than playing them out
+    if (reduced()) { setSlideYear(YEARS); return; }
     play.current = animate(1, YEARS, { duration: 4.5, ease: EASE, onUpdate: setSlideYear });
     return () => play.current?.stop();
   }, [mobile, seen]);
