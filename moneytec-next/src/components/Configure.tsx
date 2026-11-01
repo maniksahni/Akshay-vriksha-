@@ -94,10 +94,12 @@ export function Configure() {
   const [monthly, setMonthlyRaw] = useState(5000);
   const [years, setYearsRaw] = useState(20);
   const [rate, setRateRaw] = useState(12);
-  // phones: the result lives in a sheet that rises the moment any choice is made
+  // phones: the result lives in a sheet that rises when you tap a choice (never from the slider, which a
+  // passing thumb can nudge mid-scroll); the peek bar below the choices shows the number live either way
   const [sheet, setSheet] = useState(false);
   const open = () => { if (mobile) setSheet(true); };
   const setMonthly = (v: number) => { setMonthlyRaw(v); open(); };
+  const fineTune = (v: number) => setMonthlyRaw(v);
   const setYears = (v: number) => { setYearsRaw(v); open(); };
   const setRate = (v: number) => { setRateRaw(v); open(); };
   const section = useRef<HTMLElement>(null);
@@ -183,7 +185,7 @@ export function Configure() {
                     <span>Or fine-tune it</span>
                     <span className="font-semibold tabular-nums text-paper">{inr(monthly, false)}</span>
                   </span>
-                  <input type="range" className="slider" min={500} max={100000} step={500} value={monthly} aria-label="Monthly amount" onChange={(e) => setMonthly(Number(e.target.value))} style={{ ['--fill' as string]: `${((monthly - 500) / 99500) * 100}%` }} />
+                  <input type="range" className="slider" min={500} max={100000} step={500} value={monthly} aria-label="Monthly amount" onChange={(e) => fineTune(Number(e.target.value))} style={{ ['--fill' as string]: `${((monthly - 500) / 99500) * 100}%` }} />
                 </label>
               </div>
               <div>
@@ -210,7 +212,12 @@ export function Configure() {
       {mobile && createPortal(
         <AnimatePresence>
           {sheet && mode === 'sip' && (
+            // a tap anywhere outside the sheet closes it
+            <motion.div key="scrim" className="calc-scrim" onClick={() => setSheet(false)} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.3 }} aria-hidden />
+          )}
+          {sheet && mode === 'sip' && (
             <motion.div
+              key="sheet"
               id="calc-sheet"
               role="dialog"
               aria-label={`Illustrated value after ${years} years`}
@@ -225,6 +232,7 @@ export function Configure() {
               onDragEnd={(_, i) => { if (i.offset.y > 80 || i.velocity.y > 500) setSheet(false); }}
             >
               <button type="button" className="calc-sheet-handle" onClick={() => setSheet(false)} aria-label="Close"><span /></button>
+              <button type="button" className="calc-sheet-close" onClick={() => setSheet(false)} aria-label="Close result">×</button>
               {result}
             </motion.div>
           )}

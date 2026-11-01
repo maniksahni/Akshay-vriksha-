@@ -2,7 +2,7 @@ import { AnimatePresence, motion, useMotionValueEvent, useScroll } from 'framer-
 import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { FACTS, NAV, wa } from '../data';
-import { EASE } from './ui';
+import { EASE, useMobile } from './ui';
 
 export function Wordmark({ className = '' }: { className?: string }) {
   return (
@@ -15,6 +15,7 @@ export function Wordmark({ className = '' }: { className?: string }) {
 
 /** A floating glass pill: logo, the sections, one action. It tucks away while you read and returns when you scroll back up. */
 export function Nav() {
+  const mobile = useMobile();
   const [solid, setSolid] = useState(false);
   const [hidden, setHidden] = useState(false);
   const [open, setOpen] = useState(false);
@@ -23,8 +24,11 @@ export function Nav() {
   useMotionValueEvent(scrollY, 'change', (y) => {
     const prev = scrollY.getPrevious() ?? 0;
     setSolid(y > 24);
-    setHidden(y > 600 && y > prev + 2 && !open);
-    if (y < prev - 2) setHidden(false);
+    // phones keep the bar still; laptops tuck it away while reading down and bring it back on the way up
+    if (mobile) { setHidden(false); } else {
+      if (y > 600 && y > prev + 6 && !open) setHidden(true);
+      else if (y < prev - 6 || y <= 600) setHidden(false);
+    }
     const hit = NAV.map((n) => document.querySelector<HTMLElement>(n.href)).filter(Boolean).reverse().find((s) => s!.getBoundingClientRect().top < window.innerHeight * 0.4);
     setCurrent(hit ? `#${hit.id}` : '');
   });
