@@ -279,7 +279,8 @@ export function mountRupee(canvas: HTMLCanvasElement, { phone, still, pose }: { 
     coin.rotation.y = mark.rotation.y * 0.5;
     coin.rotation.x = 0.25 + mark.rotation.x * 0.6;
     coin.rotation.z = still ? 0 : t * 0.06;
-    coin.scale.setScalar(0.3 + 0.7 * easeOut(Math.min(1, Math.max(0, (t - 0.3) / 1.6))));
+    // the ring grows in with the arrival; with motion reduced it is simply there at full size
+    coin.scale.setScalar(still ? 1 : 0.3 + 0.7 * easeOut(Math.min(1, Math.max(0, (t - 0.3) / 1.6))));
     galaxyPivot.rotation.y = sx * 0.25;
     galaxyPivot.rotation.z = -sy * 0.15 + 0.12;
     hero.position.set((cur.x - 0.5) * 2 * halfW, -cur.y * halfH + (still ? 0 : Math.sin(t * 0.9) * 0.08), -(1 - arrive) * 10);
