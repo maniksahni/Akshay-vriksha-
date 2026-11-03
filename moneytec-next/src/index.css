@@ -849,3 +849,9 @@ img.brand-facebook { padding: 0; width: 21px; height: 21px; border-radius: 50%; 
   .hero-phone-intro .lux-promise { max-width: none; font-size: clamp(14px, min(2.2svh, 4.7vw), 19px); }
   .hero-phone-intro .hero-wisdom-meaning { max-width: none; font-size: clamp(10px, 2.8vw, 12px); }
 }
+
+/* Desktop and tablet: the promise under the hero also reads as two whole lines, never a stray word below. */
+@media (min-width: 768px) {
+  .lux-full-floor .lux-promise { max-width: none; font-size: clamp(14px, 1.2vw, 20px); line-height: 1.35; }
+  .lux-full-floor .phone-line { display: block; white-space: nowrap; }
+}
