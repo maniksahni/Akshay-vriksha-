@@ -298,7 +298,6 @@ export function Footer() {
       <FooterMark />
       <div className="wrap-wide flex flex-col gap-2 border-t border-line py-5 sm:flex-row sm:justify-between">
         <p>© {new Date().getFullYear()} moneytec · {FACTS.city}</p>
-        <a href="./brand/partners/CREDITS.txt" target="_blank" rel="noreferrer" className="hover:text-paper">Logo credits</a>
       </div>
     </footer>
   );
