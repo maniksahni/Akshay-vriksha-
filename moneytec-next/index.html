@@ -39,7 +39,7 @@
           "slogan": "Make your money mean more.",
           "description": "Goal-based mutual fund SIPs, life cover through Kotak Life and NRI investing guidance with Gulshan Kohli, AMFI-registered mutual fund distributor (ARN-105840) in Rohini, New Delhi.",
           "url": "https://moneytec.in/",
-          "logo": "https://moneytec.in/brand/moneytec-symbol.svg",
+          "logo": { "@type": "ImageObject", "url": "https://moneytec.in/icon-512.png", "width": 512, "height": 512 },
           "image": "https://moneytec.in/og-moneytec.jpg",
           "telephone": "+91-91367-92367",
           "email": "akshayavriksha@gmail.com",
@@ -99,8 +99,12 @@
       ]
     }
     </script>
-    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
-    <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+    <!-- Google shows a site's favicon in results only from a square icon in a multiple of 48px -->
+    <link rel="icon" href="./favicon.ico" sizes="48x48" />
+    <link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png" />
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
+    <link rel="manifest" href="./site.webmanifest" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..800&family=Instrument+Serif:ital@0;1&display=swap" />
