@@ -855,3 +855,9 @@ img.brand-facebook { padding: 0; width: 21px; height: 21px; border-radius: 50%; 
   .lux-full-floor .lux-promise { max-width: none; font-size: clamp(14px, 1.2vw, 20px); line-height: 1.35; }
   .lux-full-floor .phone-line { display: block; white-space: nowrap; }
 }
+
+/* quiet links from a section to the guide pages that explain it */
+.learn-links { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 16px; font-size: 13px; line-height: 1.5; color: rgba(255,255,255,.62); }
+.learn-links > span { font-size: 11px; letter-spacing: .18em; text-transform: uppercase; }
+.learn-links a { color: var(--ivory, #F4F1F8); text-decoration: underline; text-decoration-color: rgba(255,92,122,.7); text-underline-offset: 3px; }
+.learn-links a:hover { color: #FF8FA5; }

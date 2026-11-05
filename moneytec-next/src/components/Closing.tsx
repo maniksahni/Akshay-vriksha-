@@ -2,7 +2,7 @@ import { BrandLogo } from './BrandLogo';
 import { AnimatePresence, motion, useScroll, useTransform } from 'framer-motion';
 import { FormEvent, useRef, useState } from 'react';
 import { DISCLAIMER, FACTS, GUIDES, NAV, SOCIALS, wa } from '../data';
-import { CountUp, EASE, FadeIn, Scene, spotlight, Title, untilt, useMobile } from './ui';
+import { CountUp, EASE, FadeIn, LearnLinks, Scene, spotlight, Title, untilt, useMobile } from './ui';
 
 /* ---------------------------------------------------------------- meet Gulshan */
 const BIO = `${FACTS.name} is an electronics engineer turned mutual fund distributor. For ${FACTS.years}+ years, he has helped people start SIPs and explore protection for their families. From your first question to your next review, you can speak with him personally.`;
@@ -145,6 +145,7 @@ export function Safety() {
         </div>
         <div className="safety-brand-links"><a href={FACTS.amfiLocator} target="_blank" rel="noreferrer" aria-label="AMFI official distributor lookup"><BrandLogo brand="amfi" /></a><a href="https://www.kotaklife.com/" target="_blank" rel="noreferrer" aria-label="Kotak Life official website"><BrandLogo brand="kotak" /></a></div>
         <p className="mt-6 text-center"><a href={FACTS.amfiLocator} target="_blank" rel="noreferrer" className="link">Verify {FACTS.arn} on AMFI ↗</a></p>
+        <LearnLinks className="mt-4 justify-center" links={[['How Moneytec works', './how-moneytec-works'], ['About Gulshan Kohli', './mutual-fund-distributor-rohini-delhi']]} />
       </div>
     </section>
   );
@@ -167,6 +168,7 @@ export function Faq() {
       <Scene className="wrap grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
         <div className="lg:sticky lg:top-28 lg:self-start">
           <Title className="display sm:mt-4 text-[clamp(2.2rem,4.6vw,4rem)]" text="A little clarity / *goes a long way.*" />
+          <LearnLinks className="mt-5" links={[['How to start a SIP', './how-to-start-sip'], ['KYC', './mutual-fund-kyc'], ['Mutual fund terms', './mutual-fund-terms'], ['All guides', './learn']]} />
         </div>
         <div className="border-t border-line">
           {FAQ.map(([q, a], i) => {

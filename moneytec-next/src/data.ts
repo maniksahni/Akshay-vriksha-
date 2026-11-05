@@ -23,15 +23,20 @@ export const NAV = [
   { label: 'Our approach', href: '#safety' },
   { label: 'Gulshan', href: '#gulshan' },
   { label: 'FAQ', href: '#faq' },
+  { label: 'Learn', href: './learn' },
 ];
 
 /** The static guide pages in public/, linked from the footer so search engines can find them. */
 export const GUIDES = [
-  { label: 'Mutual fund distributor in Rohini', href: './mutual-fund-distributor-rohini-delhi' },
+  { label: 'What is a mutual fund?', href: './what-is-mutual-fund' },
+  { label: 'What is a SIP?', href: './what-is-sip' },
   { label: 'SIP calculator', href: './sip-calculator' },
-  { label: 'How to start a SIP', href: './how-to-start-sip' },
+  { label: 'Power of compounding', href: './power-of-compounding' },
   { label: 'NRI mutual fund investment', href: './nri-mutual-fund-investment' },
-  { label: 'ELSS tax-saving funds', href: './elss-tax-saving-funds' },
+  { label: 'What is life insurance?', href: './what-is-life-insurance' },
+  { label: 'Mutual fund terms explained', href: './mutual-fund-terms' },
+  { label: 'How Moneytec works', href: './how-moneytec-works' },
+  { label: 'All guides', href: './learn' },
 ];
 
 export const DISCLAIMER =

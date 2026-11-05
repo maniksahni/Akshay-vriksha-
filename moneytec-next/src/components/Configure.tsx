@@ -3,7 +3,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { wa } from '../data';
 import { GoalPlanner } from './GoalPlanner';
-import { EASE, inr, Scene, sipValue, spotlight, Title, useMobile, useTween } from './ui';
+import { EASE, inr, LearnLinks, Scene, sipValue, spotlight, Title, useMobile, useTween } from './ui';
 
 const AMOUNTS = [1000, 3000, 5000, 10000, 25000, 50000];
 const DURATIONS = [5, 10, 15, 20, 25, 30];
@@ -209,6 +209,7 @@ export function Configure() {
           </div>
         </div>
       </Scene>
+      <div className="wrap-wide"><LearnLinks className="mt-6" links={[['What is a SIP?', './what-is-sip'], ['How to start a SIP', './how-to-start-sip'], ['SIP calculator guide', './sip-calculator'], ['Goal-based investing', './goal-based-investing']]} /></div>
       {mobile && createPortal(
         <AnimatePresence>
           {sheet && mode === 'sip' && (

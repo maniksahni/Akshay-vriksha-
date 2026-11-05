@@ -1,7 +1,7 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { wa } from '../data';
-import { EASE, Scene, spotlight, Title, untilt } from './ui';
+import { EASE, LearnLinks, Scene, spotlight, Title, untilt } from './ui';
 
 const PLANS = [
   { name: 'Near-term needs', tag: 'Keep liquidity in view', horizon: '3–5 years', drops: 'Prefers to avoid them', goals: 'Emergency fund, short-term goals', before: 'Check access to your money, exit conditions and capital risk.', orbit: 1, hue: '#64D2FF' },
@@ -112,6 +112,7 @@ export function Plans() {
           ))}
         </div>
         <p className="mx-auto mt-8 max-w-2xl text-center text-[12px] text-dim">These are starting points for a conversation, not product recommendations. Suitability depends on your full financial circumstances and risk assessment.</p>
+        <LearnLinks className="mt-4 justify-center" links={[['Goal-based investing', './goal-based-investing'], ['ELSS tax-saving funds', './elss-tax-saving-funds']]} />
       </Scene>
     </section>
   );

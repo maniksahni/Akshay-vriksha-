@@ -119,6 +119,16 @@ export function CountUp({ to, suffix = '', className = '' }: { to: number; suffi
   return <span ref={ref} className={className}>{n}{suffix}</span>;
 }
 
+/** A quiet line of links from a section to the guides that explain it. */
+export function LearnLinks({ links, className = '' }: { links: [string, string][]; className?: string }) {
+  return (
+    <p className={`learn-links ${className}`}>
+      <span>Learn more</span>
+      {links.map(([label, href]) => <a key={href} href={href}>{label}</a>)}
+    </p>
+  );
+}
+
 /** Indian-style short money: ₹4.2 L, ₹1.9 Cr. */
 export function inr(n: number, short = true) {
   if (!short || n < 100000) return '₹' + Math.round(n).toLocaleString('en-IN');

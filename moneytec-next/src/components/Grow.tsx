@@ -1,6 +1,6 @@
 import { animate, AnimatePresence, motion, useInView, useMotionValueEvent, useScroll } from 'framer-motion';
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { EASE, inr, reduced, sipValue, useMobile } from './ui';
+import { EASE, inr, LearnLinks, reduced, sipValue, useMobile } from './ui';
 
 const MONTHLY = 5000;
 const RATE = 12;
@@ -119,6 +119,7 @@ export function Grow() {
         </div>
       </div>
       <p className="mt-6 text-center text-[11px] leading-relaxed text-dim">₹5,000 per month, assuming CAGR of 12% per year. Illustration only. Returns are not guaranteed. Mutual fund investments are subject to market risks.</p>
+      <LearnLinks className="mt-2 justify-center" links={[['The power of compounding', './power-of-compounding']]} />
     </div>
   );
 

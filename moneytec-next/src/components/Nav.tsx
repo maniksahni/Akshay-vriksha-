@@ -29,7 +29,7 @@ export function Nav() {
       if (y > 600 && y > prev + 6 && !open) setHidden(true);
       else if (y < prev - 6 || y <= 600) setHidden(false);
     }
-    const hit = NAV.map((n) => document.querySelector<HTMLElement>(n.href)).filter(Boolean).reverse().find((s) => s!.getBoundingClientRect().top < window.innerHeight * 0.4);
+    const hit = NAV.filter((n) => n.href.startsWith('#')).map((n) => document.querySelector<HTMLElement>(n.href)).filter(Boolean).reverse().find((s) => s!.getBoundingClientRect().top < window.innerHeight * 0.4);
     setCurrent(hit ? `#${hit.id}` : '');
   });
   useEffect(() => {

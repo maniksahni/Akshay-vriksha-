@@ -2,7 +2,7 @@ import { TrendingUp, ShieldCheck, Globe2, BookOpen, ScanLine } from 'lucide-reac
 import { BrandLogo } from './BrandLogo';
 import { motion } from 'framer-motion';
 import { wa } from '../data';
-import { EASE, Title } from './ui';
+import { EASE, LearnLinks, Title } from './ui';
 
 /** Each service gets a small living illustration: lines draw, nodes pulse, nothing loud. */
 const ART = {
@@ -112,6 +112,7 @@ export function Highlights() {
           {CARDS.map((c, i) => <Row key={c.tag} c={c} i={i} />)}
         </ol>
         <div className="lux-foot"><span>A conversation first. A decision when you’re ready.</span><a href="#gulshan" className="link">Meet the person behind your plan <span aria-hidden="true">↗</span></a></div>
+        <LearnLinks className="mt-6" links={[['What is a mutual fund?', './what-is-mutual-fund'], ['What is a SIP?', './what-is-sip'], ['Life insurance', './what-is-life-insurance'], ['NRI investing', './nri-mutual-fund-investment'], ['Portfolio review', './portfolio-review']]} />
       </div>
     </section>
   );
