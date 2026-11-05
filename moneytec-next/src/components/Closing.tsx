@@ -1,7 +1,7 @@
 import { BrandLogo } from './BrandLogo';
 import { AnimatePresence, motion, useScroll, useTransform } from 'framer-motion';
 import { FormEvent, useRef, useState } from 'react';
-import { DISCLAIMER, FACTS, NAV, SOCIALS, wa } from '../data';
+import { DISCLAIMER, FACTS, GUIDES, NAV, SOCIALS, wa } from '../data';
 import { CountUp, EASE, FadeIn, Scene, spotlight, Title, untilt, useMobile } from './ui';
 
 /* ---------------------------------------------------------------- meet Gulshan */
@@ -276,7 +276,7 @@ export function Footer() {
   return (
     <footer className="relative overflow-hidden border-t border-line pt-14 text-[12px] leading-relaxed text-dim">
       <div className="wrap-wide">
-        <div className="grid grid-cols-2 gap-8 sm:grid-cols-[1.4fr_1fr_1fr]">
+        <div className="grid grid-cols-2 gap-8 sm:grid-cols-[1.4fr_1fr_1fr] lg:grid-cols-[1.4fr_1fr_1.2fr_1fr]">
           <div className="col-span-2 sm:col-span-1">
             <img src="./brand/moneytec-logo-dark.svg" alt="Moneytec" width="200" height="39" className="h-8 w-auto" />
             <div className="footer-credential-logos"><a href={FACTS.amfiLocator} target="_blank" rel="noreferrer" aria-label="Verify registration on AMFI"><BrandLogo brand="amfi" /></a><a href="https://www.kotaklife.com/" target="_blank" rel="noreferrer" aria-label="Kotak Life official website"><BrandLogo brand="kotak" /></a></div>
@@ -285,6 +285,10 @@ export function Footer() {
           <nav aria-label="Footer" className="flex flex-col gap-1.5">
             <p className="mb-1 text-[11px] uppercase tracking-[0.2em] text-haze">Explore</p>
             {NAV.map((n) => <a key={n.href} href={n.href} className="w-fit hover:text-paper">{n.label}</a>)}
+          </nav>
+          <nav aria-label="Guides" className="flex flex-col gap-1.5">
+            <p className="mb-1 text-[11px] uppercase tracking-[0.2em] text-haze">Guides</p>
+            {GUIDES.map((g) => <a key={g.href} href={g.href} className="w-fit hover:text-paper">{g.label}</a>)}
           </nav>
           <div className="flex flex-col gap-1.5">
             <p className="mb-1 text-[11px] uppercase tracking-[0.2em] text-haze">Connect</p>

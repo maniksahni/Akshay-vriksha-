@@ -22,5 +22,12 @@
 - Stopping a SIP: most SIPs can be paused, changed or stopped any time; ELSS (tax-saving) instalments are locked for 3 years.
 - Documents: usually PAN, Aadhaar (passport for NRIs), a bank account and a photo; KYC is done once, mostly online.
 
+## Guides
+- [Mutual fund distributor in Rohini, New Delhi](https://moneytec.in/mutual-fund-distributor-rohini-delhi): who Gulshan Kohli is, how to verify a distributor, distributor vs adviser.
+- [SIP calculator](https://moneytec.in/sip-calculator): illustrated future value of a monthly SIP, with the formula.
+- [How to start a SIP in India](https://moneytec.in/how-to-start-sip): steps, documents and common mistakes.
+- [NRI mutual fund investment in India](https://moneytec.in/nri-mutual-fund-investment): NRE vs NRO, documents, US and Canada residents.
+- [ELSS tax-saving funds](https://moneytec.in/elss-tax-saving-funds): 3-year lock-in, old vs new tax regime, SIP rules.
+
 ## Disclaimer
 Mutual fund investments are subject to market risks; read all scheme-related documents carefully. Illustrations assume a constant return and are not a promise of future returns. Insurance is the subject matter of solicitation.

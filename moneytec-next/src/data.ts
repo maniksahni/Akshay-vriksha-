@@ -25,6 +25,15 @@ export const NAV = [
   { label: 'FAQ', href: '#faq' },
 ];
 
+/** The static guide pages in public/, linked from the footer so search engines can find them. */
+export const GUIDES = [
+  { label: 'Mutual fund distributor in Rohini', href: './mutual-fund-distributor-rohini-delhi' },
+  { label: 'SIP calculator', href: './sip-calculator' },
+  { label: 'How to start a SIP', href: './how-to-start-sip' },
+  { label: 'NRI mutual fund investment', href: './nri-mutual-fund-investment' },
+  { label: 'ELSS tax-saving funds', href: './elss-tax-saving-funds' },
+];
+
 export const DISCLAIMER =
   'Mutual fund investments are subject to market risks; read all scheme-related documents carefully. Illustrations assume a constant return and are not a promise of future returns. Insurance is the subject matter of solicitation.';
 
