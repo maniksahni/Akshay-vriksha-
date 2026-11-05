@@ -861,3 +861,11 @@ img.brand-facebook { padding: 0; width: 21px; height: 21px; border-radius: 50%; 
 .learn-links > span { font-size: 11px; letter-spacing: .18em; text-transform: uppercase; }
 .learn-links a { color: var(--ivory, #F4F1F8); text-decoration: underline; text-decoration-color: rgba(255,92,122,.7); text-underline-offset: 3px; }
 .learn-links a:hover { color: #FF8FA5; }
+
+/* learn links as tidy chips, so each strip reads as one deliberate element */
+.learn-links { gap: 8px; align-items: center; }
+.learn-links > span { margin-right: 4px; }
+.learn-links a { display: inline-flex; align-items: center; min-height: 34px; padding: 0 14px; border: 1px solid rgba(255,255,255,.16); border-radius: 99px; background: rgba(255,255,255,.04); font-size: 13px; text-decoration: none; transition: border-color .3s, background .3s, color .3s; }
+.learn-links a::after { content: '↗'; margin-left: 6px; font-size: 11px; color: #FF8FA5; }
+.learn-links a:hover { border-color: rgba(255,143,165,.65); background: rgba(255,255,255,.08); color: #fff; }
+.learn-links.justify-center > span { width: 100%; text-align: center; margin: 0; }
