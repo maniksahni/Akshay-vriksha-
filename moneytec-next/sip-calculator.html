@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en-IN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<meta name="theme-color" content="#07060B" />
+<title>SIP Calculator: Estimate Your Monthly SIP Returns | Moneytec</title>
+<meta name="description" content="Free SIP calculator with the formula explained. Enter your monthly amount, time period and assumed return to see an illustrated future value. Returns are not guaranteed." />
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
+<meta name="author" content="Gulshan Kohli" />
+<link rel="canonical" href="https://moneytec.in/sip-calculator" />
+<meta property="og:site_name" content="Moneytec" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="SIP Calculator: Estimate Your Monthly SIP Returns | Moneytec" />
+<meta property="og:description" content="Free SIP calculator with the formula explained. Enter your monthly amount, time period and assumed return to see an illustrated future value. Returns are not guaranteed." />
+<meta property="og:url" content="https://moneytec.in/sip-calculator" />
+<meta property="og:image" content="https://moneytec.in/og-moneytec.jpg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta name="twitter:card" content="summary_large_image" />
+<link rel="icon" href="/favicon.ico" sizes="48x48" />
+<link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/guide-v1.css" />
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "WebApplication",
+   "@id": "https://moneytec.in/sip-calculator#page",
+   "headline": "SIP calculator",
+   "name": "SIP Calculator: Estimate Your Monthly SIP Returns | Moneytec",
+   "description": "Free SIP calculator with the formula explained. Enter your monthly amount, time period and assumed return to see an illustrated future value. Returns are not guaranteed.",
+   "url": "https://moneytec.in/sip-calculator",
+   "inLanguage": "en-IN",
+   "dateModified": "2026-11-05",
+   "image": "https://moneytec.in/og-moneytec.jpg",
+   "author": {
+    "@type": "Person",
+    "@id": "https://moneytec.in/#gulshan",
+    "name": "Gulshan Kohli"
+   },
+   "publisher": {
+    "@type": "Organization",
+    "@id": "https://moneytec.in/#business",
+    "name": "Moneytec",
+    "logo": {
+     "@type": "ImageObject",
+     "url": "https://moneytec.in/icon-512.png"
+    }
+   },
+   "applicationCategory": "FinanceApplication",
+   "operatingSystem": "Any",
+   "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "INR"
+   }
+  },
+  {
+   "@type": "BreadcrumbList",
+   "itemListElement": [
+    {
+     "@type": "ListItem",
+     "position": 1,
+     "name": "Moneytec",
+     "item": "https://moneytec.in/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 2,
+     "name": "SIP calculator",
+     "item": "https://moneytec.in/sip-calculator"
+    }
+   ]
+  },
+  {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "How accurate is a SIP calculator?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "It is only an illustration. It assumes the same return every year, while real mutual fund returns vary and can be negative over some periods. Use it to compare scenarios, not to predict an outcome."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What return should I assume?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "There is no correct number. Try a few, including a cautious one, because no return is guaranteed and it depends on the scheme and market conditions."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Does this calculator include tax or fund costs?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "No. The result is before tax and uses only the return you enter, so check the scheme’s expense ratio, any exit load and current tax rules."
+     }
+    }
+   ]
+  }
+ ]
+}
+</script>
+</head>
+<body>
+<header class="top"><a href="/" aria-label="Moneytec home"><img src="/brand/moneytec-logo-dark.svg" alt="Moneytec" width="174" height="32" /></a><a class="pill" href="https://wa.me/919136792367?text=Hi%20Gulshan!%20I%20read%20your%20guide%20and%20have%20a%20question.">Talk to Gulshan</a></header>
+<main>
+<nav class="crumbs" aria-label="Breadcrumb"><a href="/">Moneytec</a> <span aria-hidden="true">/</span> SIP calculator</nav>
+<h1>SIP calculator</h1>
+<p class="lede">Enter a monthly amount, a time period and an assumed return to see what a SIP could grow to. It shows how much you put in and how much is illustrated growth.</p>
+<form class="calc" id="sip" onsubmit="return false">
+<label for="amt">Monthly SIP (₹)<input id="amt" type="number" inputmode="numeric" min="100" max="10000000" step="100" value="5000" /></label>
+<label for="yrs">Time period (years)<input id="yrs" type="number" inputmode="numeric" min="1" max="50" step="1" value="15" /></label>
+<label for="ret">Assumed return (% a year)<input id="ret" type="number" inputmode="decimal" min="0" max="30" step="0.5" value="12" /></label>
+<div class="result" aria-live="polite"><b id="fv">—</b><small id="split"></small></div>
+</form>
+<p class="note">This is an illustration that assumes the same return every year. Real returns go up and down and are not guaranteed. The 12% starting value is only an example, not a forecast.</p>
+<h2>What a monthly SIP can look like</h2>
+<p>Illustrative values at an assumed 12% a year, with a contribution at the start of each month:</p>
+<div class="scroll"><table>
+<tr><th>Monthly SIP</th><th>10 years</th><th>15 years</th><th>20 years</th><th>25 years</th></tr>
+<tr><th>₹1,000</th><td>₹2.24 L</td><td>₹4.76 L</td><td>₹9.20 L</td><td>₹17.02 L</td></tr>
+<tr><th>₹5,000</th><td>₹11.20 L</td><td>₹23.80 L</td><td>₹45.99 L</td><td>₹85.11 L</td></tr>
+<tr><th>₹10,000</th><td>₹22.40 L</td><td>₹47.59 L</td><td>₹91.99 L</td><td>₹1.70 Cr</td></tr>
+<tr><th>₹25,000</th><td>₹56.01 L</td><td>₹1.19 Cr</td><td>₹2.30 Cr</td><td>₹4.26 Cr</td></tr>
+
+</table></div>
+<h2>The formula behind it</h2>
+<p>The calculator converts the yearly return to an equivalent monthly rate, <code>i = (1 + r)<sup>1/12</sup> − 1</code>, then calculates:</p>
+<p><code>Future value = P × [((1 + i)<sup>n</sup> − 1) ÷ i] × (1 + i)</code></p>
+<p>Here <code>P</code> is the monthly SIP and <code>n</code> is the number of months. Some other calculators use <code>r ÷ 12</code> as the monthly rate, so their answers can be slightly higher.</p>
+<h2>What moves the result most</h2>
+<ul>
+<li><strong>Time:</strong> later years add more because earlier growth is also growing.</li>
+<li><strong>Amount:</strong> doubling the SIP doubles the illustrated value.</li>
+<li><strong>Return:</strong> a small change compounds over time, so also try a lower return to see a more cautious picture.</li>
+</ul>
+<h2>Frequently asked questions</h2>
+<h3>How accurate is a SIP calculator?</h3>
+<p>It is only an illustration. It assumes the same return every year, while real mutual fund returns vary and can be negative over some periods. Use it to compare scenarios, not to predict an outcome.</p>
+<h3>What return should I assume?</h3>
+<p>There is no correct number. Try a few, including a cautious one, because no return is guaranteed and it depends on the scheme and market conditions.</p>
+<h3>Does this calculator include tax or fund costs?</h3>
+<p>No. The result is before tax and uses only the return you enter, so check the scheme’s expense ratio, any exit load and current tax rules.</p>
+
+<aside class="cta"><h2>Have a question about your own situation?</h2><p>Speak with Gulshan Kohli directly, one to one. There is no form to fill in and nothing is invested from this website.</p><p><a class="btn" href="https://wa.me/919136792367?text=Hi%20Gulshan!%20I%20read%20your%20guide%20and%20have%20a%20question.">Message on WhatsApp</a> <a class="btn ghost" href="tel:+919136792367">Call +91 91367 92367</a></p></aside>
+<section class="more"><h2>More from Moneytec</h2><ul><li><a href="/">Moneytec home</a></li><li><a href="/mutual-fund-distributor-rohini-delhi">Mutual fund distributor in Rohini</a></li><li><a href="/how-to-start-sip">How to start a SIP</a></li><li><a href="/nri-mutual-fund-investment">NRI mutual fund investment</a></li><li><a href="/elss-tax-saving-funds">ELSS tax-saving funds</a></li></ul></section>
+</main>
+<footer><p><strong>Gulshan Kohli</strong> is an AMFI-registered mutual fund distributor (ARN-105840) and a Kotak Life Insurance advisor (KLI61205587), based in Rohini, New Delhi. <a href="https://www.amfiindia.com/locate-distributor" rel="noopener">Verify on AMFI</a>.</p><p>This guide is general information, not personal investment, tax or legal advice. Rules can change; check the scheme documents and current regulations before you act. Mutual fund investments are subject to market risks; read all scheme-related documents carefully. Illustrations assume a constant return and are not a promise of future returns. Insurance is the subject matter of solicitation.</p><p>Last updated 5 November 2026 · © 2026 moneytec</p></footer>
+<script>
+(function () {
+  var a = document.getElementById('amt'), y = document.getElementById('yrs'), r = document.getElementById('ret');
+  var fv = document.getElementById('fv'), split = document.getElementById('split');
+  function fmt(n) {
+    if (n >= 1e7) return '₹' + (n / 1e7).toFixed(2) + ' Cr';
+    if (n >= 1e5) return '₹' + (n / 1e5).toFixed(2) + ' L';
+    return '₹' + Math.round(n).toLocaleString('en-IN');
+  }
+  function run() {
+    var p = +a.value, yrs = +y.value, pct = +r.value;
+    if (!(p > 0) || !(yrs > 0) || !(pct >= 0)) { fv.textContent = '—'; split.textContent = 'Enter an amount, a time period and a return.'; return; }
+    var n = yrs * 12, i = Math.pow(1 + pct / 100, 1 / 12) - 1;
+    var v = i === 0 ? p * n : p * ((Math.pow(1 + i, n) - 1) / i) * (1 + i), paid = p * n;
+    fv.textContent = fmt(v);
+    split.textContent = 'You put in ' + fmt(paid) + '. Illustrated growth ' + fmt(Math.max(0, v - paid)) + '.';
+  }
+  [a, y, r].forEach(function (el) { el.addEventListener('input', run); });
+  run();
+})();
+</script>
+</body>
+</html>
