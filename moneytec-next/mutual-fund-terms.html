@@ -24,7 +24,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="/guide-v1.css" />
+<link rel="stylesheet" href="/guide-v2.css" />
+<script>document.documentElement.className += ' js';</script>
 <script type="application/ld+json">
 {
  "@context": "https://schema.org",
@@ -110,13 +111,20 @@
 }
 </script>
 </head>
-<body>
-<header class="top"><a href="/" aria-label="Moneytec home"><img src="/brand/moneytec-logo-dark.svg" alt="Moneytec" width="174" height="32" /></a><a class="pill" href="https://wa.me/919136792367?text=Hi%20Gulshan!%20I%20read%20your%20guide%20and%20have%20a%20question.">Talk to Gulshan</a></header>
-<main>
+<body class="">
+<div class="sky" aria-hidden="true"><i></i><i></i><i></i></div>
+<div class="progress" aria-hidden="true"><i id="bar"></i></div>
+<header class="top"><div class="top-in"><a href="/" aria-label="Moneytec home"><img src="/brand/moneytec-logo-dark.svg" alt="Moneytec" width="174" height="32" /></a><nav aria-label="Main"><a class="tlink" href="/learn">Learn</a><a class="pill" href="https://wa.me/919136792367?text=Hi%20Gulshan!%20I%20read%20your%20guide%20and%20have%20a%20question.">Talk to Gulshan</a></nav></div></header>
+<div class="hero reveal">
 <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Moneytec</a> <span aria-hidden="true">/</span> <a href="/learn">Learn</a> <span aria-hidden="true">/</span> Mutual fund terms explained</nav>
-<h1>Mutual fund terms explained</h1>
+<h1>Mutual fund terms <em>explained</em></h1>
 <p class="lede">Every term you will see on Moneytec and in most scheme documents, explained in plain English.</p>
-<h2>The basics</h2>
+<p class="meta"><span>3 min read</span><span>By Gulshan Kohli, ARN-105840</span><span>Updated 5 Nov 2026</span></p>
+</div>
+<div class="layout">
+<nav class="toc" aria-label="On this page"><details open><summary>On this page</summary><ol><li><a href="#the-basics">The basics</a></li><li><a href="#ways-of-investing">Ways of investing</a></li><li><a href="#returns-and-costs">Returns and costs</a></li><li><a href="#fund-types-and-plans">Fund types and plans</a></li><li><a href="#people-rules-and-accounts">People, rules and accounts</a></li><li><a href="#frequently-asked-questions">Frequently asked questions</a></li></ol></details></nav>
+<main>
+<section class="panel reveal" id="the-basics"><p class="num">01</p><h2>The basics</h2>
 <div class="scroll"><table>
 <tr><th>Term</th><th>Meaning</th></tr>
 <tr><td>AMC</td><td>Asset Management Company: the fund house that runs a mutual fund.</td></tr>
@@ -127,7 +135,8 @@
 <tr><td>Folio</td><td>Your account number with a fund house.</td></tr>
 <tr><td>Nominee</td><td>The person you name to receive your investments if you die.</td></tr>
 </table></div>
-<h2>Ways of investing</h2>
+</section>
+<section class="panel reveal" id="ways-of-investing"><p class="num">02</p><h2>Ways of investing</h2>
 <div class="scroll"><table>
 <tr><th>Term</th><th>Meaning</th></tr>
 <tr><td><a href="/what-is-sip">SIP</a></td><td>Systematic Investment Plan: a fixed amount invested regularly.</td></tr>
@@ -138,7 +147,8 @@
 <tr><td>Growth option</td><td>Gains stay invested and are reflected in the NAV.</td></tr>
 <tr><td>IDCW option</td><td>Income Distribution cum Capital Withdrawal: payouts that may be made from the scheme, and which reduce the NAV.</td></tr>
 </table></div>
-<h2>Returns and costs</h2>
+</section>
+<section class="panel reveal" id="returns-and-costs"><p class="num">03</p><h2>Returns and costs</h2>
 <div class="scroll"><table>
 <tr><th>Term</th><th>Meaning</th></tr>
 <tr><td>CAGR</td><td>Compound Annual Growth Rate: a smoothed yearly growth rate between two points. Real returns are uneven.</td></tr>
@@ -149,7 +159,8 @@
 <tr><td>Benchmark</td><td>An index that a scheme’s performance is compared with.</td></tr>
 <tr><td>Inflation</td><td>The general rise in prices, which reduces what money can buy.</td></tr>
 </table></div>
-<h2>Fund types and plans</h2>
+</section>
+<section class="panel reveal" id="fund-types-and-plans"><p class="num">04</p><h2>Fund types and plans</h2>
 <div class="scroll"><table>
 <tr><th>Term</th><th>Meaning</th></tr>
 <tr><td>Equity fund</td><td>Invests mainly in company shares.</td></tr>
@@ -160,7 +171,8 @@
 <tr><td>Direct plan</td><td>You invest without a distributor; lower expense ratio.</td></tr>
 <tr><td>Regular plan</td><td>You invest through a distributor, who earns commission; higher expense ratio.</td></tr>
 </table></div>
-<h2>People, rules and accounts</h2>
+</section>
+<section class="panel reveal" id="people-rules-and-accounts"><p class="num">05</p><h2>People, rules and accounts</h2>
 <div class="scroll"><table>
 <tr><th>Term</th><th>Meaning</th></tr>
 <tr><td>SEBI</td><td>Securities and Exchange Board of India: the regulator for mutual funds.</td></tr>
@@ -174,18 +186,17 @@
 <tr><td>NRO account</td><td>A rupee account generally used for income earned in India.</td></tr>
 <tr><td>FATCA</td><td>A tax-residency declaration required when you invest.</td></tr>
 </table></div>
-<h2>Frequently asked questions</h2>
-<h3>What is NAV in a mutual fund?</h3>
-<p>Net Asset Value is the price of one unit of a scheme. It is calculated from the value of the scheme’s assets, less liabilities, divided by the number of units.</p>
-<h3>What is the difference between direct and regular plans?</h3>
-<p>In a direct plan you invest without a distributor and the expense ratio is lower. In a regular plan a distributor earns commission and the expense ratio is higher.</p>
-<h3>What is CAGR?</h3>
-<p>Compound Annual Growth Rate is the smoothed yearly rate that takes a value from its start to its end. Actual yearly returns can be very different.</p>
-
-<aside class="cta"><h2>Have a question about your own situation?</h2><p>Speak with Gulshan Kohli directly, one to one. There is no form to fill in and nothing is invested from this website.</p><p><a class="btn" href="https://wa.me/919136792367?text=Hi%20Gulshan!%20I%20read%20your%20guide%20and%20have%20a%20question.">Message on WhatsApp</a> <a class="btn ghost" href="tel:+919136792367">Call +91 91367 92367</a></p></aside>
-<section class="more"><h2>More from Moneytec</h2><ul class="links"><li><a href="/">Moneytec home</a></li><li><a href="/learn">All guides</a></li><li><a href="/what-is-mutual-fund">What is a mutual fund?</a></li><li><a href="/what-is-sip">What is a SIP?</a></li><li><a href="/power-of-compounding">The power of compounding</a></li><li><a href="/goal-based-investing">Goal-based investing</a></li><li><a href="/how-to-start-sip">How to start a SIP</a></li><li><a href="/sip-calculator">SIP calculator</a></li><li><a href="/elss-tax-saving-funds">ELSS tax-saving funds</a></li><li><a href="/mutual-fund-kyc">Mutual fund KYC</a></li><li><a href="/portfolio-review">Portfolio review</a></li><li><a href="/nri-mutual-fund-investment">NRI mutual fund investment</a></li><li><a href="/what-is-life-insurance">What is life insurance?</a></li><li><a href="/what-is-health-insurance">What is health insurance?</a></li><li><a href="/how-moneytec-works">How Moneytec works</a></li><li><a href="/mutual-fund-distributor-rohini-delhi">Mutual fund distributor in Rohini</a></li></ul></section>
+</section>
+<section class="panel reveal" id="frequently-asked-questions"><p class="num">06</p><h2>Frequently asked questions</h2>
+<details class="faq" open><summary><h3>What is NAV in a mutual fund?</h3><i aria-hidden="true"></i></summary><p>Net Asset Value is the price of one unit of a scheme. It is calculated from the value of the scheme’s assets, less liabilities, divided by the number of units.</p></details>
+<details class="faq"><summary><h3>What is the difference between direct and regular plans?</h3><i aria-hidden="true"></i></summary><p>In a direct plan you invest without a distributor and the expense ratio is lower. In a regular plan a distributor earns commission and the expense ratio is higher.</p></details>
+<details class="faq"><summary><h3>What is CAGR?</h3><i aria-hidden="true"></i></summary><p>Compound Annual Growth Rate is the smoothed yearly rate that takes a value from its start to its end. Actual yearly returns can be very different.</p></details></section>
+<aside class="cta reveal"><p class="eyebrow">A real person. On your side.</p><h2>Have a question about <em>your</em> situation?</h2><p>Speak with Gulshan Kohli directly, one to one. There is no form to fill in, and nothing is invested from this website.</p><p class="btns"><a class="btn" href="https://wa.me/919136792367?text=Hi%20Gulshan!%20I%20read%20your%20guide%20and%20have%20a%20question.">Message on WhatsApp <span aria-hidden="true">↗</span></a> <a class="btn ghost" href="tel:+919136792367">Call +91 91367 92367</a></p></aside>
+<section class="more reveal"><div class="more-head"><h2>Keep reading</h2><a href="/learn">All guides →</a></div><div class="rels"><a class="rel" href="/portfolio-review"><b>Portfolio review</b><span>What to check, and when</span><i aria-hidden="true">→</i></a><a class="rel" href="/nri-mutual-fund-investment"><b>NRI mutual fund investment</b><span>NRE, NRO, documents, US and Canada</span><i aria-hidden="true">→</i></a><a class="rel" href="/what-is-life-insurance"><b>What is life insurance?</b><span>Types of cover, and how claims work</span><i aria-hidden="true">→</i></a></div></section>
 </main>
-<footer><p><strong>Gulshan Kohli</strong> is an AMFI-registered mutual fund distributor (ARN-105840) and a Kotak Life Insurance advisor (KLI61205587), based in Rohini, New Delhi. <a href="https://www.amfiindia.com/locate-distributor" rel="noopener">Verify on AMFI</a>.</p><p>This guide is general information, not personal investment, tax or legal advice. Rules can change; check the scheme documents and current regulations before you act. Mutual fund investments are subject to market risks; read all scheme-related documents carefully. Illustrations assume a constant return and are not a promise of future returns. Insurance is the subject matter of solicitation.</p><p>Last updated 5 November 2026 · © 2026 moneytec</p></footer>
+</div>
+<footer><div class="foot-in"><img src="/brand/moneytec-logo-dark.svg" alt="Moneytec" width="150" height="28" /><p><strong>Gulshan Kohli</strong> is an AMFI-registered mutual fund distributor (ARN-105840) and a Kotak Life Insurance advisor (KLI61205587), based in Rohini, New Delhi. <a href="https://www.amfiindia.com/locate-distributor" rel="noopener">Verify on AMFI</a>.</p><p>This guide is general information, not personal investment, tax or legal advice. Rules can change; check the scheme documents and current regulations before you act. Mutual fund investments are subject to market risks; read all scheme-related documents carefully. Illustrations assume a constant return and are not a promise of future returns. Insurance is the subject matter of solicitation.</p><p class="legal">© 2026 moneytec · Rohini, New Delhi · <a href="/">Home</a> · <a href="/learn">Learn</a></p></div><p class="mark" aria-hidden="true">moneytec</p></footer>
+<script src="/guide-v2.js" defer></script>
 
 </body>
 </html>

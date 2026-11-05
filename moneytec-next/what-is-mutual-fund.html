@@ -24,7 +24,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="/guide-v1.css" />
+<link rel="stylesheet" href="/guide-v2.css" />
+<script>document.documentElement.className += ' js';</script>
 <script type="application/ld+json">
 {
  "@context": "https://schema.org",
@@ -118,13 +119,20 @@
 }
 </script>
 </head>
-<body>
-<header class="top"><a href="/" aria-label="Moneytec home"><img src="/brand/moneytec-logo-dark.svg" alt="Moneytec" width="174" height="32" /></a><a class="pill" href="https://wa.me/919136792367?text=Hi%20Gulshan!%20I%20read%20your%20guide%20and%20have%20a%20question.">Talk to Gulshan</a></header>
-<main>
+<body class="">
+<div class="sky" aria-hidden="true"><i></i><i></i><i></i></div>
+<div class="progress" aria-hidden="true"><i id="bar"></i></div>
+<header class="top"><div class="top-in"><a href="/" aria-label="Moneytec home"><img src="/brand/moneytec-logo-dark.svg" alt="Moneytec" width="174" height="32" /></a><nav aria-label="Main"><a class="tlink" href="/learn">Learn</a><a class="pill" href="https://wa.me/919136792367?text=Hi%20Gulshan!%20I%20read%20your%20guide%20and%20have%20a%20question.">Talk to Gulshan</a></nav></div></header>
+<div class="hero reveal">
 <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Moneytec</a> <span aria-hidden="true">/</span> <a href="/learn">Learn</a> <span aria-hidden="true">/</span> What is a mutual fund?</nav>
-<h1>What is a mutual fund?</h1>
+<h1>What is a mutual <em>fund?</em></h1>
 <p class="lede">A mutual fund pools money from many investors and invests it in shares, bonds or other assets, as set out in the scheme’s stated objective. A professional fund manager runs it, and each investor owns units in proportion to what they put in.</p>
-<h2>How a mutual fund works</h2>
+<p class="meta"><span>3 min read</span><span>By Gulshan Kohli, ARN-105840</span><span>Updated 5 Nov 2026</span></p>
+</div>
+<div class="layout">
+<nav class="toc" aria-label="On this page"><details open><summary>On this page</summary><ol><li><a href="#how-a-mutual-fund-works">How a mutual fund works</a></li><li><a href="#a-simple-example">A simple example</a></li><li><a href="#main-types-of-mutual-funds">Main types of mutual funds</a></li><li><a href="#what-it-costs">What it costs</a></li><li><a href="#the-risks">The risks</a></li><li><a href="#who-protects-investors">Who protects investors?</a></li><li><a href="#read-next">Read next</a></li><li><a href="#frequently-asked-questions">Frequently asked questions</a></li></ol></details></nav>
+<main>
+<section class="panel reveal" id="how-a-mutual-fund-works"><p class="num">01</p><h2>How a mutual fund works</h2>
 <ol>
 <li><strong>You invest money</strong> in a scheme, either in one go or through a <a href="/what-is-sip">SIP</a>.</li>
 <li><strong>You receive units</strong> based on that day’s price per unit, called the NAV.</li>
@@ -132,9 +140,11 @@
 <li><strong>The value of your units changes</strong> as the value of the investments changes.</li>
 <li><strong>You redeem units</strong> when you need the money, subject to the scheme’s terms.</li>
 </ol>
-<h2>A simple example</h2>
+</section>
+<section class="panel reveal" id="a-simple-example"><p class="num">02</p><h2>A simple example</h2>
 <p>Suppose you invest ₹10,000 when the NAV is ₹50. You receive 200 units. If the NAV later rises to ₹60, your units are worth ₹12,000. If it falls to ₹40, they are worth ₹8,000. These numbers are only an illustration.</p>
-<h2>Main types of mutual funds</h2>
+</section>
+<section class="panel reveal" id="main-types-of-mutual-funds"><p class="num">03</p><h2>Main types of mutual funds</h2>
 <p>SEBI groups open-ended schemes into five broad categories:</p>
 <div class="scroll"><table>
 <tr><th>Type</th><th>What it mainly invests in</th><th>General risk character</th></tr>
@@ -145,32 +155,34 @@
 <tr><td>Other funds</td><td>Index funds, ETFs and funds of funds</td><td>Depends on what they track or hold</td></tr>
 </table></div>
 <p><a href="/elss-tax-saving-funds">ELSS funds</a> are a type of equity fund with a 3-year lock-in.</p>
-<h2>What it costs</h2>
+</section>
+<section class="panel reveal" id="what-it-costs"><p class="num">04</p><h2>What it costs</h2>
 <ul>
 <li><strong>Expense ratio:</strong> a yearly cost, taken from the fund’s assets, that is already reflected in the NAV.</li>
 <li><strong>Exit load:</strong> a charge some schemes apply if you redeem within a set period.</li>
 <li><strong>Tax:</strong> gains can be taxed when you redeem. The rules depend on the fund type and how long you held it.</li>
 </ul>
-<h2>The risks</h2>
+</section>
+<section class="panel reveal" id="the-risks"><p class="num">05</p><h2>The risks</h2>
 <p>Mutual funds do not guarantee returns or protect your capital. Market movements, interest rates, credit quality and how long you stay invested can all affect the result. Every scheme shows a riskometer, from Low to Very High, so read that and the scheme documents before you invest.</p>
-<h2>Who protects investors?</h2>
+</section>
+<section class="panel reveal" id="who-protects-investors"><p class="num">06</p><h2>Who protects investors?</h2>
 <p>Mutual funds in India are regulated by SEBI (Securities and Exchange Board of India). Your money is held by an independent custodian and trustees oversee the fund house, which is separate from your distributor. AMFI is the industry body that registers distributors. Regulation does not remove market risk.</p>
-<h2>Keep reading</h2>
+</section>
+<section class="panel reveal" id="read-next"><p class="num">07</p><h2>Read next</h2>
 <ul><li><a href="/what-is-sip">What is a SIP?</a></li><li><a href="/mutual-fund-terms">Mutual fund terms explained</a></li><li><a href="/mutual-fund-kyc">Mutual fund KYC</a></li></ul>
-<h2>Frequently asked questions</h2>
-<h3>Are mutual funds safe?</h3>
-<p>They are regulated by SEBI, but they carry market risk. The value of your investment can fall, and returns are not guaranteed. Risk varies by fund type, so check the riskometer and scheme documents.</p>
-<h3>How much money do I need to start?</h3>
-<p>Many schemes take SIPs from ₹500 a month. Minimums vary by scheme.</p>
-<h3>Can I withdraw my money at any time?</h3>
-<p>Open-ended schemes can generally be redeemed on any business day, but an exit load may apply, and ELSS funds have a 3-year lock-in.</p>
-<h3>Who manages a mutual fund?</h3>
-<p>A fund manager at the fund house (AMC) manages the scheme according to its stated objective, under SEBI regulation.</p>
-
-<aside class="cta"><h2>Have a question about your own situation?</h2><p>Speak with Gulshan Kohli directly, one to one. There is no form to fill in and nothing is invested from this website.</p><p><a class="btn" href="https://wa.me/919136792367?text=Hi%20Gulshan!%20I%20read%20your%20guide%20and%20have%20a%20question.">Message on WhatsApp</a> <a class="btn ghost" href="tel:+919136792367">Call +91 91367 92367</a></p></aside>
-<section class="more"><h2>More from Moneytec</h2><ul class="links"><li><a href="/">Moneytec home</a></li><li><a href="/learn">All guides</a></li><li><a href="/what-is-sip">What is a SIP?</a></li><li><a href="/power-of-compounding">The power of compounding</a></li><li><a href="/goal-based-investing">Goal-based investing</a></li><li><a href="/how-to-start-sip">How to start a SIP</a></li><li><a href="/sip-calculator">SIP calculator</a></li><li><a href="/elss-tax-saving-funds">ELSS tax-saving funds</a></li><li><a href="/mutual-fund-kyc">Mutual fund KYC</a></li><li><a href="/mutual-fund-terms">Mutual fund terms explained</a></li><li><a href="/portfolio-review">Portfolio review</a></li><li><a href="/nri-mutual-fund-investment">NRI mutual fund investment</a></li><li><a href="/what-is-life-insurance">What is life insurance?</a></li><li><a href="/what-is-health-insurance">What is health insurance?</a></li><li><a href="/how-moneytec-works">How Moneytec works</a></li><li><a href="/mutual-fund-distributor-rohini-delhi">Mutual fund distributor in Rohini</a></li></ul></section>
+</section>
+<section class="panel reveal" id="frequently-asked-questions"><p class="num">08</p><h2>Frequently asked questions</h2>
+<details class="faq" open><summary><h3>Are mutual funds safe?</h3><i aria-hidden="true"></i></summary><p>They are regulated by SEBI, but they carry market risk. The value of your investment can fall, and returns are not guaranteed. Risk varies by fund type, so check the riskometer and scheme documents.</p></details>
+<details class="faq"><summary><h3>How much money do I need to start?</h3><i aria-hidden="true"></i></summary><p>Many schemes take SIPs from ₹500 a month. Minimums vary by scheme.</p></details>
+<details class="faq"><summary><h3>Can I withdraw my money at any time?</h3><i aria-hidden="true"></i></summary><p>Open-ended schemes can generally be redeemed on any business day, but an exit load may apply, and ELSS funds have a 3-year lock-in.</p></details>
+<details class="faq"><summary><h3>Who manages a mutual fund?</h3><i aria-hidden="true"></i></summary><p>A fund manager at the fund house (AMC) manages the scheme according to its stated objective, under SEBI regulation.</p></details></section>
+<aside class="cta reveal"><p class="eyebrow">A real person. On your side.</p><h2>Have a question about <em>your</em> situation?</h2><p>Speak with Gulshan Kohli directly, one to one. There is no form to fill in, and nothing is invested from this website.</p><p class="btns"><a class="btn" href="https://wa.me/919136792367?text=Hi%20Gulshan!%20I%20read%20your%20guide%20and%20have%20a%20question.">Message on WhatsApp <span aria-hidden="true">↗</span></a> <a class="btn ghost" href="tel:+919136792367">Call +91 91367 92367</a></p></aside>
+<section class="more reveal"><div class="more-head"><h2>Keep reading</h2><a href="/learn">All guides →</a></div><div class="rels"><a class="rel" href="/what-is-sip"><b>What is a SIP?</b><span>How it works, with a worked example</span><i aria-hidden="true">→</i></a><a class="rel" href="/power-of-compounding"><b>The power of compounding</b><span>Growth on growth, and our verse</span><i aria-hidden="true">→</i></a><a class="rel" href="/goal-based-investing"><b>Goal-based investing</b><span>From a goal to a monthly amount</span><i aria-hidden="true">→</i></a></div></section>
 </main>
-<footer><p><strong>Gulshan Kohli</strong> is an AMFI-registered mutual fund distributor (ARN-105840) and a Kotak Life Insurance advisor (KLI61205587), based in Rohini, New Delhi. <a href="https://www.amfiindia.com/locate-distributor" rel="noopener">Verify on AMFI</a>.</p><p>This guide is general information, not personal investment, tax or legal advice. Rules can change; check the scheme documents and current regulations before you act. Mutual fund investments are subject to market risks; read all scheme-related documents carefully. Illustrations assume a constant return and are not a promise of future returns. Insurance is the subject matter of solicitation.</p><p>Last updated 5 November 2026 · © 2026 moneytec</p></footer>
+</div>
+<footer><div class="foot-in"><img src="/brand/moneytec-logo-dark.svg" alt="Moneytec" width="150" height="28" /><p><strong>Gulshan Kohli</strong> is an AMFI-registered mutual fund distributor (ARN-105840) and a Kotak Life Insurance advisor (KLI61205587), based in Rohini, New Delhi. <a href="https://www.amfiindia.com/locate-distributor" rel="noopener">Verify on AMFI</a>.</p><p>This guide is general information, not personal investment, tax or legal advice. Rules can change; check the scheme documents and current regulations before you act. Mutual fund investments are subject to market risks; read all scheme-related documents carefully. Illustrations assume a constant return and are not a promise of future returns. Insurance is the subject matter of solicitation.</p><p class="legal">© 2026 moneytec · Rohini, New Delhi · <a href="/">Home</a> · <a href="/learn">Learn</a></p></div><p class="mark" aria-hidden="true">moneytec</p></footer>
+<script src="/guide-v2.js" defer></script>
 
 </body>
 </html>
