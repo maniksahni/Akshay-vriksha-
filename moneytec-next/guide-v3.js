@@ -1,4 +1,11 @@
 (function () {
+  // one FAQ open at a time; browsers without <details name> get the same behaviour here
+  var faqs = [].slice.call(document.querySelectorAll('details.faq'));
+  faqs.forEach(function (d) {
+    d.addEventListener('toggle', function () {
+      if (d.open) faqs.forEach(function (o) { if (o !== d && o.open) o.open = false; });
+    });
+  });
   var reveal = [].slice.call(document.querySelectorAll('.reveal'));
   if ('IntersectionObserver' in window) {
     var io = new IntersectionObserver(function (es) {
@@ -10,7 +17,7 @@
   }
   var bar = document.getElementById('bar');
   var links = [].slice.call(document.querySelectorAll('.toc a'));
-  var targets = links.map(function (a) { return document.querySelector(a.getAttribute('href')); });
+  var targets = links.map(function (a) { return document.getElementById(a.getAttribute('href').slice(1)); });
   var queued = false;
   function paint() {
     queued = false;
