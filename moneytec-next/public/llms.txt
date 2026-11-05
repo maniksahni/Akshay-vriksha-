@@ -6,7 +6,7 @@
 - Person: Gulshan Kohli — electronics engineer turned mutual fund distributor, 12+ years of experience, one-to-one personal service.
 - Registration: AMFI Registered Mutual Fund Distributor, ARN-105840 (verify at https://www.amfiindia.com/locate-distributor). Kotak Life advisor, KLI61205587.
 - Location: Rohini, New Delhi, India. Serves clients across India and NRIs worldwide.
-- Contact: WhatsApp / phone +91 91367 92367 · email akshayavriksha@gmail.com · https://moneytec.in/
+- Contact: WhatsApp / phone +91 91367 92367 · email invest@moneytec.in · https://moneytec.in/
 - How Moneytec is paid: commission from fund houses and the insurer, as regulated by SEBI, AMFI and IRDAI; no separate advisory fee.
 - Moneytec never collects investment or premium payments; money goes directly from the investor's bank to the fund house (AMC) or insurer, and units and policies are in the investor's name.
 
@@ -23,6 +23,7 @@
 - Documents: usually PAN, Aadhaar (passport for NRIs), a bank account and a photo; KYC is done once, mostly online.
 
 ## Guides
+- [All guide text in one file](https://moneytec.in/llms-full.txt)
 - [Learn: all guides](https://moneytec.in/learn)
 - [What is a mutual fund?](https://moneytec.in/what-is-mutual-fund)
 - [What is a SIP?](https://moneytec.in/what-is-sip)

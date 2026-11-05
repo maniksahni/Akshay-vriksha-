@@ -5,7 +5,7 @@ export const FACTS = {
   name: 'Gulshan Kohli',
   phone: '+91 91367 92367',
   phoneIntl: '919136792367',
-  email: 'akshayavriksha@gmail.com',
+  email: 'invest@moneytec.in',
   city: 'Rohini, New Delhi',
   arn: 'ARN-105840',
   kotak: 'KLI61205587',

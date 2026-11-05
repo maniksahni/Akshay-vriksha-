@@ -147,7 +147,10 @@ export function Stage() {
         } catch { /* the flat ₹ stays */ }
       });
     };
-    const later = () => { timer = idle ? idle(go, { timeout: 1200 }) : window.setTimeout(go, 250); };
+    // phones hold the 3D scene back a little longer so it never fights the headline's entrance for the CPU
+    let hold = 0;
+    const settle = () => { timer = idle ? idle(go, { timeout: 1200 }) : window.setTimeout(go, 250); };
+    const later = () => { if (mobile) hold = window.setTimeout(settle, 1400); else settle(); };
     if (document.readyState === 'complete') later(); else window.addEventListener('load', later, { once: true });
 
     return () => {
@@ -161,6 +164,7 @@ export function Stage() {
       window.removeEventListener('touchcancel', release);
       window.clearInterval(calm);
       window.removeEventListener('load', later);
+      window.clearTimeout(hold);
       if (!idle) window.clearTimeout(timer);
       rupee?.dispose(); aurora?.dispose();
     };
