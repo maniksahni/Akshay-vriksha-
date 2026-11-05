@@ -869,3 +869,30 @@ img.brand-facebook { padding: 0; width: 21px; height: 21px; border-radius: 50%; 
 .learn-links a::after { content: '↗'; margin-left: 6px; font-size: 11px; color: #FF8FA5; }
 .learn-links a:hover { border-color: rgba(255,143,165,.65); background: rgba(255,255,255,.08); color: #fff; }
 .learn-links.justify-center > span { width: 100%; text-align: center; margin: 0; }
+
+/* ---------------------------------------------------------------- phones stay smooth
+   A blurred layer that repaints sits behind every scroll on a phone, so phones get no live blur at all: the glows
+   are soft gradients already, and the bar and cards use solid colour. */
+@media (max-width: 1023px) {
+  .glass, .btn-ghost, header .backdrop-blur-2xl { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
+  header .backdrop-blur-2xl { background: rgba(7,6,11,.95) !important; }
+  .glass { background: linear-gradient(180deg, #16131E, #0E0C14); }
+}
+@media (max-width: 767px) {
+  .aurora, .stage .aurora { filter: none; animation: none; will-change: auto; }
+  .stage-glow { will-change: auto; }
+}
+@media (max-width: 1023px) {
+  /* the menu fully covers the page, including the area under Safari's bars; its buttons stay above them */
+  nav.menu-sheet {
+    top: 0; right: 0; bottom: auto; left: 0; height: 100vh; height: 100lvh;
+    padding-top: 84px;
+    padding-bottom: calc(100vh - 100% + 20px); padding-bottom: calc(100lvh - 100dvh + 20px + env(safe-area-inset-bottom));
+    background: radial-gradient(120% 70% at 80% 0%, rgba(191,90,242,.25), transparent 60%), #07060B;
+  }
+  .menu-sheet > div:first-child > a { font-size: clamp(20px, 3dvh, 25px); min-height: 44px; padding-top: clamp(6px, 1.15dvh, 11px); padding-bottom: clamp(6px, 1.15dvh, 11px); }
+}
+.is-off, .is-off * { animation-play-state: paused !important; }
+@media (max-width: 767px) {
+  #safety .blur-xl { filter: none; background: radial-gradient(closest-side, rgba(91,240,181,.28), transparent); }
+}

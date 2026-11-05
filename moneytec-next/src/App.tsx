@@ -30,9 +30,20 @@ function useSmoothScroll() {
   }, []);
 }
 
+/** Decorative loops stop while their section is off screen, so a long page never spends power on what no one can see. */
+function usePauseOffscreen() {
+  useEffect(() => {
+    if (!('IntersectionObserver' in window)) return;
+    const io = new IntersectionObserver((es) => es.forEach((e) => e.target.classList.toggle('is-off', !e.isIntersecting)), { rootMargin: '200px 0px' });
+    document.querySelectorAll('#main > section, #main > div, footer').forEach((s) => io.observe(s));
+    return () => io.disconnect();
+  }, []);
+}
+
 /** moneytec, told as one continuous night scene: light gathers into the ₹, then the story unfolds around it. */
 export default function App() {
   useSmoothScroll();
+  usePauseOffscreen();
   return (
     <>
       <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-paper focus:px-5 focus:py-3 focus:text-ink">

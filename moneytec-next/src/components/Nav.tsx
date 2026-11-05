@@ -78,10 +78,10 @@ export function Nav() {
               id="local-menu"
               aria-label="Sections"
               className="menu-sheet fixed inset-0 z-40 flex flex-col px-6 pb-8 pt-24 lg:hidden"
-              initial={{ clipPath: 'circle(0% at 92% 6%)' }}
-              animate={{ clipPath: 'circle(150% at 92% 6%)' }}
-              exit={{ clipPath: 'circle(0% at 92% 6%)' }}
-              transition={{ duration: 0.6, ease: EASE }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.25, ease: 'easeOut' }}
             >
               <div className="flex flex-col">
                 {NAV.map((n, i) => (

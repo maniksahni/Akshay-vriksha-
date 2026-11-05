@@ -84,6 +84,7 @@ export function Stage() {
         if (glow.current) {
           glow.current.style.transform = `translate3d(${r.left + r.width / 2}px, ${r.top + r.height / 2}px, 0) translate(-50%, -50%)`;
           glow.current.style.opacity = String(o);
+          glow.current.style.display = o < 0.01 ? 'none' : '';
         }
       }
       rupee?.setPose(pose, !!slot);
