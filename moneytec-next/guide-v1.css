@@ -26,6 +26,13 @@ th{background:rgba(255,255,255,.05);font-weight:600}
 .btn{display:inline-block;margin:6px 8px 0 0;padding:12px 20px;border-radius:99px;background:#F4F1F8;color:#07060B;font-size:15px;font-weight:600;text-decoration:none}
 .btn.ghost{background:transparent;border:1px solid rgba(255,255,255,.3);color:#fff}
 .more ul{list-style:none;padding:0}
+.hub{display:grid;gap:12px;padding:0;list-style:none}
+.hub li{margin:0}
+.hub a{display:block;padding:16px 18px;border:1px solid rgba(255,255,255,.14);border-radius:16px;background:rgba(255,255,255,.04);color:#F4F1F8;text-decoration:none}
+.hub a:hover{border-color:rgba(255,143,165,.6)}
+.hub b{display:block;font-size:17px}
+.hub span{display:block;margin-top:2px;font-size:14px;color:rgba(255,255,255,.72)}
+@media (min-width:640px){.hub{grid-template-columns:1fr 1fr}}
 footer{max-width:820px;margin:0 auto;padding:24px 20px 40px;border-top:1px solid rgba(255,255,255,.12);font-size:13px;color:rgba(255,255,255,.68)}
 .calc{display:grid;gap:18px;margin:20px 0;padding:22px;border:1px solid rgba(255,255,255,.14);border-radius:20px;background:rgba(255,255,255,.04)}
 .calc label{display:block;font-size:14px;font-weight:600}
