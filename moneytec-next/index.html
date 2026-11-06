@@ -110,13 +110,31 @@
     <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..800&family=Instrument+Serif:ital@0;1&display=swap" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
     <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" /></noscript>
-    <script type="module" crossorigin src="./assets/index-C2PGEZwX.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/index-Dh_T2mNL.css">
+    <script type="module" crossorigin src="./assets/index-CyB_pXTx.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-Cg-A7af6.css">
   </head>
   <body>
     <!-- The readable page for search engines, AI assistants and anyone without JavaScript. React replaces it with
          the animated site as soon as it loads; until then it stays out of sight so visitors never see a flash. -->
-    <script>document.documentElement.className += ' js';</script>
+    <script>
+      document.documentElement.className += ' js';
+      // Phones: remember the place on this page, so coming Back from a guide (or a reload) returns straight to it.
+      (function () {
+        try {
+          if (innerWidth >= 768) return;
+          var save = function () { sessionStorage.setItem('mt-y', String(Math.round(scrollY))); };
+          addEventListener('pagehide', save);
+          document.addEventListener('visibilitychange', function () { if (document.hidden) save(); });
+          var nav = performance.getEntriesByType('navigation')[0];
+          var y = Number(sessionStorage.getItem('mt-y')) || 0;
+          if (nav && (nav.type === 'back_forward' || nav.type === 'reload') && y > innerHeight / 2) {
+            history.scrollRestoration = 'manual';
+            document.documentElement.className += ' returning';
+            window.__mtReturn = y;
+          }
+        } catch (e) {}
+      })();
+    </script>
     <style>
       .seo-page { max-width: 760px; margin: 0 auto; padding: 96px 20px 48px; font: 16px/1.65 Inter, system-ui, sans-serif; color: #F4F1F8; background: #07060B; }
       .seo-page h1, .seo-page h2 { font-family: 'Instrument Serif', Georgia, serif; font-weight: 400; line-height: 1.1; }
@@ -126,6 +144,8 @@
       .boot-mark { position: fixed; z-index: 1; top: 26px; left: 29px; width: 26px; height: 24px; }
       @media (min-width: 640px) { .boot-mark { top: 30px; left: max(41px, calc(50vw - 569px)); } }
       html.js { background: #07060B; }
+      /* returning part-way down the page: the hero's mark and light must not flash first */
+      .returning .boot-mark, .returning .stage-flat, .returning .stage-glow, .returning .stage-coin { visibility: hidden !important; }
     </style>
     <div id="root">
       <img class="boot-mark" src="./brand/moneytec-symbol.svg" width="26" height="24" alt="" />
@@ -224,15 +244,17 @@
     </div>
     <script>
       // Phones often reopen a saved copy of this page. Ask the server which build is current (bypassing the
-      // cache) and, if this copy is older, reload once so visitors always get the latest site.
+      // cache) and, if this copy is older, reload once so visitors always get the latest site. Never while someone is
+      // part-way down the page: they get the new build on their next visit instead of a reset under their thumb.
       (function () {
         function check() {
           try {
             var mine = document.querySelector('script[type="module"][src*="assets/index-"]');
             if (!mine || !window.fetch) return;
+            var startY = scrollY;
             fetch(location.pathname + '?fresh=' + Date.now(), { cache: 'no-store' }).then(function (r) { return r.text(); }).then(function (html) {
               var latest = html.match(/assets\/index-[\w-]+\.js/);
-              if (latest && mine.getAttribute('src').indexOf(latest[0]) < 0 && sessionStorage.getItem('mt-refreshed') !== latest[0]) {
+              if (latest && mine.getAttribute('src').indexOf(latest[0]) < 0 && sessionStorage.getItem('mt-refreshed') !== latest[0] && startY < innerHeight / 2 && scrollY < innerHeight / 2) {
                 sessionStorage.setItem('mt-refreshed', latest[0]);
                 location.reload();
               }
