@@ -29,6 +29,8 @@ export function Nav() {
       if (y > 600 && y > prev + 6 && !open) setHidden(true);
       else if (y < prev - 6 || y <= 600) setHidden(false);
     }
+    // phones have no section pill to highlight, so they skip measuring every section on every scroll
+    if (mobile) return;
     const hit = NAV.filter((n) => n.href.startsWith('#')).map((n) => document.querySelector<HTMLElement>(n.href)).filter(Boolean).reverse().find((s) => s!.getBoundingClientRect().top < window.innerHeight * 0.4);
     setCurrent(hit ? `#${hit.id}` : '');
   });
@@ -38,6 +40,8 @@ export function Nav() {
     window.addEventListener('keydown', esc);
     window.addEventListener('resize', resize);
     window.dispatchEvent(new CustomEvent('moneytec:menu', { detail: open }));
+    // Safari can clip fixed layers above its bottom bar, so the page itself steps aside while the menu is open
+    document.documentElement.classList.toggle('menu-open', open);
     return () => { window.removeEventListener('keydown', esc); window.removeEventListener('resize', resize); };
   }, [open]);
 
@@ -78,25 +82,18 @@ export function Nav() {
               id="local-menu"
               aria-label="Sections"
               className="menu-sheet fixed inset-0 z-40 flex flex-col px-6 pb-8 pt-24 lg:hidden"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.25, ease: 'easeOut' }}
             >
               <div className="flex flex-col">
                 {NAV.map((n, i) => (
-                  <motion.a
+                  <a
                     key={n.href}
                     href={n.href}
                     onClick={() => setOpen(false)}
                     className="flex items-baseline gap-4 border-b border-white/[0.07] py-3.5 text-[30px] font-semibold tracking-[-0.04em]"
-                    initial={{ opacity: 0, y: 24 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, ease: EASE, delay: 0.12 + i * 0.04 }}
                   >
                     <span className="text-[11px] font-medium tracking-[0.2em] text-dim">0{i + 1}</span>
                     {n.label}
-                  </motion.a>
+                  </a>
                 ))}
               </div>
               <div className="mt-auto flex flex-col gap-3 pt-6">

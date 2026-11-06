@@ -2,7 +2,7 @@ import { TrendingUp, ShieldCheck, Globe2, BookOpen, ScanLine } from 'lucide-reac
 import { BrandLogo } from './BrandLogo';
 import { motion } from 'framer-motion';
 import { wa } from '../data';
-import { EASE, LearnLinks, Title } from './ui';
+import { EASE, LearnLinks, phoneNow, Title } from './ui';
 
 /** Each service gets a small living illustration: lines draw, nodes pulse, nothing loud. */
 const ART = {
@@ -68,10 +68,7 @@ function Row({ c, i }: { c: (typeof CARDS)[number]; i: number }) {
   return (
     <motion.li
       className="lux-row"
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '0px 0px -10% 0px' }}
-      transition={{ duration: 1, ease: EASE, delay: i * 0.06 }}
+      {...(phoneNow() ? {} : { initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, viewport: { once: true, margin: '0px 0px -10% 0px' }, transition: { duration: 1, ease: EASE, delay: i * 0.06 } })}
     >
       <a
         href={first ? '#calculator' : wa(`Hi Gulshan! Tell me more: ${c.title}`)}

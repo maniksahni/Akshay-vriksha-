@@ -2,7 +2,8 @@ import { ArrowUpRight, Target } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useState } from 'react';
 import { wa } from '../data';
-import { EASE, goalProjection, inr } from './ui';
+import { GrowthChart } from './GrowthChart';
+import { EASE, goalProjection, inr, useMobile } from './ui';
 
 const GOALS = ['Education', 'A home', 'Retirement', 'My own goal'];
 
@@ -19,6 +20,7 @@ function Money({ label, value, onChange, aria }: { label: string; value: string;
 }
 
 export function GoalPlanner() {
+  const mobile = useMobile();
   const [goal, setGoal] = useState('Education');
   const [cost, setCost] = useState('2500000');
   const [saved, setSaved] = useState('0');
@@ -83,6 +85,7 @@ export function GoalPlanner() {
                   <motion.span className="absolute inset-y-0 rounded-full bg-gradient-to-r from-amber via-rose to-violet" animate={{ left: `${grow * 100}%`, right: 0 }} transition={{ duration: 0.6, ease: EASE }} />
                 </div>
               </div>
+              <div className="mt-6"><GrowthChart monthly={monthly} rate={rate} years={years} start={savings} compact={mobile} /></div>
               <dl className="mt-6 space-y-2.5 border-t border-line pt-5 text-[13px]">
                 {[['Goal cost today', inr(amount)], ['Future cost with inflation', inr(result.target)], ['Illustrated value of existing savings', inr(result.futureSavings)], ['Remaining target for SIPs', inr(result.gap)]].map(([k, v]) => (
                   <div key={k} className="flex justify-between gap-4"><dt className="text-haze">{k}</dt><dd className="financial-value tabular-nums">{v}</dd></div>

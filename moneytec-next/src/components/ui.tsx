@@ -17,11 +17,12 @@ export function useMobile() {
   return m;
 }
 
-const phoneNow = () => typeof window !== 'undefined' && window.innerWidth < 768;
+export const phoneNow = () => typeof window !== 'undefined' && window.innerWidth < 768;
 
 export function FadeIn({ children, className = '', delay = 0, y = 28 }: { children: ReactNode; className?: string; delay?: number; y?: number }) {
-  // blur is a full-layer repaint every frame; phones get the lift and fade only
-  const blur = !phoneNow();
+  // phones scroll with content already in place: an entrance here shows as blank space and jumping on a fast scroll
+  if (phoneNow()) return <div className={className}>{children}</div>;
+  const blur = true;
   return (
     <motion.div
       className={className}
@@ -40,14 +41,15 @@ export function Title({ text, className = '', as: Tag = 'h2', delay = 0 }: { tex
   const ref = useRef<HTMLHeadingElement>(null);
   const inView = useInView(ref, { once: true, margin: '0px 0px -10% 0px' });
   const lines = text.split(' / ');
+  const still = phoneNow();
   return (
     <Tag ref={ref} className={className} aria-label={text.replace(/\*| \/ /g, (m) => (m === '*' ? '' : ' '))}>
       {lines.map((line, i) => (
-        <span key={i} aria-hidden className="text-mask block overflow-hidden pb-[0.08em]">
+        <span key={i} aria-hidden className={still ? 'block pb-[0.08em]' : 'text-mask block overflow-hidden pb-[0.08em]'}>
           <motion.span
             className="block"
-            initial={{ y: '110%' }}
-            animate={inView ? { y: 0 } : undefined}
+            initial={still ? false : { y: '110%' }}
+            animate={still || !inView ? undefined : { y: 0 }}
             transition={{ duration: 1.05, ease: EASE, delay: delay + i * 0.09 }}
           >
             {line.split(/(\*[^*]+\*)/).map((part, k) =>
@@ -78,14 +80,19 @@ export const untilt = (e: PointerEvent<HTMLElement>) => {
 
 /** Each section rises out of depth as it arrives: scale, lift and a soft unblur, tied to scroll. Phones get a plain fade. */
 export function Scene({ children, className = '' }: { children: ReactNode; className?: string }) {
-  const ref = useRef<HTMLDivElement>(null);
   const mobile = useMobile();
+  // phones skip the scroll tracking altogether, so a section costs nothing per scrolled pixel
+  if (mobile || reduced()) return <div className={className}>{children}</div>;
+  return <MovingScene className={className}>{children}</MovingScene>;
+}
+
+function MovingScene({ children, className }: { children: ReactNode; className: string }) {
+  const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'start 0.3'] });
   const scale = useTransform(scrollYProgress, [0, 1], [0.86, 1]);
   const y = useTransform(scrollYProgress, [0, 1], [120, 0]);
   const opacity = useTransform(scrollYProgress, [0, 0.6], [0.15, 1]);
   const rotateX = useTransform(scrollYProgress, [0, 1], [14, 0]);
-  if (mobile || reduced()) return <div className={className}>{children}</div>;
   return (
     <div ref={ref} style={{ perspective: 1400 }}>
       <motion.div className={className} style={{ scale, y, opacity, rotateX, transformOrigin: '50% 0%' }}>{children}</motion.div>

@@ -65,7 +65,10 @@ export function Stage() {
       return { pose: p, field: mix(a.cue.field, b.cue.field, t), o: mix(a.cue.o, b.cue.o, t) };
     };
     let lastY = window.scrollY, lastT = performance.now();
+    let gone = false;
     const apply = () => {
+      // phones: once the ₹ has scrolled away, a scroll costs nothing until it is nearly back
+      if (mobile && gone && window.scrollY > window.innerHeight * 1.2) return;
       const now = performance.now();
       rupee?.setVelocity(((window.scrollY - lastY) / Math.max(8, now - lastT)) * 0.6);
       lastY = window.scrollY; lastT = now;
@@ -78,6 +81,7 @@ export function Stage() {
         const W = st.width || window.innerWidth, H = st.height || window.innerHeight;
         pose = { x: (r.left + r.width / 2) / W, y: ((r.top + r.height / 2) / H) * 2 - 1, s: (r.height / 2) * 2 * PHONE_HALF_H / (2.95 * H), spin: window.scrollY * 0.004, glow: 1 };
         o = Math.max(0, Math.min(1, r.bottom / (r.height * 0.7)));
+        gone = o < 0.01;
         f = 0;
         // a soft halo travels with the coin so it glows against the night even mid-spin
         if (field.current) field.current.style.display = o < 0.01 ? 'none' : '';
@@ -134,7 +138,8 @@ export function Stage() {
     let timer = 0;
     const go = () => {
       // phones get the same liquid light as laptops, drawn small and only while the hero is on screen
-      import('./AuroraField').then(({ mountAurora }) => {
+      // phones keep the soft CSS light: one WebGL scene is all a phone should run while it scrolls
+      if (!mobile) import('./AuroraField').then(({ mountAurora }) => {
         if (dead || !field.current) return;
         try { aurora = mountAurora(field.current, { phone: mobile, still: false }); apply(); setReady((r) => ({ ...r, field: true })); } catch { /* CSS aurora stays */ }
       });

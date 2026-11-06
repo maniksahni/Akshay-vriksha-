@@ -45,7 +45,7 @@ export function Gulshan() {
   const nameOpacity = useTransform(p, [0.25, 0.6], [0, 1]);
   const introOpacity = useTransform(p, [0, 0.2], [1, 0]);
 
-  const img = <img src="./images/gulshan-kohli.webp" alt="Gulshan Kohli, your personal point of contact at Moneytec" width="900" height="1037" loading="lazy" decoding="async" className="h-full w-full object-cover object-[50%_22%]" />;
+  const img = <img src="./images/gulshan-kohli.webp" alt="Gulshan Kohli, your personal point of contact at Moneytec" width="900" height="1037" decoding="async" className="h-full w-full object-cover object-[50%_22%]" />;
 
   return (
     <section id="gulshan" data-dark aria-labelledby="mentor-title" className="relative">
@@ -269,7 +269,7 @@ function FooterMark() {
   const ref = useRef<HTMLParagraphElement>(null);
   const { scrollYProgress: p } = useScroll({ target: ref, offset: ['start end', 'end end'] });
   return (
-    <p ref={ref} aria-hidden className="text-mask mt-12 select-none overflow-hidden pb-[0.06em] text-center text-[23vw] font-semibold leading-[0.84] tracking-[-0.07em]">
+    <p ref={ref} aria-hidden className="text-mask mt-12 select-none overflow-hidden pb-[0.24em] text-center text-[23vw] font-semibold leading-[0.84] tracking-[-0.07em]">
       {'moneytec'.split('').map((ch, i) => <Letter key={i} ch={ch} i={i} p={p} />)}
     </p>
   );

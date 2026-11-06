@@ -896,3 +896,12 @@ img.brand-facebook { padding: 0; width: 21px; height: 21px; border-radius: 50%; 
 @media (max-width: 767px) {
   #safety .blur-xl { filter: none; background: radial-gradient(closest-side, rgba(91,240,181,.28), transparent); }
 }
+
+/* ---------------------------------------------------------------- Safari's bottom bar
+   iPhone Safari can clip fixed layers above its bar while the page scrolls on beneath it, which leaves a hard line
+   where a glow is cut off. So the glow is sized to the visible area and fades to the page colour before that edge. */
+@media (max-width: 767px) {
+  .stage { height: 100vh; height: 100svh; }
+  .stage::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 130px; z-index: 5; pointer-events: none; background: linear-gradient(rgba(7,6,11,0), #07060B); }
+}
+html.menu-open #main, html.menu-open footer, html.menu-open .stage { visibility: hidden; }
