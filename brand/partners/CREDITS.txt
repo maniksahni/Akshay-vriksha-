@@ -1,0 +1,6 @@
+AMFI logo: https://www.amfiindia.com/logo.svg (official website).
+Kotak Life logo: Sameerbhand, Wikimedia Commons, CC BY-SA 4.0; used unchanged.
+Source: https://commons.wikimedia.org/wiki/File:Kotak_Life_Logo-1.png
+License: https://creativecommons.org/licenses/by-sa/4.0/
+Brand names and logos belong to their respective owners. Placement identifies the stated distributor registration or insurance advisor relationship; it does not indicate sponsorship.
+Platform SVG artwork: Simple Icons, https://simpleicons.org/, SVG paths used unchanged; fill colours reflect platform identification. Source files: https://github.com/simple-icons/simple-icons/tree/develop/icons .
