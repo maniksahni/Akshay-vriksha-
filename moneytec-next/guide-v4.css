@@ -4,7 +4,8 @@ body{margin:0;color:#F4F1F8;font:17px/1.72 Inter,system-ui,-apple-system,sans-se
 a{color:#FF8FA5;text-underline-offset:3px;text-decoration-color:rgba(255,143,165,.5)}
 a:hover{color:#fff}
 :focus-visible{outline:2px solid #FF8FA5;outline-offset:3px;border-radius:6px}
-.sky{position:fixed;top:0;left:0;right:0;height:calc(100vh + 200px);height:calc(100lvh + 200px);z-index:-1;overflow:hidden;pointer-events:none}
+.sky{position:fixed;top:0;left:0;right:0;height:100vh;height:100svh;z-index:-1;overflow:hidden;pointer-events:none}
+.sky::after{content:'';position:absolute;left:0;right:0;bottom:0;height:130px;background:linear-gradient(rgba(7,6,11,0),#07060B)}
 .sky i{position:absolute;display:block;border-radius:50%}
 .sky i:nth-child(1){width:60vmax;height:60vmax;right:-22vmax;top:-26vmax;background:radial-gradient(closest-side,rgba(191,90,242,.34),transparent)}
 .sky i:nth-child(2){width:46vmax;height:46vmax;left:-20vmax;top:-12vmax;background:radial-gradient(closest-side,rgba(255,159,10,.18),transparent)}
@@ -100,7 +101,7 @@ footer{margin-top:24px;overflow:hidden;border-top:1px solid rgba(255,255,255,.1)
 .foot-in img{display:block;height:24px;width:auto;margin-bottom:14px}
 .foot-in strong{color:rgba(255,255,255,.9)}
 .legal{color:rgba(255,255,255,.55)}
-.mark{margin:0;font-weight:600;font-size:23vw;line-height:.84;letter-spacing:-.07em;text-align:center;white-space:nowrap;background:linear-gradient(100deg,#FFB340,#FF375F 50%,#BF5AF2);-webkit-background-clip:text;background-clip:text;color:transparent;padding-bottom:.08em}
+.mark{margin:0;font-weight:600;font-size:23vw;line-height:.84;letter-spacing:-.07em;text-align:center;white-space:nowrap;background:linear-gradient(100deg,#FFB340,#FF375F 50%,#BF5AF2);-webkit-background-clip:text;background-clip:text;color:transparent;padding-bottom:.24em}
 .calc{display:grid;gap:18px;margin:0 0 16px}
 .calc label{display:block;font-size:14px;font-weight:600}
 .field{display:flex;align-items:center;gap:8px;margin-top:8px;padding:0 14px;border:1px solid rgba(255,255,255,.2);border-radius:14px;background:#0E0C14}
