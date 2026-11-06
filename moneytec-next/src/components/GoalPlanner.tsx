@@ -10,8 +10,8 @@ const GOALS = ['Education', 'A home', 'Retirement', 'My own goal'];
 const COSTS = [500000, 1000000, 2500000, 5000000, 10000000, 20000000];
 const SAVINGS = [0, 100000, 200000, 500000, 1000000, 2500000];
 const YEARS = [5, 10, 15, 20, 25, 30];
-const INFLATIONS = [0, 4, 5, 6, 7, 8];
-const RATES = [0, 6, 10, 12, 14, 15, 16];
+const INFLATIONS = [0, 4, 5, 6, 7, 8, 10];
+const RATES = [6, 10, 12, 14, 15, 16];
 const lakh = (v: number) => (v === 0 ? '₹0' : v >= 10000000 ? `₹${v / 10000000} crore` : `₹${v / 100000} lakh`);
 
 function Money({ label, value, onChange, aria }: { label: string; value: string; onChange: (v: string) => void; aria: string }) {
@@ -23,20 +23,6 @@ function Money({ label, value, onChange, aria }: { label: string; value: string;
         <input className="field pl-9 tabular-nums" type="number" inputMode="numeric" min="0" max="1000000000" value={value} onChange={(e) => onChange(e.target.value)} aria-label={aria} aria-describedby="goal-input-help" />
       </div>
     </label>
-  );
-}
-
-/** Phones: drag to an amount, or type the exact one. 16px text keeps iPhone Safari from zooming in on the field. */
-function FineTune({ label, value, onChange, min, max, step }: { label: string; value: string; onChange: (v: string) => void; min: number; max: number; step: number }) {
-  const n = Number(value) || 0;
-  return (
-    <div className="calc-fine mt-5">
-      <div className="flex items-center justify-between gap-3 text-[13px] text-haze">
-        <span>Or fine-tune it</span>
-        <span className="calc-type"><span aria-hidden>₹</span><input type="number" inputMode="numeric" min="0" max="1000000000" value={value} onChange={(e) => onChange(e.target.value)} aria-label={label} aria-describedby="goal-input-help" className="financial-value tabular-nums" /></span>
-      </div>
-      <input type="range" className="slider" min={min} max={max} step={step} value={Math.min(max, Math.max(min, n))} aria-label={label} onChange={(e) => onChange(e.target.value)} style={{ ['--fill' as string]: `${(Math.min(1, Math.max(0, (n - min) / (max - min)))) * 100}%` }} />
-    </div>
   );
 }
 
@@ -52,7 +38,7 @@ export function GoalPlanner() {
   const valid = cost.trim() !== '' && saved.trim() !== '' && Number.isFinite(amount) && amount > 0 && amount <= 1000000000 && Number.isFinite(savings) && savings >= 0 && savings <= 1000000000;
   const result = goalProjection(valid ? amount : 0, valid ? savings : 0, years, inflation, rate);
   const monthly = Math.ceil(result.monthly / 100) * 100;
-  const share = wa(`Hi Gulshan! I'd like to discuss my ${goal.toLowerCase()} goal. Cost today: ${inr(amount, false)}. Timeline: ${years} years. Existing savings allocated to this goal: ${inr(savings, false)}. Assumptions: ${inflation}% inflation and ${rate}% annual CAGR. Illustrated future target: ${inr(result.target, false)}. Estimated monthly SIP rounded up to the next Rs 100: ${inr(monthly, false)}. This is only an illustration; I understand returns are not guaranteed. Can we review affordability, risk and suitability?`);
+  const share = wa(`Hi Gulshan! I'd like to discuss my ${mobile ? '' : `${goal.toLowerCase()} `}goal. Cost today: ${inr(amount, false)}. Timeline: ${years} years. Existing savings allocated to this goal: ${inr(savings, false)}. Assumptions: ${inflation}% inflation and ${rate}% annual CAGR. Illustrated future target: ${inr(result.target, false)}. Estimated monthly SIP rounded up to the next Rs 100: ${inr(monthly, false)}. This is only an illustration; I understand returns are not guaranteed. Can we review affordability, risk and suitability?`);
   const grow = valid && result.target > 0 ? Math.min(1, amount / result.target) : 1;
 
   // phones: the same layout as Explore my SIP. Tap a choice and the result rises in a sheet; the slider and the
@@ -70,46 +56,25 @@ export function GoalPlanner() {
   }, [mobile]);
 
   if (mobile) {
-    const heading = valid ? `Illustrated monthly SIP for ${years} ${years === 1 ? 'year' : 'years'}` : 'Add your goal details to see the illustration';
+    const heading = valid ? `Illustrated monthly SIP for ${years} ${years === 1 ? 'year' : 'years'}` : 'Choose a goal cost to see the illustration';
     return (
       <div ref={controls} className="grid gap-6">
         <div className="calc-controls glass space-y-6 p-4">
           <div>
-            <p className="text-[17px] font-semibold tracking-[-0.02em]">Your goal. <span className="text-dim">Give it a name.</span></p>
-            <div className="mt-4"><Segmented className="seg-2" label="Your financial goal" options={GOALS} value={goal} onChange={setGoal} fmt={(v) => v} /></div>
-          </div>
-          <div>
-            <p className="text-[17px] font-semibold tracking-[-0.02em]">Cost today. <span className="text-dim">Pick the closest.</span></p>
+            <p className="text-[17px] font-semibold tracking-[-0.02em]">Goal cost today. <span className="text-dim">Pick the closest.</span></p>
             <div className="mt-4"><Segmented label="Goal cost today" options={COSTS} value={amount} onChange={pick((v: number) => setCost(String(v)))} fmt={lakh} /></div>
-            <FineTune label="Goal cost today in rupees" value={cost} onChange={setCost} min={100000} max={50000000} step={100000} />
-          </div>
-          <div>
-            <p className="text-[17px] font-semibold tracking-[-0.02em]">Already saved. <span className="text-dim">For this goal.</span></p>
-            <div className="mt-4"><Segmented label="Savings for this goal today" options={SAVINGS} value={savings} onChange={pick((v: number) => setSaved(String(v)))} fmt={lakh} /></div>
-            <FineTune label="Savings allocated to this goal in rupees" value={saved} onChange={setSaved} min={0} max={25000000} step={50000} />
-            <p id="goal-input-help" className="mt-2 text-[12px] text-dim">Use today’s cost and only the savings set aside for this goal.</p>
-            {!valid && <p role="alert" className="mt-2 rounded-xl border border-rose/40 bg-rose/10 px-4 py-3 text-[13px] text-paper">Enter a goal cost above ₹0 and savings of ₹0 or more, up to ₹100 crore each.</p>}
           </div>
           <div>
             <p className="text-[17px] font-semibold tracking-[-0.02em]">How long. <span className="text-dim">Longer is kinder.</span></p>
             <div className="mt-4"><Segmented label="Years to your goal" options={YEARS} value={years} onChange={pick(setYears)} fmt={(v) => `${v} years`} /></div>
-            <label className="calc-fine mt-5 block">
-              <span className="flex items-baseline justify-between text-[13px] text-haze"><span>Or fine-tune it</span><span className="financial-value tabular-nums">{years} {years === 1 ? 'year' : 'years'}</span></span>
-              <input type="range" className="slider" min={1} max={40} value={years} aria-label="Years to your goal" onChange={(e) => setYears(Number(e.target.value))} style={{ ['--fill' as string]: `${((years - 1) / 39) * 100}%` }} />
-            </label>
-          </div>
-          <div>
-            <p className="text-[17px] font-semibold tracking-[-0.02em]">Assumed inflation. <span className="text-dim">Prices rise.</span></p>
-            <div className="mt-4"><Segmented label="Assumed annual inflation" options={INFLATIONS} value={inflation} onChange={pick(setInflation)} fmt={(v) => `${v}% a year`} /></div>
-            <label className="calc-fine mt-5 block">
-              <span className="flex items-baseline justify-between text-[13px] text-haze"><span>Or fine-tune it</span><span className="financial-value tabular-nums">{inflation}% a year</span></span>
-              <input type="range" className="slider" min={0} max={10} value={inflation} aria-label="Assumed annual inflation" onChange={(e) => setInflation(Number(e.target.value))} style={{ ['--fill' as string]: `${inflation * 10}%` }} />
-            </label>
           </div>
           <div>
             <p className="text-[17px] font-semibold tracking-[-0.02em]">Assumed return. <span className="text-dim">For illustration.</span></p>
-            <div className="mt-4"><Segmented className="seg-first-full" label="Assumed annual return (CAGR)" options={RATES} value={rate} onChange={pick(setRate)} fmt={(v) => `${v}% a year`} /></div>
-            <p className="mt-3 text-[12px] text-dim">These are adjustable assumptions, not expected or promised returns. Existing savings are assumed to earn the same rate.</p>
+            <div className="mt-4"><Segmented label="Assumed annual return (CAGR)" options={RATES} value={rate} onChange={pick(setRate)} fmt={(v) => `${v}% a year`} /></div>
+          </div>
+          <div className="calc-mini">
+            <label><span>Already saved</span><select value={savings} onChange={(e) => setSaved(e.target.value)} aria-label="Savings for this goal today">{SAVINGS.map((v) => <option key={v} value={v}>{lakh(v)}</option>)}</select></label>
+            <label><span>Inflation</span><select value={inflation} onChange={(e) => setInflation(Number(e.target.value))} aria-label="Assumed annual inflation">{INFLATIONS.map((v) => <option key={v} value={v}>{v}% a year</option>)}</select></label>
           </div>
         </div>
 
@@ -121,38 +86,18 @@ export function GoalPlanner() {
         <ResultSheet open={sheet} onClose={() => setSheet(false)} id="goal-sheet" label={heading}>
           <div className="glass ring-grad overflow-hidden p-5">
             <div className="pointer-events-none absolute -top-24 left-1/2 h-48 w-72 -translate-x-1/2 rounded-full bg-[radial-gradient(closest-side,rgba(255,159,10,0.40),transparent)]" />
-            {valid ? (
-              <>
-                <div className="calc-head relative">
-                  <p className="calc-label pr-11 text-haze">Your {goal.toLowerCase()} goal: {heading.toLowerCase().replace('sip', 'SIP')}</p>
-                  <p className="calc-total display financial-value mt-1 tabular-nums" aria-live="polite">{inr(tMonthly, false)}</p>
-                </div>
-                <dl className="calc-split calc-split-4 relative border-t border-line">
-                  {[['Goal cost today', inr(amount)], ['Future cost with inflation', inr(result.target)], ['Illustrated value of existing savings', inr(result.futureSavings)], ['Remaining target for SIPs', inr(result.gap)]].map(([k, v]) => (
-                    <div key={k} className="flex"><dt className="text-haze">{k}</dt><dd className="financial-value tabular-nums">{v}</dd></div>
-                  ))}
-                </dl>
-                <div className="calc-block relative"><GrowthChart monthly={monthly} rate={rate} years={years} start={savings} compact /></div>
-                <div className="calc-block relative">
-                  <p className="calc-label text-haze">Cost today vs. future cost</p>
-                  <div className="calc-compare">
-                    <div>
-                      <div className="calc-bar overflow-hidden rounded-full bg-white/[0.08]"><motion.div className="h-full rounded-full bg-white/35" animate={{ width: `${grow * 100}%` }} transition={{ duration: 0.5, ease: EASE }} /></div>
-                      <p className="mt-1.5 flex justify-between text-haze"><span>Cost today</span><span className="financial-value tabular-nums">{inr(amount)}</span></p>
-                    </div>
-                    <div>
-                      <div className="calc-bar overflow-hidden rounded-full bg-gradient-to-r from-amber via-rose to-violet" />
-                      <p className="mt-1.5 flex justify-between"><span>Future cost</span><span className="financial-value tabular-nums">{inr(result.target)}</span></p>
-                    </div>
-                  </div>
-                  <p className="calc-diff text-haze">{result.gap === 0 ? 'Under these assumptions, your allocated savings cover the target. Review the assumptions and suitability with Gulshan.' : `At ${inflation}% inflation, today’s ${inr(amount)} goal becomes approximately ${inr(result.target)} in ${years} years. Planning for that future cost keeps the target realistic.`}</p>
-                </div>
-                <a href={share} target="_blank" rel="noopener noreferrer" className="btn-light relative w-full">Discuss my goal with Gulshan <ArrowUpRight size={17} aria-hidden="true" /></a>
-              </>
-            ) : (
-              <div className="relative grid place-items-center gap-3 py-12 text-center text-haze"><Target size={38} aria-hidden="true" /><p>Add your goal details to see the illustration.</p></div>
-            )}
-            <p className="calc-note relative text-dim">Illustration only. Rounded up to the next ₹100. Contributions at the start of each month; constant inflation and annual CAGR. Taxes, costs and changing returns are not modelled. Returns are not guaranteed. Mutual fund investments are subject to market risks.</p>
+            <div className="calc-head relative">
+              <p className="calc-label pr-11 text-haze">{heading}</p>
+              <p className="calc-total display financial-value mt-1 tabular-nums" aria-live="polite">{inr(tMonthly, false)}</p>
+            </div>
+            <div className="calc-split relative border-t border-line">
+              <div className="flex"><span className="text-haze">Cost today</span><span className="financial-value tabular-nums">{inr(amount)}</span></div>
+              <div className="flex"><span className="text-haze">Cost after {years} {years === 1 ? 'year' : 'years'}</span><span className="financial-value tabular-nums">{inr(result.target)}</span></div>
+            </div>
+            <div className="calc-block relative"><GrowthChart monthly={monthly} rate={rate} years={years} start={savings} compact /></div>
+            {result.gap === 0 && <p className="calc-diff relative text-haze">Under these assumptions, your allocated savings cover the target.</p>}
+            <a href={share} target="_blank" rel="noopener noreferrer" className="btn-light relative w-full">Discuss my goal with Gulshan <ArrowUpRight size={17} aria-hidden="true" /></a>
+            <p className="calc-note relative text-dim">Illustration only, rounded up to the next ₹100. Assumes {inflation}% inflation, {rate}% CAGR and {inr(savings)} already saved earning the same rate. Taxes and costs not modelled. Returns are not guaranteed. Mutual fund investments are subject to market risks.</p>
           </div>
         </ResultSheet>
       </div>
