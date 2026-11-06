@@ -60,7 +60,7 @@ export function Grow() {
           <p className="kicker">One SIP. {YEARS} years.</p>
           <div className="grow-line relative mt-4 h-[2.3em] text-[clamp(2rem,4.6vw,4rem)] md:h-[2.2em]">
             <AnimatePresence mode="wait">
-              <motion.p key={ms.line} className="display absolute inset-0" initial={{ opacity: 0, y: 20, ...(mobile ? {} : { filter: 'blur(6px)' }) }} animate={{ opacity: 1, y: 0, ...(mobile ? {} : { filter: 'blur(0px)' }) }} exit={{ opacity: 0, y: -16, ...(mobile ? {} : { filter: 'blur(6px)' }) }} transition={{ duration: 0.45 }}>
+              <motion.p key={ms.line} className="display absolute inset-0" initial={mobile ? false : { opacity: 0, y: 20, filter: 'blur(6px)' }} animate={{ opacity: 1, y: 0, ...(mobile ? {} : { filter: 'blur(0px)' }) }} exit={mobile ? { opacity: 1, transition: { duration: 0 } } : { opacity: 0, y: -16, filter: 'blur(6px)' }} transition={{ duration: 0.45 }}>
                 {ms.line}
               </motion.p>
             </AnimatePresence>

@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useLayoutEffect } from 'react';
 import { Faq, Finale, Footer, Gulshan, Safety } from './components/Closing';
 import { Configure } from './components/Configure';
 import { Grow } from './components/Grow';
@@ -40,10 +40,37 @@ function usePauseOffscreen() {
   }, []);
 }
 
+/**
+ * Phones: coming Back from a guide rebuilds this page from nothing. index.html remembers where you were; here the
+ * page is put back there before its first paint, so you never see the hero replay and then a jump down the page.
+ */
+function useReturnToPlace() {
+  useLayoutEffect(() => {
+    const y = (window as Window & { __mtReturn?: number }).__mtReturn;
+    if (!y) return;
+    const put = () => window.scrollTo({ top: y, left: 0, behavior: 'instant' as ScrollBehavior });
+    put();
+    // late fonts can change the page height for a moment: hold the place until the visitor moves or it settles
+    const ro = new ResizeObserver(put);
+    ro.observe(document.body);
+    const stop = () => {
+      ro.disconnect();
+      window.clearTimeout(timer);
+      window.removeEventListener('touchstart', stop);
+      history.scrollRestoration = 'auto';
+    };
+    const timer = window.setTimeout(stop, 1500);
+    window.addEventListener('touchstart', stop, { passive: true });
+    requestAnimationFrame(() => requestAnimationFrame(() => document.documentElement.classList.remove('returning')));
+    return stop;
+  }, []);
+}
+
 /** moneytec, told as one continuous night scene: light gathers into the ₹, then the story unfolds around it. */
 export default function App() {
   useSmoothScroll();
   usePauseOffscreen();
+  useReturnToPlace();
   return (
     <>
       <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-paper focus:px-5 focus:py-3 focus:text-ink">

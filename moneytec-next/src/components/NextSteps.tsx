@@ -1,7 +1,7 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { useState } from 'react';
 import { wa } from '../data';
-import { EASE, Scene, Title } from './ui';
+import { EASE, Scene, Title, useMobile } from './ui';
 
 const ROUTES = [
   { title: 'Build wealth', detail: 'Give your monthly savings a purpose.', items: ['Choose the goal and when you need the money.', 'Explore a monthly amount in the SIP calculator.', 'Discuss suitability and scheme details with Gulshan.'], cta: 'Explore the calculator', href: '#calculator' },
@@ -10,6 +10,7 @@ const ROUTES = [
 ];
 
 export function NextSteps() {
+  const mobile = useMobile();
   const [active, setActive] = useState(0);
   const route = ROUTES[active];
   return (
@@ -26,7 +27,8 @@ export function NextSteps() {
         <div className="glass ring-grad overflow-hidden p-6 sm:p-10" aria-live="polite" style={{ perspective: 1200 }}>
           <div className="pointer-events-none absolute -right-20 -top-20 h-56 w-56 rounded-full bg-[radial-gradient(closest-side,rgba(191,90,242,0.40),transparent)]" />
           <AnimatePresence mode="wait">
-            <motion.div key={active} className="relative" initial={{ opacity: 0, rotateY: -70, x: 40 }} animate={{ opacity: 1, rotateY: 0, x: 0 }} exit={{ opacity: 0, rotateY: 70, x: -40 }} transition={{ duration: 0.55, ease: EASE }} style={{ transformOrigin: '50% 50%' }}>
+            {/* phones swap at once: a turning card leaves the panel blank for a moment */}
+            <motion.div key={active} className="relative" initial={mobile ? false : { opacity: 0, rotateY: -70, x: 40 }} animate={{ opacity: 1, rotateY: 0, x: 0 }} exit={mobile ? { opacity: 1, transition: { duration: 0 } } : { opacity: 0, rotateY: 70, x: -40 }} transition={{ duration: 0.55, ease: EASE }} style={{ transformOrigin: '50% 50%' }}>
               <p className="text-[11px] uppercase tracking-[0.22em] text-dim">{route.title}</p>
               <h3 className="mt-3 text-[26px] font-semibold tracking-[-0.03em] sm:text-[32px]">{route.detail}</h3>
               <ol className="my-8 space-y-5">

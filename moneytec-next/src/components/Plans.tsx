@@ -98,11 +98,8 @@ export function Plans() {
           ))}
         </div>
         <div className="mt-5 md:hidden">
-          <AnimatePresence mode="wait">
-            <motion.div key={tab} initial={{ opacity: 0, x: 24 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -24 }} transition={{ duration: 0.35, ease: EASE }}>
-              {card(PLANS[tab], tab)}
-            </motion.div>
-          </AnimatePresence>
+          {/* the new card takes the old one's place at once: no blank moment, nothing sliding */}
+          {card(PLANS[tab], tab)}
         </div>
         <div className="mt-12 hidden gap-5 md:grid md:grid-cols-3" style={{ perspective: 1400 }}>
           {PLANS.map((p, i) => (

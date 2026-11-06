@@ -156,13 +156,20 @@ export function Stage() {
     // phones hold the 3D scene back a little longer so it never fights the headline's entrance for the CPU
     let hold = 0;
     const settle = () => { timer = idle ? idle(go, { timeout: 1200 }) : window.setTimeout(go, 250); };
-    const later = () => { if (mobile) hold = window.setTimeout(settle, 1400); else settle(); };
+    // phones also never build it while it is far off screen (arriving back from a guide part-way down the page)
+    const nearCoin = () => window.scrollY < window.innerHeight * 1.5;
+    const whenNear = () => { if (nearCoin()) { window.removeEventListener('scroll', whenNear); settle(); } };
+    const later = () => {
+      if (!mobile) return settle();
+      hold = window.setTimeout(() => { if (nearCoin()) settle(); else window.addEventListener('scroll', whenNear, { passive: true }); }, 1400);
+    };
     if (document.readyState === 'complete') later(); else window.addEventListener('load', later, { once: true });
 
     return () => {
       dead = true;
       ro.disconnect();
       window.removeEventListener('scroll', apply);
+      window.removeEventListener('scroll', whenNear);
       window.removeEventListener('pointermove', move);
       window.removeEventListener('pointerdown', flick);
       window.removeEventListener('touchmove', touch);

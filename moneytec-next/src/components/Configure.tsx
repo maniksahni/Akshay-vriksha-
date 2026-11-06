@@ -1,7 +1,7 @@
-import { AnimatePresence, motion } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { createPortal } from 'react-dom';
 import { wa } from '../data';
+import { ResultSheet, Segmented } from './CalcParts';
 import { GoalPlanner } from './GoalPlanner';
 import { GrowthChart } from './GrowthChart';
 import { EASE, inr, LearnLinks, Scene, sipValue, spotlight, Title, useMobile, useTween } from './ui';
@@ -9,24 +9,6 @@ import { EASE, inr, LearnLinks, Scene, sipValue, spotlight, Title, useMobile, us
 const AMOUNTS = [1000, 3000, 5000, 10000, 25000, 50000];
 const DURATIONS = [5, 10, 15, 20, 25, 30];
 const RATES = [6, 10, 12, 14, 15, 16];
-
-function Segmented<T extends number>({ options, value, onChange, label, fmt }: { options: T[]; value: T; onChange: (v: T) => void; label: string; fmt: (v: T) => string }) {
-  return (
-    <div role="radiogroup" aria-label={label} className="grid grid-cols-3 gap-2">
-      {options.map((o) => (
-        <button key={o} type="button" role="radio" aria-checked={o === value} tabIndex={o === value ? 0 : -1} onClick={() => onChange(o)} onKeyDown={e => {
-          const index = options.indexOf(value);
-          const next = e.key === 'Home' ? 0 : e.key === 'End' ? options.length - 1 : ['ArrowRight', 'ArrowDown'].includes(e.key) ? (index + 1) % options.length : ['ArrowLeft', 'ArrowUp'].includes(e.key) ? (index - 1 + options.length) % options.length : -1;
-          if (next < 0) return;
-          e.preventDefault(); onChange(options[next]);
-          (e.currentTarget.parentElement?.children[next] as HTMLElement)?.focus();
-        }} className="seg">
-          {fmt(o)}
-        </button>
-      ))}
-    </div>
-  );
-}
 
 /** A dial of light: the ring fills with the share of the final value that came from growth. */
 function GrowthRing({ share }: { share: number }) {
@@ -169,36 +151,7 @@ export function Configure() {
         </div>
       </Scene>
       <div className="wrap-wide"><LearnLinks className="mt-6" links={[['What is a SIP?', './what-is-sip'], ['How to start a SIP', './how-to-start-sip'], ['SIP calculator guide', './sip-calculator'], ['Goal-based investing', './goal-based-investing']]} /></div>
-      {mobile && createPortal(
-        <AnimatePresence>
-          {sheet && mode === 'sip' && (
-            // a tap anywhere outside the sheet closes it
-            <motion.div key="scrim" className="calc-scrim" onClick={() => setSheet(false)} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.3 }} aria-hidden />
-          )}
-          {sheet && mode === 'sip' && (
-            <motion.div
-              key="sheet"
-              id="calc-sheet"
-              role="dialog"
-              aria-label={`Illustrated value after ${years} years`}
-              className="calc-sheet calc-result"
-              initial={{ y: '105%' }}
-              animate={{ y: 0 }}
-              exit={{ y: '105%' }}
-              transition={{ duration: 0.5, ease: EASE }}
-              drag="y"
-              dragConstraints={{ top: 0, bottom: 0 }}
-              dragElastic={{ top: 0, bottom: 0.6 }}
-              onDragEnd={(_, i) => { if (i.offset.y > 80 || i.velocity.y > 500) setSheet(false); }}
-            >
-              <button type="button" className="calc-sheet-handle" onClick={() => setSheet(false)} aria-label="Close"><span /></button>
-              <button type="button" className="calc-sheet-close" onClick={() => setSheet(false)} aria-label="Close result">×</button>
-              {result}
-            </motion.div>
-          )}
-        </AnimatePresence>,
-        document.body,
-      )}
+      {mobile && <ResultSheet open={sheet && mode === 'sip'} onClose={() => setSheet(false)} id="calc-sheet" label={`Illustrated value after ${years} years`}>{result}</ResultSheet>}
     </section>
   );
 }

@@ -905,3 +905,12 @@ img.brand-facebook { padding: 0; width: 21px; height: 21px; border-radius: 50%; 
   .stage::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 130px; z-index: 5; pointer-events: none; background: linear-gradient(rgba(7,6,11,0), #07060B); }
 }
 html.menu-open #main, html.menu-open footer, html.menu-open .stage { visibility: hidden; }
+
+/* Plan my goal on phones: built from the same parts as Explore my SIP */
+.calc-controls [role=radiogroup].seg-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.calc-controls [role=radiogroup].seg-first-full > :first-child { grid-column: 1 / -1; }
+.calc-split-4 { row-gap: 8px !important; }
+.calc-type { display: inline-flex; align-items: center; gap: 4px; padding: 0 10px; height: 34px; border: 1px solid rgba(255,255,255,.16); border-radius: 10px; background: rgba(255,255,255,.05); color: var(--ivory, #F4F1F8); }
+.calc-type:focus-within { border-color: rgba(255,55,95,.7); }
+.calc-type input { width: 8.6ch; font-size: 16px; line-height: 1; text-align: right; background: transparent; color: inherit; outline: none; -moz-appearance: textfield; appearance: textfield; }
+.calc-type input::-webkit-outer-spin-button, .calc-type input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
