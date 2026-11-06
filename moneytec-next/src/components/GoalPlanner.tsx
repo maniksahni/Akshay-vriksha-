@@ -106,36 +106,48 @@ export function GoalPlanner() {
 
   return (
     <div className="grid gap-6 lg:grid-cols-[1fr_440px] lg:gap-8">
-      <div className="glass space-y-5 p-4 sm:space-y-6 sm:p-8">
+      <div className="calc-controls glass flex flex-col justify-between gap-6 p-4 sm:gap-8 sm:p-8">
         <div>
-          <p className="text-[11px] uppercase tracking-[0.2em] text-dim">01 · Give your goal a name</p>
-          <div className="mt-3 flex flex-wrap gap-2" role="group" aria-label="Your financial goal">
+          <p className="text-[17px] font-semibold tracking-[-0.02em] sm:text-[19px]">Your goal. <span className="text-dim">Give it a name.</span></p>
+          <div className="mt-4 flex flex-wrap gap-2" role="group" aria-label="Your financial goal">
             {GOALS.map((g) => <button key={g} type="button" aria-pressed={goal === g} onClick={() => setGoal(g)} className="chip">{g}</button>)}
           </div>
         </div>
-        <div className="grid gap-4 sm:grid-cols-2">
-          <Money label="What would it cost today?" value={cost} onChange={setCost} aria="Goal cost today in rupees" />
-          <Money label="Savings for this goal today" value={saved} onChange={setSaved} aria="Savings allocated to this goal in rupees" />
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 xl:gap-8">
+        <div>
+          <p className="text-[17px] font-semibold tracking-[-0.02em] sm:text-[19px]">Cost today. <span className="text-dim">Pick or type.</span></p>
+          <div className="mt-4"><Segmented label="Goal cost today" options={COSTS} value={amount} onChange={(v: number) => setCost(String(v))} fmt={lakh} /></div>
+          <div className="mt-3"><Money label="Or type the exact cost" value={cost} onChange={setCost} aria="Goal cost today in rupees" /></div>
         </div>
-        <p id="goal-input-help" className="-mt-2 text-[12px] text-dim">Use today’s cost and only the savings set aside for this goal.</p>
+        <div>
+          <p className="text-[17px] font-semibold tracking-[-0.02em] sm:text-[19px]">Already saved. <span className="text-dim">For this goal.</span></p>
+          <div className="mt-4"><Segmented label="Savings for this goal today" options={SAVINGS} value={savings} onChange={(v: number) => setSaved(String(v))} fmt={lakh} /></div>
+          <div className="mt-3"><Money label="Or type the exact amount" value={saved} onChange={setSaved} aria="Savings allocated to this goal in rupees" /></div>
+        </div>
+        </div>
         {!valid && <p role="alert" className="rounded-xl border border-rose/40 bg-rose/10 px-4 py-3 text-[13px] text-paper">Enter a goal cost above ₹0 and savings of ₹0 or more, up to ₹100 crore each.</p>}
-        <label className="block" htmlFor="goal-years">
-          <span className="flex justify-between text-[13px] text-haze">Time to your goal <b className="text-paper">{years} years</b></span>
-          <input id="goal-years" className="slider" type="range" min="1" max="40" value={years} onChange={(e) => setYears(Number(e.target.value))} style={{ ['--fill' as string]: `${((years - 1) / 39) * 100}%` }} />
-        </label>
-        <div className="border-t border-line pt-6">
-          <p className="text-[11px] uppercase tracking-[0.2em] text-dim">02 · Explore the assumptions</p>
-          <label className="mt-4 block" htmlFor="goal-inflation">
-            <span className="flex justify-between text-[13px] text-haze">Assumed annual inflation <b className="text-paper">{inflation}%</b></span>
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 xl:gap-8">
+        <div>
+          <p className="text-[17px] font-semibold tracking-[-0.02em] sm:text-[19px]">How long. <span className="text-dim">Longer is kinder.</span></p>
+          <div className="mt-4"><Segmented label="Years to your goal" options={YEARS} value={years} onChange={setYears} fmt={(v) => `${v} years`} /></div>
+          <label className="mt-5 block" htmlFor="goal-years">
+            <span className="flex justify-between text-[13px] text-haze">Or fine-tune it <b className="text-paper">{years} years</b></span>
+            <input id="goal-years" className="slider" type="range" min="1" max="40" value={years} onChange={(e) => setYears(Number(e.target.value))} style={{ ['--fill' as string]: `${((years - 1) / 39) * 100}%` }} />
+          </label>
+        </div>
+        <div>
+          <p className="text-[17px] font-semibold tracking-[-0.02em] sm:text-[19px]">Assumed inflation. <span className="text-dim">Prices rise.</span></p>
+          <div className="mt-4"><Segmented label="Assumed annual inflation" options={INFLATIONS.filter(Boolean)} value={inflation} onChange={setInflation} fmt={(v) => `${v}% a year`} /></div>
+          <label className="mt-5 block" htmlFor="goal-inflation">
+            <span className="flex justify-between text-[13px] text-haze">Or fine-tune it <b className="text-paper">{inflation}% a year</b></span>
             <input id="goal-inflation" className="slider" type="range" min="0" max="10" value={inflation} onChange={(e) => setInflation(Number(e.target.value))} style={{ ['--fill' as string]: `${inflation * 10}%` }} />
           </label>
-          <label className="mt-5 block" htmlFor="goal-return">
-            <span className="text-[13px] text-haze">Assumed annual return (CAGR)</span>
-            <select id="goal-return" className="field mt-2" value={rate} onChange={(e) => setRate(Number(e.target.value))}>
-              {[0, 6, 10, 12, 14, 15, 16].map((r) => <option key={r} value={r}>{r}% per year</option>)}
-            </select>
-          </label>
-          <p className="mt-3 text-[12px] text-dim">These are adjustable assumptions, not expected or promised returns. Existing savings are assumed to earn the same rate.</p>
+        </div>
+        </div>
+        <div>
+          <p className="text-[17px] font-semibold tracking-[-0.02em] sm:text-[19px]">Assumed return. <span className="text-dim">A year, for illustration.</span></p>
+          <div className="mt-4"><Segmented className="seg-7" label="Assumed annual return (CAGR)" options={[0, ...RATES]} value={rate} onChange={setRate} fmt={(v) => `${v}%`} /></div>
+          <p id="goal-input-help" className="mt-3 text-[12px] text-dim">Use today’s cost and only the savings set aside for this goal. These are adjustable assumptions, not expected or promised returns. Existing savings are assumed to earn the same rate.</p>
         </div>
       </div>
 

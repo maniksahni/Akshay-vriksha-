@@ -54,7 +54,6 @@ export function Grow() {
 
   const scene = (
     <div className="wrap-wide relative w-full">
-      <p aria-hidden className="pointer-events-none absolute -top-[6vh] right-0 select-none text-[clamp(10rem,30vw,28rem)] font-semibold leading-none tracking-[-0.08em] text-transparent [-webkit-text-stroke:1px_rgba(255,255,255,0.07)]">{String(whole).padStart(2, '0')}</p>
       <div className="relative grid gap-8 md:grid-cols-[0.75fr_1.6fr] md:items-center md:gap-12">
         <div>
           <p className="kicker">One SIP. {YEARS} years.</p>

@@ -618,7 +618,6 @@ a.lux-masthead-cell:hover { background: rgba(255,55,95,.05); color: var(--ivory)
 @media (max-width: 767px) {
   .kicker { font-size: 10px; letter-spacing: .2em; gap: 10px; }
   .kicker::before { width: 18px; }
-  #grow p[aria-hidden].select-none { font-size: 120px; top: -10px; }
   #plans h2 { margin-top: 0; }
 }
 
@@ -729,7 +728,6 @@ a.lux-masthead-cell:hover { background: rgba(255,55,95,.05); color: var(--ivory)
   .lux-masthead-cell:nth-child(n+3) { grid-column: 1 / -1; border-top: 1px solid var(--hair); padding: 12px 16px; }
   .lux-masthead-cell .credential-logo { width: 92px; padding: 5px 7px; }
   .grow-line { height: 1.25em !important; font-size: 30px !important; }
-  #grow p[aria-hidden].select-none { font-size: 96px; top: 0; }
   .calc-controls [role=radiogroup] { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; overflow: visible; margin: 0; padding: 0; }
   .calc-controls .seg { width: 100%; padding: 0 4px; font-size: 12px !important; height: 34px !important; }
 }
@@ -918,3 +916,7 @@ html.menu-open #main, html.menu-open footer, html.menu-open .stage { visibility:
 @media (max-width: 1023px) {
   .bg-ink\/70.rounded-full { background-color: rgba(7, 6, 11, .95); }
 }
+
+/* the assumed return on laptops: seven short choices on one line */
+#calculator [role=radiogroup].seg-7 { grid-template-columns: repeat(7, minmax(0, 1fr)); }
+#calculator .seg-7 .seg { padding-inline: 2px; }
