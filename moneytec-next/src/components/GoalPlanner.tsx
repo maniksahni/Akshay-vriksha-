@@ -162,8 +162,8 @@ export function GoalPlanner() {
               <p className="text-[12px] text-dim">for {years} years · rounded up to the next ₹100</p>
               <div className="mt-6" aria-hidden>
                 <div className="flex justify-between text-[11px] text-dim"><span>Cost today</span><span>Future cost</span></div>
-                <div className="relative mt-2 h-2.5 overflow-hidden rounded-full bg-white/[0.08]">
-                  <motion.span className="absolute inset-y-0 left-0 rounded-full bg-white/40" animate={{ width: `${grow * 100}%` }} transition={{ duration: 0.6, ease: EASE }} />
+                <div className="relative mt-2 h-2.5 overflow-hidden rounded-full bg-paper/[0.08]">
+                  <motion.span className="absolute inset-y-0 left-0 rounded-full bg-paper/40" animate={{ width: `${grow * 100}%` }} transition={{ duration: 0.6, ease: EASE }} />
                   <motion.span className="absolute inset-y-0 rounded-full bg-gradient-to-r from-amber via-rose to-violet" animate={{ left: `${grow * 100}%`, right: 0 }} transition={{ duration: 0.6, ease: EASE }} />
                 </div>
               </div>
@@ -173,7 +173,7 @@ export function GoalPlanner() {
                   <div key={k} className="flex justify-between gap-4"><dt className="text-haze">{k}</dt><dd className="financial-value tabular-nums">{v}</dd></div>
                 ))}
               </dl>
-              <p className="mt-5 rounded-2xl bg-white/[0.04] p-4 text-[13px] leading-relaxed text-haze">
+              <p className="mt-5 rounded-2xl bg-paper/[0.04] p-4 text-[13px] leading-relaxed text-haze">
                 {result.gap === 0 ? 'Under these assumptions, your allocated savings cover the target. Review the assumptions and suitability with Gulshan.' : `At ${inflation}% inflation, today’s ${inr(amount)} goal becomes approximately ${inr(result.target)} in ${years} years. Planning for that future cost keeps the target realistic.`}
               </p>
               <a href={share} target="_blank" rel="noopener noreferrer" className="btn-light mt-6 w-full">Discuss my goal with Gulshan <ArrowUpRight size={17} aria-hidden="true" /></a>

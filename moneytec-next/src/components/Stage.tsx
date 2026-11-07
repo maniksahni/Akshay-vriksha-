@@ -101,7 +101,9 @@ export function Stage() {
       if (flat.current) {
         flat.current.style.left = `${pose.x * 100}%`;
         flat.current.style.top = `${50 + pose.y * 50}%`;
-        flat.current.style.scale = String(pose.s);
+        // phones: the flat ₹ fills its slot at full strength, exactly like the copy in the page's HTML
+        if (slot) { flat.current.style.height = `${slot.getBoundingClientRect().height * 0.62}px`; flat.current.style.scale = '1'; }
+        else flat.current.style.scale = String(pose.s);
         flat.current.style.setProperty('--o', String(o));
         flat.current.style.display = o < 0.05 ? 'none' : '';
       }
@@ -159,9 +161,19 @@ export function Stage() {
     // phones also never build it while it is far off screen (arriving back from a guide part-way down the page)
     const nearCoin = () => window.scrollY < window.innerHeight * 1.5;
     const whenNear = () => { if (nearCoin()) { window.removeEventListener('scroll', whenNear); settle(); } };
+    // phones show the flat ₹ first and build the 3D one on the first touch or scroll (or after a few quiet
+    // seconds), so the opening screen is ready the moment it arrives
+    let woke = false;
+    const wake = () => {
+      if (woke) return; woke = true;
+      ['touchstart', 'pointerdown', 'scroll', 'keydown'].forEach((ev) => window.removeEventListener(ev, wake));
+      window.clearTimeout(hold);
+      if (nearCoin()) settle(); else window.addEventListener('scroll', whenNear, { passive: true });
+    };
     const later = () => {
       if (!mobile) return settle();
-      hold = window.setTimeout(() => { if (nearCoin()) settle(); else window.addEventListener('scroll', whenNear, { passive: true }); }, 1400);
+      ['touchstart', 'pointerdown', 'scroll', 'keydown'].forEach((ev) => window.addEventListener(ev, wake, { passive: true }));
+      hold = window.setTimeout(wake, 6000);
     };
     if (document.readyState === 'complete') later(); else window.addEventListener('load', later, { once: true });
 
@@ -170,6 +182,7 @@ export function Stage() {
       ro.disconnect();
       window.removeEventListener('scroll', apply);
       window.removeEventListener('scroll', whenNear);
+      ['touchstart', 'pointerdown', 'scroll', 'keydown'].forEach((ev) => window.removeEventListener(ev, wake));
       window.removeEventListener('pointermove', move);
       window.removeEventListener('pointerdown', flick);
       window.removeEventListener('touchmove', touch);
@@ -188,7 +201,7 @@ export function Stage() {
       <div className="aurora opacity-30" />
       <canvas ref={field} className="stage-field" style={{ opacity: ready.field ? 1 : 0 }} />
       <svg ref={flat} viewBox="118 68 186 275" className="stage-flat" style={{ opacity: ready.coin ? 0 : undefined }}>
-        <defs><linearGradient id="flat-rupee" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stopColor="#FFD688" /><stop offset=".45" stopColor="#FF375F" /><stop offset="1" stopColor="#BF5AF2" /></linearGradient></defs>
+        <defs><linearGradient id="flat-rupee" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stopColor="#F59E0B" /><stop offset=".45" stopColor="#FF375F" /><stop offset="1" stopColor="#BF5AF2" /></linearGradient></defs>
         <path d={RUPEE_PATH} fill="url(#flat-rupee)" />
       </svg>
       <div ref={glow} className="stage-glow" />

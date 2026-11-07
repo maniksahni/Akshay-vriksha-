@@ -1,21 +1,21 @@
-/** Moneytec "night cinema" tokens: one ink-black world, warm aurora light, quiet glass. */
+/** Moneytec "daylight" tokens: a warm ivory page, ink-dark type, the same amber, rose and violet light. */
 module.exports = {
   content: [__dirname + '/index.html', __dirname + '/src/**/*.{ts,tsx}'],
   theme: {
     extend: {
       colors: {
-        ink: '#07060B',
-        ink2: '#0E0C14',
-        ink3: '#16131E',
-        paper: '#F4F1F8',
-        haze: 'rgba(244,241,248,0.84)',
-        dim: 'rgba(244,241,248,0.66)',
-        line: 'rgba(255,255,255,0.09)',
+        ink: '#FBF8F3',
+        ink2: '#F4EFE8',
+        ink3: '#FFFFFF',
+        paper: '#17131D',
+        haze: 'rgba(23,19,29,0.78)',
+        dim: 'rgba(23,19,29,0.62)',
+        line: 'rgba(23,19,29,0.10)',
         amber: '#FF9F0A',
         rose: '#FF375F',
         violet: '#BF5AF2',
-        mint: '#5BF0B5',
-        sky: '#64D2FF',
+        mint: '#047857',
+        sky: '#0284C7',
       },
       fontFamily: {
         sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],

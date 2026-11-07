@@ -1,7 +1,7 @@
 import { BrandLogo } from './BrandLogo';
 import { AnimatePresence, motion, useScroll, useTransform } from 'framer-motion';
 import { FormEvent, useRef, useState } from 'react';
-import { DISCLAIMER, FACTS, GUIDES, NAV, SOCIALS, wa } from '../data';
+import { DISCLAIMER, FACTS, GUIDES, NAV, SOCIALS, wa, AMFI_WA, KOTAK_WA } from '../data';
 import { CountUp, EASE, FadeIn, LearnLinks, Scene, spotlight, Title, untilt, useMobile } from './ui';
 
 /* ---------------------------------------------------------------- meet Gulshan */
@@ -21,7 +21,7 @@ function MentorDetails() {
           <div><p className="display text-[clamp(2.2rem,4vw,3.4rem)]"><CountUp to={FACTS.years} suffix="+" className="grad" /></p><p className="text-[12px] text-dim">Years of experience</p></div>
           <div><p className="display text-[clamp(1.6rem,3vw,2.6rem)] leading-[1.25]">One-to-one</p><p className="text-[12px] text-dim">Personal conversations</p></div>
         </div>
-        <a href={FACTS.amfiLocator} target="_blank" rel="noopener noreferrer" className="group mt-6 flex items-center justify-between gap-4 rounded-2xl border border-line bg-white/[0.03] px-5 py-4 transition-colors hover:border-white/25">
+        <a href={AMFI_WA} target="_blank" rel="noopener noreferrer" aria-label="Ask Gulshan about his AMFI registration on WhatsApp" className="group mt-6 flex items-center justify-between gap-4 rounded-2xl border border-line bg-paper/[0.03] px-5 py-4 transition-colors hover:border-paper/25">
           <span className="mentor-amfi-credential flex items-center gap-3"><BrandLogo brand="amfi" /><span><span className="block text-[12px] text-dim">AMFI Registered Mutual Fund Distributor</span><b className="text-[17px] tracking-[-0.01em]">{FACTS.arn}</b></span></span>
           <span aria-hidden className="text-haze transition-transform group-hover:translate-x-1">↗</span>
         </a>
@@ -29,7 +29,7 @@ function MentorDetails() {
           <a href={wa('Hi Gulshan! I would like to talk about my financial goals.')} target="_blank" rel="noreferrer" className="btn-light pr-2"><img src="./brand/partners/whatsapp.svg" alt="" width="17" height="17" />Talk to Gulshan <span className="arrow">↗</span></a>
           <a href={`tel:+${FACTS.phoneIntl}`} className="btn-ghost">Call directly ↗</a>
         </div>
-        <a href="https://www.kotaklife.com/" target="_blank" rel="noopener noreferrer" className="mentor-kotak-credential"><BrandLogo brand="kotak" /><span>Kotak Life advisor<b>{FACTS.kotak}</b></span><span aria-hidden="true">↗</span></a>
+        <a href={KOTAK_WA} target="_blank" rel="noopener noreferrer" aria-label="Ask Gulshan about Kotak Life insurance on WhatsApp" className="mentor-kotak-credential"><BrandLogo brand="kotak" /><span>Kotak Life advisor<b>{FACTS.kotak}</b></span><span aria-hidden="true">↗</span></a>
       </FadeIn>
     </div>
   );
@@ -45,7 +45,7 @@ export function Gulshan() {
   const nameOpacity = useTransform(p, [0.25, 0.6], [0, 1]);
   const introOpacity = useTransform(p, [0, 0.2], [1, 0]);
 
-  const img = <img src="./images/gulshan-kohli.webp" alt="Gulshan Kohli, your personal point of contact at Moneytec" width="900" height="1037" decoding="async" className="h-full w-full object-cover object-[50%_22%]" />;
+  const img = <img src="./images/gulshan-kohli.webp" alt="Gulshan Kohli, your personal point of contact at Moneytec" width="900" height="1037" decoding="async" fetchPriority="low" className="h-full w-full object-cover object-[50%_22%]" />;
 
   return (
     <section id="gulshan" data-dark aria-labelledby="mentor-title" className="relative">
@@ -95,14 +95,14 @@ function VaultRings() {
     <div ref={ref} aria-hidden className="pointer-events-none absolute inset-x-0 top-0 flex h-[110vmin] max-h-[1100px] justify-center">
       <motion.svg viewBox="0 0 600 600" className="h-full w-auto" style={{ scale, opacity: o }}>
         <motion.g style={{ rotate: rot, transformOrigin: '300px 300px' }}>
-          <circle cx="300" cy="300" r="280" fill="none" stroke="#5BF0B5" strokeOpacity="0.14" strokeDasharray="2 10" />
-          {Array.from({ length: 24 }).map((_, i) => <rect key={i} x="298" y="18" width="4" height="18" rx="2" fill="#5BF0B5" opacity={i % 3 ? 0.12 : 0.35} transform={`rotate(${i * 15} 300 300)`} />)}
+          <circle cx="300" cy="300" r="280" fill="none" stroke="#0E9F6E" strokeOpacity="0.14" strokeDasharray="2 10" />
+          {Array.from({ length: 24 }).map((_, i) => <rect key={i} x="298" y="18" width="4" height="18" rx="2" fill="#0E9F6E" opacity={i % 3 ? 0.12 : 0.35} transform={`rotate(${i * 15} 300 300)`} />)}
         </motion.g>
         <motion.g style={{ rotate: rot2, transformOrigin: '300px 300px' }}>
-          <circle cx="300" cy="300" r="220" fill="none" stroke="#64D2FF" strokeOpacity="0.16" />
-          <circle cx="300" cy="300" r="220" fill="none" stroke="#64D2FF" strokeOpacity="0.5" strokeWidth="2" strokeDasharray="60 1322" />
+          <circle cx="300" cy="300" r="220" fill="none" stroke="#0284C7" strokeOpacity="0.16" />
+          <circle cx="300" cy="300" r="220" fill="none" stroke="#0284C7" strokeOpacity="0.5" strokeWidth="2" strokeDasharray="60 1322" />
         </motion.g>
-        <circle cx="300" cy="300" r="160" fill="none" stroke="#5BF0B5" strokeOpacity="0.1" strokeDasharray="1 6" />
+        <circle cx="300" cy="300" r="160" fill="none" stroke="#0E9F6E" strokeOpacity="0.1" strokeDasharray="1 6" />
       </motion.svg>
     </div>
   );
@@ -113,14 +113,14 @@ export function Safety() {
   return (
     <section id="safety" data-dark className="relative overflow-hidden py-14 sm:py-32">
       {!mobile && <VaultRings />}
-      <div className="pointer-events-none absolute left-1/2 top-1/3 h-[50vmin] w-[80vmin] -translate-x-1/2 rounded-full bg-[radial-gradient(closest-side,rgba(91,240,181,0.16),transparent)]" />
+      <div className="pointer-events-none absolute left-1/2 top-1/3 h-[50vmin] w-[80vmin] -translate-x-1/2 rounded-full bg-[radial-gradient(closest-side,rgba(14,159,110,0.16),transparent)]" />
       <div className="wrap relative">
         <div className="text-center">
           <div className="relative mx-auto grid h-24 w-24 place-items-center">
             <div className="spin-slow absolute inset-0 rounded-full border border-dashed border-mint/40" />
             <div className="absolute inset-3 rounded-full bg-mint/20 blur-xl" />
             <svg viewBox="0 0 64 64" className="float-y relative h-12 w-12" aria-hidden>
-              <defs><linearGradient id="lock" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stopColor="#64D2FF" /><stop offset="1" stopColor="#5BF0B5" /></linearGradient></defs>
+              <defs><linearGradient id="lock" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stopColor="#0284C7" /><stop offset="1" stopColor="#0E9F6E" /></linearGradient></defs>
               <rect x="12" y="28" width="40" height="30" rx="8" fill="url(#lock)" />
               <path d="M20 28v-7a12 12 0 0 1 24 0v7" fill="none" stroke="url(#lock)" strokeWidth="5" strokeLinecap="round" />
             </svg>
@@ -143,7 +143,7 @@ export function Safety() {
             </FadeIn>
           ))}
         </div>
-        <div className="safety-brand-links"><a href={FACTS.amfiLocator} target="_blank" rel="noreferrer" aria-label="AMFI official distributor lookup"><BrandLogo brand="amfi" /></a><a href="https://www.kotaklife.com/" target="_blank" rel="noreferrer" aria-label="Kotak Life official website"><BrandLogo brand="kotak" /></a></div>
+        <div className="safety-brand-links"><a href={AMFI_WA} target="_blank" rel="noreferrer" aria-label="Ask Gulshan about his AMFI registration on WhatsApp"><BrandLogo brand="amfi" /></a><a href={KOTAK_WA} target="_blank" rel="noreferrer" aria-label="Ask Gulshan about Kotak Life insurance on WhatsApp"><BrandLogo brand="kotak" /></a></div>
         <p className="mt-6 text-center"><a href={FACTS.amfiLocator} target="_blank" rel="noreferrer" className="link">Verify {FACTS.arn} on AMFI ↗</a></p>
         <LearnLinks className="mt-4 justify-center" links={[['How Moneytec works', './how-moneytec-works'], ['About Gulshan Kohli', './mutual-fund-distributor-rohini-delhi']]} />
       </div>
@@ -177,7 +177,7 @@ export function Faq() {
               <div key={q} className="border-b border-line">
                 <button type="button" className="group flex w-full items-center justify-between gap-6 py-5 text-left sm:py-6" aria-expanded={on} onClick={() => setOpen(on ? null : i)}>
                   <span className="flex items-baseline gap-4"><span className="text-[11px] tabular-nums text-dim">0{i + 1}</span><span className={`text-[17px] font-semibold tracking-[-0.02em] transition-colors sm:text-[21px] ${on ? 'text-paper' : 'text-paper/85 group-hover:text-paper'}`}>{q}</span></span>
-                  <span className={`grid h-9 w-9 shrink-0 place-items-center rounded-full border text-[18px] transition-all duration-500 ${on ? 'rotate-45 border-transparent bg-paper text-ink' : 'border-white/15 text-paper'}`} aria-hidden>+</span>
+                  <span className={`grid h-9 w-9 shrink-0 place-items-center rounded-full border text-[18px] transition-all duration-500 ${on ? 'rotate-45 border-transparent bg-paper text-ink' : 'border-paper/15 text-paper'}`} aria-hidden>+</span>
                 </button>
                 <AnimatePresence initial={false}>
                   {on && (
@@ -280,8 +280,8 @@ export function Footer() {
       <div className="wrap-wide">
         <div className="grid grid-cols-2 gap-8 sm:grid-cols-[1.4fr_1fr_1fr] lg:grid-cols-[1.4fr_1fr_1.2fr_1fr]">
           <div className="col-span-2 sm:col-span-1">
-            <img src="./brand/moneytec-logo-dark.svg" alt="Moneytec" width="200" height="39" className="h-8 w-auto" />
-            <div className="footer-credential-logos"><a href={FACTS.amfiLocator} target="_blank" rel="noreferrer" aria-label="Verify registration on AMFI"><BrandLogo brand="amfi" /></a><a href="https://www.kotaklife.com/" target="_blank" rel="noreferrer" aria-label="Kotak Life official website"><BrandLogo brand="kotak" /></a></div>
+            <img src="./brand/moneytec-logo-light.svg" alt="Moneytec" width="200" height="39" className="h-8 w-auto" />
+            <div className="footer-credential-logos"><a href={AMFI_WA} target="_blank" rel="noreferrer" aria-label="Ask Gulshan about his AMFI registration on WhatsApp"><BrandLogo brand="amfi" /></a><a href={KOTAK_WA} target="_blank" rel="noreferrer" aria-label="Ask Gulshan about Kotak Life insurance on WhatsApp"><BrandLogo brand="kotak" /></a></div>
             <p className="mt-4 max-w-md">{FACTS.name} is an AMFI-registered mutual fund distributor ({FACTS.arn}) and a Kotak Life Insurance advisor ({FACTS.kotak}). {DISCLAIMER}</p>
           </div>
           <nav aria-label="Footer" className="flex flex-col gap-1.5">

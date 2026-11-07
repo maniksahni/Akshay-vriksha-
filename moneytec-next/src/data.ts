@@ -14,6 +14,9 @@ export const FACTS = {
 };
 
 export const wa = (text: string) => `https://wa.me/${FACTS.phoneIntl}?text=${encodeURIComponent(text)}`;
+/** The AMFI and Kotak Life logos open a WhatsApp chat with Gulshan about that relationship. */
+export const AMFI_WA = wa(`Hi Gulshan! I saw your AMFI registration (${FACTS.arn}) on Moneytec. I'd like to know more about investing in mutual funds with you.`);
+export const KOTAK_WA = wa(`Hi Gulshan! I saw you are a Kotak Life advisor (${FACTS.kotak}). I'd like to know about life insurance options.`);
 
 export const NAV = [
   { label: 'Expertise', href: '#highlights' },

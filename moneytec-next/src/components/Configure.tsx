@@ -16,7 +16,7 @@ function GrowthRing({ share }: { share: number }) {
   return (
     <svg viewBox="0 0 120 120" className="calc-ring h-24 w-24 shrink-0 -rotate-90 sm:h-28 sm:w-28" aria-hidden>
       <defs><linearGradient id="ring" x1="0" x2="1"><stop offset="0" stopColor="#FF9F0A" /><stop offset="0.5" stopColor="#FF375F" /><stop offset="1" stopColor="#BF5AF2" /></linearGradient></defs>
-      <circle cx="60" cy="60" r={r} fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="10" />
+      <circle cx="60" cy="60" r={r} fill="none" stroke="rgba(23,19,29,0.08)" strokeWidth="10" />
       <motion.circle cx="60" cy="60" r={r} fill="none" stroke="url(#ring)" strokeWidth="10" strokeLinecap="round" strokeDasharray={c} animate={{ strokeDashoffset: c * (1 - share) }} transition={{ duration: 0.7, ease: EASE }} />
     </svg>
   );
@@ -77,11 +77,11 @@ export function Configure() {
                   <p className="calc-label text-[13px] text-haze">Start now vs. start in 5 years</p>
                   <div className="calc-compare mt-3 space-y-3">
                     <div>
-                      <div className="calc-bar h-2.5 overflow-hidden rounded-full bg-white/[0.08]"><motion.div className="h-full rounded-full bg-gradient-to-r from-amber via-rose to-violet" initial={{ width: 0 }} whileInView={{ width: '100%' }} viewport={{ once: true }} transition={{ duration: 1, ease: EASE }} /></div>
+                      <div className="calc-bar h-2.5 overflow-hidden rounded-full bg-paper/[0.08]"><motion.div className="h-full rounded-full bg-gradient-to-r from-amber via-rose to-violet" initial={{ width: 0 }} whileInView={{ width: '100%' }} viewport={{ once: true }} transition={{ duration: 1, ease: EASE }} /></div>
                       <p className="mt-1.5 flex justify-between text-[12px]"><span>Start now</span><span className="financial-value tabular-nums">{inr(tTotal)}</span></p>
                     </div>
                     <div>
-                      <div className="calc-bar h-2.5 overflow-hidden rounded-full bg-white/[0.08]"><motion.div className="h-full rounded-full bg-white/35" animate={{ width: `${total ? (late / total) * 100 : 0}%` }} transition={{ duration: 0.5, ease: EASE }} /></div>
+                      <div className="calc-bar h-2.5 overflow-hidden rounded-full bg-paper/[0.08]"><motion.div className="h-full rounded-full bg-paper/35" animate={{ width: `${total ? (late / total) * 100 : 0}%` }} transition={{ duration: 0.5, ease: EASE }} /></div>
                       <p className="mt-1.5 flex justify-between text-[12px] text-haze"><span>Start in 5 years</span><span className="financial-value tabular-nums">{inr(tLate)}</span></p>
                     </div>
                   </div>

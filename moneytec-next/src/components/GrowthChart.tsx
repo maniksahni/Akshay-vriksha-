@@ -26,18 +26,18 @@ export function GrowthChart({ monthly, rate, years, compact, start = 0 }: { mont
       <svg viewBox={`0 -6 ${W} ${H + 26}`} className="h-auto w-full" aria-hidden>
         <defs>
           <linearGradient id={`calc-area-${id}`} x1="0" x2="0" y1="0" y2="1"><stop offset="0" stopColor="#FF375F" stopOpacity=".28" /><stop offset="1" stopColor="#FF375F" stopOpacity="0" /></linearGradient>
-          <linearGradient id={`calc-line-${id}`} x1="0" x2="1"><stop offset="0" stopColor="#BF5AF2" /><stop offset=".6" stopColor="#FF375F" /><stop offset="1" stopColor="#FFD688" /></linearGradient>
+          <linearGradient id={`calc-line-${id}`} x1="0" x2="1"><stop offset="0" stopColor="#BF5AF2" /><stop offset=".6" stopColor="#FF375F" /><stop offset="1" stopColor="#F59E0B" /></linearGradient>
           <pattern id={`calc-hatch-${id}`} width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="6" stroke="#FF375F" strokeOpacity=".22" strokeWidth="1.2" /></pattern>
         </defs>
-        {[0.25, 0.5, 0.75].map((f) => <line key={f} x1="0" x2={W} y1={H * f} y2={H * f} stroke="#FFFFFF" strokeOpacity=".07" />)}
+        {[0.25, 0.5, 0.75].map((f) => <line key={f} x1="0" x2={W} y1={H * f} y2={H * f} stroke="#17131D" strokeOpacity=".07" />)}
         <motion.path initial={false} animate={{ d: area }} transition={t} fill={`url(#calc-area-${id})`} />
         <motion.path initial={false} animate={{ d: gap }} transition={t} fill={`url(#calc-hatch-${id})`} />
-        <motion.path initial={false} animate={{ d: line('c') }} transition={t} fill="none" stroke="#F4F1F8" strokeOpacity=".45" strokeWidth="1.2" strokeDasharray="4 4" />
+        <motion.path initial={false} animate={{ d: line('c') }} transition={t} fill="none" stroke="#17131D" strokeOpacity=".45" strokeWidth="1.2" strokeDasharray="4 4" />
         <motion.path initial={false} animate={{ d: line('v') }} transition={t} fill="none" stroke={`url(#calc-line-${id})`} strokeWidth="2.4" strokeLinecap="round" />
-        <motion.circle initial={false} animate={{ cy: pts[N].v }} transition={t} cx={W} r="4.5" fill="#FFD688" />
+        <motion.circle initial={false} animate={{ cy: pts[N].v }} transition={t} cx={W} r="4.5" fill="#F59E0B" />
         <motion.circle initial={false} animate={{ cy: pts[N].v }} transition={t} cx={W} r="11" fill="#FF375F" opacity=".2" />
-        <text x="0" y={H + 18} fill="#FFFFFF" fillOpacity=".9" fontSize="11">Year 0</text>
-        <text x={W} y={H + 18} fill="#FFFFFF" fillOpacity=".9" fontSize="11" textAnchor="end">Year {years}</text>
+        <text x="0" y={H + 18} fill="#17131D" fillOpacity=".9" fontSize="11">Year 0</text>
+        <text x={W} y={H + 18} fill="#17131D" fillOpacity=".9" fontSize="11" textAnchor="end">Year {years}</text>
       </svg>
       <div className="calc-chart-legend">
         <span><i className="calc-key-line" />Illustrated value</span>

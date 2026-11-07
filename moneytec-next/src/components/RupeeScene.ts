@@ -1,5 +1,5 @@
 import {
-  ACESFilmicToneMapping, AdditiveBlending, DoubleSide, AmbientLight, BackSide, BoxGeometry, BufferGeometry, CanvasTexture, Color, ExtrudeGeometry,
+  ACESFilmicToneMapping, NormalBlending, DoubleSide, AmbientLight, BackSide, BoxGeometry, BufferGeometry, CanvasTexture, Color, ExtrudeGeometry,
   Float32BufferAttribute, Group, InstancedMesh, Matrix4, Mesh, MeshBasicMaterial, MeshPhysicalMaterial, MeshStandardMaterial, Object3D,
   PerspectiveCamera, PlaneGeometry, PMREMGenerator, PointLight, Points, Scene, ShaderMaterial, SRGBColorSpace, Sprite, SpriteMaterial,
   TorusGeometry, WebGLRenderer,
@@ -13,12 +13,12 @@ export type RupeePose = { x: number; y: number; s: number; spin: number; glow: n
 export type RupeeHandle = { setPose: (p: RupeePose, immediate?: boolean) => void; setPointer: (x: number, y: number) => void; setVelocity: (v: number) => void; kick: () => void; dispose: () => void };
 
 /**
- * A studio built from the brand's own light: long softboxes in amber, rose and violet plus white strips, so
+ * A light studio built from the brand's own colours (the page is ivory, so the room is too): long softboxes in amber, rose and violet plus white strips, so
  * the chrome reflects the palette instead of a grey room.
  */
 function brandStudio() {
   const room = new Scene();
-  room.add(new Mesh(new BoxGeometry(20, 14, 20), new MeshBasicMaterial({ color: '#07060B', side: BackSide })));
+  room.add(new Mesh(new BoxGeometry(20, 14, 20), new MeshBasicMaterial({ color: '#8E7F9C', side: BackSide })));
   const panel = (w: number, h: number, color: string, x: number, y: number, z: number, ry = 0, rx = 0, k = 1) => {
     const m = new Mesh(new PlaneGeometry(w, h), new MeshBasicMaterial({ color: new Color(color).multiplyScalar(k), side: DoubleSide }));
     m.position.set(x, y, z); m.rotation.set(rx, ry, 0);
@@ -36,7 +36,7 @@ function brandStudio() {
 /** Soft points with per-point size and colour, twinkling, round and additive. */
 function glowPoints(pixel: number) {
   return new ShaderMaterial({
-    transparent: true, depthWrite: false, blending: AdditiveBlending,
+    transparent: true, depthWrite: false, blending: NormalBlending,
     uniforms: { uTime: { value: 0 }, uPixel: { value: pixel }, uFade: { value: 1 } },
     vertexShader: `
       attribute float aSize; attribute float aSeed; attribute vec3 color;
@@ -70,7 +70,7 @@ export function mountRupee(canvas: HTMLCanvasElement, { phone, still, calm = fal
   const dpr = Math.min(window.devicePixelRatio || 1, phone ? 1.5 : 1.5);
   renderer.setPixelRatio(dpr);
   renderer.toneMapping = ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 1.1;
+  renderer.toneMappingExposure = 1.0;
   renderer.outputColorSpace = SRGBColorSpace;
 
   const scene = new Scene();
@@ -97,7 +97,7 @@ export function mountRupee(canvas: HTMLCanvasElement, { phone, still, calm = fal
 
   // fresnel aura: the same shape, slightly larger, glowing only at its silhouette
   const aura = new Mesh(geo, new ShaderMaterial({
-    transparent: true, depthWrite: false, blending: AdditiveBlending, side: BackSide,
+    transparent: true, depthWrite: false, blending: NormalBlending, side: BackSide,
     uniforms: { uTime: { value: 0 }, uPower: { value: 1 } },
     vertexShader: `
       varying vec3 vN; varying vec3 vV; varying float vY;
@@ -113,7 +113,7 @@ export function mountRupee(canvas: HTMLCanvasElement, { phone, still, calm = fal
         float k = clamp(vY / 260.0 + 0.5 + 0.15 * sin(uTime * 0.8), 0.0, 1.0);
         vec3 c = mix(vec3(1.0, 0.62, 0.1), vec3(1.0, 0.22, 0.42), smoothstep(0.0, 0.55, k));
         c = mix(c, vec3(0.75, 0.35, 0.95), smoothstep(0.5, 1.0, k));
-        gl_FragColor = vec4(c, f * 0.75 * uPower);
+        gl_FragColor = vec4(c, f * 0.45 * uPower);
       }`,
   }));
   aura.scale.copy(rupee.scale);
@@ -148,10 +148,10 @@ export function mountRupee(canvas: HTMLCanvasElement, { phone, still, calm = fal
     g.fillStyle = gr; g.fillRect(0, 0, 256, 256);
     return new CanvasTexture(c);
   };
-  const halo = new Sprite(new SpriteMaterial({ map: radial([[0, 'rgba(255,55,95,0.7)'], [0.35, 'rgba(191,90,242,0.28)'], [1, 'rgba(0,0,0,0)']]), blending: AdditiveBlending, depthWrite: false, transparent: true }));
+  const halo = new Sprite(new SpriteMaterial({ map: radial([[0, 'rgba(255,55,95,0.22)'], [0.4, 'rgba(191,90,242,0.1)'], [1, 'rgba(191,90,242,0)']]), blending: NormalBlending, depthWrite: false, transparent: true }));
   halo.scale.set(10, 10, 1);
   halo.position.z = -1.6;
-  const core = new Sprite(new SpriteMaterial({ map: radial([[0, 'rgba(255,240,245,0.9)'], [0.15, 'rgba(255,170,90,0.35)'], [1, 'rgba(0,0,0,0)']]), blending: AdditiveBlending, depthWrite: false, transparent: true }));
+  const core = new Sprite(new SpriteMaterial({ map: radial([[0, 'rgba(255,255,255,0.85)'], [0.2, 'rgba(255,214,170,0.3)'], [1, 'rgba(255,214,170,0)']]), blending: NormalBlending, depthWrite: false, transparent: true }));
   core.scale.set(3.6, 3.6, 1);
   core.position.z = -1.1;
 

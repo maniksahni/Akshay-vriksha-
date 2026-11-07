@@ -5,7 +5,7 @@ import { FACTS } from '../data';
 import { EASE, useMobile } from './ui';
 
 /** Each character rises out of its own mask, one after another. */
-function SplitLine({ text, play, delay, accent }: { text: string; play: boolean; delay: number; accent?: boolean }) {
+function SplitLine({ text, play, delay, accent, still }: { text: string; play: boolean; delay: number; accent?: boolean; still?: boolean }) {
   const chars = text.split('');
   return (
     <span aria-hidden className="text-mask block overflow-hidden pb-[0.12em]">
@@ -14,7 +14,7 @@ function SplitLine({ text, play, delay, accent }: { text: string; play: boolean;
           <motion.span
             key={i}
             className={`inline-block ${accent ? 'gold-text' : ''}`}
-            initial={{ y: '110%', opacity: 0 }}
+            initial={still ? false : { y: '110%', opacity: 0 }}
             animate={play ? { y: 0, opacity: 1 } : undefined}
             transition={{ duration: 1.3, ease: EASE, delay: delay + i * 0.035 }}
             // one gradient spread across the whole line, each letter showing its own slice
@@ -40,10 +40,10 @@ function GoalWord({ word, state }: { word: string; state: 'in' | 'out' | 'wait' 
  * "Tomorrow's" holds while the goal after it rolls over every few seconds. All words share one masked cell;
  * the cell's width glides to fit the next word, so the centred line eases instead of jumping.
  */
-function GoalLine({ play, delay }: { play: boolean; delay: number }) {
+function GoalLine({ play, delay, still }: { play: boolean; delay: number; still?: boolean }) {
   const [i, setI] = useState(0);
   const [prev, setPrev] = useState(-1);
-  const [shown, setShown] = useState(false);
+  const [shown, setShown] = useState(!!still);
   const [widths, setWidths] = useState<number[]>([]);
   const slot = useRef<HTMLSpanElement>(null);
 
@@ -67,13 +67,13 @@ function GoalLine({ play, delay }: { play: boolean; delay: number }) {
     const start = window.setTimeout(() => {
       // with Reduce Motion on, the words still change; they cross-fade in place instead of travelling
       t = window.setInterval(() => setI((n) => { setPrev(n); return (n + 1) % GOALS.length; }), 3000);
-    }, (delay + 2.2) * 1000);
+    }, (still ? 0.5 : delay + 2.2) * 1000);
     return () => { window.clearTimeout(show); window.clearTimeout(start); window.clearInterval(t); };
-  }, [play, delay]);
+  }, [play, delay, still]);
 
   return (
     <span aria-hidden className="goal-line block pb-[0.12em]">
-      <motion.span className="goal-lead inline-block italic" initial={{ y: '110%', opacity: 0 }} animate={play ? { y: 0, opacity: 1 } : undefined} transition={{ duration: 1.3, ease: EASE, delay }}>
+      <motion.span className="goal-lead inline-block italic" initial={still ? false : { y: '110%', opacity: 0 }} animate={play ? { y: 0, opacity: 1 } : undefined} transition={{ duration: 1.3, ease: EASE, delay }}>
         Tomorrow’s{'\u00A0'}
       </motion.span>
       <span ref={slot} className="goal-slot" style={widths[i] ? { width: `${widths[i]}px` } : undefined}>
@@ -84,6 +84,8 @@ function GoalLine({ play, delay }: { play: boolean; delay: number }) {
 }
 
 const rise = (play: boolean, d: number, y = 16) => ({ initial: { opacity: 0, y }, animate: play ? { opacity: 1, y: 0 } : undefined, transition: { duration: 1.2, ease: EASE, delay: d } });
+/** Phones show the opening at once: on a phone an entrance only means waiting for the first words. */
+const still = { initial: false as const };
 
 function Actions({ mobile }: { mobile: boolean }) {
   return (
@@ -114,11 +116,11 @@ export function Hero() {
         <div className="wrap hero-phone-layout relative text-center">
           <div className="coin-slot" aria-hidden />
           <h1 className="lux-title lux-full-title" aria-label="Today’s Rupee. Tomorrow’s Freedom.">
-            <SplitLine text="Today’s Rupee." play={play} delay={0.2} />
-            <GoalLine play={play} delay={0.45} />
+            <SplitLine text="Today’s Rupee." play={play} delay={0.2} still />
+            <GoalLine play={play} delay={0.45} still />
           </h1>
-          <motion.div className="hero-phone-actions" {...rise(play, 0.9)}><Actions mobile /></motion.div>
-          <motion.div className="hero-phone-intro" {...rise(play, 1.05)}>
+          <motion.div className="hero-phone-actions" {...still}><Actions mobile /></motion.div>
+          <motion.div className="hero-phone-intro" {...still}>
             <p className="lux-eyebrow justify-center">Moneytec — Money, with meaning</p>
             <p className="lux-promise mx-auto mt-3"><span className="phone-line">Goal-based investing · Family protection</span> <span className="phone-line">NRI guidance with {FACTS.name}</span></p>
             <div className="lux-mobile-verse"><HeroWisdom /></div>

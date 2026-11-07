@@ -52,19 +52,19 @@ export function Nav() {
         animate={{ y: hidden ? -90 : 0 }}
         transition={{ duration: 0.5, ease: EASE }}
       >
-        <div className={`mx-auto flex h-14 max-w-[1180px] items-center justify-between rounded-full border pl-4 pr-2 transition-all duration-500 sm:pl-5 ${solid || open ? 'border-white/10 bg-ink/70 shadow-[0_20px_50px_-20px_rgba(0,0,0,0.8)] backdrop-blur-2xl backdrop-saturate-150' : 'border-transparent bg-transparent'}`}>
+        <div className={`mx-auto flex h-14 max-w-[1180px] items-center justify-between rounded-full border pl-4 pr-2 transition-all duration-500 sm:pl-5 ${solid || open ? 'border-paper/10 bg-ink/70 shadow-[0_20px_50px_-20px_rgba(23,19,29,0.18)] backdrop-blur-2xl backdrop-saturate-150' : 'border-transparent bg-transparent'}`}>
           <a href="#top" aria-label="moneytec home" onClick={() => setOpen(false)}><Wordmark /></a>
           <nav aria-label="Sections" className="hidden items-center gap-1 lg:flex">
             {NAV.map((n) => (
               <a key={n.href} href={n.href} className={`relative rounded-full px-3.5 py-2 text-[13px] transition-colors ${current === n.href ? 'text-paper' : 'text-haze hover:text-paper'}`}>
-                {current === n.href && <motion.span layoutId="nav-pill" className="absolute inset-0 rounded-full bg-white/[0.08]" transition={{ duration: 0.5, ease: EASE }} />}
+                {current === n.href && <motion.span layoutId="nav-pill" className="absolute inset-0 rounded-full bg-paper/[0.08]" transition={{ duration: 0.5, ease: EASE }} />}
                 <span className="relative">{n.label}</span>
               </a>
             ))}
           </nav>
           <div className="flex items-center gap-1.5">
             <a href="#start" onClick={() => setOpen(false)} className="btn-glow h-10 px-4 text-[13px]">Get started</a>
-            <button type="button" onClick={() => setOpen((o) => !o)} aria-label={open ? 'Close sections menu' : 'Open sections menu'} aria-expanded={open} aria-controls="local-menu" className="grid h-10 w-10 place-items-center rounded-full border border-white/10 lg:hidden">
+            <button type="button" onClick={() => setOpen((o) => !o)} aria-label={open ? 'Close sections menu' : 'Open sections menu'} aria-expanded={open} aria-controls="local-menu" className="grid h-10 w-10 place-items-center rounded-full border border-paper/10 lg:hidden">
               <span className="relative block h-3 w-4">
                 <span className={`absolute left-0 top-0 h-[1.5px] w-4 bg-paper transition-transform duration-300 ${open ? 'translate-y-[5px] rotate-45' : ''}`} />
                 <span className={`absolute bottom-0 left-0 h-[1.5px] w-4 bg-paper transition-transform duration-300 ${open ? '-translate-y-[5px] -rotate-45' : ''}`} />
@@ -89,7 +89,7 @@ export function Nav() {
                     key={n.href}
                     href={n.href}
                     onClick={() => setOpen(false)}
-                    className="flex items-baseline gap-4 border-b border-white/[0.07] py-3.5 text-[30px] font-semibold tracking-[-0.04em]"
+                    className="flex items-baseline gap-4 border-b border-paper/[0.07] py-3.5 text-[30px] font-semibold tracking-[-0.04em]"
                   >
                     <span className="text-[11px] font-medium tracking-[0.2em] text-dim">0{i + 1}</span>
                     {n.label}

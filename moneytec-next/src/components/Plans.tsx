@@ -4,8 +4,8 @@ import { wa } from '../data';
 import { EASE, LearnLinks, Scene, spotlight, Title, untilt } from './ui';
 
 const PLANS = [
-  { name: 'Near-term needs', tag: 'Keep liquidity in view', horizon: '3–5 years', drops: 'Prefers to avoid them', goals: 'Emergency fund, short-term goals', before: 'Check access to your money, exit conditions and capital risk.', orbit: 1, hue: '#64D2FF' },
-  { name: 'Life milestones', tag: 'Plan around a date', horizon: '5–10 years', drops: 'Can sit through some', goals: 'Car, wedding, a home down-payment', before: 'Estimate your target, timeline and a comfortable monthly amount.', orbit: 2, hue: '#5BF0B5' },
+  { name: 'Near-term needs', tag: 'Keep liquidity in view', horizon: '3–5 years', drops: 'Prefers to avoid them', goals: 'Emergency fund, short-term goals', before: 'Check access to your money, exit conditions and capital risk.', orbit: 1, hue: '#0284C7' },
+  { name: 'Life milestones', tag: 'Plan around a date', horizon: '5–10 years', drops: 'Can sit through some', goals: 'Car, wedding, a home down-payment', before: 'Estimate your target, timeline and a comfortable monthly amount.', orbit: 2, hue: '#0E9F6E' },
   { name: 'Wealth for Generations', tag: 'Plan for changing markets', horizon: '10–30+ years', drops: 'Can affect your plan', goals: 'Retirement, kids’ education, wealth', before: 'Review affordability, inflation and your ability to stay invested.', orbit: 3, hue: '#FF375F' },
 ];
 const QS = [
@@ -19,12 +19,12 @@ function Orbits({ n, hue }: { n: number; hue: string }) {
   return (
     <svg viewBox="0 0 120 120" className="h-16 w-16" aria-hidden>
       {[20, 36, 52].map((r, i) => (
-        <circle key={r} cx="60" cy="60" r={r} fill="none" stroke={i < n ? hue : '#fff'} strokeOpacity={i < n ? 0.8 : 0.1} strokeWidth="1.5" strokeDasharray={i < n ? 'none' : '2 5'} />
+        <circle key={r} cx="60" cy="60" r={r} fill="none" stroke={i < n ? hue : '#17131D'} strokeOpacity={i < n ? 0.8 : 0.1} strokeWidth="1.5" strokeDasharray={i < n ? 'none' : '2 5'} />
       ))}
       <circle cx="60" cy="60" r="6" fill={hue} />
       {Array.from({ length: n }).map((_, i) => (
         <g key={i} className="spin-slow" style={{ transformOrigin: '60px 60px', animationDuration: `${12 + i * 8}s` }}>
-          <circle cx={60 + [20, 36, 52][i]} cy="60" r="3.5" fill="#fff" />
+          <circle cx={60 + [20, 36, 52][i]} cy="60" r="3.5" fill="#17131D" />
         </g>
       ))}
     </svg>
@@ -72,7 +72,7 @@ export function Plans() {
             <motion.div key={ans.length} className="glass mx-auto mt-8 max-w-xl p-5 sm:p-6" initial={{ opacity: 0, y: 16, filter: 'blur(6px)' }} animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.4, ease: EASE }}>
               <div className="flex items-center justify-between text-[12px] text-dim">
                 <span>Question {ans.length + 1} of {QS.length}</span>
-                <span className="flex gap-1">{QS.map((_, i) => <i key={i} className={`h-1 w-6 rounded-full ${i <= ans.length ? 'bg-gradient-to-r from-amber to-rose' : 'bg-white/10'}`} />)}</span>
+                <span className="flex gap-1">{QS.map((_, i) => <i key={i} className={`h-1 w-6 rounded-full ${i <= ans.length ? 'bg-gradient-to-r from-amber to-rose' : 'bg-paper/10'}`} />)}</span>
               </div>
               <p className="mt-3 text-[20px] font-semibold tracking-[-0.02em]">{QS[ans.length].q}</p>
               <div className="mt-4 grid gap-2 sm:grid-cols-3">

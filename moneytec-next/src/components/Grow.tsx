@@ -87,13 +87,13 @@ export function Grow() {
             </defs>
             {[0, 10, 20, 30].map((y) => (
               <g key={y}>
-                <line x1={(y / YEARS) * W} x2={(y / YEARS) * W} y1="0" y2={H} stroke="#fff" strokeOpacity={whole >= y ? 0.14 : 0.05} strokeDasharray="4 6" vectorEffect="non-scaling-stroke" />
-                <text x={(y / YEARS) * W} y={H + 26 * k} fill="#fff" fillOpacity={whole >= y ? 0.95 : 0.6} fontSize={18 * k} textAnchor={y === 0 ? 'start' : y === 30 ? 'end' : 'middle'}>Year {y}</text>
+                <line x1={(y / YEARS) * W} x2={(y / YEARS) * W} y1="0" y2={H} stroke="#17131D" strokeOpacity={whole >= y ? 0.14 : 0.05} strokeDasharray="4 6" vectorEffect="non-scaling-stroke" />
+                <text x={(y / YEARS) * W} y={H + 26 * k} fill="#17131D" fillOpacity={whole >= y ? 0.95 : 0.6} fontSize={18 * k} textAnchor={y === 0 ? 'start' : y === 30 ? 'end' : 'middle'}>Year {y}</text>
               </g>
             ))}
-            <path d={ghost} fill="none" stroke="#fff" strokeOpacity="0.08" strokeWidth="2" vectorEffect="non-scaling-stroke" />
+            <path d={ghost} fill="none" stroke="#17131D" strokeOpacity="0.08" strokeWidth="2" vectorEffect="non-scaling-stroke" />
             {area && <path d={area} fill="url(#g-area)" />}
-            <line x1="0" y1={H} x2={ix} y2={iy} stroke="#fff" strokeOpacity="0.35" strokeWidth="1.5" strokeDasharray="6 6" vectorEffect="non-scaling-stroke" />
+            <line x1="0" y1={H} x2={ix} y2={iy} stroke="#17131D" strokeOpacity="0.35" strokeWidth="1.5" strokeDasharray="6 6" vectorEffect="non-scaling-stroke" />
             <path d={line} fill="none" stroke="url(#g-line)" strokeWidth="10" strokeLinecap="round" filter="url(#g-glow)" opacity="0.6" vectorEffect="non-scaling-stroke" />
             <path d={line} fill="none" stroke="url(#g-line)" strokeWidth="3.5" strokeLinecap="round" vectorEffect="non-scaling-stroke" />
             {[10, 20, 30].map((my) => {
@@ -103,17 +103,17 @@ export function Grow() {
                 <motion.g key={my} initial={false} animate={{ opacity: on ? 1 : 0, scale: on ? 1 : 0.4 }} transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }} style={{ transformOrigin: `${mx}px ${mY}px` }}>
                   <circle cx={mx} cy={mY} r="22" fill="none" stroke="#FF9F0A" strokeOpacity="0.35" />
                   <circle cx={mx} cy={mY} r="7" fill="#FF9F0A" />
-                  <rect x={mx - (my === 30 ? 180 : 75) * k} y={mY + (my === 30 ? 4 : -64) * k} width={150 * k} height={36 * k} rx={18 * k} fill="rgba(7,6,11,0.85)" stroke="rgba(255,255,255,0.15)" />
-                  <text x={mx - (my === 30 ? 105 : 0) * k} y={mY + (my === 30 ? 28 : -40) * k} textAnchor="middle" fill="#FFFFFF" fontSize={17 * k} fontWeight="600">{inr(sipValue(MONTHLY, RATE, my * 12))}</text>
+                  <rect x={mx - (my === 30 ? 180 : 75) * k} y={mY + (my === 30 ? 4 : -64) * k} width={150 * k} height={36 * k} rx={18 * k} fill="rgba(255,255,255,0.95)" stroke="rgba(23,19,29,0.15)" />
+                  <text x={mx - (my === 30 ? 105 : 0) * k} y={mY + (my === 30 ? 28 : -40) * k} textAnchor="middle" fill="#17131D" fontSize={17 * k} fontWeight="600">{inr(sipValue(MONTHLY, RATE, my * 12))}</text>
                 </motion.g>
               );
             })}
             <circle cx={tx} cy={ty} r={14 * Math.sqrt(k)} fill="#FF375F" opacity="0.25" />
-            <circle cx={tx} cy={ty} r={6 * Math.sqrt(k)} fill="#fff" />
+            <circle cx={tx} cy={ty} r={6 * Math.sqrt(k)} fill="#17131D" />
           </svg>
           <div className="pointer-events-none mt-2 flex gap-4 text-[11px] text-dim sm:absolute sm:left-8 sm:top-7 sm:mt-0">
             <span className="flex items-center gap-1.5"><i className="h-0.5 w-4 bg-gradient-to-r from-amber to-violet" />Illustrated value</span>
-            <span className="flex items-center gap-1.5"><i className="h-0 w-4 border-t border-dashed border-white/50" />Contributions</span>
+            <span className="flex items-center gap-1.5"><i className="h-0 w-4 border-t border-dashed border-paper/50" />Contributions</span>
           </div>
         </div>
       </div>

@@ -34,7 +34,7 @@ export function NextSteps() {
               <ol className="my-8 space-y-5">
                 {route.items.map((item, i) => (
                   <li key={item} className="flex items-start gap-4 text-[15px] leading-relaxed text-haze">
-                    <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full border border-white/15 text-[12px] font-semibold text-paper">0{i + 1}</span>
+                    <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full border border-paper/15 text-[12px] font-semibold text-paper">0{i + 1}</span>
                     <span className="pt-1.5">{item}</span>
                   </li>
                 ))}

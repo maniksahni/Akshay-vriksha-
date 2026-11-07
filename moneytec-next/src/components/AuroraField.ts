@@ -54,7 +54,12 @@ void main(){
   col += rose * 0.22 * exp(-d * 4.5);                      // light under the pointer
   col *= 1.0 - smoothstep(0.35, 1.25, length((uv - vec2(0.5, 0.45)) * vec2(1.35, 1.0))); // vignette
   col *= 0.62 - uScroll * 0.38;                            // dims as you leave the hero
-  col += (hash(gl_FragCoord.xy + uTime) - 0.5) * 0.025;     // film grain to break banding
+  // daylight: the light becomes a pastel wash over the ivory page
+  vec3 ivory = vec3(0.984, 0.972, 0.953);
+  float k = clamp(max(max(col.r, col.g), col.b), 0.0, 1.0);
+  vec3 hue = col / max(k, 0.001);
+  col = mix(ivory, mix(ivory, hue, 0.5), k * 0.85);
+  col += (hash(gl_FragCoord.xy + uTime) - 0.5) * 0.012;     // film grain to break banding
   gl_FragColor = vec4(col, 1.0);
 }`;
 
